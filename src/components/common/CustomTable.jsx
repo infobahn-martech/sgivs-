@@ -4,7 +4,7 @@ import prevIcon from '../../assets/images/arrow-left.svg';
 import nextIcon from '../../assets/images/arrow-right.svg';
 import sortUp from '../../assets/images/up.svg';
 import sortDown from '../../assets/images/down.svg';
-import CustomLoader from '../CustomLoader';
+import CustomLoader from './CustomLoader';
 import NoTableData from './NoTableData';
 
 export default function CustomTable({
