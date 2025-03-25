@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import CustomTable from '../../components/common/CustomTable';
 import deleteIcon from '../../assets/images/delete.svg';
 import closseIcon from '../../assets/images/close.svg';
+import dummyImg from '../../assets/images/avatar.png';
 import '../../assets/scss/usermanagement.scss';
 import CommonHeader from '../../components/common/CommonHeader';
 
@@ -77,7 +78,7 @@ const UserManagement = () => {
       cell: (row) => (
         <>
           <figure>
-            <img src={row.profilePic} alt="" className="img" />
+            <img src={dummyImg} alt="" className="img" />
           </figure>
           <span>{row.firstName}</span>
         </>
