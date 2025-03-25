@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import '../../assets/scss/sidebar.scss';
@@ -15,18 +15,16 @@ import ToggleIcon from '../../assets/images/toggle-btn.svg';
 
 const Sidebar = () => {
   const location = useLocation();
-  console.log(' location', location);
+  const [collapsed, setCollapsed] = useState(false);
+
+  const toggleSidebar = () => {
+    setCollapsed(!collapsed);
+    document.body.classList.toggle('sidebar-collapsed', !collapsed);
+  };
+
   const sideMenu = [
-    {
-      name: 'Dashboard',
-      icon: DashboardIcon,
-      path: '/',
-    },
-    {
-      name: 'User Management',
-      icon: UserManageIcon,
-      path: '/user-management',
-    },
+    { name: 'Dashboard', icon: DashboardIcon, path: '/' },
+    { name: 'User Management', icon: UserManageIcon, path: '/user-management' },
     {
       name: 'Inventory Management',
       icon: InventoryManageIcon,
@@ -37,35 +35,19 @@ const Sidebar = () => {
       icon: RentalManageIcon,
       path: '/rental-management',
     },
-    {
-      name: 'EZ pass billing',
-      icon: EZIcon,
-      path: '/ez-pass-billing',
-    },
-    {
-      name: 'Messages',
-      icon: MessagesIcon,
-      path: '/messages',
-    },
-    {
-      name: 'Settings',
-      icon: SettingsIcon,
-      path: '/settings',
-    },
+    { name: 'EZ pass billing', icon: EZIcon, path: '/ez-pass-billing' },
+    { name: 'Messages', icon: MessagesIcon, path: '/messages' },
+    { name: 'Settings', icon: SettingsIcon, path: '/settings' },
   ];
 
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${collapsed ? 'collapsed' : ''}`}>
       <div className="top-hold">
         <div className="logo">
           <img src={MainLogo} alt="logo" />
         </div>
-
-        <button className="toggle-nav close-nav">
-          <img src={ToggleIcon} alt="" />
-        </button>
-        <button className="toggle-nav open-nav">
-          <img src={ToggleIcon} alt="" />
+        <button className="toggle-nav" onClick={toggleSidebar}>
+          <img src={ToggleIcon} alt="Toggle Sidebar" />
         </button>
       </div>
       <nav className="nav">
@@ -78,7 +60,7 @@ const Sidebar = () => {
             key={index}
           >
             <span className="icon">
-              <img src={menu.icon} alt="dashboard-icon" />
+              <img src={menu.icon} alt="menu-icon" />
             </span>
             <span className="txt">{menu.name}</span>
           </Link>

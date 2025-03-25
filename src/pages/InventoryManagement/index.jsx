@@ -8,6 +8,7 @@ import userImage from '../../assets/images/user-1.png';
 
 import CommonHeader from '../../components/common/CommonHeader';
 import CustomTable from '../../components/common/CustomTable';
+import { Link } from 'react-router-dom';
 
 const dummyData = [
   {
@@ -54,6 +55,7 @@ const dummyData = [
 
 const InventoryManagement = () => {
   const [pagination, setPagination] = useState({ currentPage: 1, limit: 10 });
+  const [modalConfig, setModalConfig] = useState({ type: null, data: null });
 
   const [data, setData] = useState(dummyData);
 
@@ -148,6 +150,9 @@ const InventoryManagement = () => {
           <span
             data-tooltip-id={`tooltip-${row.id || rowIndex}`} // Unique ID for the tooltip
             data-tooltip-content={'Edit'} // Tooltip content
+            onClick={() => {
+              setModalConfig({ data: row, type: 'edit' });
+            }}
           >
             <img src={closseIcon} alt="Edit" />
           </span>
@@ -179,12 +184,21 @@ const InventoryManagement = () => {
     console.log('Processed Excel data:', data);
   };
 
+
   return (
     <>
       <CommonHeader
         exportExcel={() => {}}
         uploadExcel
         onExcelUpload={handleExcelUpload}
+        addButton={{
+          name: 'Add Item',
+          type:'link',
+          path:'/inventory-management/add',
+          action: () => {
+            setModalConfig({ data: null, type: 'add', });
+          },
+        }}
       />
       <CustomTable
         pagination={pagination}
