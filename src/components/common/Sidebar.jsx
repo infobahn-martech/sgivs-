@@ -11,6 +11,7 @@ import RentalManageIcon from '../../assets/images/dashboard-4.svg';
 import MessagesIcon from '../../assets/images/dashboard-5.svg';
 import EZIcon from '../../assets/images/dashboard-6.svg';
 import SettingsIcon from '../../assets/images/dashboard-7.svg';
+import ToggleIcon from '../../assets/images/toggle-btn.svg';
 
 const Sidebar = () => {
   const location = useLocation();
@@ -55,8 +56,17 @@ const Sidebar = () => {
 
   return (
     <div className="sidebar">
-      <div className="logo">
-        <img src={MainLogo} alt="logo" />
+      <div className="top-hold">
+        <div className="logo">
+          <img src={MainLogo} alt="logo" />
+        </div>
+
+        <button className="toggle-nav close-nav">
+          <img src={ToggleIcon} alt="" />
+        </button>
+        <button className="toggle-nav open-nav">
+          <img src={ToggleIcon} alt="" />
+        </button>
       </div>
       <nav className="nav">
         {sideMenu.map((menu, index) => (
