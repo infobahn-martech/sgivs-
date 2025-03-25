@@ -1,0 +1,282 @@
+@import "partials";
+.user-log-wrp{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 43px 44px;
+    background: url(../images/login-bottom-img.png) #fff no-repeat bottom right;
+    background-size: 320px;
+    @media ($sm-1679){
+        padding: 30px;
+        background-size: 160px;
+    }
+    @media ($sm-1441){
+        padding: 25px;
+        background-size: 140px;
+    }
+    @media ($sm-1199){
+        padding: 20px;
+        background-size: 100px;
+    }
+    .inner-wrp{
+        display: flex;
+        align-items: stretch;
+        flex: 1;
+        flex-wrap: wrap;
+        @media (max-width:650px){
+            flex-direction: column;
+        }
+        .panel-left{
+            background: #0096DF;
+            background-size: 700px;
+            border-radius: 31px;
+            padding: 56px;
+            flex: 1;
+            max-width: 45%;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            @media ($sm-1679){
+                padding: 40px;
+            }
+            @media ($sm-1441){
+                padding: 35px;
+            }
+            @media ($sm-1199){
+                padding: 30px;
+            }
+            @media ($sm-991){
+                padding: 25px;
+                max-width: 45%;
+            }
+            @media ($sm-767){
+                padding: 20px;
+                max-width: 50%;
+            }
+            @media (max-width:650px){
+                max-width: 100%;
+                flex: none;
+            }
+            &:after{
+                content: "";
+                width: 100%;
+                height: 751px;
+                background: url(../images/login-left-bg.png) no-repeat bottom right;
+                background-size: contain;
+                position: absolute;
+                right: 0;
+                bottom: -55px;
+                top: unset;
+                @media (max-width:1750px){
+                    height: 660px;
+                    bottom: -77px;
+                }
+                @media ($sm-1679){
+                    height: 500px;
+                }
+                @media (max-width:1566px){
+                    height: 595px;
+                    bottom:-48px;
+                }
+                @media ($sm-1481){
+                    height: 508px;
+                }
+                @media (max-width:1199px){
+                    bottom:0px;
+                }
+                @media (max-width:650px){
+                    height: 176px;
+                    bottom:0px;
+                }
+            }
+            .logo-wrp{
+                display: flex;
+                position: relative;
+                z-index: 1;
+                @media (max-width:650px){
+                    margin: 0 auto;
+                    justify-content: center;
+                }
+                img{
+                    max-width: 100%;
+                    height: 87px;
+                    @media ($sm-1679){
+                        height: 77px;
+                    }
+                    @media (max-width:1566px){
+                        height: 67px;
+                    }
+                    @media ($sm-1481){
+                        height: 57px;
+                    }
+                }
+            }
+            .quotes-wrp{
+                font-size: 18px;
+                color: $white;
+                padding: 26px 0 0;
+                position: relative;
+                z-index: 1;
+                @media ($sm-1679){
+                    font-size: 16px;
+                    padding: 20px 0 0;
+                }
+                @media ($sm-1441){
+                    font-size: 15px;
+                    padding: 15px 0 0;
+                }
+                @media ($sm-1199){
+                    font-size: 14px;
+                    padding: 10px 0 0;
+                }
+                @media ($sm-767){
+                    font-size: 13px;
+                }
+                @media (max-width:650px){
+                    text-align: center;
+                }
+                br{
+                    @media (max-width:650px){
+                        display: none;
+                    }
+                }
+            }
+        }
+        .panel-right{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            flex-direction: column;
+            @media ($sm-1199){
+                padding-left: 50px;
+            }
+            @media ($sm-991){
+                padding-left: 40px;
+            }
+            @media ($sm-767){
+                padding-left: 30px;
+                max-width: 50%;
+            }
+            @media (max-width:650px){
+                max-width: 100%;
+                padding-left: 20px;
+                flex: unset;
+                padding-top: 40px;
+            }
+            @media ($sm-579){
+                padding: 30px 0 0;
+            }
+            .form-wrp-center{
+                max-width: 414px;
+                width: 100%;
+                margin: auto;
+                .top-blk{
+                    margin-bottom: 48px;
+                    display: flex;
+                    flex-direction: column;
+                    .title{
+                        margin-bottom: 28px;
+                        line-height: 1;
+                        @media ($sm-1679){
+                            margin-bottom: 20px;
+                        }
+                        @media ($sm-1441){
+                            margin-bottom: 15px;
+                        }
+                        @media ($sm-1199){
+                            margin-bottom: 10px;
+                        }
+                    }
+                    .desc{
+                        font-size: 20px;
+                        color: #313957;
+                        @media ($sm-1679){
+                            font-size: 18px;
+                        }
+                        @media ($sm-1441){
+                            font-size: 16px;
+                        }
+                        @media ($sm-1199){
+                            font-size: 15px;
+                        }
+                        @media ($sm-991){
+                            font-size: 14px;
+                        }
+                        @media (max-width:650px){
+                            font-size: 13px;
+                        }
+                    }
+                    @media ($sm-1679){
+                        margin-bottom: 40px;
+                    }
+                    @media ($sm-1441){
+                        margin-bottom: 35px;
+                    }
+                    @media ($sm-1199){
+                        margin-bottom: 30px;
+                    }
+                    @media ($sm-991){
+                        margin-bottom: 25px;
+                    }
+                    @media ($sm-767){
+                        margin-bottom: 20px;
+                    }
+                }
+                .form-sec-wrp{
+                    .form-group{
+                        .error{
+                            bottom: -20px;
+                            left: 15px;
+                        }
+                    }
+                    .form-control{
+                        border-radius: 28px;
+                    }
+                    .link{
+                        color: #0096DF;
+                        font-size: 16px;
+                        margin-bottom: 24px;
+                        display: block;
+                        text-align: right;
+                        @media ($sm-1679){
+                        
+                            font-size: 15px;
+                        }
+                        @media ($sm-1441){
+                            font-size: 14px;
+                        }
+                        @media ($sm-767){
+                            font-size: 13px;
+                        }
+                    }
+                    .btn-rounded{
+                        width: 388px;
+                        border: none;
+                        @media ($sm-991){
+                            width: 100%;
+                        }
+                    }
+                }
+                &.login{
+                    max-width: 388px;
+                }
+                &:not(.login){
+                    .form-sec-wrp{
+                        .form-control{
+                            border-radius: 12px;
+                        }
+                    }
+                    .btn-rounded{
+                        width: 100%;
+                        border: none;
+                        @media ($sm-991){
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
