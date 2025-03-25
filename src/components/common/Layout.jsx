@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../../assets/css/dashboard.css';
+import '../../assets/scss/dashboard.scss';
 
 import Sidebar from './Sidebar';
 import Header from './Header';
