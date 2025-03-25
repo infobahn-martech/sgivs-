@@ -1,0 +1,66 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+/*** all Mobile Screen (iphone 6,7,8) ***/
+/*** mobile Landscape Size ***/
+/*** medium devices (tablets, less than 992px) ***/
+/*** iPad in landscape ***/
+/**** smaller than desktop 1200 (devices and browsers) ***/
+/*** laptop with MDPI (medium density per inch) resolution ***/
+/*** laptop with HiDPI (High Dots Per Inch) resolution ***/
+/*** WSXGA (Wide Super Extended Graphics Array) resolution ***/
+/*** all Mobile Screen (iphone 6,7,8) ***/
+/*** mobile Landscape Size ***/
+/*** medium devices (tablets, less than 992px) ***/
+/*** iPad in landscape ***/
+/**** smaller than desktop 1200 (devices and browsers) ***/
+/*** laptop with MDPI (medium density per inch) resolution ***/
+/*** laptop with HiDPI (High Dots Per Inch) resolution ***/
+/*** WSXGA (Wide Super Extended Graphics Array) resolution ***/
+body {
+  font-family: "Outfit", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+a {
+  text-decoration: none;
+}
+.right-pannel {
+  flex: 1;
+  width: calc(100% - 323px);
+  margin-left: 328px;
+  min-height: 100vh;
+  background-color: #FFFFFF;
+  border-radius: 40px 0 0 40px;
+  display: flex;
+  flex-direction: column;
+}
+.title {
+  font-size: 36px;
+  font-weight: 600;
+  color: #1E1E1E;
+}
+@media (max-width: 1679px) {
+  .title {
+    font-size: 34px;
+  }
+}
+@media (max-width: 1441px) {
+  .title {
+    font-size: 32px;
+  }
+}
+@media (max-width: 1199px) {
+  .title {
+    font-size: 30px;
+  }
+}
+@media (max-width: 991px) {
+  .title {
+    font-size: 28px;
+  }
+}
+@media (max-width: 767px) {
+  .title {
+    font-size: 26px;
+  }
+}

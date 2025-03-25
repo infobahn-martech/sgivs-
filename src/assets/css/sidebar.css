@@ -1,0 +1,150 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+/*** all Mobile Screen (iphone 6,7,8) ***/
+/*** mobile Landscape Size ***/
+/*** medium devices (tablets, less than 992px) ***/
+/*** iPad in landscape ***/
+/**** smaller than desktop 1200 (devices and browsers) ***/
+/*** laptop with MDPI (medium density per inch) resolution ***/
+/*** laptop with HiDPI (High Dots Per Inch) resolution ***/
+/*** WSXGA (Wide Super Extended Graphics Array) resolution ***/
+/*** all Mobile Screen (iphone 6,7,8) ***/
+/*** mobile Landscape Size ***/
+/*** medium devices (tablets, less than 992px) ***/
+/*** iPad in landscape ***/
+/**** smaller than desktop 1200 (devices and browsers) ***/
+/*** laptop with MDPI (medium density per inch) resolution ***/
+/*** laptop with HiDPI (High Dots Per Inch) resolution ***/
+/*** WSXGA (Wide Super Extended Graphics Array) resolution ***/
+.sidebar {
+  background-image: url(../images/side_bar_img.png);
+  background-color: #0096df;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 308px;
+  max-width: 308px;
+  flex: 0 0 308px;
+  height: 100vh;
+  padding: 37px 16px;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+@media (max-width: 1679px) {
+  .sidebar {
+    width: 280px;
+    max-width: 280px;
+    flex: 0 0 280px;
+  }
+}
+@media (max-width: 1481px) {
+  .sidebar {
+    width: 200px;
+    max-width: 200px;
+    flex: 0 0 200px;
+  }
+}
+@media (max-width: 1199px) {
+  .sidebar {
+    width: 180px;
+    max-width: 180px;
+    flex: 0 0 180px;
+  }
+}
+@media (max-width: 579px) {
+  .sidebar {
+    width: 50px;
+    max-width: 50px;
+    flex: 0 0 50px;
+    display: flex;
+    justify-content: center;
+  }
+}
+.sidebar .top-hold {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 46px;
+}
+.sidebar .top-hold .logo {
+  max-width: 205px;
+  margin: 0;
+}
+@media (max-width: 1679px) {
+  .sidebar .top-hold .logo {
+    max-width: 170px;
+  }
+}
+@media (max-width: 1199px) {
+  .sidebar .top-hold .logo {
+    max-width: 90px;
+  }
+}
+.sidebar .top-hold .logo img {
+  width: 100%;
+}
+.sidebar .top-hold .toggle-nav {
+  border: none;
+  background: transparent;
+  outline: none;
+  position: absolute;
+  right: 0px;
+}
+.sidebar .nav {
+  flex-direction: column;
+}
+.sidebar .nav .nav-link {
+  color: #fff;
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: 0px;
+  display: flex;
+  padding: 20px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+@media (max-width: 1679px) {
+  .sidebar .nav .nav-link {
+    font-size: 14px;
+    padding: 15px;
+  }
+}
+@media (max-width: 1481px) {
+  .sidebar .nav .nav-link {
+    font-size: 13px;
+    padding: 12px;
+  }
+}
+@media (max-width: 579px) {
+  .sidebar .nav .nav-link {
+    width: 40px;
+  }
+  .sidebar .nav .nav-link .txt {
+    opacity: 0;
+  }
+}
+.sidebar .nav .nav-link .icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  margin-right: 19px;
+}
+@media (max-width: 1679px) {
+  .sidebar .nav .nav-link .icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+@media (max-width: 1481px) {
+  .sidebar .nav .nav-link .icon {
+    width: 15px;
+    height: 15px;
+  }
+}
+.sidebar .nav .nav-link.active {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%);
+}
+.sidebar .nav .nav-link:hover {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%);
+}

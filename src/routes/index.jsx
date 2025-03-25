@@ -5,6 +5,7 @@ import Page404 from '../components/common/Page404';
 
 import PublicRoutes from './PublicRoutes';
 import PrivateRoutes from './PrivateRoutes';
+import Layout from '../components/common/Layout';
 
 const router = createBrowserRouter([
   {
@@ -28,12 +29,17 @@ const router = createBrowserRouter([
         element: <PrivateRoutes />,
         children: [
           {
-            path: '/dashboard',
-            element: <h1>Dashboard page</h1>,
-          },
-          {
-            path: '/profile',
-            element: <h1>Profile page</h1>,
+            element: <Layout />,
+            children: [
+              {
+                path: '/dashboard',
+                element: <h1>Dashboard page</h1>,
+              },
+              {
+                path: '/profile',
+                element: <h1>Profile page</h1>,
+              },
+            ],
           },
         ],
       },
