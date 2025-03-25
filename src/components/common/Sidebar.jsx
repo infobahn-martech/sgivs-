@@ -19,7 +19,7 @@ const Sidebar = () => {
     {
       name: 'Dashboard',
       icon: DashboardIcon,
-      path: '/dashboard',
+      path: '/',
     },
     {
       name: 'User Management',
