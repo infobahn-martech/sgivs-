@@ -1,9 +1,10 @@
 import userImage from '../assets/images/user.svg';
+import InventoryIcon from '../assets/images/inventory-count.svg';
 
 export const headerConfig = [
   {
     title: 'Inventory Management',
-    icon: 'img/inventory.svg',
+    icon: InventoryIcon,
     path: '/inventory-management',
   },
   {
