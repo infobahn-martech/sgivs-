@@ -1,9 +1,205 @@
-import React from 'react'
+import React, { useState } from 'react';
+import { Tooltip as ReactTooltip, Tooltip } from 'react-tooltip';
+
+import deleteIcon from '../../assets/images/delete.svg';
+import closseIcon from '../../assets/images/close.svg';
+
+import userImage from '../../assets/images/user-1.png';
+
+import CommonHeader from '../../components/common/CommonHeader';
+import CustomTable from '../../components/common/CustomTable';
+
+const dummyData = [
+  {
+    id: 4,
+    itemId: '#FAS44SS',
+    itemName: 'Riding Jacket',
+    quantity: '06',
+    quantityAvailable: '04',
+    createdAt: 'Mar 3, 2025',
+    haveParts: true,
+    image: userImage,
+  },
+  {
+    id: 3,
+    itemId: '#AS44SS',
+    itemName: 'Riding Gloves',
+    quantity: '10',
+    quantityAvailable: '07',
+    createdAt: 'Mar 14, 2025',
+    haveParts: false,
+    image: userImage,
+  },
+  {
+    id: 2,
+    itemId: '#RAS33VS',
+    itemName: 'Helmet',
+    quantity: '06',
+    quantityAvailable: '04',
+    createdAt: 'Mar 1, 2025',
+    haveParts: false,
+    image: userImage,
+  },
+  {
+    id: 1,
+    itemId: '#FAS44SS',
+    itemName: 'Riding Jacket',
+    quantity: '06',
+    quantityAvailable: '04',
+    createdAt: 'Mar 3, 2025',
+    haveParts: true,
+    image: userImage,
+  },
+];
 
 const InventoryManagement = () => {
-  return (
-    <div>Inventory Management</div>
-  )
-}
+  const [pagination, setPagination] = useState({ currentPage: 1, limit: 10 });
 
-export default InventoryManagement
+  const [data, setData] = useState(dummyData);
+
+  const handleSortChange = (selector) => {
+    setData((prevData) => {
+      const isAscending =
+        prevData[0][selector] > prevData[prevData.length - 1][selector];
+      return [...prevData].sort((a, b) =>
+        isAscending
+          ? a[selector] > b[selector]
+            ? -1
+            : 1
+          : a[selector] < b[selector]
+          ? -1
+          : 1
+      );
+    });
+  };
+  const columns = [
+    {
+      name: 'Image',
+      selector: 'image',
+      titleClasses: 'tw1',
+      contentClass: 'user-pic',
+      cell: (row) => (
+        <>
+          <figure>
+            <img src={row.image} alt="" className="img" />
+          </figure>
+        </>
+      ),
+    },
+    {
+      name: 'Item ID',
+      selector: 'itemId',
+      titleClasses: 'tw1',
+    },
+    {
+      name: 'Item Name',
+      selector: 'itemName',
+      titleClasses: 'tw1',
+      contentClass: 'user-pic',
+    },
+    {
+      name: 'Quantity Available',
+      selector: 'quantity',
+      titleClasses: 'tw1',
+      contentClass: 'user-pic',
+    },
+    {
+      name: 'Quantity Available After Borrowing',
+      selector: 'quantityAvailable',
+      titleClasses: 'tw1',
+      contentClass: 'user-pic',
+    },
+    {
+      name: 'Item Created date',
+      selector: 'createdAt',
+      titleClasses: 'tw1',
+      contentClass: 'user-pic',
+      sort: true,
+    },
+    {
+      name: 'Have Parts',
+      selector: 'haveParts',
+      titleClasses: 'tw1',
+      contentClass: 'user-pic',
+      cell: (row) => <span>{row.haveParts ? 'Yes' : 'No'}</span>,
+    },
+
+    {
+      name: 'Action',
+      selector: 'action',
+      titleClasses: 'tw7',
+      contentClass: 'action-wrap',
+      cell: (row, rowIndex) => (
+        <>
+          <Tooltip
+            id={`tooltip-${row.id || rowIndex}`}
+            place="bottom"
+            style={{
+              backgroundColor: '#2ca0da',
+              maxWidth: 500,
+            }}
+          />
+          <span
+            data-tooltip-id={`tooltip-${row.id || rowIndex}`} // Unique ID for the tooltip
+            data-tooltip-content={'View'} // Tooltip content
+          >
+            <img src={deleteIcon} alt="view" />
+          </span>
+          <span
+            data-tooltip-id={`tooltip-${row.id || rowIndex}`} // Unique ID for the tooltip
+            data-tooltip-content={'Edit'} // Tooltip content
+          >
+            <img src={closseIcon} alt="Edit" />
+          </span>
+          <span
+            data-tooltip-id={`tooltip-${row.id || rowIndex}`} // Unique ID for the tooltip
+            data-tooltip-content={'Hide/Show'} // Tooltip content
+          >
+            <img src={closseIcon} alt="Hide/Show" />
+          </span>
+          <span
+            data-tooltip-id={`tooltip-${row.id || rowIndex}`} // Unique ID for the tooltip
+            data-tooltip-content={'Delete'} // Tooltip content
+          >
+            <img src={deleteIcon} alt="Delete" />
+          </span>
+          <span
+            data-tooltip-id={`tooltip-${row.id || rowIndex}`} // Unique ID for the tooltip
+            data-tooltip-content={'Download Barcode'} // Tooltip content
+          >
+            <img src={closseIcon} alt="Download" />
+          </span>
+        </>
+      ),
+    },
+  ];
+
+  const handleExcelUpload = (data) => {
+    // Process the uploaded Excel data
+    console.log('Processed Excel data:', data);
+  };
+
+  return (
+    <>
+      <CommonHeader
+        exportExcel={() => {}}
+        uploadExcel
+        onExcelUpload={handleExcelUpload}
+      />
+      <CustomTable
+        pagination={pagination}
+        count={dummyData?.length}
+        columns={columns}
+        data={data}
+        isLoading={false}
+        onPageChange={(currentPage) =>
+          setPagination({ ...pagination, currentPage })
+        }
+        setLimit={(limit) => setPagination({ ...pagination, limit })}
+        onSortChange={handleSortChange}
+      />
+    </>
+  );
+};
+
+export default InventoryManagement;
