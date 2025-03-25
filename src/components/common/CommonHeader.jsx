@@ -1,10 +1,16 @@
 import React, { useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import * as XLSX from 'xlsx';
 import { headerConfig } from '../../config/config';
 import filterImg from '../../assets/images/sort.svg';
 
-const CommonHeader = ({ exportExcel, uploadExcel, onExcelUpload }) => {
+const CommonHeader = ({
+  exportExcel,
+  uploadExcel,
+  onExcelUpload,
+  addButton,
+  hideRightSide = false,
+}) => {
   const location = useLocation();
   const fileInputRef = useRef(null);
 
@@ -26,10 +32,10 @@ const CommonHeader = ({ exportExcel, uploadExcel, onExcelUpload }) => {
           const workbook = XLSX.read(e.target.result, { type: 'binary' });
           const sheetName = workbook.SheetNames[0];
           const worksheet = workbook.Sheets[sheetName];
-          
+
           // Convert worksheet to JSON
           const excelData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-          
+
           // Optional: Remove header row if needed
           const processedData = excelData;
 
@@ -41,7 +47,7 @@ const CommonHeader = ({ exportExcel, uploadExcel, onExcelUpload }) => {
           }
         } catch (error) {
           console.error('Error processing Excel file:', error);
-          alert('Failed to process the Excel file. Please check the file format.');
+          
         }
       };
       reader.readAsBinaryString(file);
@@ -52,6 +58,29 @@ const CommonHeader = ({ exportExcel, uploadExcel, onExcelUpload }) => {
     fileInputRef.current.click();
   };
 
+  const renderAddButton = (type) => {
+    switch (type) {
+      case 'link':
+        return (
+          <Link to={addButton.path} className="btn btn-outline">
+            {addButton.name}
+          </Link>
+        );
+      case 'button':
+        return (
+          <button className="btn btn-outline" onClick={addButton.action}>
+            {addButton.name}
+          </button>
+        );
+      default:
+        return (
+          <button className="btn btn-outline" onClick={addButton.action}>
+            {addButton.name}
+          </button>
+        );
+    }
+  };
+
   return (
     <div className="table-header-wrap">
       <div className="left-wrap">
@@ -60,37 +89,37 @@ const CommonHeader = ({ exportExcel, uploadExcel, onExcelUpload }) => {
           <span>{headerInfo?.title}</span>
         </div>
       </div>
-      <div className="right-wrap">
-        <div className="search-wrap">
-          <input type="text" className="txt" placeholder="Search Controls" />
-        </div>
-        <div className="filter-wrap">
-          <span>Filter</span>
-          <img src={filterImg} alt="" className="img" />
-        </div>
+      {!hideRightSide && (
+        <div className="right-wrap">
+          <div className="search-wrap">
+            <input type="text" className="txt" placeholder="Search Controls" />
+          </div>
+          <div className="filter-wrap">
+            <span>Filter</span>
+            <img src={filterImg} alt="" className="img" />
+          </div>
 
-        {exportExcel && (
-          <button className="btn btn-primary">Export As Excel</button>
-        )}
+          {exportExcel && (
+            <button className="btn btn-primary">Export As Excel</button>
+          )}
 
-        {uploadExcel && (
-          <>
-            <input 
-              type="file" 
-              ref={fileInputRef}
-              accept=".xlsx, .xls" 
-              style={{ display: 'none' }}
-              onChange={handleFileUpload}
-            />
-            <button 
-              className="btn btn-primary" 
-              onClick={triggerFileInput}
-            >
-              Upload Excel
-            </button>
-          </>
-        )}
-      </div>
+          {uploadExcel && (
+            <>
+              <input
+                type="file"
+                ref={fileInputRef}
+                accept=".xlsx, .xls"
+                style={{ display: 'none' }}
+                onChange={handleFileUpload}
+              />
+              <button className="btn btn-primary" onClick={triggerFileInput}>
+                Upload Excel
+              </button>
+            </>
+          )}
+          {addButton && renderAddButton(addButton.type)}
+        </div>
+      )}
     </div>
   );
 };
