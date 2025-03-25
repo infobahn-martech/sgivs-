@@ -3,11 +3,11 @@ import { Navigate, Outlet } from 'react-router-dom';
 import useAuthReducer from '../stores/AuthReducer';
 
 function PublicRoutes() {
-  const { isAuthenticated } = useAuthReducer((state) => state);
+  const { isLoggedIn } = useAuthReducer((state) => state);
 
   return (
     <Suspense fallback={<div />}>
-      {isAuthenticated ? (
+      {isLoggedIn ? (
         <Navigate to="/dashboard" />
       ) : (
         <div className="outer">

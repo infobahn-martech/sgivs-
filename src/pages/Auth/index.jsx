@@ -15,7 +15,7 @@ const loginSchema = z.object({
 });
 
 const Login = () => {
-  const login = useAuthReducer((state) => state.login);
+  const { login, isLoginLoading } = useAuthReducer((state) => state);
 
   const {
     register,
@@ -89,7 +89,7 @@ const Login = () => {
                 Forgot Password?
               </a>
               <button class="btn btn-rounded" onClick={handleSubmit(onSubmit)}>
-                Login
+                {isLoginLoading ? 'Loading...' : 'Login'}
               </button>
             </div>
           </div>

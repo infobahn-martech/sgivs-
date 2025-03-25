@@ -22,9 +22,9 @@ const useAuthReducer = create((set) => ({
         password,
         platform
       );
-      const authData = data.data.userData;
-      setItem('accessToken', data.data.token.accessToken);
-      setItem('refreshToken', data.data.token.refreshToken);
+      const authData = data?.user;
+      setItem('accessToken', data?.token?.accessToken);
+      setItem('refreshToken', data?.token?.refreshToken);
       set({ authData, isLoggedIn: true, isLoginLoading: false });
     } catch (err) {
       const { error } = useAlertReducer.getState();
