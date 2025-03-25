@@ -3,7 +3,7 @@ import useAuthReducer from '../stores/AuthReducer';
 
 function PrivateRoutes() {
   const { isAuthenticated } = useAuthReducer((state) => state);
-  return isAuthenticated ? <Outlet /> : <Navigate to="/" />;
+  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
 }
 
 export default PrivateRoutes;

@@ -6,6 +6,7 @@ import Page404 from '../components/common/Page404';
 import PublicRoutes from './PublicRoutes';
 import PrivateRoutes from './PrivateRoutes';
 import Layout from '../components/common/Layout';
+import Login from '../pages/Auth';
 
 const router = createBrowserRouter([
   {
@@ -21,7 +22,7 @@ const router = createBrowserRouter([
           },
           {
             path: '/login',
-            element: <h1>Login page</h1>,
+            element: <Login />,
           },
         ],
       },
