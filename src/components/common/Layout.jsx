@@ -1,10 +1,11 @@
 import React from 'react';
+import { Outlet } from 'react-router-dom';
 
 import '../../assets/scss/dashboard.scss';
 
 import Sidebar from './Sidebar';
 import Header from './Header';
-import { Outlet } from 'react-router-dom';
+import Footer from './Footer';
 
 const Layout = () => {
   return (
@@ -12,7 +13,10 @@ const Layout = () => {
       <Sidebar />
       <div className="right-pannel">
         <Header />
-        <Outlet />
+        <div style={{ height: '100%' }}>
+          <Outlet />
+        </div>
+        <Footer />
       </div>
     </div>
   );
