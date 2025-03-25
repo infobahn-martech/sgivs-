@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../../assets/css/header.css';
+import '../../assets/scss/header.scss';
 
 import NotificationIcon from '../../assets/images/notifications.svg';
 import UserIcon from '../../assets/images/user.png';
