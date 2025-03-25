@@ -8,6 +8,11 @@ import Page404 from '../components/common/Page404';
 import Layout from '../components/common/Layout';
 import Login from '../pages/Auth';
 import InventoryManagement from '../pages/InventoryManagement/Loader';
+import RentalManagement from '../pages/RentalManagement/Loader';
+import EZPassBilling from '../pages/EZPassBilling/Loader';
+import Messages from '../pages/Messages/Loader';
+import Settings from '../pages/Settings/Loader';
+import Dashboard from '../pages/Dashboard/Loader';
 
 const router = createBrowserRouter([
   {
@@ -31,7 +36,7 @@ const router = createBrowserRouter([
             children: [
               {
                 path: '/',
-                element: <h1>Dashboard page</h1>,
+                element: <Dashboard />,
               },
               {
                 element: <h1>User Management</h1>,
@@ -42,19 +47,19 @@ const router = createBrowserRouter([
                 path: '/inventory-management',
               },
               {
-                element: <h1>Rental Management'</h1>,
+                element: <RentalManagement  />,
                 path: '/rental-management',
               },
               {
-                element: <h1>EZ pass billing'</h1>,
+                element: <EZPassBilling />,
                 path: '/ez-pass-billing',
               },
               {
-                element: <h1>Messages'</h1>,
+                element: <Messages />,
                 path: '/messages',
               },
               {
-                element: <h1>Settings'</h1>,
+                element: <Settings />,
                 path: '/settings',
               },
             ],
