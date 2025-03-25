@@ -14,6 +14,7 @@ import Messages from '../pages/Messages/Loader';
 import Settings from '../pages/Settings/Loader';
 import Dashboard from '../pages/Dashboard/Loader';
 import UserManagement from '../pages/userManagement';
+import ForgotPassword from '../pages/ForgotPassword/Loader';
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
           {
             path: '/login',
             element: <Login />,
+          },
+          {
+            path: '/forgot-password',
+            element: <ForgotPassword />,
           },
         ],
       },

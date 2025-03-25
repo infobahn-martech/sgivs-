@@ -8,16 +8,14 @@ import '../../assets/scss/footer.scss';
 import '../../assets/scss/signin.scss';
 import logo from '../../assets/images/logo.svg';
 import useAuthReducer from '../../stores/AuthReducer';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const loginSchema = z.object({
   email: z.string().nonempty('Email is required').email('Invalid email format'),
-  password: z.string().nonempty('Password is required'),
 });
 
-const Login = () => {
-  const navigate = useNavigate();
-  const { login, isLoginLoading } = useAuthReducer((state) => state);
+const ForgotPassword = () => {
+  const { forgotPassword, isForgotLoading } = useAuthReducer((state) => state);
 
   const {
     register,
@@ -28,7 +26,7 @@ const Login = () => {
   });
 
   const onSubmit = (data) => {
-    login({ ...data, platform: 'web' });
+    forgotPassword(data);
   };
 
   return (
@@ -71,32 +69,9 @@ const Login = () => {
                   </span>
                 )}
               </div>
-              <div class="form-group">
-                <label class="form-label" for="">
-                  Password
-                </label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter your password"
-                  {...register('password')}
-                />
-                {errors.password && (
-                  <span htmlFor="" className="error">
-                    {errors.password.message}
-                  </span>
-                )}
-              </div>
-              <Link
-                class="link"
-                onClick={() => {
-                  navigate('/forgot-password');
-                }}
-              >
-                Forgot Password?
-              </Link>
+              <Link class="link">Forgot Password?</Link>
               <button class="btn btn-rounded" onClick={handleSubmit(onSubmit)}>
-                {isLoginLoading ? 'Loading...' : 'Login'}
+                {isForgotLoading ? 'Loading...' : 'Submit'}
               </button>
             </div>
           </div>
@@ -109,4 +84,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ForgotPassword;
