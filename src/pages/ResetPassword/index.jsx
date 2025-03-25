@@ -8,15 +8,13 @@ import '../../assets/scss/footer.scss';
 import '../../assets/scss/signin.scss';
 import logo from '../../assets/images/logo.svg';
 import useAuthReducer from '../../stores/AuthReducer';
-import { Link, useNavigate } from 'react-router-dom';
 
 const loginSchema = z.object({
   email: z.string().nonempty('Email is required').email('Invalid email format'),
   password: z.string().nonempty('Password is required'),
 });
 
-const Login = () => {
-  const navigate = useNavigate();
+const Reset = () => {
   const { login, isLoginLoading } = useAuthReducer((state) => state);
 
   const {
@@ -87,16 +85,11 @@ const Login = () => {
                   </span>
                 )}
               </div>
-              <Link
-                class="link"
-                onClick={() => {
-                  navigate('/forgot-password');
-                }}
-              >
+              <a href="#" class="link">
                 Forgot Password?
-              </Link>
+              </a>
               <button class="btn btn-rounded" onClick={handleSubmit(onSubmit)}>
-                {isLoginLoading ? 'Loading...' : 'Login'}
+                {isLoginLoading ? 'Loading...' : 'Reset'}
               </button>
             </div>
           </div>
@@ -109,4 +102,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Reset;
