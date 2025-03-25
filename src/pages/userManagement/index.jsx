@@ -3,6 +3,7 @@ import CustomTable from '../../components/common/CustomTable';
 import deleteIcon from '../../assets/images/delete.svg';
 import closseIcon from '../../assets/images/close.svg';
 import '../../assets/scss/usermanagement.scss';
+import CommonHeader from '../../components/common/CommonHeader';
 
 const dummyData = [
   {
@@ -123,18 +124,21 @@ const UserManagement = () => {
   ];
 
   return (
-    <CustomTable
-      pagination={pagination}
-      count={dummyData?.length}
-      columns={columns}
-      data={data}
-      isLoading={false}
-      onPageChange={(currentPage) =>
-        setPagination({ ...pagination, currentPage })
-      }
-      setLimit={(limit) => setPagination({ ...pagination, limit })}
-      onSortChange={handleSortChange}
-    />
+    <>
+      <CommonHeader />
+      <CustomTable
+        pagination={pagination}
+        count={dummyData?.length}
+        columns={columns}
+        data={data}
+        isLoading={false}
+        onPageChange={(currentPage) =>
+          setPagination({ ...pagination, currentPage })
+        }
+        setLimit={(limit) => setPagination({ ...pagination, limit })}
+        onSortChange={handleSortChange}
+      />
+    </>
   );
 };
 
