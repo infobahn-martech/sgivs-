@@ -15,6 +15,9 @@ const useAuthReducer = create((set) => ({
   successMessage: '',
   profileData: null,
   profileEditLoader: null,
+  usersData: null,
+  isUsersLoading: false,
+
   login: async ({ email, password, platform }) => {
     try {
       set({ isLoginLoading: true });
@@ -80,6 +83,22 @@ const useAuthReducer = create((set) => ({
       error(err?.response?.data?.message ?? err.message);
       removeItem('accessToken');
       removeItem('refreshToken');
+    }
+  },
+
+  getAllUsers: async () => {
+    try {
+      set({ isUsersLoading: true });
+      const { data } = await authService.getUserProfile();
+      const usersData = data.data;
+      set({ usersData, isUsersLoading: false });
+    } catch (err) {
+      const { error } = useAlertReducer.getState();
+      set({
+        isUsersLoading: false,
+        isAuthenticated: false,
+      });
+      error(err?.response?.data?.message ?? err.message);
     }
   },
 
