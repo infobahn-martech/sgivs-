@@ -7,9 +7,7 @@ export const headerConfig = [
     path: '/inventory-management',
   },
   {
-    title: 'Rental Management',
-    icon: 'img/rental.svg',
-    path: '/rental-management',
+    title: 'Rental Management', icon: userImage, path: '/rental-management'
   },
   {
     title: 'EZ Pass Billing',
