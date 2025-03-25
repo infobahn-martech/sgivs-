@@ -6,7 +6,7 @@ import PrivateRoutes from './PrivateRoutes';
 
 import Page404 from '../components/common/Page404';
 import Layout from '../components/common/Layout';
-import Login from '../pages/Auth';
+import Login from '../pages/Auth/Loader';
 import InventoryManagement from '../pages/InventoryManagement/Loader';
 
 const router = createBrowserRouter([
@@ -38,7 +38,7 @@ const router = createBrowserRouter([
                 path: '/user-management',
               },
               {
-                element:<InventoryManagement />,
+                element: <InventoryManagement />,
                 path: '/inventory-management',
               },
               {
