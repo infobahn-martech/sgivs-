@@ -1,11 +1,34 @@
 import React from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import '../../assets/scss/common.scss';
 import '../../assets/scss/forms.scss';
 import '../../assets/scss/footer.scss';
 import '../../assets/scss/signin.scss';
 import logo from '../../assets/images/logo.svg';
+import useAuthReducer from '../../stores/AuthReducer';
+
+const loginSchema = z.object({
+  email: z.string().nonempty('Email is required').email('Invalid email format'),
+  password: z.string().nonempty('Password is required'),
+});
 
 const Login = () => {
+  const login = useAuthReducer((state) => state.login);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(loginSchema),
+  });
+
+  const onSubmit = (data) => {
+    login({ ...data, platform: 'web' });
+  };
+
   return (
     <div class="user-log-wrp">
       <div class="inner-wrp">
@@ -37,10 +60,14 @@ const Login = () => {
                 <input
                   type="text"
                   class="form-control"
-                  placeholder=""
-                  value="Example@email.com"
+                  placeholder="Enter your email"
+                  {...register('email')}
                 />
-                <span class="error">please check fields</span>
+                {errors.email && (
+                  <span htmlFor="" className="error">
+                    {errors.email.message}
+                  </span>
+                )}
               </div>
               <div class="form-group">
                 <label class="form-label" for="">
@@ -49,15 +76,21 @@ const Login = () => {
                 <input
                   type="text"
                   class="form-control"
-                  placeholder=""
-                  value="Example@email.com"
+                  placeholder="Enter your password"
+                  {...register('password')}
                 />
-                <span class="error">please check fields</span>
+                {errors.password && (
+                  <span htmlFor="" className="error">
+                    {errors.password.message}
+                  </span>
+                )}
               </div>
               <a href="#" class="link">
                 Forgot Password?
               </a>
-              <button class="btn btn-rounded">Login</button>
+              <button class="btn btn-rounded" onClick={handleSubmit(onSubmit)}>
+                Login
+              </button>
             </div>
           </div>
           <footer class="ftr">
