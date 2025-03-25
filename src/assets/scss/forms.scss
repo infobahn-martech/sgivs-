@@ -1,0 +1,90 @@
+@import "partials";
+.form-label{
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: #8B8B8D;
+    @media ($sm-1679){
+        font-size: 15px;
+    }
+    @media ($sm-1199){
+        font-size: 14px;
+    }
+    @media ($sm-767){
+        font-size: 13px;
+    }
+}
+.form-control{
+    border: 1px solid #E9F0FF;
+    color: #1E1E1E;
+    font-size: 16px;
+    height: 48px;
+    padding: 16px;
+    border-radius: 12px;
+    background-color: #F7FBFF;
+    @media ($sm-1679){
+        height: 44px;
+        font-size: 15px;
+    }
+    @media ($sm-1441){
+        height: 42px;
+        font-size: 14px;
+    }
+    @media ($sm-1199){
+        height: 40px;
+    }
+    @media ($sm-767){
+        height: 40px;
+        font-size: 13px;
+    }
+    &::placeholder{
+        color: #8897AD;
+    }
+}
+.form-group{
+    margin-bottom: 24px;
+    position: relative;
+    @media ($sm-1679){
+        margin-bottom: 20px;
+    }
+}
+.error{
+    color: red;
+    font-size: 14px;
+    position: absolute;
+}
+
+.btn-rounded{
+    border-radius: 30px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(90deg, #2CA0DA 0%, #3982A7 100%);
+    color: #fff;
+    font-size: 20px;
+    transition: all 0.5s linear;
+    @media ($sm-1679){
+        height: 48px;
+        font-size: 18px;
+    }
+    @media ($sm-1441){
+        height: 42px;
+        font-size: 17px;
+    }
+    @media ($sm-1199){
+        height: 40px;
+        font-size: 16px;
+    }
+    @media ($sm-991){
+        height: 40px;
+        font-size: 15px;
+    }
+    @media ($sm-767){
+        height: 38px;
+        font-size: 14px;
+    }
+    &:hover{
+        background: linear-gradient(90deg, #3982A7 0%, #2CA0DA 100%);
+        color: #fff;
+    }
+}

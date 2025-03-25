@@ -1,0 +1,32 @@
+@import "partials";
+.ftr{
+    font-size: 16px;
+    color: #8B8B8D;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    @media ($sm-1679){
+        font-size: 15px;
+    }
+    @media ($sm-1441){
+        font-size: 14px;
+    }
+    @media (max-width:650px){
+        margin-top: 20px;
+    }
+    .copy{
+        margin-bottom: 0;
+    }
+}
+
+.dashboard-outer{
+    .right-pannel{
+        .ftr{
+            padding-bottom: 25px;
+            @media ($sm-579){
+                margin-top: 10px;
+            }
+        }
+    }
+}
