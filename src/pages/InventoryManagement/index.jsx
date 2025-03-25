@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
-import { Tooltip as ReactTooltip, Tooltip } from 'react-tooltip';
+import { Tooltip } from 'react-tooltip';
 
 import deleteIcon from '../../assets/images/delete.svg';
-import closseIcon from '../../assets/images/close.svg';
+import viewIcon from '../../assets/images/eye.svg';
+import showHideIcon from '../../assets/images/eye-close.svg';
+import editIcon from '../../assets/images/edit.svg';
+import downloadIcon from '../../assets/images/download.svg';
+
+import '../../assets/scss/usermanagement.scss';
 
 import userImage from '../../assets/images/user-1.png';
 
 import CommonHeader from '../../components/common/CommonHeader';
 import CustomTable from '../../components/common/CustomTable';
-import { Link } from 'react-router-dom';
 
 const dummyData = [
   {
-    id: 4,
+    id: 1232,
     itemId: '#FAS44SS',
     itemName: 'Riding Jacket',
     quantity: '06',
@@ -22,7 +26,7 @@ const dummyData = [
     image: userImage,
   },
   {
-    id: 3,
+    id: 12312,
     itemId: '#AS44SS',
     itemName: 'Riding Gloves',
     quantity: '10',
@@ -32,7 +36,7 @@ const dummyData = [
     image: userImage,
   },
   {
-    id: 2,
+    id: 123123,
     itemId: '#RAS33VS',
     itemName: 'Helmet',
     quantity: '06',
@@ -42,7 +46,7 @@ const dummyData = [
     image: userImage,
   },
   {
-    id: 1,
+    id: 1231232,
     itemId: '#FAS44SS',
     itemName: 'Riding Jacket',
     quantity: '06',
@@ -145,7 +149,7 @@ const InventoryManagement = () => {
             data-tooltip-id={`tooltip-${row.id || rowIndex}`} // Unique ID for the tooltip
             data-tooltip-content={'View'} // Tooltip content
           >
-            <img src={deleteIcon} alt="view" />
+            <img src={viewIcon} alt="view" />
           </span>
           <span
             data-tooltip-id={`tooltip-${row.id || rowIndex}`} // Unique ID for the tooltip
@@ -154,13 +158,13 @@ const InventoryManagement = () => {
               setModalConfig({ data: row, type: 'edit' });
             }}
           >
-            <img src={closseIcon} alt="Edit" />
+            <img src={editIcon} alt="Edit" />
           </span>
           <span
             data-tooltip-id={`tooltip-${row.id || rowIndex}`} // Unique ID for the tooltip
             data-tooltip-content={'Hide/Show'} // Tooltip content
           >
-            <img src={closseIcon} alt="Hide/Show" />
+            <img src={showHideIcon} alt="Hide/Show" />
           </span>
           <span
             data-tooltip-id={`tooltip-${row.id || rowIndex}`} // Unique ID for the tooltip
@@ -172,7 +176,7 @@ const InventoryManagement = () => {
             data-tooltip-id={`tooltip-${row.id || rowIndex}`} // Unique ID for the tooltip
             data-tooltip-content={'Download Barcode'} // Tooltip content
           >
-            <img src={closseIcon} alt="Download" />
+            <img src={downloadIcon} alt="Download" />
           </span>
         </>
       ),
@@ -184,7 +188,6 @@ const InventoryManagement = () => {
     console.log('Processed Excel data:', data);
   };
 
-
   return (
     <>
       <CommonHeader
@@ -193,10 +196,10 @@ const InventoryManagement = () => {
         onExcelUpload={handleExcelUpload}
         addButton={{
           name: 'Add Item',
-          type:'link',
-          path:'/inventory-management/add',
+          type: 'link',
+          path: '/inventory-management/add',
           action: () => {
-            setModalConfig({ data: null, type: 'add', });
+            setModalConfig({ data: null, type: 'add' });
           },
         }}
       />

@@ -1,8 +1,11 @@
 import React, { useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import * as XLSX from 'xlsx';
+
 import { headerConfig } from '../../config/config';
 import filterImg from '../../assets/images/sort.svg';
+import exportIcon from '../../assets/images/export-excel.svg';
+import upload from '../../assets/images/upload-excel.svg';
 
 const CommonHeader = ({
   exportExcel,
@@ -97,26 +100,30 @@ const CommonHeader = ({
             <span>Filter</span>
             <img src={filterImg} alt="" className="img" />
           </div>
-
-          {exportExcel && (
-            <button className="btn btn-primary">Export As Excel</button>
-          )}
-
-          {uploadExcel && (
-            <>
-              <input
-                type="file"
-                ref={fileInputRef}
-                accept=".xlsx, .xls"
-                style={{ display: 'none' }}
-                onChange={handleFileUpload}
-              />
-              <button className="btn btn-primary" onClick={triggerFileInput}>
-                Upload Excel
+          <div class="button-wrap">
+            {exportExcel && (
+              <button class="btn export">
+                <img src={exportIcon} alt="" class="img" />{' '}
+                <span>Export as Excel</span>
               </button>
-            </>
-          )}
-          {addButton && renderAddButton(addButton.type)}
+            )}
+
+            {uploadExcel && (
+              <>
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  accept=".xlsx, .xls"
+                  style={{ display: 'none' }}
+                  onChange={handleFileUpload}
+                />
+                <button class="btn upload" onClick={triggerFileInput}>
+                  <img src={upload} alt="" class="img" />{' '}
+                  <span>Upload Excel</span>
+                </button>
+              </>
+            )}
+          </div>
         </div>
       )}
     </div>
