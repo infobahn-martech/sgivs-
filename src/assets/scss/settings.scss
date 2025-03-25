@@ -1,0 +1,173 @@
+@import "partials";
+.right-pannel {
+    position: relative;
+    padding-bottom: 50px;
+}
+.settings-wrap {
+    width: 1120px;
+    margin: 0 auto;
+    padding: 100px 0;
+    @media ($sm-1679) {
+        padding: 50px 0;
+        width: 960px;
+    }
+    .head-wrap {
+        padding: 0 0 35px 0;
+        gap: 15px;
+        display: flex;
+        align-items: center;
+        @media ($sm-1679) {
+            gap: 10px;
+            padding-bottom: 20px;
+        }
+        .img {
+            width: 47px;
+            @media ($sm-1679) {
+                width: 40px;
+            }
+        }
+        span {
+            font-size: 18px;
+            color: #0096df;
+            font-weight: 500;
+            @media ($sm-1679) {
+                font-size: 16px;
+            }
+        }
+    }
+    .settings-content-wrap {
+        border: 1px solid #b3c6dd;
+        border-radius: 20px;
+        .fields-outer-wrap {
+            padding: 55px 150px;
+            @media ($sm-1679) {
+                padding: 45px 60px;
+            }
+        }
+        .form-group {
+            margin: 0;
+            padding-bottom: 60px;
+            @media ($sm-1679) {
+                padding-bottom: 30px;
+            }
+            .form-label {
+                font-size: 19px;
+                color: #0c1421;
+                font-weight: 400;
+                margin: 0;
+                padding: 0 0 25px 0;
+                @media ($sm-1679) {
+                    font-size: 16px;
+                    padding-bottom: 15px;
+                }
+            }
+            .hour-days-wrap {
+                display: flex;
+                justify-content: space-between;
+                gap: 35px;
+                .form-control {
+                    color: #8897ad;
+                    outline: 0;
+                    box-shadow: none;
+                    background-color: #f7fbff !important;
+                    padding: 5px 15px;
+                    flex: 1;
+                    &::placeholder {
+                        opacity: 1;
+                        color: #8897ad;
+                    }
+                }
+                .select {
+                    border-radius: 12px;
+                    background-color: #f7fbff;
+                    border: 1px solid #e9f0ff;
+                    color: #8897ad;
+                    width: 104px;
+                    outline: 0;
+                    box-shadow: none;
+                    padding: 0 10px;
+                    font-size: 16px;
+                    height: 48px;
+                    @media ($sm-1679) {
+                        height: 44px;
+                        font-size: 14px;
+                    }
+                }
+            }
+            .form-switch {
+                height: 48px;
+                background-color: #f7fbff;
+                border: 1px solid #e9f0ff;
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                padding: 5px 15px 5px 55px;
+                @media ($sm-1679) {
+                    height: 44px;
+                }
+                .form-check-input {
+                    outline: 0;
+                    box-shadow: none;
+                }
+                .form-check-label {
+                    font-size: 16px;
+                    color: #8897ad;
+                    padding: 0 0 0 10px;
+                    @media ($sm-1679) {
+                        font-size: 14px;
+                    }
+                }
+            }
+            &.form-group-last {
+                padding-bottom: 0;
+            }
+        }
+    }
+    .settng-footer-wrap {
+        padding: 30px 150px;
+        border-top: 1px solid #d8e1ed;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        .btn {
+            width: 50%;
+            border-radius: 30px;
+            height: 52px;
+            background: #dfe6ea;
+            text-align: center;
+            cursor: pointer;
+            font-size: 20px;
+            color: #517c90;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            @media ($sm-1679) {
+                height: 48px;
+                font-size: 18px;
+            }
+            &.clear {
+            }
+            &.submit {
+                background: #2ca0da;
+                color: #fff;
+            }
+        }
+    }
+}
+.footer-wrap {
+    position: absolute;
+    inset: 0;
+    text-align: center;
+    inset: auto 0 10px 0;
+    .des {
+        font-size: 16px;
+        color: #000000;
+        font-weight: 300;
+        margin: 0;
+        padding: 0;
+        @media ($sm-1679) {
+            font-size: 14px;
+        }
+    }
+}
