@@ -4,8 +4,11 @@ import '../../assets/scss/header.scss';
 
 import NotificationIcon from '../../assets/images/notifications.svg';
 import UserIcon from '../../assets/images/user.png';
+import useAuthReducer from '../../stores/AuthReducer';
 
 const Header = () => {
+  const { doLogout } = useAuthReducer((state) => state);
+
   return (
     <div className="header">
       <div className="header-inner">
@@ -45,9 +48,9 @@ const Header = () => {
                 </a>
               </li>
               <li>
-                <a className="dropdown-item" href="#">
+                <button className="dropdown-item" onClick={() => doLogout()}>
                   Logout
-                </a>
+                </button>
               </li>
             </ul>
           </div>
