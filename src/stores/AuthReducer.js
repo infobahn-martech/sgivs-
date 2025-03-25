@@ -3,13 +3,13 @@ import authService from '../services/authService';
 import { getAuthData, removeItem, setItem } from '../helpers/localStorage';
 import useAlertReducer from './AlertReducer';
 
-const { isLoggedIn } = getAuthData();
+const { isAuthenticated } = getAuthData();
 
 const useAuthReducer = create((set) => ({
   authData: null,
   userProfile: null,
   isLoginLoading: false,
-  isLoggedIn,
+  isAuthenticated,
   errorMessage: '',
   successMessage: '',
   profileData: null,
@@ -25,7 +25,7 @@ const useAuthReducer = create((set) => ({
       const authData = data?.user;
       setItem('accessToken', data?.token?.accessToken);
       setItem('refreshToken', data?.token?.refreshToken);
-      set({ authData, isLoggedIn: true, isLoginLoading: false });
+      set({ authData, isAuthenticated: true, isLoginLoading: false });
     } catch (err) {
       const { error } = useAlertReducer.getState();
       set({
@@ -40,7 +40,7 @@ const useAuthReducer = create((set) => ({
       userProfile: null,
       authData: null,
       successMessage: '',
-      isLoggedIn: false,
+      isAuthenticated: false,
       errorMessage: null,
     });
     removeItem('accessToken');
@@ -56,7 +56,7 @@ const useAuthReducer = create((set) => ({
       const { error } = useAlertReducer.getState();
       set({
         isProfileFetchLoading: false,
-        isLoggedIn: false,
+        isAuthenticated: false,
       });
       error(err?.response?.data?.message ?? err.message);
       removeItem('accessToken');
