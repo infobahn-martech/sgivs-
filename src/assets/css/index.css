@@ -24,7 +24,12 @@ body {
 a {
   text-decoration: none;
 }
-.right-pannel {
+.dashboard-outer {
+  display: flex;
+  align-items: stretch;
+  background-color: #2CA0DA;
+}
+.dashboard-outer .right-pannel {
   flex: 1;
   width: calc(100% - 323px);
   margin-left: 328px;
@@ -33,6 +38,221 @@ a {
   border-radius: 40px 0 0 40px;
   display: flex;
   flex-direction: column;
+}
+@media (max-width: 1679px) {
+  .dashboard-outer .right-pannel {
+    width: calc(100% - 280px);
+    margin-left: 280px;
+  }
+}
+@media (max-width: 1481px) {
+  .dashboard-outer .right-pannel {
+    width: calc(100% - 200px);
+    margin-left: 200px;
+  }
+}
+@media (max-width: 1199px) {
+  .dashboard-outer .right-pannel {
+    width: calc(100% - 180px);
+    margin-left: 180px;
+  }
+}
+@media (max-width: 579px) {
+  .dashboard-outer .right-pannel {
+    width: calc(100% - 50px);
+    margin-left: 50px;
+  }
+}
+.dashboard-outer .right-pannel .cta-info-blk {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 26px 25px 0;
+}
+@media (max-width: 1679px) {
+  .dashboard-outer .right-pannel .cta-info-blk {
+    padding: 20px 25px 0;
+  }
+}
+.dashboard-outer .right-pannel .cta-info-blk .board-info {
+  display: flex;
+  align-items: center;
+}
+.dashboard-outer .right-pannel .cta-info-blk .board-info .icon-blk {
+  width: 47px;
+  height: 47px;
+  border-radius: 47px;
+  background-color: #EEECEE;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+}
+.dashboard-outer .right-pannel .cta-info-blk .board-info .txt {
+  font-weight: 500;
+  color: #0096DF;
+  font-size: 23px;
+}
+.dashboard-outer .right-pannel .content-wrp-outer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  padding: 25px;
+  max-height: calc(100vh - 70px);
+  overflow-y: auto;
+  flex-grow: 1;
+}
+.dashboard-outer .right-pannel .content-wrp-outer .panel-wrp {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 753px;
+  width: 100%;
+  margin-right: 26px;
+}
+@media (max-width: 1679px) {
+  .dashboard-outer .right-pannel .content-wrp-outer .panel-wrp {
+    max-width: 48%;
+    margin-right: 18px;
+  }
+}
+.dashboard-outer .right-pannel .content-wrp-outer .panel-wrp .greetings-blk {
+  border-radius: 24px;
+  background: url("../img/greetings-dashboard.png") no-repeat;
+  background-position: right bottom;
+  background-size: cover;
+  height: 282px;
+  flex-grow: 1;
+  padding: 0 47px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #fff;
+}
+.dashboard-outer .right-pannel .content-wrp-outer .panel-wrp .greetings-blk .greetings-title {
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 23px;
+}
+@media (max-width: 1679px) {
+  .dashboard-outer .right-pannel .content-wrp-outer .panel-wrp .greetings-blk .greetings-title {
+    font-size: 26px;
+    margin-bottom: 20px;
+  }
+}
+@media (max-width: 1441px) {
+  .dashboard-outer .right-pannel .content-wrp-outer .panel-wrp .greetings-blk .greetings-title {
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+}
+@media (max-width: 1199px) {
+  .dashboard-outer .right-pannel .content-wrp-outer .panel-wrp .greetings-blk .greetings-title {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+}
+.dashboard-outer .right-pannel .content-wrp-outer .panel-wrp .greetings-blk .greetings-txt {
+  font-size: 18px;
+  font-weight: 300;
+}
+@media (max-width: 1679px) {
+  .dashboard-outer .right-pannel .content-wrp-outer .panel-wrp .greetings-blk .greetings-txt {
+    font-size: 17px;
+  }
+}
+@media (max-width: 1441px) {
+  .dashboard-outer .right-pannel .content-wrp-outer .panel-wrp .greetings-blk .greetings-txt {
+    font-size: 16px;
+  }
+}
+@media (max-width: 1199px) {
+  .dashboard-outer .right-pannel .content-wrp-outer .panel-wrp .greetings-blk .greetings-txt {
+    font-size: 15px;
+  }
+}
+@media (max-width: 991px) {
+  .dashboard-outer .right-pannel .content-wrp-outer .panel-wrp .greetings-blk .greetings-txt {
+    font-size: 14px;
+  }
+}
+.dashboard-outer .right-pannel .content-wrp-outer .count-blks-wrp {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1;
+  height: 282px;
+}
+.dashboard-outer .right-pannel .content-wrp-outer .count-blks-wrp .count-blk {
+  width: calc(50% - 14px);
+  border-radius: 17px;
+  background-color: #D8E1ED;
+  padding: 30px 26px;
+  display: flex;
+  margin: 7px;
+  height: 133px;
+  align-items: center;
+}
+@media (max-width: 1679px) {
+  .dashboard-outer .right-pannel .content-wrp-outer .count-blks-wrp .count-blk {
+    padding: 24px;
+  }
+}
+.dashboard-outer .right-pannel .content-wrp-outer .count-blks-wrp .count-blk .icon-blk {
+  width: 74px;
+  height: 74px;
+  border-radius: 74px;
+  background-color: #fff;
+  margin-right: 26px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media (max-width: 1679px) {
+  .dashboard-outer .right-pannel .content-wrp-outer .count-blks-wrp .count-blk .icon-blk {
+    width: 64px;
+    height: 64px;
+    margin-right: 20px;
+  }
+}
+@media (max-width: 1441px) {
+  .dashboard-outer .right-pannel .content-wrp-outer .count-blks-wrp .count-blk .icon-blk {
+    width: 54px;
+    height: 54px;
+  }
+}
+@media (max-width: 1199px) {
+  .dashboard-outer .right-pannel .content-wrp-outer .count-blks-wrp .count-blk .icon-blk {
+    width: 44px;
+    height: 44px;
+  }
+}
+.dashboard-outer .right-pannel .content-wrp-outer .count-blks-wrp .count-blk .icon-blk img {
+  max-width: 31px;
+}
+.dashboard-outer .right-pannel .content-wrp-outer .count-blks-wrp .count-blk .dtl-blk {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  color: #0096DF;
+  justify-content: center;
+}
+.dashboard-outer .right-pannel .content-wrp-outer .count-blks-wrp .count-blk .dtl-blk .info {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+@media (max-width: 1679px) {
+  .dashboard-outer .right-pannel .content-wrp-outer .count-blks-wrp .count-blk .dtl-blk .info {
+    font-size: 16px;
+  }
+}
+.dashboard-outer .right-pannel .content-wrp-outer .count-blks-wrp .count-blk .dtl-blk .count {
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 1;
+}
+@media (max-width: 1679px) {
+  .dashboard-outer .right-pannel .content-wrp-outer .count-blks-wrp .count-blk .dtl-blk .count {
+    font-size: 24px;
+  }
 }
 .title {
   font-size: 36px;
