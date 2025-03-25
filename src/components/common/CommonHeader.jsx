@@ -47,7 +47,6 @@ const CommonHeader = ({
           }
         } catch (error) {
           console.error('Error processing Excel file:', error);
-          
         }
       };
       reader.readAsBinaryString(file);

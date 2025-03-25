@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { Tooltip } from 'react-tooltip';
 
 import '../../assets/scss/sidebar.scss';
 
@@ -52,18 +53,34 @@ const Sidebar = () => {
       </div>
       <nav className="nav">
         {sideMenu.map((menu, index) => (
-          <Link
-            to={menu.path}
-            className={`nav-link ${
-              location.pathname === menu.path ? 'active' : ''
-            }`}
-            key={index}
-          >
-            <span className="icon">
-              <img src={menu.icon} alt="menu-icon" />
+          <Fragment key={index}>
+            <Tooltip
+              id={`tooltip-${index}`}
+              place="right"
+              style={{
+                backgroundColor: '#2ca0da',
+                maxWidth: 500,
+                marginBottom: '10px',
+              }}
+            />
+            <span
+              className="icon"
+              data-tooltip-content={menu.name}
+              data-tooltip-hidden={!collapsed}
+              data-tooltip-id={`tooltip-${index}`}
+            >
+              <Link
+                to={menu.path}
+                className={`nav-link ${
+                  location.pathname === menu.path ? 'active' : ''
+                }`}
+                key={index}
+              >
+                <img src={menu.icon} alt="menu-icon" />
+                <span className="txt p-2">{menu.name}</span>
+              </Link>
             </span>
-            <span className="txt">{menu.name}</span>
-          </Link>
+          </Fragment>
         ))}
       </nav>
     </div>
