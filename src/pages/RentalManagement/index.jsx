@@ -5,6 +5,7 @@ import '../../assets/scss/usermanagement.scss';
 
 import deleteIcon from '../../assets/images/delete.svg';
 import closseIcon from '../../assets/images/close.svg';
+import dummyImg from '../../assets/images/avatar.png';
 
 const dummyData = [
   {
@@ -77,7 +78,7 @@ const RentalManagement = () => {
         cell: (row) => (
           <>
             <figure>
-              <img src={row.profilePic} alt="" className="img" />
+              <img src={dummyImg} alt="" className="img" />
             </figure>
             <span>{row.firstName}</span>
           </>
