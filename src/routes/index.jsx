@@ -13,6 +13,7 @@ import EZPassBilling from '../pages/EZPassBilling/Loader';
 import Messages from '../pages/Messages/Loader';
 import Settings from '../pages/Settings/Loader';
 import Dashboard from '../pages/Dashboard/Loader';
+import UserManagement from '../pages/userManagement';
 
 const router = createBrowserRouter([
   {
@@ -39,15 +40,11 @@ const router = createBrowserRouter([
                 element: <Dashboard />,
               },
               {
-                element: <h1>User Management</h1>,
-                path: '/user-management',
-              },
-              {
                 element: <InventoryManagement />,
                 path: '/inventory-management',
               },
               {
-                element: <RentalManagement  />,
+                element: <RentalManagement />,
                 path: '/rental-management',
               },
               {
@@ -61,6 +58,10 @@ const router = createBrowserRouter([
               {
                 element: <Settings />,
                 path: '/settings',
+              },
+              {
+                path: '/user-management',
+                element: <UserManagement />,
               },
             ],
           },
