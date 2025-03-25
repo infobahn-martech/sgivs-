@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
+import '../../assets/css/sidebar.css';
+
 import MainLogo from '../../assets/images/sidenav-logo.svg';
 import DashboardIcon from '../../assets/images/dashboard-1.svg';
 import UserManageIcon from '../../assets/images/dashboard-2.svg';
