@@ -94,11 +94,7 @@ export default function CustomTable({
                     <li className="link-dots"> ... </li>
                   )}
                   <li onClick={() => onPageNumberClick(num)}>
-                    <a
-                      className={`page-link ${
-                        num === currentPage ? 'active' : ''
-                      }`}
-                    >
+                    <a className={` ${num === currentPage ? 'active' : ''}`}>
                       {num}
                     </a>
                   </li>
