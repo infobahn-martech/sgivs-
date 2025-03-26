@@ -9,6 +9,13 @@ const forgotPassword = (email) =>
 const restPassword = (token, password, confirmPassword) =>
   Gateway.post('auth/reset-password', { token, password, confirmPassword });
 
+const changePassword = (currentPassword, password, confirmPassword) =>
+  Gateway.patch('user/change-password', {
+    currentPassword,
+    password,
+    confirmPassword,
+  });
+
 const getUserProfile = (details) =>
   Gateway.get(`user/profile?details=${details}`);
 
@@ -30,4 +37,5 @@ export default {
   getAllUsers,
   restPassword,
   usersActionService,
+  changePassword,
 };
