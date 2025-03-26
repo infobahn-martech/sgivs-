@@ -1,0 +1,134 @@
+import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import '../../assets/scss/common.scss';
+import '../../assets/scss/forms.scss';
+import '../../assets/scss/footer.scss';
+import '../../assets/scss/signin.scss';
+import logo from '../../assets/images/logo.svg';
+import useAuthReducer from '../../stores/AuthReducer';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+
+const resetPasswordSchema = z
+  .object({
+    password: z
+      .string()
+      .nonempty('Password is required')
+      .min(8, 'Password must be at least 8 characters'),
+    confirmPassword: z.string().nonempty('Confirm Password is required'),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+  });
+
+const ResetPassword = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { restPassword, isResetPassLoading } = useAuthReducer((state) => state);
+
+  const [token, setToken] = useState('');
+
+  useEffect(() => {
+    const urlToken = location.pathname.split('/reset-password/')[1]; // Extract token
+    if (urlToken) {
+      setToken(urlToken);
+    }
+  }, [location]);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(resetPasswordSchema),
+  });
+
+  const onSubmit = (data) => {
+    if (token) {
+      restPassword({ ...data, token });
+    } else {
+      console.error('Token not found');
+    }
+  };
+
+  return (
+    <div class="user-log-wrp">
+      <div class="inner-wrp">
+        <div class="panel-left">
+          <div class="logo-wrp">
+            <img src={logo} alt="" />
+          </div>
+          <div class="quotes-wrp">
+            Today is a new day. It's your day. You shape it.
+            <br /> Sign in to start managing your projects
+          </div>
+        </div>
+        <div class="panel-right">
+          <div class="form-wrp-center login">
+            <div class="top-blk">
+              <div class="title">
+                Welcome Back <span class="icon">👋</span>
+              </div>
+              <div class="desc">
+                Today is a new day. It's your day. You shape it. Sign in to
+                start managing your projects.
+              </div>
+            </div>
+            <div class="form-sec-wrp">
+              <div class="form-group">
+                <label class="form-label" for="">
+                  Email
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter password"
+                  {...register('password')}
+                />
+                {errors.password && (
+                  <span htmlFor="" className="error">
+                    {errors.password.message}
+                  </span>
+                )}
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="">
+                  Password
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Confirm password"
+                  {...register('password')}
+                />
+                {errors.confirmPassword && (
+                  <span htmlFor="" className="error">
+                    {errors.confirmPassword.message}
+                  </span>
+                )}
+              </div>
+              <Link
+                class="link"
+                onClick={() => {
+                  navigate('/login');
+                }}
+              >
+                Back to login
+              </Link>
+              <button class="btn btn-rounded" onClick={handleSubmit(onSubmit)}>
+                {isResetPassLoading ? 'Loading...' : 'Submit'}
+              </button>
+            </div>
+          </div>
+          <footer class="ftr">
+            <p class="copy">© 2023 ALL RIGHTS RESERVED</p>
+          </footer>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ResetPassword;

@@ -30,6 +30,8 @@ const useAuthReducer = create((set) => ({
       setItem('accessToken', data?.token?.accessToken);
       setItem('refreshToken', data?.token?.refreshToken);
       set({ authData, isAuthenticated: true, isLoginLoading: false });
+      const { success } = useAlertReducer.getState();
+      success(data?.response?.data?.message ?? data?.message);
     } catch (err) {
       const { error } = useAlertReducer.getState();
       set({
@@ -43,12 +45,39 @@ const useAuthReducer = create((set) => ({
     try {
       set({ isForgotLoading: true });
       const { data } = await authService.forgotPassword(email);
-
+      const { success } = useAlertReducer.getState();
+      success(data?.response?.data?.message ?? data?.message);
       set({
         successMessage: data?.response?.data?.message ?? data?.message,
         isForgotLoading: false,
       });
     } catch (err) {
+      const { error } = useAlertReducer.getState();
+      set({
+        errorMessage: err?.response?.data?.message ?? err?.message,
+        isForgotLoading: false,
+      });
+      error(err?.response?.data?.message ?? err.message);
+    }
+  },
+  restPassword: async ({ token, password, confirmPassword }) => {
+    debugger;
+    try {
+      set({ isForgotLoading: true });
+      const { data } = await authService.restPassword(
+        token,
+        password,
+        confirmPassword
+      );
+      debugger;
+      const { success } = useAlertReducer.getState();
+      success(data?.response?.data?.message ?? data?.message);
+      set({
+        successMessage: data?.response?.data?.message ?? data?.message,
+        isForgotLoading: false,
+      });
+    } catch (err) {
+      debugger;
       const { error } = useAlertReducer.getState();
       set({
         errorMessage: err?.response?.data?.message ?? err?.message,
