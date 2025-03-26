@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
-import Select from 'react-select';
+import { useParams } from 'react-router-dom';
 
 import '../../assets/scss/add-inventory.scss';
 
@@ -11,7 +11,25 @@ import Close_LGIcon from '../../assets/images/Close_LG.svg';
 import Upload__icon from '../../assets/images/Upload__icon.svg';
 import CustomSelect from '../../components/common/CustomSelect';
 
+import useInventoryStore from '../../stores/InventoryReducer';
+import useAlertReducer from '../../stores/AlertReducer';
+
 const InventoryForm = () => {
+  const {
+    createInventoryItem,
+    isLoading,
+    generateBarcode,
+    barcodeId,
+    getItemById,
+    updateInventoryItem,
+    inventoryItem,
+    clearItemById,
+  } = useInventoryStore((state) => state);
+  console.log(' inventoryItem', inventoryItem);
+  const { error, clear } = useAlertReducer((state) => state);
+
+  const params = useParams();
+
   const {
     register,
     control,
@@ -21,27 +39,50 @@ const InventoryForm = () => {
     formState: { errors },
     clearErrors,
     setError,
-    getValues
+    reset,
   } = useForm({
     defaultValues: {
       addPart: false,
-      parts: []
-    }
+      parts: [],
+    },
   });
-
-  console.log((getValues('quantity')))
 
   // Use useFieldArray for dynamic parts management
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "parts"
+    name: 'parts',
   });
 
-  console.log(' errors', errors);
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [newPart, setNewPart] = useState('');
   const [customError, setCustomError] = useState({});
+  useEffect(() => {
+    if (params?.id) getItemById(params.id);
+    clearItemById();
+  }, [params]);
+
+  useEffect(() => {
+    clear();
+    if (barcodeId) setValue('itemId', barcodeId);
+  }, [barcodeId]);
+
+  useEffect(() => {
+    if (inventoryItem) {
+      setValue('itemId', inventoryItem.itemId);
+      setValue('itemName', inventoryItem.itemName);
+      setValue('quantity', '1');
+      setUploadedFiles(inventoryItem.images || []);
+    } else {
+      reset();
+      setUploadedFiles([])
+    }
+  }, [inventoryItem, setValue]);
+
+  // watchers
   const isAddPartChecked = watch('addPart', false);
+  const itemId = watch('itemId', null);
+  const quantity = watch('quantity', null);
+  console.log(' quantity', quantity);
 
   useEffect(() => {
     if (!isAddPartChecked) {
@@ -73,10 +114,10 @@ const InventoryForm = () => {
         return;
       }
 
-      if (newFiles.length >= 5) {
+      if (newFiles.length >= 10) {
         setError('fileUpload', {
           type: 'manual',
-          message: 'You can upload a maximum of 5 images.',
+          message: 'You can upload a maximum of 10 images.',
         });
         return;
       }
@@ -109,7 +150,8 @@ const InventoryForm = () => {
     if (newPart.trim()) {
       // Check for duplicate parts (case-insensitive)
       const isDuplicate = fields.some(
-        field => field.value.trim().toLowerCase() === newPart.trim().toLowerCase()
+        (field) =>
+          field.value.trim().toLowerCase() === newPart.trim().toLowerCase()
       );
 
       if (isDuplicate) {
@@ -133,20 +175,57 @@ const InventoryForm = () => {
 
   // Handle Form Submission
   const onSubmit = (data) => {
-    console.log(' data', data);
-    // If addPart is not checked, ensure parts array is empty
-    if (data.addPart && (!data.parts || data.parts.length === 0)) {
+    if (data.hasParts && (!data.parts || data.parts.length === 0)) {
       setError('parts', {
         type: 'manual',
-        message: 'At least one part is required when "Add Part" is checked'
+        message: 'At least one part is required when "Has Parts" is checked',
       });
       return;
     }
 
-    console.log('Form Data:', data);
-    console.log('Uploaded File:', uploadedFiles);
-    console.log('Parts:', data.parts);
-    alert('Form Submitted Successfully!');
+    if (uploadedFiles.length === 0)
+      setError('fileUpload', {
+        type: 'manual',
+        message: 'At least one image is required.',
+      });
+    if (!barcodeId && itemId) {
+      error('Please generate barcode before submit!');
+      return;
+    }
+    console.log('data', data);
+
+    // Validate parts when hasParts is true
+
+    // Create FormData
+    const formData = new FormData();
+
+    // Append basic form fields
+    formData.append('itemName', data.itemName);
+    formData.append('quantity', data.quantity.toString());
+    formData.append('itemId', data.itemId); // Static for now
+    formData.append('hasParts', data.addPart.toString());
+
+    // Append parts if added
+    if (data.addPart && data.parts) {
+      data.parts.forEach((part, index) => {
+        console.log(' part', part);
+        formData.append(`parts[${index}]`, part.value);
+      });
+    }
+
+    // Append files
+    if (uploadedFiles.length) {
+      console.log(' uploadedFiles', uploadedFiles);
+      uploadedFiles.forEach((file, index) => {
+        formData.append(`images[${index}]`, file);
+      });
+    }
+    if (params.id) updateInventoryItem(formData, params.id);
+    else createInventoryItem(formData);
+  };
+
+  const handleBarcode = () => {
+    generateBarcode(itemId || null);
   };
 
   return (
@@ -190,11 +269,13 @@ const InventoryForm = () => {
                 <CustomSelect
                   className="form-select form-control"
                   options={quantityOptions}
-                  onChange={(selectedOption) => {
-                    setValue('quantity', selectedOption);
-                    clearErrors('quantity')
+                  value={quantity}
+                  onChange={() => {
+                    // console.log(' selectedOption', selectedOption);
+                    // setValue('quantity', selectedOption);
+                    clearErrors('quantity');
                   }}
-                  name='quantity'
+                  name="quantity"
                   {...register('quantity', {
                     required: 'Quantity is required',
                   })}
@@ -234,7 +315,7 @@ const InventoryForm = () => {
                   onChange={handleFileSelect}
                 />
                 <span className="btm-txt">
-                  Supported formats: JPEG, PNG (Max: 5 images)
+                  Supported formats: JPEG, PNG (Max: 10 images)
                 </span>
               </div>
               {errors.fileUpload && (
@@ -246,7 +327,16 @@ const InventoryForm = () => {
                 <div className="uploaded-files d-flex">
                   {uploadedFiles.map((file, index) => (
                     <div key={index} className="file-preview">
-                      <span className="pt-2">{file.name}</span>
+                      <img
+                        className="pt-2 pro-pic"
+                        src={
+                          file instanceof File
+                            ? URL.createObjectURL(file)
+                            : file
+                        }
+                        alt={`Uploaded file ${index + 1}`}
+                        style={{ width: 75 }}
+                      />
                       <button
                         type="button"
                         className="btn close-btn"
@@ -265,18 +355,30 @@ const InventoryForm = () => {
             <div className="row mb-3">
               <div className="col-md-6">
                 <label htmlFor="itemId" className="form-label">
-                  Item Id
+                  Item ID
                 </label>
                 <input
                   type="text"
-                  className="form-control cursor-not"
+                  className={`${
+                    (barcodeId || params.id ? 'cursor-not' : '') +
+                    ' form-control'
+                  }`}
                   id="itemId"
-                  value="#54885658"
-                  readOnly
+                  readOnly={!!barcodeId || params?.id}
+                  {...register('itemId', {
+                    required: 'Item ID is required',
+                  })}
                 />
+                {errors.itemId && (
+                  <p className="error">{errors.itemId.message}</p>
+                )}
               </div>
-              <div className="col-md-4 d-flex align-items-end">
-                <button type="button" className="btn generate-btn">
+              <div className="col-md-4 d-flex align-items-end pt-2">
+                <button
+                  type="button"
+                  className="btn generate-btn"
+                  onClick={handleBarcode}
+                >
                   <span className="bar-code">
                     <img src={barcodeIcon} alt="bar-code" />
                   </span>
@@ -353,9 +455,9 @@ const InventoryForm = () => {
                     </button>
                   </div>
                 ))}
-                 {errors.parts && (
-            <p className="error">{errors.parts.message}</p>
-          )}
+                {errors.parts && (
+                  <p className="error">{errors.parts.message}</p>
+                )}
               </div>
             )}
           </div>
@@ -370,7 +472,7 @@ const InventoryForm = () => {
             Clear
           </button>
           <button type="submit" className="btn btn-submit">
-            Submit
+            {params.id ? 'Update' : 'Submit'}
           </button>
         </div>
       </div>
