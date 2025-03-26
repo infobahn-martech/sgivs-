@@ -26,8 +26,8 @@ const UserManagement = () => {
     search: '',
     sortOrder: 'DESC',
     sortBy: 'firstName',
-    isCardAdded: 1,
-    status: 1,
+    // isCardAdded: 1,
+    // status: 1,
     fromDate: null,
     toDate: null,
   });
@@ -49,9 +49,9 @@ const UserManagement = () => {
     setParams((prevParams) => ({
       ...prevParams,
       search: searchValue,
-      page: 1, // Reset to first page on new search
+      page: 1,
     }));
-  }, 500); // 500ms debounce delay
+  }, 500);
 
   const handleSortChange = (selector) => {
     setParams((prevParams) => ({
@@ -138,7 +138,7 @@ const UserManagement = () => {
       name: 'Credit Card Available',
       selector: 'isCreditCardAvailable',
       titleClasses: 'tw6',
-      cell: (row) => <span>{formatBoolean(row.isCreditCardAvailable)}</span>,
+      cell: (row) => <span>{formatBoolean(row?.isCreditCardAvailable)}</span>,
     },
     {
       name: 'Action',
@@ -160,12 +160,16 @@ const UserManagement = () => {
           <img
             src={closseIcon}
             alt={row?.status === 2 ? 'Blocked' : 'Active'}
-            data-tooltip-id={`status-tooltip-${row.id}`}
+            data-tooltip-id={`status-tooltip-${row?.id}`}
             data-tooltip-content={row?.status === 2 ? 'Blocked' : 'Active'}
             className="cursor-pointer"
             onClick={() => handleStatusClick(row)}
           />
-          <Tooltip id={`status-tooltip-${row.id}`} place="top" effect="solid" />
+          <Tooltip
+            id={`status-tooltip-${row?.id}`}
+            place="top"
+            effect="solid"
+          />
         </>
       ),
     },
@@ -176,7 +180,7 @@ const UserManagement = () => {
       <CommonHeader onSearch={debouncedSearch} />
       <CustomTable
         pagination={{ currentPage: params.page, limit: params.limit }}
-        count={usersData?.pagination?.totalPages}
+        count={usersData?.pagination?.totalRecords}
         columns={columns}
         data={usersData?.data || []}
         isLoading={isUsersLoading}

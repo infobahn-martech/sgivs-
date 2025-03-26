@@ -205,8 +205,8 @@ export default function CustomTable({
           </table>
         </div>
       </div>
-      {(totalPages() > 1 && renderPagination()) || null}
-      {/* {count > 10 &&renderPagination()} */}
+      {/* {(totalPages() > 1 && renderPagination()) || null} */}
+      {count > 10 && renderPagination()}
     </>
   );
 }
