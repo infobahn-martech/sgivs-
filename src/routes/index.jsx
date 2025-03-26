@@ -17,6 +17,7 @@ import UserManagement from '../pages/userManagement';
 import ForgotPassword from '../pages/ForgotPassword/Loader';
 import InventoryForm from '../pages/InventoryManagement/InventoryForm';
 import Profile from '../pages/Profile/Loader';
+import ResetPassword from '../pages/ResetPassword/Loader';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
           {
             path: '/forgot-password',
             element: <ForgotPassword />,
+          },
+          {
+            path: '/rest-password/:id',
+            element: <ResetPassword />,
           },
         ],
       },
