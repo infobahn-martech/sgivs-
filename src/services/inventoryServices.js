@@ -18,7 +18,8 @@ const updateInventoryItems = (formData, itemId) =>
 
 const getItemByIdService = (itemId) => Gateway.get(`v1/inventory/${itemId}`);
 
-const getBarcode = (itemId) => Gateway.get(`v1/inventory/barcode/${itemId}`);
+const getBarcode = (itemId) =>
+  Gateway.post(`v1/inventory/barcode`, { itemId });
 
 export {
   getInventoryListService,
