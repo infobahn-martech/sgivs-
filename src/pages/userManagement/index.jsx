@@ -192,9 +192,7 @@ const UserManagement = () => {
           isLoading={userActionLoading}
           showModal={deleteModalOpen}
           closeModal={() => setDeleteModalOpen(false)}
-          message={`Are you sure you want to ${
-            selectedUser.status === 2 ? 'Activate' : 'Block'
-          } ${selectedUser?.firstName} ?`}
+          message={`Are you sure you want to delete ${selectedUser?.firstName} ?`}
           onCancel={() => setDeleteModalOpen(false)}
           onSubmit={handleDeleUser}
         />
