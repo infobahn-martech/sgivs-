@@ -126,6 +126,7 @@ const UserManagement = () => {
       name: 'Phone',
       selector: 'phone',
       titleClasses: 'tw4',
+      cell: (row) => `${row?.countryCode || ''} ${row?.phone || ''}`.trim(),
     },
     {
       name: 'Joined Date',
