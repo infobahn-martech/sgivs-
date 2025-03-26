@@ -6,6 +6,9 @@ const doLoginValidate = (email, password, platform) =>
 const forgotPassword = (email) =>
   Gateway.post('v1/auth/forgot-password', { email });
 
+const restPassword = (token, password, confirmPassword) =>
+  Gateway.post('v1/auth/reset-password', { token, password, confirmPassword });
+
 const getUserProfile = () => Gateway.get('user/profile');
 
 const getAllUsers = () => Gateway.get('v1/user');
@@ -21,4 +24,5 @@ export default {
   getUserProfile,
   editUserProfile,
   getAllUsers,
+  restPassword,
 };
