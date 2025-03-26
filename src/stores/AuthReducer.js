@@ -137,8 +137,12 @@ const useAuthReducer = create((set) => ({
     console.log('ssss', userId, action);
     try {
       set({ userActionLoading: true });
-      await authService.usersActionService(userId, action);
+      const response = await authService.usersActionService(userId, action);
       set({ userActionLoading: false });
+      const { success } = useAlertReducer.getState();
+      const message =
+        response?.data?.message ?? 'Action completed successfully';
+      success(message);
       callBack && callBack();
     } catch (err) {
       const { error } = useAlertReducer.getState();
