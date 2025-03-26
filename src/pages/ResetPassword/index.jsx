@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -8,25 +8,53 @@ import '../../assets/scss/footer.scss';
 import '../../assets/scss/signin.scss';
 import logo from '../../assets/images/logo.svg';
 import useAuthReducer from '../../stores/AuthReducer';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-const loginSchema = z.object({
-  email: z.string().nonempty('Email is required').email('Invalid email format'),
-  password: z.string().nonempty('Password is required'),
-});
+const resetPasswordSchema = z
+  .object({
+    password: z
+      .string()
+      .nonempty('Password is required')
+      .min(8, 'Password must be at least 8 characters')
+      .regex(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
+        'Password must include at least one uppercase letter, one lowercase letter, one number, and one special character'
+      ),
+    confirmPassword: z.string().nonempty('Confirm Password is required'),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+  });
 
-const Reset = () => {
-  const { login, isLoginLoading } = useAuthReducer((state) => state);
+const ResetPassword = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { restPassword, isResetPassLoading } = useAuthReducer((state) => state);
+
+  const [token, setToken] = useState('');
+
+  useEffect(() => {
+    const urlToken = location.pathname.split('/reset-password/')[1]; // Extract token
+    if (urlToken) {
+      setToken(urlToken);
+    }
+  }, [location]);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(resetPasswordSchema),
   });
 
   const onSubmit = (data) => {
-    login({ ...data, platform: 'web' });
+    if (token) {
+      restPassword({ ...data, token });
+    } else {
+      console.error('Token not found');
+    }
   };
 
   return (
@@ -55,28 +83,12 @@ const Reset = () => {
             <div class="form-sec-wrp">
               <div class="form-group">
                 <label class="form-label" for="">
-                  Email
-                </label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter your email"
-                  {...register('email')}
-                />
-                {errors.email && (
-                  <span htmlFor="" className="error">
-                    {errors.email.message}
-                  </span>
-                )}
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="">
                   Password
                 </label>
                 <input
-                  type="text"
+                  type="password"
                   class="form-control"
-                  placeholder="Enter your password"
+                  placeholder="Enter password"
                   {...register('password')}
                 />
                 {errors.password && (
@@ -85,11 +97,32 @@ const Reset = () => {
                   </span>
                 )}
               </div>
-              <a href="#" class="link">
-                Forgot Password?
-              </a>
+              <div class="form-group">
+                <label class="form-label" for="">
+                  Confirm Password
+                </label>
+                <input
+                  type="password"
+                  class="form-control"
+                  placeholder="Confirm password"
+                  {...register('confirmPassword')}
+                />
+                {errors.confirmPassword && (
+                  <span htmlFor="" className="error">
+                    {errors.confirmPassword.message}
+                  </span>
+                )}
+              </div>
+              <Link
+                class="link"
+                onClick={() => {
+                  navigate('/login');
+                }}
+              >
+                Back to login
+              </Link>
               <button class="btn btn-rounded" onClick={handleSubmit(onSubmit)}>
-                {isLoginLoading ? 'Loading...' : 'Reset'}
+                {isResetPassLoading ? 'Loading...' : 'Submit'}
               </button>
             </div>
           </div>
@@ -102,4 +135,4 @@ const Reset = () => {
   );
 };
 
-export default Reset;
+export default ResetPassword;
