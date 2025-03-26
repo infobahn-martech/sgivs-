@@ -1,5 +1,6 @@
 import userImage from '../assets/images/user.svg';
 import InventoryIcon from '../assets/images/inventory-count.svg';
+import RentalManageIcon from '../assets/images/dashboard-4.svg';
 
 export const headerConfig = [
   {
@@ -8,7 +9,9 @@ export const headerConfig = [
     path: '/inventory-management',
   },
   {
-    title: 'Rental Management', icon: userImage, path: '/rental-management'
+    title: 'Rental Management',
+    icon: RentalManageIcon,
+    path: '/rental-management',
   },
   {
     title: 'EZ Pass Billing',
