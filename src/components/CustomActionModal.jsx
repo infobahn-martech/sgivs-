@@ -13,13 +13,13 @@ const CustomActionModal = ({
   const renderBody = () => (
     <>
       <div className="modal-body">
-        <span className="btm-txt">{message}</span>
+        <div className="prompt-title">{message}</div>
       </div>
-      <div className="modal-footer bottom-btn-sec">
+      <div className="modal-footer">
         <button type="button" className="btn btn-cancel" onClick={onCancel}>
           Cancel
         </button>
-        <button type="submit" className="btn btn-submit" onClick={onSubmit}>
+        <button type="submit" className="btn btn-primary" onClick={onSubmit}>
           {isLoading ? (
             <Spinner
               size="sm"
@@ -40,8 +40,8 @@ const CustomActionModal = ({
   return (
     <CustomModal
       closeButton
-      className="modal fade upload-modal"
-      dialgName="modal-dialog modal-dialog-centered"
+      className="modal fade prompt-modal"
+      dialgName="modal-dialog modal-dialog-centered modal-dialog-scrollable"
       show={showModal}
       closeModal={() => closeModal(false)}
       body={renderBody()}
