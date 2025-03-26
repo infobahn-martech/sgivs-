@@ -1,76 +1,43 @@
-import React, { useState } from 'react'
-import CommonHeader from '../../components/common/CommonHeader'
+import React, { useEffect, useState } from 'react'
+import useRentalReducer from '../../stores/RentalReducer';
 import CustomTable from '../../components/common/CustomTable'
+import CommonHeader from '../../components/common/CommonHeader'
+
 import '../../assets/scss/usermanagement.scss';
 
-import noteIcon from '../../assets/images/note.svg';
 import penIcon from '../../assets/images/pen.svg';
+import noteIcon from '../../assets/images/note.svg';
 import alertIcon from '../../assets/images/alert.svg';
 import dummyImg from '../../assets/images/avatar.png';
 
-const dummyData = [
-  {
-    id: 1,
-    firstName: 'Chris',
-    lastName: 'Stephanie Nicol',
-    email: 'k.p.allen@aol.com',
-    phone: '(602) 309-9604',
-    joinedDate: 'Mar 3, 2025',
-    creditCardAvailable: 'Yes',
-    profilePic: 'img/user-1.png',
-  },
-  {
-    id: 2,
-    firstName: 'Dennis Callis',
-    lastName: 'Kenneth Allen',
-    email: 'rodger913@aol.com',
-    phone: '(602) 309-9604',
-    joinedDate: 'Mar 3, 2025',
-    creditCardAvailable: 'Yes',
-    profilePic: 'img/user-2.png',
-  },
-  {
-    id: 3,
-    firstName: 'Jerry Helfer',
-    lastName: 'Daniel Hamilton',
-    email: 'Daniel_hamilton@aol.com',
-    phone: '(602) 309-9604',
-    joinedDate: 'Mar 3, 2025',
-    creditCardAvailable: 'No',
-    profilePic: 'img/user-3.png',
-  },
-  {
-    id: 4,
-    firstName: 'Kimberly',
-    lastName: 'Kurt Bates',
-    email: 'k.p.allen@aol.com',
-    phone: '(602) 309-9604',
-    joinedDate: 'Mar 3, 2025',
-    creditCardAvailable: 'Yes',
-    profilePic: 'img/user-4.png',
-  },
-];
 const RentalManagement = () => {
-    const [pagination, setPagination] = useState({ currentPage: 1, limit: 10 });
-    const [modalConfig, setModalConfig] = useState({ type: null, data: null });
+  const {
+    getAllRentals,
+    rentalData,
+  } = useRentalReducer((state) => state);
 
-    const [data, setData] = useState(dummyData);
-  
-    const handleSortChange = (selector) => {
-      setData((prevData) => {
-        const isAscending =
-          prevData[0][selector] > prevData[prevData.length - 1][selector];
-        return [...prevData].sort((a, b) =>
-          isAscending
-            ? a[selector] > b[selector]
-              ? -1
-              : 1
-            : a[selector] < b[selector]
-            ? -1
-            : 1
-        );
+    const [params, setParams] = useState({
+        page: 1,
+        limit: 10,
+        search: '',
+        sortOrder: 'DESC',
+        sortBy: 'joinedDate',
+        isCardAdded: 1,
+        status: 1,
+        fromDate: null,
+        toDate: null,
       });
+      const [pagination, setPagination] = useState({ currentPage: 1, limit: 10 });
+      const [modalConfig, setModalConfig] = useState({ type: null, data: null });
+
+   const handleGetAllUsers = () => {
+    getAllRentals(params);
     };
+  
+    useEffect(() => {
+      handleGetAllUsers();
+    }, [params]);
+  
     const columns = [
       {
         name: 'User',
@@ -88,33 +55,33 @@ const RentalManagement = () => {
       },
       {
         name: 'Item Id',
-        selector: 'lastName',
+        selector: 'id',
         titleClasses: 'tw2',
       },
       {
         name: 'Item Name',
-        selector: 'email',
+        selector: 'inventory.itemName',
         titleClasses: 'tw3',
       },
       {
         name: 'Borrowed On',
-        selector: 'phone',
+        selector: 'borrowedAt',
         titleClasses: 'tw4',
       },
       {
         name: 'Deadline',
-        selector: 'joinedDate',
+        selector: 'dueDate',
         titleClasses: 'tw5',
         sort: true,
       },
       {
         name: 'Returned date and time',
-        selector: 'creditCardAvailable',
+        selector: 'returnedAt',
         titleClasses: 'tw6',
       },
       {
         name: 'Rental Status',
-        selector: 'creditCardAvailable',
+        selector: 'status',
         titleClasses: 'tw6',
         cell: (row) => (
           <>
@@ -158,15 +125,15 @@ const RentalManagement = () => {
     />
       <CustomTable
         pagination={pagination}
-        count={dummyData?.length}
+        count={rentalData?.pagination?.totalPages}
         columns={columns}
-        data={data}
+        data={rentalData?.data || []}
         isLoading={false}
         onPageChange={(currentPage) =>
           setPagination({ ...pagination, currentPage })
         }
         setLimit={(limit) => setPagination({ ...pagination, limit })}
-        onSortChange={handleSortChange}
+        // onSortChange={handleSortChange}
       />
     </>
   )
