@@ -35,11 +35,15 @@ const Header = () => {
               id="userDropdown"
               data-bs-toggle="dropdown"
             >
-              <span className="user-image">
-                {' '}
-                <img src={UserIcon} alt="user" />
-              </span>
-              <span className="name">William James</span>
+              <div className="usr-dtl">
+                <div className="user-image">
+                  <img src={UserIcon} alt="user" />
+                </div>
+                <div className="usr-info">
+                  <span className="name">William James</span>
+                  <span className="role">Administrator</span>
+                </div>
+              </div>
             </a>
             <ul
               className="dropdown-menu dropdown-menu-end"
