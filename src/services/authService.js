@@ -8,7 +8,7 @@ const forgotPassword = (email) =>
 
 const getUserProfile = () => Gateway.get('user/profile');
 
-const getAllUsers = () => Gateway.get('user');
+const getAllUsers = () => Gateway.get('v1/user');
 
 const editUserProfile = (value) =>
   Gateway.patch('user/profile', value, {

@@ -89,8 +89,8 @@ const useAuthReducer = create((set) => ({
   getAllUsers: async () => {
     try {
       set({ isUsersLoading: true });
-      const { data } = await authService.getUserProfile();
-      const usersData = data.data;
+      const { data } = await authService.getAllUsers();
+      const usersData = data.users;
       set({ usersData, isUsersLoading: false });
     } catch (err) {
       const { error } = useAlertReducer.getState();

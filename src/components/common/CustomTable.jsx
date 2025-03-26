@@ -148,7 +148,7 @@ export default function CustomTable({
               </thead>
             )}
             {showLoader && <CustomLoader columns={columns} limit={limit} />}
-            {isLoading && !data?.length ? (
+            {isLoading ? (
               <CustomLoader columns={columns} limit={limit} />
             ) : !data?.length ? (
               <NoTableData columns={columns} />
@@ -178,7 +178,7 @@ export default function CustomTable({
                                   }}
                                 >
                                   <div className={` ${contentClass}`}>
-                                    {cell(row, index)}
+                                    {cell(row, index) || '-'}
                                   </div>
                                 </td>
                               ) : (
@@ -192,7 +192,7 @@ export default function CustomTable({
                                     onView(row);
                                   }}
                                 >
-                                  {row[selector]}
+                                  {row[selector] || '-'}
                                 </td>
                               )
                           )}
