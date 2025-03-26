@@ -38,6 +38,6 @@ export const getFirstLetters = (name) => {
   return '';
 };
 
-export const formatDate = (date) => moment(date)?.format('MM/DD/YY');
+export const formatDate = (date) => moment(date)?.format('MMM D, YYYY');
 
 export const formatBoolean = (value) => (value ? 'Yes' : 'No');

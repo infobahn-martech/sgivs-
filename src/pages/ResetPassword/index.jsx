@@ -30,7 +30,9 @@ const resetPasswordSchema = z
 const ResetPassword = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { restPassword, isResetPassLoading } = useAuthReducer((state) => state);
+  const { restPassword, isResetPassLoading, successMessage } = useAuthReducer(
+    (state) => state
+  );
 
   const [token, setToken] = useState('');
 
@@ -40,6 +42,10 @@ const ResetPassword = () => {
       setToken(urlToken);
     }
   }, [location]);
+
+  useEffect(() => {
+    if (successMessage === 'Password reset successfully') navigate('/login');
+  }, [successMessage]);
 
   const {
     register,
