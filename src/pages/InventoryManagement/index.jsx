@@ -16,6 +16,7 @@ import CustomTable from '../../components/common/CustomTable';
 import useInventoryStore from '../../stores/InventoryReducer';
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
+import { downloadContent } from '../../helpers/utils';
 
 const dummyData = [
   {
@@ -184,6 +185,18 @@ const InventoryManagement = () => {
           <span
             data-tooltip-id={`tooltip-${row.id || rowIndex}`} // Unique ID for the tooltip
             data-tooltip-content={'Download Barcode'} // Tooltip content
+            onClick={() => {
+              const barcodeUrl =
+                'https://spericorn-development-bucket.s3.us-east-2.amazonaws.com/inventory/string.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAYQP66NNME4MHNDPT%2F20250326%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250326T134913Z&X-Amz-Expires=3600&X-Amz-Signature=8ba99e0b4bed6b5071e849b322076f8bf1ba515c0a4fe8f8d2ad7891c89668c5&X-Amz-SignedHeaders=host&response-content-type=&x-amz-checksum-mode=ENABLED&x-id=GetObject';
+              // const a = document.createElement('a');
+              // a.href = barcodeUrl;
+              // a.download = `${row.itemId}.png`;
+              // document.body.appendChild(a);
+              // a.click();
+              // document.body.removeChild(a);
+              // window.URL.revokeObjectURL(barcodeUrl);
+              downloadContent(barcodeUrl, `${row.itemId}.png`);
+            }}
           >
             <img src={downloadIcon} alt="Download" />
           </span>
