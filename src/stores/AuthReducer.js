@@ -17,6 +17,7 @@ const useAuthReducer = create((set) => ({
   profileEditLoader: null,
   usersData: null,
   isUsersLoading: false,
+  userActionLoading: false,
 
   login: async ({ email, password, platform }) => {
     try {
@@ -125,7 +126,24 @@ const useAuthReducer = create((set) => ({
       const { error } = useAlertReducer.getState();
       set({
         isUsersLoading: false,
-        isAuthenticated: false,
+      });
+      error(err?.response?.data?.message ?? err.message);
+    }
+  },
+
+  // patch user status active blocked delete
+  usersAction: async (userId, action, callBack) => {
+    console.log('callBack', callBack);
+    console.log('ssss', userId, action);
+    try {
+      set({ userActionLoading: true });
+      await authService.usersActionService(userId, action);
+      set({ userActionLoading: false });
+      callBack && callBack();
+    } catch (err) {
+      const { error } = useAlertReducer.getState();
+      set({
+        userActionLoading: false,
       });
       error(err?.response?.data?.message ?? err.message);
     }

@@ -8,11 +8,16 @@ import '../../assets/scss/usermanagement.scss';
 import CommonHeader from '../../components/common/CommonHeader';
 import useAuthReducer from '../../stores/AuthReducer';
 import { formatBoolean, formatDate } from '../../config/config';
+import CustomActionModal from '../../components/CustomActionModal';
 
 const UserManagement = () => {
-  const { getAllUsers, usersData, isUsersLoading } = useAuthReducer(
-    (state) => state
-  );
+  const {
+    getAllUsers,
+    usersData,
+    isUsersLoading,
+    usersAction,
+    userActionLoading,
+  } = useAuthReducer((state) => state);
 
   const [params, setParams] = useState({
     page: 1,
@@ -26,8 +31,17 @@ const UserManagement = () => {
     toDate: null,
   });
 
-  useEffect(() => {
+  const [statusModalOpen, setstatusModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+
+  const [selectedUser, setSelectedUser] = useState(null);
+
+  const handleGetAllUsers = () => {
     getAllUsers(params);
+  };
+
+  useEffect(() => {
+    handleGetAllUsers();
   }, [params]);
 
   const handleSortChange = (selector) => {
@@ -45,6 +59,35 @@ const UserManagement = () => {
   const handleLimitChange = (limit) => {
     setParams((prevParams) => ({ ...prevParams, limit }));
   };
+
+  const handleStatusClick = (row) => {
+    setSelectedUser(row);
+    setstatusModalOpen(true);
+  };
+
+  const handleStatusUpdate = () => {
+    if (selectedUser) {
+      const newStatus = selectedUser.status === 2 ? 1 : 2;
+      usersAction(selectedUser.id, newStatus, () => {
+        setstatusModalOpen(false);
+        handleGetAllUsers();
+      });
+    }
+  };
+
+  const handleDeleteClick = (row) => {
+    setSelectedUser(row);
+    setDeleteModalOpen(true);
+  };
+  const handleDeleUser = () => {
+    if (selectedUser) {
+      usersAction(selectedUser.id, 3, () => {
+        setstatusModalOpen(false);
+        handleGetAllUsers();
+      });
+    }
+  };
+
   const columns = [
     {
       name: 'First Name',
@@ -93,7 +136,7 @@ const UserManagement = () => {
       selector: 'action',
       titleClasses: 'tw7',
       contentClass: 'action-wrap',
-      cell: () => (
+      cell: (row) => (
         <>
           <img
             src={deleteIcon}
@@ -101,17 +144,19 @@ const UserManagement = () => {
             data-tooltip-id="delete-tooltip"
             data-tooltip-content="Delete"
             className="cursor-pointer"
+            onClick={() => handleDeleteClick(row)}
           />
           <Tooltip id="delete-tooltip" place="top" effect="solid" />
 
           <img
             src={closseIcon}
-            alt="Close"
-            data-tooltip-id="close-tooltip"
-            data-tooltip-content="Disable"
+            alt={row?.status === 2 ? 'Blocked' : 'Active'}
+            data-tooltip-id={`status-tooltip-${row.id}`}
+            data-tooltip-content={row?.status === 2 ? 'Blocked' : 'Active'}
             className="cursor-pointer"
+            onClick={() => handleStatusClick(row)}
           />
-          <Tooltip id="close-tooltip" place="top" effect="solid" />
+          <Tooltip id={`status-tooltip-${row.id}`} place="top" effect="solid" />
         </>
       ),
     },
@@ -130,6 +175,30 @@ const UserManagement = () => {
         setLimit={handleLimitChange}
         onSortChange={handleSortChange}
       />
+      {statusModalOpen && selectedUser && (
+        <CustomActionModal
+          isLoading={userActionLoading}
+          showModal={statusModalOpen}
+          closeModal={() => setstatusModalOpen(false)}
+          message={`Are you sure you want to ${
+            selectedUser.status === 2 ? 'Activate' : 'Block'
+          } ${selectedUser?.firstName} ?`}
+          onCancel={() => setstatusModalOpen(false)}
+          onSubmit={handleStatusUpdate}
+        />
+      )}
+      {deleteModalOpen && selectedUser && (
+        <CustomActionModal
+          isLoading={userActionLoading}
+          showModal={deleteModalOpen}
+          closeModal={() => setDeleteModalOpen(false)}
+          message={`Are you sure you want to ${
+            selectedUser.status === 2 ? 'Activate' : 'Block'
+          } ${selectedUser?.firstName} ?`}
+          onCancel={() => setDeleteModalOpen(false)}
+          onSubmit={handleDeleUser}
+        />
+      )}
     </>
   );
 };
