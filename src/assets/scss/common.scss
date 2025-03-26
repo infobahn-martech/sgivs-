@@ -29,5 +29,44 @@ a{
         font-size: 26px;
     }
 }
-
+.table-wrap{
+    border: 1px solid #4B164C1A;
+    border-radius: 20px 20px 0 0;
+}
+.table{
+    tr{
+        &:last-child{
+            td{
+                border: none;
+            }
+        }
+    }
+    th{
+        background-color: #D7EAF3;
+        font-size: 16px;
+        font-weight: 500;
+        color: $primaryColor;
+        padding: 32px 18px;
+        &:first-child{
+            border-top-left-radius: 20px;
+            padding-left: 36px;
+        }
+        &:last-child{
+            border-top-right-radius: 20px;
+            padding-right: 36px;
+        }
+    }
+    td{
+        color: #216A8D;
+        font-size: 16px;
+        padding: 32px 18px;
+        border-bottom: 1px solid #4B164C1A;
+        &:first-child{
+            padding-left: 36px;
+        }
+        &:last-child{
+            padding-right: 36px;
+        }
+    }
+}
 

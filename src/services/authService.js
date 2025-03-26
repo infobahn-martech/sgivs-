@@ -13,6 +13,9 @@ const getUserProfile = () => Gateway.get('user/profile');
 
 const getAllUsers = () => Gateway.get('v1/user');
 
+const usersActionService = (userId, action) =>
+  Gateway.patch(`v1/user/${userId}/status/${action}`);
+
 const editUserProfile = (value) =>
   Gateway.patch('user/profile', value, {
     headers: { 'Content-Type': 'Multipart/formdata' },
@@ -25,4 +28,5 @@ export default {
   editUserProfile,
   getAllUsers,
   restPassword,
+  usersActionService,
 };
