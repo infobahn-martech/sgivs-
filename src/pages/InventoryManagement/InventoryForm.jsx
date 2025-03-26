@@ -24,6 +24,7 @@ const InventoryForm = () => {
     updateInventoryItem,
     inventoryItem,
     clearItemById,
+    barcodeKey
   } = useInventoryStore((state) => state);
   console.log(' inventoryItem', inventoryItem);
   const { error, clear } = useAlertReducer((state) => state);
@@ -204,6 +205,7 @@ const InventoryForm = () => {
     formData.append('quantity', data.quantity.toString());
     formData.append('itemId', data.itemId); // Static for now
     formData.append('hasParts', data.addPart.toString());
+    formData.append('barcode ', barcodeKey);
 
     // Append parts if added
     if (data.addPart && data.parts) {

@@ -16,6 +16,7 @@ const useInventoryStore = create((set) => ({
   pagination: {},
   isLoading: false,
   barcodeId: null,
+  barcodeKey: null,
   inventoryItem: null,
   createInventoryItem: async (formData) => {
     set({ isLoading: true, error: null });
@@ -55,8 +56,12 @@ const useInventoryStore = create((set) => ({
     set({ isLoading: true, error: null });
     try {
       const { data } = await getBarcode(itemId);
-      console.log(' response', data);
-      set({ isLoading: false, barcodeId: data.barcode?.itemId });
+      console.log(' response', data.barcode?.barcodeKey);
+      set({
+        isLoading: false,
+        barcodeId: data.barcode?.itemId,
+        barcodeKey: data.barcode?.barcodeKey,
+      });
 
       // Update the state with the new item
     } catch (err) {
