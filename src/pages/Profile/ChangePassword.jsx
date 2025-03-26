@@ -1,17 +1,59 @@
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import useAuthReducer from '../../stores/AuthReducer';
+
+const changePasswordSchema = z
+  .object({
+    currentPassword: z.string().nonempty('Current password is required'),
+    password: z
+      .string()
+      .nonempty('New password is required')
+      .min(8, 'Password must be at least 8 characters')
+      .regex(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
+        'Password must include at least one uppercase letter, one lowercase letter, one number, and one special character'
+      ),
+    confirmPassword: z.string().nonempty('Confirm new password is required'),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+  });
+
 const ChangePassword = () => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(changePasswordSchema),
+  });
+
+  const { changePassword, isChangePassLoading } = useAuthReducer(
+    (state) => state
+  );
+
+  const onSubmit = (data) => {
+    changePassword(data);
+  };
+
   return (
-    <form className="change-pass">
+    <form className="change-pass" onSubmit={handleSubmit(onSubmit)}>
       <div className="mb-3 row input-grp">
         <div className="col-md-6 input-wrp">
           <label className="form-label">Old password</label>
           <input
             type="password"
             className="form-control"
-            placeholder="At least 8 characters"
-            minLength={8}
-            required
+            placeholder="Enter the current password"
+            {...register('currentPassword')}
           />
-          <span className="error">Please check fields</span>
+          {errors.currentPassword && (
+            <span className="error">{errors.currentPassword.message}</span>
+          )}
         </div>
       </div>
       <div className="mb-3 row input-grp">
@@ -20,11 +62,12 @@ const ChangePassword = () => {
           <input
             type="password"
             className="form-control"
-            placeholder="At least 8 characters"
-            minLength={8}
-            required
+            placeholder="Enter the new password"
+            {...register('password')}
           />
-          <span className="error">Please check fields</span>
+          {errors.password && (
+            <span className="error">{errors.password.message}</span>
+          )}
         </div>
         <div className="col-md-6 input-wrp">
           <label className="form-label">Re-enter the new password</label>
@@ -32,18 +75,23 @@ const ChangePassword = () => {
             type="password"
             className="form-control"
             placeholder="Re-enter the new password"
-            minLength={8}
-            required
+            {...register('confirmPassword')}
           />
-          <span className="error">Please check fields</span>
+          {errors.confirmPassword && (
+            <span className="error">{errors.confirmPassword.message}</span>
+          )}
         </div>
       </div>
       <div className="bottom-btn-sec">
-        <button type="reset" className="btn btn-cancel">
+        <button
+          type="button"
+          className="btn btn-cancel"
+          onClick={() => reset()}
+        >
           Clear
         </button>
         <button type="submit" className="btn btn-submit">
-          Submit
+          {isChangePassLoading ? 'Loading' : 'Submit'}
         </button>
       </div>
     </form>

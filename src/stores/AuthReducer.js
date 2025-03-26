@@ -18,6 +18,7 @@ const useAuthReducer = create((set) => ({
   usersData: null,
   isUsersLoading: false,
   userActionLoading: false,
+  isChangePassLoading: false,
 
   login: async ({ email, password, platform }) => {
     try {
@@ -84,6 +85,30 @@ const useAuthReducer = create((set) => ({
       error(err?.response?.data?.message ?? err.message);
     }
   },
+  changePassword: async ({ currentPassword, password, confirmPassword }) => {
+    try {
+      set({ isChangePassLoading: true });
+      const { data } = await authService.changePassword(
+        currentPassword,
+        password,
+        confirmPassword
+      );
+      const { success } = useAlertReducer.getState();
+      success(data?.response?.data?.message ?? data?.message);
+      set({
+        successMessage: data?.response?.data?.message ?? data?.message,
+        isChangePassLoading: false,
+      });
+    } catch (err) {
+      const { error } = useAlertReducer.getState();
+      set({
+        errorMessage: err?.response?.data?.message ?? err?.message,
+        isChangePassLoading: false,
+      });
+      error(err?.response?.data?.message ?? err.message);
+    }
+  },
+
   doLogout: () => {
     set({
       userProfile: null,

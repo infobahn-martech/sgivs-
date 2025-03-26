@@ -4,8 +4,6 @@ import { dateFormat } from '../../utils/helpers';
 const MyAccount = () => {
   const { profileData } = useAuthReducer((state) => state);
 
-  console.log('profileData', profileData);
-
   return (
     <div className="box-section">
       <div className="col-md-6 boxes">

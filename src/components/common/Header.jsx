@@ -16,6 +16,7 @@ import { useNavigate } from 'react-router-dom';
 const Header = () => {
   const navigate = useNavigate();
   const { doLogout } = useAuthReducer((state) => state);
+  const { profileData } = useAuthReducer((state) => state);
 
   return (
     <div className="header">
@@ -40,7 +41,10 @@ const Header = () => {
                   <img src={UserIcon} alt="user" />
                 </div>
                 <div className="usr-info">
-                  <span className="name">William James</span>
+                  <span className="name">
+                    {profileData?.employee?.firstName}{' '}
+                    {profileData?.employee?.lastName}
+                  </span>
                   <span className="role">Administrator</span>
                 </div>
               </div>
