@@ -8,6 +8,8 @@ const forgotPassword = (email) =>
 
 const getUserProfile = () => Gateway.get('user/profile');
 
+const getAllUsers = () => Gateway.get('user');
+
 const editUserProfile = (value) =>
   Gateway.patch('user/profile', value, {
     headers: { 'Content-Type': 'Multipart/formdata' },
@@ -18,4 +20,5 @@ export default {
   forgotPassword,
   getUserProfile,
   editUserProfile,
+  getAllUsers,
 };

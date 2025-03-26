@@ -3,7 +3,7 @@ import React from 'react';
 import '../../assets/scss/header.scss';
 
 import NotificationIcon from '../../assets/images/notifications.svg';
-import UserIcon from '../../assets/images/user.png';
+import UserIcon from '../../assets/images/avatar.png';
 import useAuthReducer from '../../stores/AuthReducer';
 
 const Header = () => {

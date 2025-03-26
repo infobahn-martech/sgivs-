@@ -5,6 +5,7 @@ import closseIcon from '../../assets/images/close.svg';
 import dummyImg from '../../assets/images/avatar.png';
 import '../../assets/scss/usermanagement.scss';
 import CommonHeader from '../../components/common/CommonHeader';
+// import useAuthReducer from '../../stores/AuthReducer';
 
 const dummyData = [
   {
@@ -53,6 +54,24 @@ const UserManagement = () => {
   const [pagination, setPagination] = useState({ currentPage: 1, limit: 10 });
 
   const [data, setData] = useState(dummyData);
+  //   const { getAllUsers, usersData,isUsersLoading } = useAuthReducer((state) => state);
+
+  // const [params,setParams]=useState({
+
+  //   page:
+  //   limit:10,
+  //   search:"",
+  //   sortOrder:"DESC"
+  //   sortBy:
+  //   isCardAdded:1,
+  //   status:1,
+  //   fromDate:
+  //   toDate:
+
+  // })
+  // useEffect(() => {
+  //   getAllUsers(params);
+  // }, [params]);
 
   const handleSortChange = (selector) => {
     setData((prevData) => {

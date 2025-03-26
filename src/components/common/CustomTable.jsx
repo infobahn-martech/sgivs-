@@ -192,9 +192,7 @@ export default function CustomTable({
                                     onView(row);
                                   }}
                                 >
-                                  {/* <div className={`tbl-cont ${contentClass}`}> */}
                                   {row[selector]}
-                                  {/* </div> */}
                                 </td>
                               )
                           )}
@@ -206,10 +204,9 @@ export default function CustomTable({
             )}
           </table>
         </div>
-
-        {/* {(totalPages() > 1 && renderPagination()) || null} */}
       </div>
-      {count > 10 &&renderPagination()}
+      {(totalPages() > 1 && renderPagination()) || null}
+      {/* {count > 10 &&renderPagination()} */}
     </>
   );
 }
