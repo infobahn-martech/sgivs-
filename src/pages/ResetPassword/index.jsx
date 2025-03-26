@@ -119,7 +119,7 @@ const ResetPassword = () => {
                   navigate('/login');
                 }}
               >
-                Back to login
+                Back to login?
               </Link>
               <button class="btn btn-rounded" onClick={handleSubmit(onSubmit)}>
                 {isResetPassLoading ? 'Loading...' : 'Submit'}

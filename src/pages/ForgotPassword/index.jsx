@@ -8,13 +8,14 @@ import '../../assets/scss/footer.scss';
 import '../../assets/scss/signin.scss';
 import logo from '../../assets/images/logo.svg';
 import useAuthReducer from '../../stores/AuthReducer';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const loginSchema = z.object({
   email: z.string().nonempty('Email is required').email('Invalid email format'),
 });
 
 const ForgotPassword = () => {
+  const navigate = useNavigate();
   const { forgotPassword, isForgotLoading } = useAuthReducer((state) => state);
 
   const {
@@ -69,7 +70,14 @@ const ForgotPassword = () => {
                   </span>
                 )}
               </div>
-              <Link class="link">Forgot Password?</Link>
+              <Link
+                class="link"
+                onClick={() => {
+                  navigate('/login');
+                }}
+              >
+                Back to login?
+              </Link>
               <button class="btn btn-rounded" onClick={handleSubmit(onSubmit)}>
                 {isForgotLoading ? 'Loading...' : 'Submit'}
               </button>
