@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import * as XLSX from 'xlsx';
 
@@ -13,7 +13,15 @@ const CommonHeader = ({
   onExcelUpload,
   addButton,
   hideRightSide = false,
+  onSearch,
 }) => {
+  const [searchInput, setSearchInput] = useState('');
+
+  const handleSearchChange = (event) => {
+    const value = event.target.value;
+    setSearchInput(value);
+    onSearch(value); // Pass value to parent component
+  };
   const location = useLocation();
   const fileInputRef = useRef(null);
 
@@ -94,7 +102,13 @@ const CommonHeader = ({
       {!hideRightSide && (
         <div className="right-wrap">
           <div className="search-wrap">
-            <input type="text" className="txt" placeholder="Search Controls" />
+            <input
+              type="text"
+              className="txt"
+              placeholder="Search Controls"
+              value={searchInput}
+              onChange={handleSearchChange}
+            />
           </div>
           <div className="filter-wrap">
             <span>Filter</span>

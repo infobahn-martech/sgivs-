@@ -9,6 +9,7 @@ import CommonHeader from '../../components/common/CommonHeader';
 import useAuthReducer from '../../stores/AuthReducer';
 import { formatBoolean, formatDate } from '../../config/config';
 import CustomActionModal from '../../components/CustomActionModal';
+import { debounce } from 'lodash';
 
 const UserManagement = () => {
   const {
@@ -24,7 +25,7 @@ const UserManagement = () => {
     limit: 10,
     search: '',
     sortOrder: 'DESC',
-    sortBy: 'joinedDate',
+    sortBy: 'firstName',
     isCardAdded: 1,
     status: 1,
     fromDate: null,
@@ -43,6 +44,14 @@ const UserManagement = () => {
   useEffect(() => {
     handleGetAllUsers();
   }, [params]);
+
+  const debouncedSearch = debounce((searchValue) => {
+    setParams((prevParams) => ({
+      ...prevParams,
+      search: searchValue,
+      page: 1, // Reset to first page on new search
+    }));
+  }, 500); // 500ms debounce delay
 
   const handleSortChange = (selector) => {
     setParams((prevParams) => ({
@@ -164,7 +173,7 @@ const UserManagement = () => {
 
   return (
     <>
-      <CommonHeader />
+      <CommonHeader onSearch={debouncedSearch} />
       <CustomTable
         pagination={{ currentPage: params.page, limit: params.limit }}
         count={usersData?.pagination?.totalPages}

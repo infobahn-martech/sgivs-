@@ -116,10 +116,10 @@ const useAuthReducer = create((set) => ({
     }
   },
 
-  getAllUsers: async () => {
+  getAllUsers: async (params) => {
     try {
       set({ isUsersLoading: true });
-      const { data } = await authService.getAllUsers();
+      const { data } = await authService.getAllUsers(params);
       const usersData = data.users;
       set({ usersData, isUsersLoading: false });
     } catch (err) {

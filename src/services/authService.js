@@ -11,7 +11,7 @@ const restPassword = (token, password, confirmPassword) =>
 
 const getUserProfile = () => Gateway.get('user/profile');
 
-const getAllUsers = () => Gateway.get('v1/user');
+const getAllUsers = (params) => Gateway.get('v1/user', { params });
 
 const usersActionService = (userId, action) =>
   Gateway.patch(`v1/user/${userId}/status/${action}`);
