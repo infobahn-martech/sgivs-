@@ -72,19 +72,19 @@ const CommonHeader = ({
     switch (type) {
       case 'link':
         return (
-          <Link to={addButton.path} className="btn btn-outline">
+          <Link to={addButton.path} className="btn export">
             {addButton.name}
           </Link>
         );
       case 'button':
         return (
-          <button className="btn btn-outline" onClick={addButton.action}>
+          <button className="btn export" onClick={addButton.action}>
             {addButton.name}
           </button>
         );
       default:
         return (
-          <button className="btn btn-outline" onClick={addButton.action}>
+          <button className="btn export" onClick={addButton.action}>
             {addButton.name}
           </button>
         );
@@ -114,10 +114,10 @@ const CommonHeader = ({
             <span>Filter</span>
             <img src={filterImg} alt="" className="img" />
           </div>
-          <div class="button-wrap">
+          <div className="button-wrap">
             {exportExcel && (
-              <button class="btn export">
-                <img src={exportIcon} alt="" class="img" />{' '}
+              <button className="btn export">
+                <img src={exportIcon} alt="" className="img" />{' '}
                 <span>Export as Excel</span>
               </button>
             )}
@@ -131,12 +131,13 @@ const CommonHeader = ({
                   style={{ display: 'none' }}
                   onChange={handleFileUpload}
                 />
-                <button class="btn upload" onClick={triggerFileInput}>
-                  <img src={upload} alt="" class="img" />{' '}
+                <button className="btn upload" onClick={triggerFileInput}>
+                  <img src={upload} alt="" className="img" />{' '}
                   <span>Upload Excel</span>
                 </button>
               </>
             )}
+            {addButton && renderAddButton(addButton.type)}
           </div>
         </div>
       )}
