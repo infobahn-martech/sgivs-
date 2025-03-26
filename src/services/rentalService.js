@@ -1,6 +1,6 @@
 import Gateway from '../config/gateway';
 
-const getAllRentals = () => Gateway.get('rental');
+const getAllRentals = (params) => Gateway.get('rental', { params });
 
 export default {
   getAllRentals,

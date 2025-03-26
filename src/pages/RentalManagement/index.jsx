@@ -9,11 +9,13 @@ import penIcon from '../../assets/images/pen.svg';
 import noteIcon from '../../assets/images/note.svg';
 import alertIcon from '../../assets/images/alert.svg';
 import dummyImg from '../../assets/images/avatar.png';
+import { debounce } from 'lodash';
 
 const RentalManagement = () => {
   const {
     getAllRentals,
     rentalData,
+    isRentalLoading,
   } = useRentalReducer((state) => state);
 
     const [params, setParams] = useState({
@@ -21,11 +23,9 @@ const RentalManagement = () => {
         limit: 10,
         search: '',
         sortOrder: 'DESC',
-        sortBy: 'joinedDate',
-        isCardAdded: 1,
-        status: 1,
-        fromDate: null,
-        toDate: null,
+        // sortBy: 'joinedDate',
+        // fromDate: null,
+        // toDate: null,
       });
       const [pagination, setPagination] = useState({ currentPage: 1, limit: 10 });
       const [modalConfig, setModalConfig] = useState({ type: null, data: null });
@@ -37,6 +37,14 @@ const RentalManagement = () => {
     useEffect(() => {
       handleGetAllUsers();
     }, [params]);
+
+      const debouncedSearch = debounce((searchValue) => {
+        setParams((prevParams) => ({
+          ...prevParams,
+          search: searchValue,
+          page: 1,
+        }));
+      }, 500);
   
     const columns = [
       {
@@ -111,6 +119,7 @@ const RentalManagement = () => {
   return (
     <>
     <CommonHeader 
+     onSearch={debouncedSearch}
      exportExcel={() => {}}
      uploadExcel
      onExcelUpload={handleExcelUpload}
@@ -124,11 +133,11 @@ const RentalManagement = () => {
      }}
     />
       <CustomTable
-        pagination={pagination}
+        pagination={{ currentPage: params.page, limit: params.limit }}
         count={rentalData?.pagination?.totalPages}
         columns={columns}
         data={rentalData?.data || []}
-        isLoading={false}
+        isLoading={isRentalLoading}
         onPageChange={(currentPage) =>
           setPagination({ ...pagination, currentPage })
         }

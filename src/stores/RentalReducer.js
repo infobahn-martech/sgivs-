@@ -6,19 +6,19 @@ const useRentalReducer = create((set) => ({
   rentalData: null,
   errorMessage: '',
   successMessage: '',
-  isUsersLoading: false,
+  isRentalLoading: false,
   userActionLoading: false,
 
-  getAllRentals: async () => {
+  getAllRentals: async (params) => {
     try {
-      set({ isUsersLoading: true });
-      const { data } = await rentalService.getAllRentals();
+      set({ isRentalLoading: true });
+      const { data } = await rentalService.getAllRentals(params);
       const rentalData = data.rental;
-      set({ rentalData, isUsersLoading: false });
+      set({ rentalData, isRentalLoading: false });
     } catch (err) {
       const { error } = useAlertReducer.getState();
       set({
-        isUsersLoading: false,
+        isRentalLoading: false,
       });
       error(err?.response?.data?.message ?? err.message);
     }
