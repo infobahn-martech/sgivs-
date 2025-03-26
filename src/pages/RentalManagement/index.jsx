@@ -80,7 +80,6 @@ const RentalManagement = () => {
         name: 'Deadline',
         selector: 'dueDate',
         titleClasses: 'tw5',
-        sort: true,
       },
       {
         name: 'Returned date and time',
