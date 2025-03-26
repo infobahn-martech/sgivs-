@@ -148,7 +148,7 @@ export default function CustomTable({
               </thead>
             )}
             {showLoader && <CustomLoader columns={columns} limit={limit} />}
-            {isLoading && !data?.length ? (
+            {isLoading ? (
               <CustomLoader columns={columns} limit={limit} />
             ) : !data?.length ? (
               <NoTableData columns={columns} />
@@ -178,7 +178,7 @@ export default function CustomTable({
                                   }}
                                 >
                                   <div className={` ${contentClass}`}>
-                                    {cell(row, index)}
+                                    {cell(row, index) || '-'}
                                   </div>
                                 </td>
                               ) : (
@@ -192,9 +192,7 @@ export default function CustomTable({
                                     onView(row);
                                   }}
                                 >
-                                  {/* <div className={`tbl-cont ${contentClass}`}> */}
-                                  {row[selector]}
-                                  {/* </div> */}
+                                  {row[selector] || '-'}
                                 </td>
                               )
                           )}
@@ -206,10 +204,9 @@ export default function CustomTable({
             )}
           </table>
         </div>
-
-        {/* {(totalPages() > 1 && renderPagination()) || null} */}
       </div>
-      {count > 10 &&renderPagination()}
+      {(totalPages() > 1 && renderPagination()) || null}
+      {/* {count > 10 &&renderPagination()} */}
     </>
   );
 }

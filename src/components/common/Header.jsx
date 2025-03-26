@@ -1,12 +1,20 @@
 import React from 'react';
 
 import '../../assets/scss/header.scss';
+import '../../assets/scss/common.scss';
+import '../../assets/scss/profile.scss';
+import '../../assets/scss/sidebar.scss';
+import '../../assets/scss/dashboard.scss';
+import '../../assets/scss/footer.scss';
+import '../../assets/scss/header.scss';
 
 import NotificationIcon from '../../assets/images/notifications.svg';
-import UserIcon from '../../assets/images/user.png';
+import UserIcon from '../../assets/images/avatar.png';
 import useAuthReducer from '../../stores/AuthReducer';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
+  const navigate = useNavigate();
   const { doLogout } = useAuthReducer((state) => state);
 
   return (
@@ -38,9 +46,14 @@ const Header = () => {
               aria-labelledby="userDropdown"
             >
               <li>
-                <a className="dropdown-item" href="#">
+                <button
+                  className="dropdown-item"
+                  onClick={() => {
+                    navigate('/profile');
+                  }}
+                >
                   Profile
-                </a>
+                </button>
               </li>
               <li>
                 <a className="dropdown-item" href="#">

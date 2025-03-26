@@ -3,8 +3,9 @@ import CommonHeader from '../../components/common/CommonHeader'
 import CustomTable from '../../components/common/CustomTable'
 import '../../assets/scss/usermanagement.scss';
 
-import deleteIcon from '../../assets/images/delete.svg';
-import closseIcon from '../../assets/images/close.svg';
+import noteIcon from '../../assets/images/note.svg';
+import penIcon from '../../assets/images/pen.svg';
+import alertIcon from '../../assets/images/alert.svg';
 import dummyImg from '../../assets/images/avatar.png';
 
 const dummyData = [
@@ -51,7 +52,8 @@ const dummyData = [
 ];
 const RentalManagement = () => {
     const [pagination, setPagination] = useState({ currentPage: 1, limit: 10 });
-  
+    const [modalConfig, setModalConfig] = useState({ type: null, data: null });
+
     const [data, setData] = useState(dummyData);
   
     const handleSortChange = (selector) => {
@@ -71,7 +73,7 @@ const RentalManagement = () => {
     };
     const columns = [
       {
-        name: 'First Name',
+        name: 'User',
         selector: 'firstName',
         titleClasses: 'tw1',
         contentClass: 'user-pic',
@@ -85,30 +87,42 @@ const RentalManagement = () => {
         ),
       },
       {
-        name: 'Last Name',
+        name: 'Item Id',
         selector: 'lastName',
         titleClasses: 'tw2',
       },
       {
-        name: 'Email',
+        name: 'Item Name',
         selector: 'email',
         titleClasses: 'tw3',
       },
       {
-        name: 'Phone',
+        name: 'Borrowed On',
         selector: 'phone',
         titleClasses: 'tw4',
       },
       {
-        name: 'Joined Date',
+        name: 'Deadline',
         selector: 'joinedDate',
         titleClasses: 'tw5',
         sort: true,
       },
       {
-        name: 'Credit Card Available',
+        name: 'Returned date and time',
         selector: 'creditCardAvailable',
         titleClasses: 'tw6',
+      },
+      {
+        name: 'Rental Status',
+        selector: 'creditCardAvailable',
+        titleClasses: 'tw6',
+        cell: (row) => (
+          <>
+            <div class="status-wrap">
+                  <span>Overdue</span> <img src={penIcon} alt="" class="img" />
+                </div>
+          </>
+        ),
       },
       {
         name: 'Action',
@@ -117,15 +131,31 @@ const RentalManagement = () => {
         contentClass: 'action-wrap',
         cell: () => (
           <>
-            <img src={deleteIcon} alt="Delete" />
-            <img src={closseIcon} alt="Close" />
+            <img src={noteIcon} alt="Note" />
+            <img src={alertIcon} alt="Alert" />
           </>
         ),
       },
     ];
+    const handleExcelUpload = (data) => {
+      // Process the uploaded Excel data
+      console.log('Processed Excel data:', data);
+    };
   return (
     <>
-    <CommonHeader />
+    <CommonHeader 
+     exportExcel={() => {}}
+     uploadExcel
+     onExcelUpload={handleExcelUpload}
+     addButton={{
+       name: 'Add Item',
+       type: 'link',
+       path: '/inventory-management/add',
+       action: () => {
+         setModalConfig({ data: null, type: 'add' });
+       },
+     }}
+    />
       <CustomTable
         pagination={pagination}
         count={dummyData?.length}

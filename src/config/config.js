@@ -1,5 +1,7 @@
 import userImage from '../assets/images/user.svg';
 import InventoryIcon from '../assets/images/inventory-count.svg';
+import RentalManageIcon from '../assets/images/dashboard-4.svg';
+import moment from 'moment';
 
 export const headerConfig = [
   {
@@ -8,7 +10,10 @@ export const headerConfig = [
     path: '/inventory-management',
   },
   {
-    title: 'Rental Management', icon: userImage, path: '/rental-management'
+    title: 'Rental Management',
+    // icon: RentalManageIcon,
+    icon: userImage,
+    path: '/rental-management',
   },
   {
     title: 'EZ Pass Billing',
@@ -32,3 +37,7 @@ export const getFirstLetters = (name) => {
   }
   return '';
 };
+
+export const formatDate = (date) => moment(date)?.format('MM/DD/YY');
+
+export const formatBoolean = (value) => (value ? 'Yes' : 'No');

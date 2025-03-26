@@ -1,4 +1,4 @@
-import loader from '../../helpers/LazyLoader.jsx';
+import loader from '../../helpers/LazyLoader';
 
-const loadable = loader(() => import('./index.jsx'));
+export const loadable = loader(() => import('./index.jsx'));
 export default loadable;
