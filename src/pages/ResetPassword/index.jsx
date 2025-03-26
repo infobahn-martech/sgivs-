@@ -15,7 +15,11 @@ const resetPasswordSchema = z
     password: z
       .string()
       .nonempty('Password is required')
-      .min(8, 'Password must be at least 8 characters'),
+      .min(8, 'Password must be at least 8 characters')
+      .regex(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
+        'Password must include at least one uppercase letter, one lowercase letter, one number, and one special character'
+      ),
     confirmPassword: z.string().nonempty('Confirm Password is required'),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -79,10 +83,10 @@ const ResetPassword = () => {
             <div class="form-sec-wrp">
               <div class="form-group">
                 <label class="form-label" for="">
-                  Email
+                  Password
                 </label>
                 <input
-                  type="text"
+                  type="password"
                   class="form-control"
                   placeholder="Enter password"
                   {...register('password')}
@@ -95,13 +99,13 @@ const ResetPassword = () => {
               </div>
               <div class="form-group">
                 <label class="form-label" for="">
-                  Password
+                  Confirm Password
                 </label>
                 <input
-                  type="text"
+                  type="password"
                   class="form-control"
                   placeholder="Confirm password"
-                  {...register('password')}
+                  {...register('confirmPassword')}
                 />
                 {errors.confirmPassword && (
                   <span htmlFor="" className="error">
