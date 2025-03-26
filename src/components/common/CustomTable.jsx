@@ -94,11 +94,7 @@ export default function CustomTable({
                     <li className="link-dots"> ... </li>
                   )}
                   <li onClick={() => onPageNumberClick(num)}>
-                    <a
-                      className={`page-link ${
-                        num === currentPage ? 'active' : ''
-                      }`}
-                    >
+                    <a className={` ${num === currentPage ? 'active' : ''}`}>
                       {num}
                     </a>
                   </li>
@@ -205,8 +201,8 @@ export default function CustomTable({
           </table>
         </div>
       </div>
-      {(totalPages() > 1 && renderPagination()) || null}
-      {/* {count > 10 &&renderPagination()} */}
+      {/* {(totalPages() > 1 && renderPagination()) || null} */}
+      {count > 10 && renderPagination()}
     </>
   );
 }

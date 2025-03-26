@@ -8,7 +8,7 @@ export default function CustomLoader({ columns, limit = 10 }) {
         <tr key={`${index}${inx}`}>
           {columns?.map(({ colClassName = '', selector }) => (
             <td className={colClassName} key={`cell${selector}`}>
-              <CommonSkeleton height={20} />
+              <CommonSkeleton height={30} />
             </td>
           ))}
         </tr>

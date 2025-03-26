@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 
@@ -14,10 +14,8 @@ import EZIcon from '../../assets/images/dashboard-6.svg';
 import SettingsIcon from '../../assets/images/dashboard-7.svg';
 import ToggleIcon from '../../assets/images/toggle-btn.svg';
 
-const Sidebar = () => {
+const Sidebar = ({ collapsed, setCollapsed }) => {
   const location = useLocation();
-  const [collapsed, setCollapsed] = useState(false);
-
   const toggleSidebar = () => {
     setCollapsed(!collapsed);
     document.body.classList.toggle('sidebar-collapsed', !collapsed);

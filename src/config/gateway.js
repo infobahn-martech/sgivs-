@@ -2,8 +2,9 @@ import axios from 'axios';
 
 const url = import.meta.env.VITE_API_ENDPOINT;
 
+
 const Gateway = axios.create({
-  baseURL: `${url}api/`,
+  baseURL: `${url}api/v1/`,
   headers: {
     'Content-Type': 'application/json',
   },
