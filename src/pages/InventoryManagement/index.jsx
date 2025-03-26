@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Tooltip } from 'react-tooltip';
 
 import deleteIcon from '../../assets/images/delete.svg';
@@ -13,6 +13,9 @@ import userImage from '../../assets/images/user-1.png';
 
 import CommonHeader from '../../components/common/CommonHeader';
 import CustomTable from '../../components/common/CustomTable';
+import useInventoryStore from '../../stores/InventoryReducer';
+import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
 
 const dummyData = [
   {
@@ -58,25 +61,29 @@ const dummyData = [
 ];
 
 const InventoryManagement = () => {
-  const [pagination, setPagination] = useState({ currentPage: 1, limit: 10 });
-  const [modalConfig, setModalConfig] = useState({ type: null, data: null });
+  const { getInventoryList, inventoryList, pagination, deleteItemById } =
+    useInventoryStore((state) => state);
+  const navigate = useNavigate();
+  console.log(' inventoryList', inventoryList);
+  // const [pagination, setPagination] = useState({ currentPage: 1, limit: 10 });
+  const [params, setParams] = useState({
+    search: '',
+    page: '1',
+    limit: '10',
+    fromDate: null,
+    toDate: null,
+    sortBy: 'createdAt',
+    sortOrder: 'DESC',
+  });
 
-  const [data, setData] = useState(dummyData);
+  useEffect(() => {
+    getInventoryList(params);
+  }, []);
+
+  // const [data, setData] = useState(dummyData);
 
   const handleSortChange = (selector) => {
-    setData((prevData) => {
-      const isAscending =
-        prevData[0][selector] > prevData[prevData.length - 1][selector];
-      return [...prevData].sort((a, b) =>
-        isAscending
-          ? a[selector] > b[selector]
-            ? -1
-            : 1
-          : a[selector] < b[selector]
-          ? -1
-          : 1
-      );
-    });
+    console.log(' selector', selector);
   };
   const columns = [
     {
@@ -87,7 +94,7 @@ const InventoryManagement = () => {
       cell: (row) => (
         <>
           <figure>
-            <img src={row.image} alt="" className="img" />
+            <img src={row.images[0]} alt="" className="img" />
           </figure>
         </>
       ),
@@ -120,6 +127,7 @@ const InventoryManagement = () => {
       selector: 'createdAt',
       titleClasses: 'tw1',
       contentClass: 'user-pic',
+      cell: (row) => moment(row.createdAt).format('DD MMM YYYY'),
       sort: true,
     },
     {
@@ -155,7 +163,7 @@ const InventoryManagement = () => {
             data-tooltip-id={`tooltip-${row.id || rowIndex}`} // Unique ID for the tooltip
             data-tooltip-content={'Edit'} // Tooltip content
             onClick={() => {
-              setModalConfig({ data: row, type: 'edit' });
+              navigate(`/inventory-management/edit/${row.id}`);
             }}
           >
             <img src={editIcon} alt="Edit" />
@@ -169,6 +177,7 @@ const InventoryManagement = () => {
           <span
             data-tooltip-id={`tooltip-${row.id || rowIndex}`} // Unique ID for the tooltip
             data-tooltip-content={'Delete'} // Tooltip content
+            onClick={() => deleteItemById(row.id)}
           >
             <img src={deleteIcon} alt="Delete" />
           </span>
@@ -198,21 +207,16 @@ const InventoryManagement = () => {
           name: 'Add Item',
           type: 'link',
           path: '/inventory-management/add',
-          action: () => {
-            setModalConfig({ data: null, type: 'add' });
-          },
         }}
       />
       <CustomTable
         pagination={pagination}
         count={dummyData?.length}
         columns={columns}
-        data={data}
+        data={inventoryList}
         isLoading={false}
-        onPageChange={(currentPage) =>
-          setPagination({ ...pagination, currentPage })
-        }
-        setLimit={(limit) => setPagination({ ...pagination, limit })}
+        onPageChange={(page) => setParams({ ...params, page })}
+        setLimit={(limit) => setParams({ ...params, limit })}
         onSortChange={handleSortChange}
       />
     </>

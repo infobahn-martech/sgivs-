@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 /*** all Mobile Screen (iphone 6,7,8) ***/
 /*** mobile Landscape Size ***/
 /*** medium devices (tablets, less than 992px) ***/
@@ -16,7 +16,7 @@
 /*** laptop with HiDPI (High Dots Per Inch) resolution ***/
 /*** WSXGA (Wide Super Extended Graphics Array) resolution ***/
 body {
-  font-family: "Outfit", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 16px;
   font-weight: 400;
 }
@@ -28,7 +28,7 @@ a {
 .title {
   font-size: 36px;
   font-weight: 600;
-  color: #1E1E1E;
+  color: #1e1e1e;
 }
 @media (max-width: 1679px) {
   .title {
@@ -54,4 +54,29 @@ a {
   .title {
     font-size: 26px;
   }
+}
+.cursor-pointer {
+  cursor: pointer !important;
+}
+.cursor-not {
+  cursor: not-allowed !important;
+}
+
+/* custom dropdown */
+.css-13cymwt-control {
+  background-color: transparent !important;
+  border: none !important;
+}
+.css-t3ipsp-control {
+  box-shadow: none !important;
+  border-color: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+}
+.css-t3ipsp-control:hover {
+  border-color: none !important;
+}
+.css-1wy0on6 {
+  padding-right: 15px !important;
+  margin-bottom: 5px !important;
 }

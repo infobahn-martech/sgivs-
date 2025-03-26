@@ -64,6 +64,11 @@
         padding: 20px;
       }
     }
+    .error {
+      color: red;
+      font-size: 14px;
+      position: absolute;
+    }
     .input-grp {
       padding-bottom: 35px;
       &:last-child {
@@ -71,11 +76,7 @@
       }
       .input-wrp {
         position: relative;
-        .error {
-          color: red;
-          font-size: 14px;
-          position: absolute;
-        }
+        
       }
     }
     .form-control {

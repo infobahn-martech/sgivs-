@@ -21,6 +21,17 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
     document.body.classList.toggle('sidebar-collapsed', !collapsed);
   };
 
+  const isRouteActive = (menu) => {
+    // Default to exact path match if no activeRoutes specified
+    const routesToCheck = menu.activeRoutes || [menu.path];
+
+    return routesToCheck.some(
+      (route) =>
+        route === location.pathname ||
+        (route !== '/' && location.pathname.startsWith(route))
+    );
+  };
+
   const sideMenu = [
     { name: 'Dashboard', icon: DashboardIcon, path: '/' },
     { name: 'User Management', icon: UserManageIcon, path: '/user-management' },
@@ -28,6 +39,11 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       name: 'Inventory Management',
       icon: InventoryManageIcon,
       path: '/inventory-management',
+      activeRoutes: [
+        '/inventory-management',
+        '/inventory-management/add',
+        '/inventory-management/edit',
+      ],
     },
     {
       name: 'Rental Management',
@@ -69,9 +85,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
             >
               <Link
                 to={menu.path}
-                className={`nav-link ${
-                  location.pathname === menu.path ? 'active' : ''
-                }`}
+                className={`nav-link ${isRouteActive(menu) ? 'active' : ''}`}
                 key={index}
               >
                 <img src={menu.icon} alt="menu-icon" />
