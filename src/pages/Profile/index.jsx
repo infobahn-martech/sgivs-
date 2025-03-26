@@ -10,10 +10,11 @@ import lock from '../../assets/images/lock.svg';
 import logOut from '../../assets/images/log-out.svg';
 import MyAccount from './MyAccount';
 import ChangePassword from './ChangePassword';
+import useAuthReducer from '../../stores/AuthReducer';
 
 const Profile = () => {
   const [isMyAccount, setIsMyAccount] = useState(true);
-  console.log('isMyAccount', isMyAccount);
+  const { profileData } = useAuthReducer((state) => state);
 
   return (
     <div className="profile-sec">
@@ -28,7 +29,10 @@ const Profile = () => {
           <div className="img-sec">
             <img src={proPict} alt="profile-picture" />
           </div>
-          <div className="u-name">William James</div>
+          <div className="u-name">
+            {' '}
+            {profileData?.employee?.firstName} {profileData?.employee?.lastName}
+          </div>
         </div>
 
         <div className="profile-tab">
