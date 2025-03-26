@@ -24,7 +24,7 @@ const UserManagement = () => {
     page: 1,
     limit: 10,
     search: '',
-    sortOrder: 'DESC',
+    sortOrder: 'ASC',
     sortBy: 'firstName',
     // isCardAdded: 1,
     // status: 1,
