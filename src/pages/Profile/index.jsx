@@ -4,19 +4,24 @@ import '../../assets/scss/forms.scss';
 import '../../assets/scss/footer.scss';
 import '../../assets/scss/signin.scss';
 
+import proPic from '../../assets/images/pro-pic.svg';
+import proPict from '../../assets/images/profile-picture.svg';
+import lock from '../../assets/images/lock.svg';
+import logOut from '../../assets/images/log-out.svg';
+
 const Profile = () => {
   return (
     <div className="profile-sec">
       <div className="profile-title">
         <span className="pro-pic">
-          <img src="img/pro-pic.svg" alt="pro-pic" />
+          <img src={proPic} alt="pro-pic" />
         </span>
         <span>Profile</span>
       </div>
       <div className="profile-inner">
         <div className="profile-picture">
           <div className="img-sec">
-            <img src="img/profile-picture.svg" alt="profile-picture" />
+            <img src={proPict} alt="profile-picture" />
           </div>
           <div className="u-name">William James</div>
         </div>
@@ -34,7 +39,7 @@ const Profile = () => {
                   tabIndex="-1"
                 >
                   <span>
-                    <img src="img/pro-pic.svg" alt="profile-icon" />
+                    <img src={proPic} alt="profile-icon" />
                   </span>
                   Profile
                 </a>
@@ -49,7 +54,7 @@ const Profile = () => {
                   role="tab"
                 >
                   <span>
-                    <img src="img/lock.svg" alt="lock" />
+                    <img src={lock} alt="lock" />
                   </span>
                   Change Password
                 </a>
@@ -63,7 +68,7 @@ const Profile = () => {
                   role="tab"
                 >
                   <span>
-                    <img src="img/log-out.svg" alt="logout-icon" />
+                    <img src={logOut} alt="logout-icon" />
                   </span>
                   Logout
                 </a>
