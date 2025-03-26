@@ -16,6 +16,7 @@ import Dashboard from '../pages/Dashboard/Loader';
 import UserManagement from '../pages/userManagement';
 import ForgotPassword from '../pages/ForgotPassword/Loader';
 import InventoryForm from '../pages/InventoryManagement/InventoryForm';
+import Profile from '../pages/Profile/Loader';
 
 const router = createBrowserRouter([
   {
@@ -76,6 +77,10 @@ const router = createBrowserRouter([
               {
                 path: '/user-management',
                 element: <UserManagement />,
+              },
+              {
+                path: '/profile',
+                element: <Profile />,
               },
             ],
           },
