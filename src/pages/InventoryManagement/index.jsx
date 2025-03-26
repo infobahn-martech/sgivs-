@@ -60,6 +60,7 @@ const dummyData = [
 const InventoryManagement = () => {
   const [pagination, setPagination] = useState({ currentPage: 1, limit: 10 });
   const [modalConfig, setModalConfig] = useState({ type: null, data: null });
+  console.log(' modalConfig', modalConfig);
 
   const [data, setData] = useState(dummyData);
 
