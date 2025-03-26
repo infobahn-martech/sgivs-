@@ -5,7 +5,7 @@ const url = import.meta.env.VITE_API_ENDPOINT;
 console.log('usssrl', url);
 
 const Gateway = axios.create({
-  baseURL: `${url}api/`,
+  baseURL: `${url}api/v1/`,
   headers: {
     'Content-Type': 'application/json',
   },
