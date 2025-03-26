@@ -61,10 +61,9 @@ const dummyData = [
 ];
 
 const InventoryManagement = () => {
-  const { getInventoryList, inventoryList, pagination } = useInventoryStore(
-    (state) => state
-  );
-  const navigate = useNavigate()
+  const { getInventoryList, inventoryList, pagination, deleteItemById } =
+    useInventoryStore((state) => state);
+  const navigate = useNavigate();
   console.log(' inventoryList', inventoryList);
   // const [pagination, setPagination] = useState({ currentPage: 1, limit: 10 });
   const [params, setParams] = useState({
@@ -164,7 +163,7 @@ const InventoryManagement = () => {
             data-tooltip-id={`tooltip-${row.id || rowIndex}`} // Unique ID for the tooltip
             data-tooltip-content={'Edit'} // Tooltip content
             onClick={() => {
-              navigate(`/inventory-management/edit/${row.id}`)
+              navigate(`/inventory-management/edit/${row.id}`);
             }}
           >
             <img src={editIcon} alt="Edit" />
@@ -178,6 +177,7 @@ const InventoryManagement = () => {
           <span
             data-tooltip-id={`tooltip-${row.id || rowIndex}`} // Unique ID for the tooltip
             data-tooltip-content={'Delete'} // Tooltip content
+            onClick={() => deleteItemById(row.id)}
           >
             <img src={deleteIcon} alt="Delete" />
           </span>
@@ -207,7 +207,6 @@ const InventoryManagement = () => {
           name: 'Add Item',
           type: 'link',
           path: '/inventory-management/add',
-          
         }}
       />
       <CustomTable

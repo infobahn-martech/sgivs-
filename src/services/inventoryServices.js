@@ -17,6 +17,7 @@ const updateInventoryItems = (formData, itemId) =>
   });
 
 const getItemByIdService = (itemId) => Gateway.get(`v1/inventory/${itemId}`);
+const deleteItemByIdService = (itemId) => Gateway.delete(`v1/inventory/${itemId}`);
 
 const getBarcode = (itemId) =>
   Gateway.post(`v1/inventory/barcode`, { itemId });
@@ -27,4 +28,5 @@ export {
   getBarcode,
   getItemByIdService,
   updateInventoryItems,
+  deleteItemByIdService,
 };

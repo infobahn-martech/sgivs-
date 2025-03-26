@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 
 import {
+  deleteItemByIdService,
   getBarcode,
   getInventoryListService,
   getItemByIdService,
@@ -91,6 +92,24 @@ const useInventoryStore = create((set) => ({
         inventoryItem: data.inventory,
       });
       console.log(' response', data);
+    } catch (error) {
+      set({
+        isLoading: false,
+        inventoryItem: null,
+      });
+      console.log(' error', error);
+    }
+  },
+  deleteItemById: async (itemId) => {
+    set({ isLoading: true });
+    try {
+      const { data } = await deleteItemByIdService(itemId);
+      set({
+        isLoading: false,
+        inventoryItem: data.inventory,
+      });
+      const { success } = useAlertReducer.getState();
+      success(data.message);
     } catch (error) {
       set({
         isLoading: false,
