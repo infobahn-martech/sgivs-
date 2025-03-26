@@ -49,7 +49,7 @@ const RentalManagement = () => {
     const columns = [
       {
         name: 'User',
-        selector: 'firstName',
+        selector: 'user.firstName',
         titleClasses: 'tw1',
         contentClass: 'user-pic',
         cell: (row) => (
@@ -57,7 +57,7 @@ const RentalManagement = () => {
             <figure>
               <img src={dummyImg} alt="" className="img" />
             </figure>
-            <span>{row.firstName}</span>
+            <span>{row?.["user.firstName"] || '-'}</span>
           </>
         ),
       },
