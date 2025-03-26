@@ -1,20 +1,21 @@
 import Gateway from '../config/gateway';
 
 const doLoginValidate = (email, password, platform) =>
-  Gateway.post('v1/auth/login', { email, password, platform });
+  Gateway.post('auth/login', { email, password, platform });
 
 const forgotPassword = (email) =>
-  Gateway.post('v1/auth/forgot-password', { email });
+  Gateway.post('auth/forgot-password', { email });
 
 const restPassword = (token, password, confirmPassword) =>
-  Gateway.post('v1/auth/reset-password', { token, password, confirmPassword });
+  Gateway.post('auth/reset-password', { token, password, confirmPassword });
 
-const getUserProfile = () => Gateway.get('user/profile');
+const getUserProfile = (details) =>
+  Gateway.get(`user/profile?details=${details}`);
 
-const getAllUsers = (params) => Gateway.get('v1/user', { params });
+const getAllUsers = (params) => Gateway.get('user', { params });
 
 const usersActionService = (userId, action) =>
-  Gateway.patch(`v1/user/${userId}/status/${action}`);
+  Gateway.patch(`user/${userId}/status/${action}`);
 
 const editUserProfile = (value) =>
   Gateway.patch('user/profile', value, {

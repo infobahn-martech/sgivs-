@@ -62,7 +62,6 @@ const useAuthReducer = create((set) => ({
     }
   },
   restPassword: async ({ token, password, confirmPassword }) => {
-    debugger;
     try {
       set({ isForgotLoading: true });
       const { data } = await authService.restPassword(
@@ -70,7 +69,6 @@ const useAuthReducer = create((set) => ({
         password,
         confirmPassword
       );
-      debugger;
       const { success } = useAlertReducer.getState();
       success(data?.response?.data?.message ?? data?.message);
       set({
@@ -78,7 +76,6 @@ const useAuthReducer = create((set) => ({
         isForgotLoading: false,
       });
     } catch (err) {
-      debugger;
       const { error } = useAlertReducer.getState();
       set({
         errorMessage: err?.response?.data?.message ?? err?.message,
@@ -98,11 +95,11 @@ const useAuthReducer = create((set) => ({
     removeItem('accessToken');
     removeItem('refreshToken');
   },
-  getUserProfile: async () => {
+  getUserProfile: async ({ details }) => {
     try {
       set({ isProfileFetchLoading: true });
-      const { data } = await authService.getUserProfile();
-      const profileData = data.data;
+      const { data } = await authService.getUserProfile(details);
+      const profileData = data?.user;
       set({ profileData, isProfileFetchLoading: false });
     } catch (err) {
       const { error } = useAlertReducer.getState();
