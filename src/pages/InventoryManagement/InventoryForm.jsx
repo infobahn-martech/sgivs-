@@ -24,7 +24,7 @@ const InventoryForm = () => {
     updateInventoryItem,
     inventoryItem,
     clearItemById,
-    barcodeKey
+    barcodeKey,
   } = useInventoryStore((state) => state);
   console.log(' inventoryItem', inventoryItem);
   const { error, clear } = useAlertReducer((state) => state);
@@ -47,6 +47,7 @@ const InventoryForm = () => {
       parts: [],
     },
   });
+  console.log(' errors', errors);
 
   // Use useFieldArray for dynamic parts management
   const { fields, append, remove } = useFieldArray({
@@ -68,6 +69,33 @@ const InventoryForm = () => {
   }, [barcodeId]);
 
   useEffect(() => {
+    if (Object.keys(errors).length) {
+      const hasParts = watch('addPart');
+      const parts = watch('parts');
+      if (hasParts && (!parts || parts.length === 0)) {
+        setCustomError({
+          parts: 'At least one part is required',
+        });
+      }
+
+      if (uploadedFiles.length === 0)
+        setError('fileUpload', {
+          type: 'manual',
+          message: 'At least one image is required.',
+        });
+      else clearErrors('fileUpload');
+    }
+  }, [
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    Object.keys(errors).length,
+    errors,
+    setError,
+    uploadedFiles.length,
+    clearErrors,
+    watch,
+  ]);
+
+  useEffect(() => {
     if (inventoryItem) {
       setValue('itemId', inventoryItem.itemId);
       setValue('itemName', inventoryItem.itemName);
@@ -75,7 +103,7 @@ const InventoryForm = () => {
       setUploadedFiles(inventoryItem.images || []);
     } else {
       reset();
-      setUploadedFiles([])
+      setUploadedFiles([]);
     }
   }, [inventoryItem, setValue]);
 
@@ -83,6 +111,7 @@ const InventoryForm = () => {
   const isAddPartChecked = watch('addPart', false);
   const itemId = watch('itemId', null);
   const quantity = watch('quantity', null);
+  const isEZPass = watch('isEZPass', null);
   console.log(' quantity', quantity);
 
   useEffect(() => {
@@ -177,9 +206,8 @@ const InventoryForm = () => {
   // Handle Form Submission
   const onSubmit = (data) => {
     if (data.hasParts && (!data.parts || data.parts.length === 0)) {
-      setError('parts', {
-        type: 'manual',
-        message: 'At least one part is required when "Has Parts" is checked',
+      setCustomError({
+        parts: 'At least one part is required when "Add Part" is checked',
       });
       return;
     }
@@ -264,7 +292,7 @@ const InventoryForm = () => {
                 )}
               </div>
 
-              <div className="col-md-6">
+              {/* <div className="col-md-6">
                 <label htmlFor="quantity" className="form-label">
                   Quantity
                 </label>
@@ -285,7 +313,7 @@ const InventoryForm = () => {
                 {errors.quantity && (
                   <p className="error">{errors.quantity.message}</p>
                 )}
-              </div>
+              </div> */}
             </div>
 
             {/* Drag & Drop Upload Box */}
@@ -389,6 +417,41 @@ const InventoryForm = () => {
               </div>
             </div>
 
+            {/* EZ pass Checkbox */}
+            <div className="mb-3">
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="isEZPass"
+                  {...register('isEZPass')}
+                />
+                <label className="form-check-label" htmlFor="isEZPass">
+                  Is this an EZ Pass Device ?
+                </label>
+              </div>
+            </div>
+
+            {/* Dynamic Part Fields */}
+            {isEZPass && (
+              <div className="mb-3">
+                <div className="col-md-10">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Tag Plate Number"
+                    {...register('plateNumber', {
+                      required: isEZPass
+                        ? 'Tag Plate Number is required'
+                        : false,
+                    })}
+                  />
+                </div>
+                {errors.plateNumber && (
+                  <p className="error">{errors.plateNumber.message}</p>
+                )}
+              </div>
+            )}
             {/* Add Part Checkbox */}
             <div className="mb-3">
               <div className="form-check">
@@ -411,21 +474,39 @@ const InventoryForm = () => {
                   Part Pop-up Title
                 </label>
                 <div className="part-sec">
-                  <input
-                    type="text"
-                    className="form-control mb-2"
-                    placeholder="Part Pop-up Title"
-                    value={newPart}
-                    onChange={(e) => {
-                      setNewPart(e.target.value);
-                      const temp = { ...customError };
-                      delete temp.parts;
-                      setCustomError(temp);
-                    }}
-                  />
-                  {customError.parts && (
-                    <p className="error mt-5 pt-4">{customError.parts}</p>
-                  )}
+                  <div>
+                    <input
+                      type="text"
+                      className="form-control m-2"
+                      placeholder="Part Pop-up Title"
+                      value={newPart}
+                      onChange={(e) => {
+                        setNewPart(e.target.value);
+                        const temp = { ...customError };
+                        delete temp.parts;
+                        setCustomError(temp);
+                      }}
+                    />
+                    {customError.parts && (
+                      <p className="error">{customError.parts}</p>
+                    )}
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      className="form-control m-2"
+                      placeholder="Button Label"
+                      id="buttonLabel"
+                      {...register('buttonLabel', {
+                        required: isAddPartChecked
+                          ? 'Button label is required'
+                          : false,
+                      })}
+                    />
+                    {errors.buttonLabel && (
+                      <p className="error">{errors.buttonLabel.message}</p>
+                    )}
+                  </div>
                   <button
                     type="button"
                     className="btn add-btn"
