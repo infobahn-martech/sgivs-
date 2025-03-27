@@ -187,6 +187,7 @@ const InventoryManagement = () => {
       message={renderMessage()}
       onSubmit={()=>modalConfig.action()}
       showModal={modalConfig.type}
+      isDelete
     />;
   
 
