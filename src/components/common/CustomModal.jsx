@@ -16,7 +16,6 @@ const CustomModal = ({
   closeButton,
   renderOnScroll,
 }) => {
-  console.log(' header', header);
   return (
     <Modal
       className={className || ''}
