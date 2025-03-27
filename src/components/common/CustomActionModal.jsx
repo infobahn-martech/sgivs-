@@ -49,7 +49,7 @@ const CustomActionModal = ({
               className="custom-spinner"
             />
           ) : (
-            'Submit'
+            isDelete ? 'Delete':'Submit'
           )}
         </button>
       </div>

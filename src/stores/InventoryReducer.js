@@ -13,19 +13,25 @@ import useAlertReducer from './AlertReducer';
 const useInventoryStore = create((set) => ({
   inventoryList: [],
   isListLoading: false,
+  isBarcodeLoading: false,
   pagination: {},
   isLoading: false,
   barcodeId: null,
   barcodeKey: null,
   inventoryItem: null,
+  redirectToList: false,
   createInventoryItem: async (formData) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await submitInventoryItems(formData);
-      console.log(' response', response);
+      const { data } = await submitInventoryItems(formData);
+      console.log(' response', data);
+      const { success } = useAlertReducer.getState();
+      set({ isLoading: false, redirectToList: true }); // Set redirectToList to true
+      success(data.message);
 
       // Update the state with the new item
     } catch (err) {
+      console.log(' err', err);
       const { error } = useAlertReducer.getState();
       error(err.response?.data?.message || 'Failed to create inventory item');
       set({
@@ -53,12 +59,12 @@ const useInventoryStore = create((set) => ({
     }
   },
   generateBarcode: async (itemId) => {
-    set({ isLoading: true, error: null });
+    set({ isBarcodeLoading: true, error: null });
     try {
       const { data } = await getBarcode(itemId);
       console.log(' response', data.barcode?.barcodeKey);
       set({
-        isLoading: false,
+        isBarcodeLoading: false,
         barcodeId: data.barcode?.itemId,
         barcodeKey: data.barcode?.barcodeKey,
       });
@@ -69,7 +75,7 @@ const useInventoryStore = create((set) => ({
       error(err.response?.data?.message || 'Failed to create inventory item');
       set({
         error: err.response?.data?.message || 'Failed to create inventory item',
-        isLoading: false,
+        isBarcodeLoading: false,
       });
       throw error;
     }
@@ -105,7 +111,7 @@ const useInventoryStore = create((set) => ({
       console.log(' error', error);
     }
   },
-  deleteItemById: async (itemId) => {
+  deleteItemById: async (itemId, params) => {
     set({ isLoading: true });
     try {
       const { data } = await deleteItemByIdService(itemId);
@@ -115,6 +121,7 @@ const useInventoryStore = create((set) => ({
       });
       const { success } = useAlertReducer.getState();
       success(data.message);
+      useInventoryStore.getState().getInventoryList(params);
     } catch (error) {
       set({
         isLoading: false,

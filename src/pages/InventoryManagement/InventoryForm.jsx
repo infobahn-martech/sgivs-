@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import '../../assets/scss/add-inventory.scss';
 
@@ -25,12 +25,15 @@ const InventoryForm = () => {
     inventoryItem,
     clearItemById,
     barcodeKey,
+    isBarcodeLoading,
+    redirectToList,
+    set,
   } = useInventoryStore((state) => state);
   console.log(' inventoryItem', inventoryItem);
   const { error, clear } = useAlertReducer((state) => state);
 
   const params = useParams();
-
+  const navigate = useNavigate();
   const {
     register,
     control,
@@ -67,6 +70,12 @@ const InventoryForm = () => {
     clear();
     if (barcodeId) setValue('itemId', barcodeId);
   }, [barcodeId]);
+  useEffect(() => {
+    if (redirectToList) {
+      navigate('/inventory-management'); // Replace with your desired route
+      set({ redirectToList: false }); // Reset the redirect state
+    }
+  }, [redirectToList, navigate, set]);
 
   useEffect(() => {
     if (Object.keys(errors).length) {
@@ -230,16 +239,18 @@ const InventoryForm = () => {
 
     // Append basic form fields
     formData.append('itemName', data.itemName);
-    formData.append('quantity', data.quantity.toString());
-    formData.append('itemId', data.itemId); // Static for now
+    // formData.append('quantity', data.quantity.toString());
+    formData.append('eZPassNumber', isEZPass ? data.plateNumber || null : null);
+    formData.append('itemId', data.itemId);
     formData.append('hasParts', data.addPart.toString());
-    formData.append('barcode ', barcodeKey);
+    formData.append('barcode', barcodeKey);
+    formData.append('label', isAddPartChecked ? data.buttonLabel : null);
 
     // Append parts if added
     if (data.addPart && data.parts) {
       data.parts.forEach((part, index) => {
         console.log(' part', part);
-        formData.append(`parts[${index}]`, part.value);
+        formData.append(`parts`, part.value);
       });
     }
 
@@ -247,9 +258,15 @@ const InventoryForm = () => {
     if (uploadedFiles.length) {
       console.log(' uploadedFiles', uploadedFiles);
       uploadedFiles.forEach((file, index) => {
-        formData.append(`images[${index}]`, file);
+        formData.append(`images`, file);
       });
     }
+
+    // Log FormData values
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}:`, value);
+    }
+
     if (params.id) updateInventoryItem(formData, params.id);
     else createInventoryItem(formData);
   };
@@ -394,7 +411,7 @@ const InventoryForm = () => {
                     ' form-control'
                   }`}
                   id="itemId"
-                  readOnly={!!barcodeId || params?.id}
+                  readOnly={!!barcodeId || params?.id || isBarcodeLoading}
                   {...register('itemId', {
                     required: 'Item ID is required',
                   })}
@@ -409,10 +426,12 @@ const InventoryForm = () => {
                   className="btn generate-btn"
                   onClick={handleBarcode}
                 >
-                  <span className="bar-code">
-                    <img src={barcodeIcon} alt="bar-code" />
-                  </span>
-                  Generate Barcode
+                  {!isBarcodeLoading && (
+                    <span className="bar-code">
+                      <img src={barcodeIcon} alt="bar-code" />
+                    </span>
+                  )}
+                  {isBarcodeLoading ? 'Please wait...' : 'Generate Barcode'}
                 </button>
               </div>
             </div>
@@ -550,11 +569,20 @@ const InventoryForm = () => {
           <button
             type="button"
             className="btn btn-cancel"
-            onClick={() => window.location.reload()}
+            onClick={() => {
+              reset();
+              setCustomError(null);
+              setNewPart("");
+              setUploadedFiles([]);
+            }}
           >
             Clear
           </button>
-          <button type="submit" className="btn btn-submit">
+          <button
+            type="submit"
+            className="btn btn-submit"
+            disabled={isLoading || isBarcodeLoading}
+          >
             {params.id ? 'Update' : 'Submit'}
           </button>
         </div>
