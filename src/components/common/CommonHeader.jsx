@@ -28,17 +28,8 @@ const CommonHeader = ({
   const handleSearchChange = (event) => {
     const value = event.target.value;
     setSearchInput(value);
+    onSearch(value); // Pass value to parent component after delay
   };
-
-  useEffect(() => {
-    let timeout;
-    if (searchInput || searchInput === '') {
-      timeout = setTimeout(() => {
-        onSearch(searchInput); // Pass value to parent component after delay
-      }, 500);
-    }
-    return () => clearTimeout(timeout); // Properly clear the timeout
-  }, [searchInput]);
 
   const location = useLocation();
   const fileInputRef = useRef(null);

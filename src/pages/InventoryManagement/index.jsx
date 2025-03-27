@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Tooltip } from 'react-tooltip';
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
+import { debounce } from 'lodash';
 
 import deleteIcon from '../../assets/images/delete.svg';
 import viewIcon from '../../assets/images/eye.svg';
@@ -24,6 +25,7 @@ const InventoryManagement = () => {
     pagination,
     deleteItemById,
     isLoading,
+    isListLoading
   } = useInventoryStore((state) => state);
   const navigate = useNavigate();
   console.log(' inventoryList', inventoryList);
@@ -192,6 +194,15 @@ const InventoryManagement = () => {
     />
   );
 
+    const debouncedSearch = debounce((searchValue) => {
+      console.log(' searchValue', searchValue);
+      setParams((prevParams) => ({
+        ...prevParams,
+        search: searchValue,
+        page: 1,
+      }));
+    }, 500);
+
   return (
     <>
       {renderModal()}
@@ -205,16 +216,14 @@ const InventoryManagement = () => {
           type: 'link',
           path: '/inventory-management/add',
         }}
-        onSearch={(value) => {
-          setParams({ ...params, search: value });
-        }}
+        onSearch={debouncedSearch}
       />
       <CustomTable
         pagination={pagination}
         count={pagination.totalRecords}
         columns={columns}
         data={inventoryList}
-        isLoading={false}
+        isLoading={isListLoading}
         onPageChange={(page) => setParams({ ...params, page })}
         setLimit={(limit) => setParams({ ...params, limit })}
         onSortChange={handleSortChange}
