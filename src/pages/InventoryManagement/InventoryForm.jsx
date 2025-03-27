@@ -251,18 +251,16 @@ const InventoryForm = () => {
     // Append parts if added
     if (data.addPart && data.parts) {
       const parts = [];
-      data.parts.forEach((part, index) => {
+      data.parts.forEach((part) => {
         console.log(' part', part);
         parts.push(part.value);
       });
-      formData.append(`parts`, parts);
-      console.log(' parts', parts);
+      formData.append('parts', parts);
     }
 
     // Append files
     if (uploadedFiles.length) {
-      console.log(' uploadedFiles', uploadedFiles);
-      uploadedFiles.forEach((file, index) => {
+      uploadedFiles.forEach((file) => {
         formData.append(`images`, file);
       });
     }
