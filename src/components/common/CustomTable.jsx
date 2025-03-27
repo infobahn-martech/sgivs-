@@ -85,7 +85,12 @@ export default function CustomTable({
         <div className="right-wrap">
           <div className="pagination">
             <ul className="listing">
-              <li onClick={onPrevClicked}>
+              <li
+                onClick={onPrevClicked}
+                className={`cursor-pointer ${
+                  currentPage === 1 ? 'cursor-not' : ''
+                }`}
+              >
                 <img src={prevIcon} alt="Previous" />
               </li>
               {numbersToShow()?.map((num) => (
@@ -94,13 +99,22 @@ export default function CustomTable({
                     <li className="link-dots"> ... </li>
                   )}
                   <li onClick={() => onPageNumberClick(num)}>
-                    <a className={` ${num === currentPage ? 'active' : ''}`}>
+                    <a
+                      className={`cursor-pointer ${
+                        num === currentPage ? 'active' : ''
+                      }`}
+                    >
                       {num}
                     </a>
                   </li>
                 </React.Fragment>
               ))}
-              <li onClick={onNextClicked}>
+              <li
+                onClick={onNextClicked}
+                className={`cursor-pointer ${
+                  currentPage === totalPages() ? 'cursor-not' : ''
+                }`}
+              >
                 <img src={nextIcon} alt="Next" />
               </li>
             </ul>

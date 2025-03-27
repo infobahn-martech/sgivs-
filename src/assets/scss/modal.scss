@@ -185,17 +185,61 @@
             @media ($sm-1679){
                 margin: 40px;
             }
+            @media ($sm-1199){
+                margin: 30px;
+            }
+            @media ($sm-991){
+                margin: 20px;
+            }
             .modal-header{
                 padding: 30px 39px;
                 border-bottom: 1px solid #B3C6DD69;
+                @media ($sm-1679){
+                    padding: 24px 35px;
+                }
+                @media ($sm-1199){
+                    padding: 20px 30px;
+                }
+                @media ($sm-991){
+                    padding: 20px 30px;
+                }
+                .btn-close{
+                    background: url(../img/modal-close-btn.svg) no-repeat center;
+                    box-shadow: none;
+                    outline: none;
+                    @media ($sm-1199){
+                        font-size: 0px;
+                    }
+                }
                 .modal-title{
                     font-weight: 500;
                     font-size: 20px;
                     color: #092837;
+                    @media ($sm-1679){
+                        font-size: 18px;
+                    }
+                    @media ($sm-1441){
+                        font-size: 17px;
+                    }
+                    @media ($sm-1199){
+                        font-size: 16px;
+                    }
                 }
             }
             .modal-body{
                 padding: 36px 51px 49px;
+                @media ($sm-1679){
+                    padding: 30px 45px 45px;
+                }
+                @media ($sm-1199){
+                    padding: 25px 40px 40px;
+                }
+                @media ($sm-991){
+                    padding: 20px 30px 30px;
+                }
+                @media ($sm-579){
+                    padding: 20px;
+                }
                 &::-webkit-scrollbar {
                     width: 4px;
                 }
@@ -212,19 +256,68 @@
                     justify-content:flex-start;
                     gap: 18px;
                     margin-bottom: 40px;
+                    @media ($sm-1679){
+                        margin-bottom: 30px;
+                    }
+                    @media ($sm-1441){
+                        margin-bottom: 25px;
+                    }
+                    @media ($sm-1199){
+                        margin-bottom: 20px;
+                    }
+                    @media ($sm-991){
+                        gap: 10px;
+                    }
+                    @media ($sm-479){
+                        flex-direction: column;
+                    }
                     .info-round-blks{
                         background-color: #ECF5FF;
                         border-radius: 20px;
                         padding: 24px 33px;
                         width: calc((100% / 4) - 18px);
                         flex:0 0 auto;
+                        @media ($sm-1679){
+                            padding: 20px 30px;
+                        }
+                        @media ($sm-1441){
+                            padding: 20px 25px;
+                        }
+                        @media ($sm-1199){
+                            padding: 20px;
+                        }
+                        @media ($sm-991){
+                            width: calc((100% / 2) - 10px);
+                        }
+                        @media ($sm-579){
+                            padding: 20px;
+                        }
+                        @media (max-width:550px){
+                            padding: 20px;
+                            width: 100%;
+                        }
                         .box-title{
                             font-size: 16px;
+                            @media ($sm-1679){
+                                font-size: 15px;
+                            }
+                            @media ($sm-1199){
+                                font-size: 14px;
+                            }
                         }
                         .box-value{
                             font-size: 18px;
                             font-weight: 500;
                             color: $primaryColor;
+                            @media ($sm-1679){
+                                font-size: 16px;
+                            }
+                            @media ($sm-1199){
+                                font-size: 15px;
+                            }
+                            @media ($sm-767){
+                                font-size: 14px;
+                            }
                         }
                     }
                 }
@@ -244,6 +337,21 @@
             .modal-header{
                 padding: 35px 45px;
                 border-bottom: 1px solid #B3C6DD69;
+                @media ($sm-1679){
+                    padding: 30px 40px;
+                }
+                @media ($sm-1441){
+                    padding: 25px 35px;
+                }
+                @media ($sm-1199){
+                    padding: 20px 30px;
+                }
+                @media ($sm-991){
+                    padding: 20px 25px;
+                }
+                @media ($sm-579){
+                    padding: 20px;
+                }
                 .btn-close{
                     width: 29px;
                     height: 29px;
@@ -261,10 +369,34 @@
                     font-weight: 500;
                     font-size: 20px;
                     color: #092837;
+                    @media ($sm-1679){
+                        font-size: 18px;
+                    }
+                    @media ($sm-1441){
+                        font-size: 17px;
+                    }
+                    @media ($sm-1199){
+                        font-size: 16px;
+                    }
                 }
             }
             .modal-body{
                 padding: 30px 45px;
+                @media ($sm-1679){
+                    padding: 25px 40px;
+                }
+                @media ($sm-1441){
+                    padding: 20px 35px;
+                }
+                @media ($sm-1199){
+                    padding: 20px 30px;
+                }
+                @media ($sm-991){
+                    padding: 20px 25px;
+                }
+                @media ($sm-579){
+                    padding: 20px;
+                }
                 &::-webkit-scrollbar {
                     width: 4px;
                 }
@@ -280,10 +412,41 @@
                     background-color: #F7FBFF;
                     border-radius: 12px;
                     padding: 43px;
+                    font-size: 18px;
+                    @media ($sm-1679){
+                        padding: 35px;
+                        font-size: 16px;
+                    }
+                    @media ($sm-1441){
+                        padding: 30px;
+                        font-size: 15px;
+                    }
+                    @media ($sm-1199){
+                        padding: 25px;
+                        font-size: 14px;
+                    }
+                    @media ($sm-991){
+                        padding: 20px;
+                    }
                 }
             }
             .modal-footer{
                 padding: 35px 45px;
+                @media ($sm-1679){
+                    padding: 30px 40px;
+                }
+                @media ($sm-1441){
+                    padding: 25px 35px;
+                }
+                @media ($sm-1199){
+                    padding: 20px 30px;
+                }
+                @media ($sm-991){
+                    padding: 20px 25px;
+                }
+                @media ($sm-579){
+                    padding: 20px;
+                }
                 .btn-primary{
                     border-radius: 35px;
                     height: 49px;
@@ -295,6 +458,23 @@
                     background:#0096DF;
                     border:none;
                     margin-left: 16px;
+                    @media ($sm-1679){
+                        height: 45px;
+                        font-size: 18px;
+                        width: 200px;
+                    }
+                    @media ($sm-1441){
+                        font-size: 17px;
+                    }
+                    @media ($sm-1199){
+                        font-size: 16px;
+                        margin-left: 10px;
+                    }
+                    @media ($sm-479){
+                        width: 100%;
+                        margin-left: 0px;
+                        margin-top: 10px;
+                    }
                     &:hover{
                         background: #1081bad6 ;
                     }
@@ -315,6 +495,23 @@
                     background:transparent;
                     border:1px solid #0096DF;
                     margin-left: 16px;
+                    @media ($sm-1679){
+                        height: 45px;
+                        font-size: 18px;
+                        width: 200px;
+                    }
+                    @media ($sm-1441){
+                        font-size: 17px;
+                    }
+                    @media ($sm-1199){
+                        font-size: 16px;
+                        margin-left: 10px;
+                    }
+                    @media ($sm-479){
+                        width: 100%;
+                        margin-left: 0px;
+                        margin-top: 10px;
+                    }
                     &:hover{
                         background: #1081bad6 ;
                         color: #fff;
@@ -328,11 +525,21 @@
 .add-new-msg-modal{
     .modal-dialog{
         max-width: 412px;
+        @media ($sm-579){
+            margin-left: auto;
+            margin-right: auto;;
+        }
         .modal-content{
             border-radius: 40px;
             .modal-header{
                 padding: 32px 28px 28px;
                 border-bottom: 1px solid #B3C6DD69;
+                @media ($sm-1679){
+                    padding: 24px 28px;
+                }
+                @media ($sm-1199){
+                    padding: 20px 28px;
+                }
                 .btn-close{
                     width: 29px;
                     height: 29px;
@@ -350,6 +557,15 @@
                     font-weight: 500;
                     font-size: 20px;
                     color: #092837;
+                    @media ($sm-1679){
+                        font-size: 18px;
+                    }
+                    @media ($sm-1441){
+                        font-size: 17px;
+                    }
+                    @media ($sm-1199){
+                        font-size: 16px;
+                    }
                 }
             }
             .modal-body{
@@ -384,6 +600,16 @@
                             width: 48px;
                             height: 48px;
                             margin-right: 16px;
+                            @media ($sm-1679){
+                                width: 44px;
+                                height: 44px;
+                                margin-right: 12px;
+                            }
+                            @media ($sm-1199){
+                                width: 40px;
+                                height: 40px;
+                                margin-right: 10px;
+                            }
                             img{
                                 width: 100%;
                                 height: 100%;
@@ -431,7 +657,19 @@
                     justify-content: center;
                     background: linear-gradient(90deg, #2CA0DA 0%, #3982A7 100%);
                     border:none;
-                    margin-left: 16px;
+                    @media ($sm-1679){
+                        height: 45px;
+                        font-size: 18px;
+                    }
+                    @media ($sm-1441){
+                        font-size: 17px;
+                    }
+                    @media ($sm-1199){
+                        font-size: 16px;
+                    }
+                    @media ($sm-479){
+                        width:100%;
+                    }
                     &:hover{
                         background: linear-gradient(90deg, #3982A7 0%, #2CA0DA 100%);
                     }
@@ -452,6 +690,23 @@
                     background:transparent;
                     border:1px solid #0096DF;
                     margin-left: 16px;
+                    @media ($sm-1679){
+                        height: 45px;
+                        font-size: 18px;
+                        width: 200px;
+                    }
+                    @media ($sm-1441){
+                        font-size: 17px;
+                    }
+                    @media ($sm-1199){
+                        font-size: 16px;
+                        margin-left: 10px;
+                    }
+                    @media ($sm-479){
+                        width: 100%;
+                        margin-left: 0px;
+                        margin-top: 10px;
+                    }
                     &:hover{
                         background: #1081bad6 ;
                         color: #fff;
@@ -502,9 +757,44 @@
                 background-color: #91ADBB;
                 outline: 1px solid #D9D9D9;
                 }
+                .modal-icon{
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 100%;
+                    margin-bottom: 30px;
+                    .icon-blk{
+                        width: 74px;
+                        height: 74px;
+                        border-radius: 74px;
+                        background-color: #D8E1ED;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        @media ($sm-1679){
+                            width: 64px;
+                            height: 64px;
+                        }
+                        @media ($sm-1199){
+                            width: 55px;
+                            height: 55px;
+                        }
+                    }
+                }
                 .prompt-title{
                     font-size: 20px;
                     margin: 20px 0 0;
+                    text-align: center;
+                    color: #313957;
+                    @media ($sm-1679){
+                        font-size: 18px;
+                    }
+                    @media ($sm-1441){
+                        font-size: 17px;
+                    }
+                    @media ($sm-1199){
+                        font-size: 16px;
+                    }
                 }
             }
             .modal-footer{
@@ -512,7 +802,7 @@
                 .btn-primary{
                     border-radius: 35px;
                     height: 49px;
-                    width: 226px;
+                    width: calc(50% - 16px);
                     font-size: 20px;
                     display: flex;
                     align-items: center;
@@ -520,6 +810,23 @@
                     background: linear-gradient(90deg, #2CA0DA 0%, #3982A7 100%);
                     border:none;
                     margin-left: 16px;
+                    @media ($sm-1679){
+                        height: 45px;
+                        font-size: 18px;
+                    }
+                    @media ($sm-1441){
+                        font-size: 17px;
+                    }
+                    @media ($sm-1199){
+                        font-size: 16px;
+                        margin-left: 10px;
+                        height: 40px;
+                    }
+                    @media ($sm-479){
+                        width: 100%;
+                        margin-left: 0px;
+                        margin-top: 10px;
+                    }
                     &:hover{
                         background: linear-gradient(90deg, #3982A7 0%, #2CA0DA 100%);
                     }
@@ -531,7 +838,7 @@
                 .btn-cancel{
                     border-radius: 35px;
                     height: 49px;
-                    width: 226px;
+                    width: calc(50% - 16px);
                     font-size: 20px;
                     color: #0096DF;
                     display: flex;
@@ -539,7 +846,23 @@
                     justify-content: center;
                     background:transparent;
                     border:1px solid #0096DF;
-                    margin-left: 16px;
+                    @media ($sm-1679){
+                        height: 45px;
+                        font-size: 18px;
+                    }
+                    @media ($sm-1441){
+                        font-size: 17px;
+                    }
+                    @media ($sm-1199){
+                        font-size: 16px;
+                        margin-left: 10px;
+                        height: 40px;
+                    }
+                    @media ($sm-479){
+                        width: 100%;
+                        margin-left: 0px;
+                        margin-top: 10px;
+                    }
                     &:hover{
                         background: #1081bad6 ;
                         color: #fff;

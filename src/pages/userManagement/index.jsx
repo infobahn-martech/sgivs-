@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Tooltip } from 'react-tooltip';
 import CustomTable from '../../components/common/CustomTable';
 import deleteIcon from '../../assets/images/delete.svg';
-import closseIcon from '../../assets/images/close.svg';
+import activeIcon from '../../assets/images/close.svg';
+import blockIcon from '../../assets/images/block.svg';
 import dummyImg from '../../assets/images/avatar.png';
 import '../../assets/scss/usermanagement.scss';
 import CommonHeader from '../../components/common/CommonHeader';
@@ -159,10 +160,10 @@ const UserManagement = () => {
           <Tooltip id="delete-tooltip" place="top" effect="solid" />
 
           <img
-            src={closseIcon}
-            alt={row?.status === 2 ? 'Blocked' : 'Active'}
+            src={row?.status === 2 ? activeIcon : blockIcon}
+            alt={row?.status === 2 ? 'Active' : 'Blocked'}
             data-tooltip-id={`status-tooltip-${row?.id}`}
-            data-tooltip-content={row?.status === 2 ? 'Blocked' : 'Active'}
+            data-tooltip-content={row?.status === 2 ? 'Active' : 'Block'}
             className="cursor-pointer"
             onClick={() => handleStatusClick(row)}
           />
@@ -203,6 +204,7 @@ const UserManagement = () => {
       )}
       {deleteModalOpen && selectedUser && (
         <CustomActionModal
+          isDelete
           isLoading={userActionLoading}
           showModal={deleteModalOpen}
           closeModal={() => setDeleteModalOpen(false)}
