@@ -22,6 +22,7 @@ export default function CustomTable({
   setLimit,
   showLoader,
   onView,
+  wrapClasses=''
 }) {
   const [tempCount, setTempCount] = useState(0);
   useEffect(() => {
@@ -126,7 +127,7 @@ export default function CustomTable({
   return (
     <>
       <div className={`table-body-wrap ${mainclasses}`} ref={reffer}>
-        <div className="table-wrap">
+        <div className={`table-wrap ${wrapClasses}`}>
           <table className={`${tableClasses}`}>
             {data?.length > 0 && (
               <thead>

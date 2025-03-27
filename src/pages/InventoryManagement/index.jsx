@@ -18,8 +18,13 @@ import { downloadContent } from '../../helpers/utils';
 import CustomActionModal from '../../components/common/CustomActionModal';
 
 const InventoryManagement = () => {
-  const { getInventoryList, inventoryList, pagination, deleteItemById } =
-    useInventoryStore((state) => state);
+  const {
+    getInventoryList,
+    inventoryList,
+    pagination,
+    deleteItemById,
+    isLoading,
+  } = useInventoryStore((state) => state);
   const navigate = useNavigate();
   console.log(' inventoryList', inventoryList);
   const [modalConfig, setModalConfig] = useState({ type: null, action: null });
@@ -35,7 +40,7 @@ const InventoryManagement = () => {
 
   useEffect(() => {
     getInventoryList(params);
-  }, []);
+  }, [params]);
 
   // const [data, setData] = useState(dummyData);
 
@@ -47,13 +52,11 @@ const InventoryManagement = () => {
       name: 'Image',
       selector: 'image',
       titleClasses: 'tw1',
-      contentClass: 'user-pic',
+      contentClass: '',
       cell: (row) => (
-        <>
-          <figure>
-            <img src={row.images[0]} alt="" className="img" />
-          </figure>
-        </>
+        <figure className="in-img">
+          <img src={row.images[0]} alt="" className="img" />
+        </figure>
       ),
     },
     {
@@ -67,18 +70,18 @@ const InventoryManagement = () => {
       titleClasses: 'tw1',
       contentClass: 'user-pic',
     },
-    {
-      name: 'Quantity Available',
-      selector: 'quantity',
-      titleClasses: 'tw1',
-      contentClass: 'user-pic',
-    },
-    {
-      name: 'Quantity Available After Borrowing',
-      selector: 'quantityAvailable',
-      titleClasses: 'tw1',
-      contentClass: 'user-pic',
-    },
+    // {
+    //   name: 'Quantity Available',
+    //   selector: 'quantity',
+    //   titleClasses: 'tw1',
+    //   contentClass: 'user-pic',
+    // },
+    // {
+    //   name: 'Quantity Available After Borrowing',
+    //   selector: 'quantityAvailable',
+    //   titleClasses: 'tw1',
+    //   contentClass: 'user-pic',
+    // },
     {
       name: 'Item Created date',
       selector: 'createdAt',
@@ -92,7 +95,7 @@ const InventoryManagement = () => {
       selector: 'haveParts',
       titleClasses: 'tw1',
       contentClass: 'user-pic',
-      cell: (row) => <span>{row.haveParts ? 'Yes' : 'No'}</span>,
+      cell: (row) => <span>{row.hasParts ? 'Yes' : 'No'}</span>,
     },
 
     {
@@ -134,9 +137,7 @@ const InventoryManagement = () => {
           <span
             data-tooltip-id={`tooltip-${row.id || rowIndex}`} // Unique ID for the tooltip
             data-tooltip-content={'Delete'} // Tooltip content
-            onClick={() =>
-              setModalConfig({ action: deleteItemById(row.id), type: 'delete' })
-            }
+            onClick={() => setModalConfig({ id: row.id, type: 'delete' })}
           >
             <img src={deleteIcon} alt="Delete" />
           </span>
@@ -144,16 +145,7 @@ const InventoryManagement = () => {
             data-tooltip-id={`tooltip-${row.id || rowIndex}`} // Unique ID for the tooltip
             data-tooltip-content={'Download Barcode'} // Tooltip content
             onClick={() => {
-              const barcodeUrl =
-                'https://spericorn-development-bucket.s3.us-east-2.amazonaws.com/inventory/string.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAYQP66NNME4MHNDPT%2F20250326%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250326T134913Z&X-Amz-Expires=3600&X-Amz-Signature=8ba99e0b4bed6b5071e849b322076f8bf1ba515c0a4fe8f8d2ad7891c89668c5&X-Amz-SignedHeaders=host&response-content-type=&x-amz-checksum-mode=ENABLED&x-id=GetObject';
-              // const a = document.createElement('a');
-              // a.href = barcodeUrl;
-              // a.download = `${row.itemId}.png`;
-              // document.body.appendChild(a);
-              // a.click();
-              // document.body.removeChild(a);
-              // window.URL.revokeObjectURL(barcodeUrl);
-              downloadContent(barcodeUrl, `${row.itemId}.png`);
+              downloadContent(row.barcode, `${row.itemId}.png`);
             }}
           >
             <img src={downloadIcon} alt="Download" />
@@ -180,17 +172,16 @@ const InventoryManagement = () => {
         break;
     }
   };
-  const renderModal = () => 
+  const renderModal = () => (
     <CustomActionModal
       closeModal={closeModal}
-      isLoading={false}
+      isLoading={isLoading}
       message={renderMessage()}
-      onSubmit={()=>modalConfig.action()}
+      onSubmit={() => deleteItemById(modalConfig.id, params)}
       showModal={modalConfig.type}
       isDelete
-
-    />;
-  
+    />
+  );
 
   return (
     <>
@@ -205,16 +196,20 @@ const InventoryManagement = () => {
           type: 'link',
           path: '/inventory-management/add',
         }}
+        onSearch={(value) => {
+          setParams({ ...params, search: value });
+        }}
       />
       <CustomTable
         pagination={pagination}
-        count={pagination}
+        count={pagination.totalRecords}
         columns={columns}
         data={inventoryList}
         isLoading={false}
         onPageChange={(page) => setParams({ ...params, page })}
         setLimit={(limit) => setParams({ ...params, limit })}
         onSortChange={handleSortChange}
+        wrapClasses="inventory-table-wrap"
       />
     </>
   );
