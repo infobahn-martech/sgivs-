@@ -8,6 +8,7 @@ import exportIcon from '../../assets/images/export-excel.svg';
 import upload from '../../assets/images/upload-excel.svg';
 import Upload__icon from '../../assets/images/Upload__icon.svg';
 import CustomModal from './CustomModal';
+import { Spinner } from 'react-bootstrap';
 
 const CommonHeader = ({
   exportExcel,
@@ -17,6 +18,7 @@ const CommonHeader = ({
   hideRightSide = false,
   onSearch,
   uploadTitle = '',
+  exportLoading,
 }) => {
   const [searchInput, setSearchInput] = useState('');
   const [openUpload, setOpenUpload] = useState(false);
@@ -256,9 +258,28 @@ const CommonHeader = ({
             </div>
             <div className="button-wrap">
               {exportExcel && (
-                <button className="btn export">
-                  <img src={exportIcon} alt="" className="img" />{' '}
-                  <span>Export as Excel</span>
+                <button
+                  className="btn export"
+                  onClick={exportExcel}
+                  disabled={exportLoading}
+                >
+                  {!exportLoading && (
+                    <img src={exportIcon} alt="" className="img" />
+                  )}
+                  <span>
+                    {exportLoading ? (
+                      <Spinner
+                        size="sm"
+                        as="span"
+                        animation="border"
+                        variant="light"
+                        aria-hidden="true"
+                        className="custom-spinner"
+                      />
+                    ) : (
+                      'Export as Excel'
+                    )}
+                  </span>
                 </button>
               )}
 
