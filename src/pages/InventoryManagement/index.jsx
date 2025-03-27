@@ -70,6 +70,12 @@ const InventoryManagement = () => {
       titleClasses: 'tw1',
       contentClass: 'user-pic',
     },
+    {
+      name: 'EZ Pass Number',
+      selector: 'eZPassNumber',
+      titleClasses: 'tw1',
+      contentClass: 'user-pic',
+    },
     // {
     //   name: 'Quantity Available',
     //   selector: 'quantity',
@@ -88,7 +94,7 @@ const InventoryManagement = () => {
       titleClasses: 'tw1',
       contentClass: 'user-pic',
       cell: (row) => moment(row.createdAt).format('DD MMM, YYYY'),
-      sort: true,
+      // sort: true,
     },
     {
       name: 'Have Parts',
