@@ -119,6 +119,11 @@
           border: 1px solid #0096df;
           color: #0096df;
         }
+        &.btn-submit {
+          background: linear-gradient(90deg, #2ca0da 0%, #3982a7 100%);
+          color: $white;
+          margin-right: 0px;
+        }
       }
     }
   }
