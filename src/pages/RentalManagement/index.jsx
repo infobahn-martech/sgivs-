@@ -10,6 +10,7 @@ import noteIcon from '../../assets/images/note.svg';
 import alertIcon from '../../assets/images/alert.svg';
 import dummyImg from '../../assets/images/avatar.png';
 import { debounce } from 'lodash';
+import moment from 'moment';
 
 const RentalManagement = () => {
   const {
@@ -29,10 +30,9 @@ const RentalManagement = () => {
     // fromDate: null,
     // toDate: null,
   });
-  // const [pagination, setPagination] = useState({ currentPage: 1, limit: 10 });
-  const [modalConfig, setModalConfig] = useState({ type: null, data: null });
+  // const [modalConfig, setModalConfig] = useState({ type: null, data: null });
 
-  const handleGetAllUsers = () => {
+  const handleGetAllRentals = () => {
     getAllRentals(params);
   };
 
@@ -52,7 +52,7 @@ const RentalManagement = () => {
     setParams((prevParams) => ({ ...prevParams, limit }));
   };
   useEffect(() => {
-    handleGetAllUsers();
+    handleGetAllRentals();
   }, [params]);
 
   const debouncedSearch = debounce((searchValue) => {
@@ -62,6 +62,9 @@ const RentalManagement = () => {
       page: 1,
     }));
   }, 500);
+
+  const formatDateTime = (date) =>
+    date ? moment(date).format('MMMM D, YYYY : hh:mm A') : '-';
 
   const columns = [
     {
@@ -90,17 +93,17 @@ const RentalManagement = () => {
     },
     {
       name: 'Borrowed On',
-      selector: 'borrowedAt',
+      cell: (row) => formatDateTime(row?.borrowedAt),
       titleClasses: 'tw4',
     },
     {
       name: 'Deadline',
-      selector: 'dueDate',
+      cell: (row) => formatDateTime(row?.dueDate),
       titleClasses: 'tw5',
     },
     {
       name: 'Returned date and time',
-      selector: 'returnedAt',
+      cell: (row) => formatDateTime(row?.returnedAt),
       titleClasses: 'tw6',
     },
     {
@@ -110,7 +113,7 @@ const RentalManagement = () => {
       cell: (row) => (
         <>
           <div class="status-wrap">
-            <span>Overdue</span> <img src={penIcon} alt="" class="img" />
+            <span>Overdue</span> <img src={penIcon} alt="" className="img" />
           </div>
         </>
       ),
@@ -136,7 +139,6 @@ const RentalManagement = () => {
       limit: 10,
       search: '',
       sortOrder: 'DESC',
-      isExcelExport: true,
       // sortBy: 'joinedDate',
       // fromDate: null,
       // toDate: null,
@@ -155,14 +157,6 @@ const RentalManagement = () => {
         exportLoading={isExportLoading}
         uploadExcel
         onExcelUpload={handleExcelUpload}
-        addButton={{
-          name: 'Add Item',
-          type: 'link',
-          path: '/inventory-management/add',
-          action: () => {
-            setModalConfig({ data: null, type: 'add' });
-          },
-        }}
       />
       <CustomTable
         pagination={{ currentPage: params.page, limit: params.limit }}
@@ -173,6 +167,7 @@ const RentalManagement = () => {
         onPageChange={handlePageChange}
         setLimit={handleLimitChange}
         onSortChange={handleSortChange}
+        wrapClasses="rm-table-wrap"
       />
     </>
   );
