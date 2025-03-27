@@ -1,8 +1,9 @@
 import React from 'react';
-import CustomModal from './common/CustomModal';
 import { Spinner } from 'react-bootstrap';
-// import deleteIcon from '../assets/images/delete.svg';
-// import logoutIcon from '../assets/images/log-out.svg';
+
+import CustomModal from './common/CustomModal';
+import deleteIcon from '../assets/images/delete.svg';
+import logoutIcon from '../assets/images/log-out.svg';
 import notifyIcon from '../assets/images/notifications.svg';
 
 const CustomActionModal = ({
@@ -20,8 +21,8 @@ const CustomActionModal = ({
         <div class="modal-icon">
           <div class="icon-blk">
             <img
-              src={notifyIcon}
-              // src={isDelete ? deleteIcon : isLogout ? logoutIcon : notifyIcon}
+              // src={notifyIcon}
+              src={isDelete ? deleteIcon : isLogout ? logoutIcon : notifyIcon}
               alt=""
             />
           </div>
