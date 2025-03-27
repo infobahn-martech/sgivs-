@@ -22,7 +22,7 @@ const InventoryManagement = () => {
     useInventoryStore((state) => state);
   const navigate = useNavigate();
   console.log(' inventoryList', inventoryList);
-  const [modalConfig, setModalConfig] = useState({ type: 'delete', action: null });
+  const [modalConfig, setModalConfig] = useState({ type: null, action: null });
   const [params, setParams] = useState({
     search: '',
     page: '1',

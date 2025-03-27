@@ -70,7 +70,7 @@ const CommonHeader = ({
       // Validate file type
       const validTypes = ['.xlsx', '.xls'];
       const fileExtension = '.' + file.name.split('.').pop()?.toLowerCase();
-
+  
       if (!validTypes.includes(fileExtension)) {
         setUploadError(
           `Invalid file type. Please upload ${validTypes.join(', ')} files.`
@@ -87,6 +87,7 @@ const CommonHeader = ({
       return;
     }
     const file = uploadedFile;
+   
 
     // Optionally add file size validation
     const maxSize = 5 * 1024 * 1024; // 5MB
@@ -206,11 +207,11 @@ const CommonHeader = ({
     </>
   );
 
-  const closeUpload = () => {
+  const closeUpload = ()=>{
     setOpenUpload(false);
     setUploadedFile(null);
-    setUploadError(null);
-  };
+    setUploadError(null)
+  }
 
   const renderUploadModal = () => (
     <CustomModal
