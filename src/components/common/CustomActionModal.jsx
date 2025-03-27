@@ -21,6 +21,7 @@ const CustomActionModal = ({
         <div class="modal-icon">
           <div class="icon-blk">
             <img
+            className='icon'
               // src={notifyIcon}
               src={isDelete ? deleteIcon : isLogout ? logoutIcon : notifyIcon}
               alt=""
