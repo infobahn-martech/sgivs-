@@ -216,6 +216,7 @@ const InventoryManagement = () => {
         exportExcel={() => {}}
         uploadExcel
         onExcelUpload={handleExcelUpload}
+        uploadTitle='Bulk Upload Inventory'
         addButton={{
           name: 'Add Item',
           type: 'link',

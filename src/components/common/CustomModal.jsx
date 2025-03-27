@@ -16,6 +16,7 @@ const CustomModal = ({
   closeButton,
   renderOnScroll,
 }) => {
+  console.log(' header', header);
   return (
     <Modal
       className={className || ''}
@@ -26,7 +27,7 @@ const CustomModal = ({
       backdrop="static"
       centered={!disableCenter}
     >
-      <Modal.Header closeButton={closeButton}>{header || null}</Modal.Header>
+      <Modal.Header closeButton={closeButton}>{header }</Modal.Header>
       {createModal ? (
         <Modal.Body className={bodyClassname || ''} ref={renderOnScroll}>
           {body}

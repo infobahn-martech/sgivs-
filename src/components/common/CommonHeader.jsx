@@ -6,6 +6,8 @@ import { headerConfig } from '../../config/config';
 import filterImg from '../../assets/images/sort.svg';
 import exportIcon from '../../assets/images/export-excel.svg';
 import upload from '../../assets/images/upload-excel.svg';
+import Upload__icon from '../../assets/images/Upload__icon.svg';
+import CustomModal from './CustomModal';
 
 const CommonHeader = ({
   exportExcel,
@@ -14,8 +16,11 @@ const CommonHeader = ({
   addButton,
   hideRightSide = false,
   onSearch,
+  uploadTitle=""
 }) => {
   const [searchInput, setSearchInput] = useState('');
+  const [openUpload, setOpenUpload] = useState(false);
+  const [uploadedFile, setUploadedFile] = useState(null)
 
   const handleSearchChange = (event) => {
     const value = event.target.value;
@@ -34,39 +39,6 @@ const CommonHeader = ({
     icon: 'img/default.svg',
   };
 
-  const handleFileUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        try {
-          const workbook = XLSX.read(e.target.result, { type: 'binary' });
-          const sheetName = workbook.SheetNames[0];
-          const worksheet = workbook.Sheets[sheetName];
-
-          // Convert worksheet to JSON
-          const excelData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-
-          // Optional: Remove header row if needed
-          const processedData = excelData;
-
-          // Call the callback if provided
-          if (onExcelUpload) {
-            onExcelUpload(processedData);
-          } else {
-            console.log('Uploaded Excel data:', processedData);
-          }
-        } catch (error) {
-          console.error('Error processing Excel file:', error);
-        }
-      };
-      reader.readAsBinaryString(file);
-    }
-  };
-
-  const triggerFileInput = () => {
-    fileInputRef.current.click();
-  };
 
   const renderAddButton = (type) => {
     switch (type) {
@@ -90,58 +62,214 @@ const CommonHeader = ({
         );
     }
   };
+ 
+
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      // Validate file type
+      setUploadedFile(file)
+      
+    }
+  };
+
+  const onUploadSubmit =()=>{
+    const file = uploadedFile;
+    const validTypes = ['.xlsx', '.xls', '.csv'];
+      const fileExtension = '.' + file.name.split('.').pop()?.toLowerCase();
+      
+      if (!validTypes.includes(fileExtension)) {
+        alert(`Invalid file type. Please upload ${validTypes.join(', ')} files.`);
+        return;
+      }
+
+      // Optionally add file size validation
+      const maxSize = 5 * 1024 * 1024; // 5MB
+      if (file.size > maxSize) {
+        alert('File is too large. Maximum file size is 5MB.');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const workbook = XLSX.read(e.target.result, { type: 'binary' });
+          const sheetName = workbook.SheetNames[0];
+          const worksheet = workbook.Sheets[sheetName];
+
+          // Convert worksheet to JSON
+          const excelData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+          // Call the callback if provided
+          if (onExcelUpload) {
+            onExcelUpload(excelData);
+          } else {
+            console.log('Uploaded Excel data:', excelData);
+          }
+
+          setOpenUpload(false)
+        } catch (error) {
+          console.error('Error processing Excel file:', error);
+          alert('Failed to process the Excel file. Please try again.');
+        }
+      };
+      reader.readAsBinaryString(file);
+  }
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (uploadExcel && e.dataTransfer.files.length > 0) {
+      const file = e.dataTransfer.files[0];
+      const fileInput = fileInputRef.current;
+      
+      // Create a new FileList
+      const dataTransfer = new DataTransfer();
+      dataTransfer.items.add(file);
+      fileInput.files = dataTransfer.files;
+
+      // Trigger file upload
+      handleFileUpload({ target: fileInput });
+    }
+  };
+
+  const triggerFileInput = () => {
+    fileInputRef.current.click();
+  };
+
+  const renderUploadBody = () => (
+    <>
+      <div 
+        className="modal-body"
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+      >
+        <div 
+          className="drop-zone upload-box" 
+          onClick={triggerFileInput}
+        >
+          <div className="upload-ico">
+            <img src={Upload__icon} alt="upload-ico" />
+          </div>
+          <p className="txt">
+            Drag & drop files or{' '}
+            <a href="#" className="browse-link" onClick={(e) => e.preventDefault()}>
+              Browse
+            </a>
+          </p>
+          <span className="btm-txt">Supported formats: xlsx, xls</span>
+        </div>
+        <span>{uploadedFile?.name}</span>
+        <input
+          type="file"
+          ref={fileInputRef}
+          accept=".xlsx, .xls"
+          style={{ display: 'none' }}
+          onChange={handleFileUpload}
+        />
+        <button className="download-btn">
+          <span className="dwnld-ico"></span>Download sample excel template
+        </button>
+      </div>
+      <div className="modal-footer bottom-btn-sec">
+        <button
+          type="button"
+          className="btn btn-cancel"
+          onClick={() =>setUploadedFile(null)}
+        >
+          Clear
+        </button>
+        <button
+          type="submit"
+          className="btn btn-submit"
+          onClick={onUploadSubmit}
+        >
+          Submit
+        </button>
+      </div>
+    </>
+  );
+
+  const renderUploadModal = () => (
+    <CustomModal
+      closeButton
+      className="modal fade upload-modal"
+      dialgName="modal-dialog modal-dialog-centered"
+      show={openUpload}
+      closeModal={() => setOpenUpload(false)}
+      header={
+        <h5 className="modal-title" id="uploadModalLabel">
+          {uploadTitle}
+        </h5>
+      }
+      contentClassName="modal-content"
+      body={renderUploadBody()}
+    />
+  );
 
   return (
-    <div className="table-header-wrap">
-      <div className="left-wrap">
-        <div className="icon-title">
-          <img src={headerInfo?.icon} alt="" className="img" />
-          <span>{headerInfo?.title}</span>
+    <>
+      {renderUploadModal()}
+      <div className="table-header-wrap">
+        <div className="left-wrap">
+          <div className="icon-title">
+            <img src={headerInfo?.icon} alt="" className="img" />
+            <span>{headerInfo?.title}</span>
+          </div>
         </div>
-      </div>
-      {!hideRightSide && (
-        <div className="right-wrap">
-          <div className="search-wrap">
-            <input
-              type="text"
-              className="txt"
-              placeholder="Search Controls"
-              value={searchInput}
-              onChange={handleSearchChange}
-            />
-          </div>
-          <div className="filter-wrap">
-            <span>Filter</span>
-            <img src={filterImg} alt="" className="img" />
-          </div>
-          <div className="button-wrap">
-            {exportExcel && (
-              <button className="btn export">
-                <img src={exportIcon} alt="" className="img" />{' '}
-                <span>Export as Excel</span>
-              </button>
-            )}
-
-            {uploadExcel && (
-              <>
-                <input
-                  type="file"
-                  ref={fileInputRef}
-                  accept=".xlsx, .xls"
-                  style={{ display: 'none' }}
-                  onChange={handleFileUpload}
-                />
-                <button className="btn upload" onClick={triggerFileInput}>
-                  <img src={upload} alt="" className="img" />{' '}
-                  <span>Upload Excel</span>
+        {!hideRightSide && (
+          <div className="right-wrap">
+            <div className="search-wrap">
+              <input
+                type="text"
+                className="txt"
+                placeholder="Search Controls"
+                value={searchInput}
+                onChange={handleSearchChange}
+              />
+            </div>
+            <div className="filter-wrap">
+              <span>Filter</span>
+              <img src={filterImg} alt="" className="img" />
+            </div>
+            <div className="button-wrap">
+              {exportExcel && (
+                <button className="btn export">
+                  <img src={exportIcon} alt="" className="img" />{' '}
+                  <span>Export as Excel</span>
                 </button>
-              </>
-            )}
-            {addButton && renderAddButton(addButton.type)}
+              )}
+
+              {uploadExcel && (
+                <>
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    accept=".xlsx, .xls"
+                    style={{ display: 'none' }}
+                    onChange={handleFileUpload}
+                  />
+                  <button
+                    className="btn upload"
+                    onClick={() => setOpenUpload(true)}
+                  >
+                    <img src={upload} alt="" className="img" />{' '}
+                    <span>Upload Excel</span>
+                  </button>
+                </>
+              )}
+              {addButton && renderAddButton(addButton.type)}
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 };
 
