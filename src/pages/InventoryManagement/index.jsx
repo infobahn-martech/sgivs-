@@ -15,7 +15,7 @@ import CommonHeader from '../../components/common/CommonHeader';
 import CustomTable from '../../components/common/CustomTable';
 import useInventoryStore from '../../stores/InventoryReducer';
 import { downloadContent } from '../../helpers/utils';
-import CustomActionModal from '../../components/CustomActionModal';
+import CustomActionModal from '../../components/common/CustomActionModal';
 
 const InventoryManagement = () => {
   const { getInventoryList, inventoryList, pagination, deleteItemById } =
@@ -188,6 +188,7 @@ const InventoryManagement = () => {
       onSubmit={()=>modalConfig.action()}
       showModal={modalConfig.type}
       isDelete
+
     />;
   
 
