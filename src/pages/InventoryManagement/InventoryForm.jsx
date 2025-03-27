@@ -61,15 +61,27 @@ const InventoryForm = () => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [newPart, setNewPart] = useState('');
   const [customError, setCustomError] = useState({});
+
+  useEffect(() => {
+    clear();
+    set({
+      isLoading: false,
+      barcodeId: null,
+      inventoryItem: null,
+      barcodeKey: null,
+      isBarcodeLoading: false,
+    });
+  }, []);
+
   useEffect(() => {
     if (params?.id) getItemById(params.id);
     clearItemById();
   }, [params]);
 
   useEffect(() => {
-    clear();
     if (barcodeId) setValue('itemId', barcodeId);
   }, [barcodeId]);
+
   useEffect(() => {
     if (redirectToList) {
       navigate('/inventory-management'); // Replace with your desired route
@@ -108,20 +120,37 @@ const InventoryForm = () => {
     if (inventoryItem) {
       setValue('itemId', inventoryItem.itemId);
       setValue('itemName', inventoryItem.itemName);
-      setValue('quantity', '1');
+      setValue('addPart', inventoryItem.hasParts);
+      if (
+        inventoryItem.eZPassNumber &&
+        (inventoryItem.eZPassNumber !== 'null' ||
+          inventoryItem.eZPassNumber !== '')
+      ) {
+        setValue('isEZPass', true);
+        setValue('plateNumber', inventoryItem.eZPassNumber);
+      }
+      if (inventoryItem.hasParts) {
+        setValue('buttonLabel', inventoryItem.label);
+        setValue('parts', [
+          { value: inventoryItem['inventory_parts.partName'] },
+        ]);
+      }
+      // setValue('quantity', '1');
       setUploadedFiles(inventoryItem.images || []);
     } else {
       reset();
       setUploadedFiles([]);
+      setCustomError(null);
+      setNewPart('');
     }
   }, [inventoryItem, setValue]);
 
   // watchers
   const isAddPartChecked = watch('addPart', false);
   const itemId = watch('itemId', null);
-  const quantity = watch('quantity', null);
+  // const parts = watch('parts', null);
   const isEZPass = watch('isEZPass', null);
-  console.log(' quantity', quantity);
+  // console.log(' parts', parts);
 
   useEffect(() => {
     if (!isAddPartChecked) {
@@ -178,11 +207,10 @@ const InventoryForm = () => {
         message: 'At least one image is required.',
       });
   };
-  // Custom Select Options
-  const quantityOptions = Array.from({ length: 10 }, (_, i) => ({
-    value: (i + 1).toString(),
-    label: `${i + 1}`,
-  }));
+  // const quantityOptions = Array.from({ length: 10 }, (_, i) => ({
+  //   value: (i + 1).toString(),
+  //   label: `${i + 1}`,
+  // }));
 
   // Handle Add Part
   const handleAddPart = () => {
@@ -248,16 +276,17 @@ const InventoryForm = () => {
 
     // Append parts if added
     if (data.addPart && data.parts) {
-      data.parts.forEach((part, index) => {
+      const parts = [];
+      data.parts.forEach((part) => {
         console.log(' part', part);
-        formData.append(`parts`, part.value);
+        parts.push(part.value);
       });
+      formData.append('parts', parts);
     }
 
     // Append files
     if (uploadedFiles.length) {
-      console.log(' uploadedFiles', uploadedFiles);
-      uploadedFiles.forEach((file, index) => {
+      uploadedFiles.forEach((file) => {
         formData.append(`images`, file);
       });
     }
@@ -506,7 +535,7 @@ const InventoryForm = () => {
                         setCustomError(temp);
                       }}
                     />
-                    {customError.parts && (
+                    {customError?.parts && (
                       <p className="error">{customError.parts}</p>
                     )}
                   </div>
@@ -572,7 +601,7 @@ const InventoryForm = () => {
             onClick={() => {
               reset();
               setCustomError(null);
-              setNewPart("");
+              setNewPart('');
               setUploadedFiles([]);
             }}
           >
@@ -583,7 +612,7 @@ const InventoryForm = () => {
             className="btn btn-submit"
             disabled={isLoading || isBarcodeLoading}
           >
-            {params.id ? 'Update' : 'Submit'}
+            {isLoading ? 'Loading...' : params.id ? 'Update' : 'Submit'}
           </button>
         </div>
       </div>
