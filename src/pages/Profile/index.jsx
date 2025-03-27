@@ -11,7 +11,7 @@ import logOut from '../../assets/images/log-out.svg';
 import MyAccount from './MyAccount';
 import ChangePassword from './ChangePassword';
 import useAuthReducer from '../../stores/AuthReducer';
-import CustomActionModal from '../../components/CustomActionModal';
+import CustomActionModal from '../../components/common/CustomActionModal';
 
 const Profile = () => {
   const [tab, setTab] = useState({

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Spinner } from 'react-bootstrap';
 
-import CustomModal from './common/CustomModal';
-import deleteIcon from '../assets/images/delete.svg';
-import logoutIcon from '../assets/images/log-out.svg';
-import notifyIcon from '../assets/images/notifications.svg';
+import CustomModal from './CustomModal';
+import deleteIcon from '../../assets/images/delete-modal.svg';
+import logoutIcon from '../../assets/images/logout-modal.svg';
+import notifyIcon from '../../assets/images/notifications.svg';
 
 const CustomActionModal = ({
   showModal,

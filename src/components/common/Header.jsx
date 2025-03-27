@@ -12,7 +12,7 @@ import NotificationIcon from '../../assets/images/notifications.svg';
 import UserIcon from '../../assets/images/avatar.png';
 import useAuthReducer from '../../stores/AuthReducer';
 import { useNavigate } from 'react-router-dom';
-import CustomActionModal from '../CustomActionModal';
+import CustomActionModal from './CustomActionModal';
 
 const Header = () => {
   const navigate = useNavigate();

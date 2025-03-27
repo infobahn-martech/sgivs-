@@ -3,13 +3,13 @@ import { Tooltip } from 'react-tooltip';
 import CustomTable from '../../components/common/CustomTable';
 import deleteIcon from '../../assets/images/delete.svg';
 import activeIcon from '../../assets/images/close.svg';
-// import blockIcon from '../../assets/images/block.svg';
+import blockIcon from '../../assets/images/block.svg';
 import dummyImg from '../../assets/images/avatar.png';
 import '../../assets/scss/usermanagement.scss';
 import CommonHeader from '../../components/common/CommonHeader';
 import useAuthReducer from '../../stores/AuthReducer';
 import { formatBoolean, formatDate } from '../../config/config';
-import CustomActionModal from '../../components/CustomActionModal';
+import CustomActionModal from '../../components/common/CustomActionModal';
 import { debounce } from 'lodash';
 
 const UserManagement = () => {
@@ -160,8 +160,7 @@ const UserManagement = () => {
           <Tooltip id="delete-tooltip" place="top" effect="solid" />
 
           <img
-            // src={row?.status === 2 ? activeIcon : blockIcon}
-            src={row?.status === 2 ? activeIcon : activeIcon}
+            src={row?.status === 2 ? activeIcon : blockIcon}
             alt={row?.status === 2 ? 'Active' : 'Blocked'}
             data-tooltip-id={`status-tooltip-${row?.id}`}
             data-tooltip-content={row?.status === 2 ? 'Active' : 'Block'}
