@@ -177,7 +177,10 @@ const InventoryManagement = () => {
       closeModal={closeModal}
       isLoading={isLoading}
       message={renderMessage()}
-      onSubmit={() => deleteItemById(modalConfig.id, params)}
+      onSubmit={() => {
+        deleteItemById(modalConfig.id, params);
+        setModalConfig({ type: null, action: null });
+      }}
       showModal={modalConfig.type}
       isDelete
     />
