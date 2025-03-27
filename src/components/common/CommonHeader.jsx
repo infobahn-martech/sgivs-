@@ -16,11 +16,12 @@ const CommonHeader = ({
   addButton,
   hideRightSide = false,
   onSearch,
-  uploadTitle=""
+  uploadTitle = '',
 }) => {
   const [searchInput, setSearchInput] = useState('');
   const [openUpload, setOpenUpload] = useState(false);
-  const [uploadedFile, setUploadedFile] = useState(null)
+  const [uploadedFile, setUploadedFile] = useState(null);
+  const [uploadError, setUploadError] = useState(null);
 
   const handleSearchChange = (event) => {
     const value = event.target.value;
@@ -38,7 +39,6 @@ const CommonHeader = ({
     title: 'Page Not Found',
     icon: 'img/default.svg',
   };
-
 
   const renderAddButton = (type) => {
     switch (type) {
@@ -62,59 +62,65 @@ const CommonHeader = ({
         );
     }
   };
- 
 
   const handleFileUpload = (event) => {
+    setUploadError('');
     const file = event.target.files[0];
     if (file) {
       // Validate file type
-      setUploadedFile(file)
-      
+      const validTypes = ['.xlsx', '.xls'];
+      const fileExtension = '.' + file.name.split('.').pop()?.toLowerCase();
+  
+      if (!validTypes.includes(fileExtension)) {
+        setUploadError(
+          `Invalid file type. Please upload ${validTypes.join(', ')} files.`
+        );
+        return;
+      }
+      setUploadedFile(file);
     }
   };
 
-  const onUploadSubmit =()=>{
+  const onUploadSubmit = () => {
+    if (!uploadedFile) {
+      setUploadError('Upload a file first!');
+      return;
+    }
     const file = uploadedFile;
-    const validTypes = ['.xlsx', '.xls', '.csv'];
-      const fileExtension = '.' + file.name.split('.').pop()?.toLowerCase();
-      
-      if (!validTypes.includes(fileExtension)) {
-        alert(`Invalid file type. Please upload ${validTypes.join(', ')} files.`);
-        return;
-      }
+   
 
-      // Optionally add file size validation
-      const maxSize = 5 * 1024 * 1024; // 5MB
-      if (file.size > maxSize) {
-        alert('File is too large. Maximum file size is 5MB.');
-        return;
-      }
+    // Optionally add file size validation
+    const maxSize = 5 * 1024 * 1024; // 5MB
+    if (file.size > maxSize) {
+      setUploadError('File is too large. Maximum file size is 5MB.');
+      return;
+    }
 
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        try {
-          const workbook = XLSX.read(e.target.result, { type: 'binary' });
-          const sheetName = workbook.SheetNames[0];
-          const worksheet = workbook.Sheets[sheetName];
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const workbook = XLSX.read(e.target.result, { type: 'binary' });
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
 
-          // Convert worksheet to JSON
-          const excelData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+        // Convert worksheet to JSON
+        const excelData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
-          // Call the callback if provided
-          if (onExcelUpload) {
-            onExcelUpload(excelData);
-          } else {
-            console.log('Uploaded Excel data:', excelData);
-          }
-
-          setOpenUpload(false)
-        } catch (error) {
-          console.error('Error processing Excel file:', error);
-          alert('Failed to process the Excel file. Please try again.');
+        // Call the callback if provided
+        if (onExcelUpload) {
+          onExcelUpload(excelData);
+        } else {
+          console.log('Uploaded Excel data:', excelData);
         }
-      };
-      reader.readAsBinaryString(file);
-  }
+
+        setOpenUpload(false);
+      } catch (error) {
+        console.error('Error processing Excel file:', error);
+        setUploadError('Failed to process the Excel file. Please try again.');
+      }
+    };
+    reader.readAsBinaryString(file);
+  };
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -124,11 +130,11 @@ const CommonHeader = ({
   const handleDrop = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    
+
     if (uploadExcel && e.dataTransfer.files.length > 0) {
       const file = e.dataTransfer.files[0];
       const fileInput = fileInputRef.current;
-      
+
       // Create a new FileList
       const dataTransfer = new DataTransfer();
       dataTransfer.items.add(file);
@@ -145,26 +151,28 @@ const CommonHeader = ({
 
   const renderUploadBody = () => (
     <>
-      <div 
+      <div
         className="modal-body"
         onDragOver={handleDragOver}
         onDrop={handleDrop}
       >
-        <div 
-          className="drop-zone upload-box" 
-          onClick={triggerFileInput}
-        >
+        <div className="drop-zone upload-box" onClick={triggerFileInput}>
           <div className="upload-ico">
             <img src={Upload__icon} alt="upload-ico" />
           </div>
           <p className="txt">
             Drag & drop files or{' '}
-            <a href="#" className="browse-link" onClick={(e) => e.preventDefault()}>
+            <a
+              href="#"
+              className="browse-link"
+              onClick={(e) => e.preventDefault()}
+            >
               Browse
             </a>
           </p>
           <span className="btm-txt">Supported formats: xlsx, xls</span>
         </div>
+        {uploadError && <p className="error">{uploadError}</p>}
         <span>{uploadedFile?.name}</span>
         <input
           type="file"
@@ -181,7 +189,10 @@ const CommonHeader = ({
         <button
           type="button"
           className="btn btn-cancel"
-          onClick={() =>setUploadedFile(null)}
+          onClick={() => {
+            setUploadError(null);
+            setUploadedFile(null);
+          }}
         >
           Clear
         </button>
