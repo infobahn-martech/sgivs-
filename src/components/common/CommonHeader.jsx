@@ -1,14 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import * as XLSX from 'xlsx';
+import { Spinner } from 'react-bootstrap';
+
+import '../../assets/scss/modal.scss'
 
 import { headerConfig } from '../../config/config';
 import filterImg from '../../assets/images/sort.svg';
 import exportIcon from '../../assets/images/export-excel.svg';
 import upload from '../../assets/images/upload-excel.svg';
 import Upload__icon from '../../assets/images/Upload__icon.svg';
+import addIcon from '../../assets/images/add-icon.svg';
 import CustomModal from './CustomModal';
-import { Spinner } from 'react-bootstrap';
 
 const CommonHeader = ({
   exportExcel,
@@ -47,19 +50,25 @@ const CommonHeader = ({
     switch (type) {
       case 'link':
         return (
-          <Link to={addButton.path} className="btn export">
+          <Link to={addButton.path} className="btn btn-submit">
+            
+            <img src={addIcon} alt="" className="img" />{' '}
             {addButton.name}
           </Link>
         );
       case 'button':
         return (
           <button className="btn export" onClick={addButton.action}>
+            
+            <img src={addIcon} alt="" className="img" />{' '}
             {addButton.name}
           </button>
         );
       default:
         return (
           <button className="btn export" onClick={addButton.action}>
+            
+            <img src={addIcon} alt="" className="img" />{' '}
             {addButton.name}
           </button>
         );
