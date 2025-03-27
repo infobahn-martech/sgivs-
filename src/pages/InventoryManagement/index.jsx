@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Tooltip } from 'react-tooltip';
+import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
 
 import deleteIcon from '../../assets/images/delete.svg';
 import viewIcon from '../../assets/images/eye.svg';
@@ -9,64 +11,18 @@ import downloadIcon from '../../assets/images/download.svg';
 
 import '../../assets/scss/usermanagement.scss';
 
-import userImage from '../../assets/images/user-1.png';
-
 import CommonHeader from '../../components/common/CommonHeader';
 import CustomTable from '../../components/common/CustomTable';
 import useInventoryStore from '../../stores/InventoryReducer';
-import moment from 'moment';
-import { useNavigate } from 'react-router-dom';
 import { downloadContent } from '../../helpers/utils';
-
-const dummyData = [
-  {
-    id: 1232,
-    itemId: '#FAS44SS',
-    itemName: 'Riding Jacket',
-    quantity: '06',
-    quantityAvailable: '04',
-    createdAt: 'Mar 3, 2025',
-    haveParts: true,
-    image: userImage,
-  },
-  {
-    id: 12312,
-    itemId: '#AS44SS',
-    itemName: 'Riding Gloves',
-    quantity: '10',
-    quantityAvailable: '07',
-    createdAt: 'Mar 14, 2025',
-    haveParts: false,
-    image: userImage,
-  },
-  {
-    id: 123123,
-    itemId: '#RAS33VS',
-    itemName: 'Helmet',
-    quantity: '06',
-    quantityAvailable: '04',
-    createdAt: 'Mar 1, 2025',
-    haveParts: false,
-    image: userImage,
-  },
-  {
-    id: 1231232,
-    itemId: '#FAS44SS',
-    itemName: 'Riding Jacket',
-    quantity: '06',
-    quantityAvailable: '04',
-    createdAt: 'Mar 3, 2025',
-    haveParts: true,
-    image: userImage,
-  },
-];
+import CustomActionModal from '../../components/CustomActionModal';
 
 const InventoryManagement = () => {
   const { getInventoryList, inventoryList, pagination, deleteItemById } =
     useInventoryStore((state) => state);
   const navigate = useNavigate();
   console.log(' inventoryList', inventoryList);
-  // const [pagination, setPagination] = useState({ currentPage: 1, limit: 10 });
+  const [modalConfig, setModalConfig] = useState({ type: 'delete', action: null });
   const [params, setParams] = useState({
     search: '',
     page: '1',
@@ -128,7 +84,7 @@ const InventoryManagement = () => {
       selector: 'createdAt',
       titleClasses: 'tw1',
       contentClass: 'user-pic',
-      cell: (row) => moment(row.createdAt).format('DD MMM YYYY'),
+      cell: (row) => moment(row.createdAt).format('DD MMM, YYYY'),
       sort: true,
     },
     {
@@ -178,7 +134,9 @@ const InventoryManagement = () => {
           <span
             data-tooltip-id={`tooltip-${row.id || rowIndex}`} // Unique ID for the tooltip
             data-tooltip-content={'Delete'} // Tooltip content
-            onClick={() => deleteItemById(row.id)}
+            onClick={() =>
+              setModalConfig({ action: deleteItemById(row.id), type: 'delete' })
+            }
           >
             <img src={deleteIcon} alt="Delete" />
           </span>
@@ -209,14 +167,37 @@ const InventoryManagement = () => {
     // Process the uploaded Excel data
     console.log('Processed Excel data:', data);
   };
+  const closeModal = () => {
+    setModalConfig({ type: null, action: null });
+  };
+
+  const renderMessage = () => {
+    switch (modalConfig.type) {
+      case 'delete':
+        return 'Are you sure you want to delete this?';
+
+      default:
+        break;
+    }
+  };
+  const renderModal = () => 
+    <CustomActionModal
+      closeModal={closeModal}
+      isLoading={false}
+      message={renderMessage()}
+      onSubmit={()=>modalConfig.action()}
+      showModal={modalConfig.type}
+    />;
+  
 
   return (
     <>
+      {renderModal()}
       <CommonHeader
         exportExcel={() => {}}
         uploadExcel
         onExcelUpload={handleExcelUpload}
-        uploadTitle='Bulk Upload Inventory'
+        uploadTitle="Bulk Upload Inventory"
         addButton={{
           name: 'Add Item',
           type: 'link',
@@ -225,7 +206,7 @@ const InventoryManagement = () => {
       />
       <CustomTable
         pagination={pagination}
-        count={dummyData?.length}
+        count={pagination}
         columns={columns}
         data={inventoryList}
         isLoading={false}
