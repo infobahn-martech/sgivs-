@@ -61,15 +61,27 @@ const InventoryForm = () => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [newPart, setNewPart] = useState('');
   const [customError, setCustomError] = useState({});
+
+  useEffect(() => {
+    clear();
+    set({
+      isLoading: false,
+      barcodeId: null,
+      inventoryItem: null,
+      barcodeKey: null,
+      isBarcodeLoading: false,
+    });
+  }, []);
+
   useEffect(() => {
     if (params?.id) getItemById(params.id);
     clearItemById();
   }, [params]);
 
   useEffect(() => {
-    clear();
     if (barcodeId) setValue('itemId', barcodeId);
   }, [barcodeId]);
+
   useEffect(() => {
     if (redirectToList) {
       navigate('/inventory-management'); // Replace with your desired route
@@ -109,7 +121,21 @@ const InventoryForm = () => {
       setValue('itemId', inventoryItem.itemId);
       setValue('itemName', inventoryItem.itemName);
       setValue('addPart', inventoryItem.hasParts);
-      setValue('quantity', '1');
+      if (
+        inventoryItem.eZPassNumber &&
+        (inventoryItem.eZPassNumber !== 'null' ||
+          inventoryItem.eZPassNumber !== '')
+      ) {
+        setValue('isEZPass', true);
+        setValue('plateNumber', inventoryItem.eZPassNumber);
+      }
+      if (inventoryItem.hasParts) {
+        setValue('buttonLabel', inventoryItem.label);
+        setValue('parts', [
+          { value: inventoryItem['inventory_parts.partName'] },
+        ]);
+      }
+      // setValue('quantity', '1');
       setUploadedFiles(inventoryItem.images || []);
     } else {
       reset();
@@ -122,9 +148,9 @@ const InventoryForm = () => {
   // watchers
   const isAddPartChecked = watch('addPart', false);
   const itemId = watch('itemId', null);
-  const quantity = watch('quantity', null);
+  // const parts = watch('parts', null);
   const isEZPass = watch('isEZPass', null);
-  console.log(' quantity', quantity);
+  // console.log(' parts', parts);
 
   useEffect(() => {
     if (!isAddPartChecked) {
@@ -586,7 +612,7 @@ const InventoryForm = () => {
             className="btn btn-submit"
             disabled={isLoading || isBarcodeLoading}
           >
-            {params.id ? 'Update' : 'Submit'}
+            {isLoading ? 'Loading...' : params.id ? 'Update' : 'Submit'}
           </button>
         </div>
       </div>
