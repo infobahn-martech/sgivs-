@@ -6,6 +6,7 @@ import { headerConfig } from '../../config/config';
 import filterImg from '../../assets/images/sort.svg';
 import exportIcon from '../../assets/images/export-excel.svg';
 import upload from '../../assets/images/upload-excel.svg';
+import { Spinner } from 'react-bootstrap';
 
 const CommonHeader = ({
   exportExcel,
@@ -14,19 +15,19 @@ const CommonHeader = ({
   addButton,
   hideRightSide = false,
   onSearch,
+  exportLoading,
 }) => {
   const [searchInput, setSearchInput] = useState('');
+  const fileInputRef = useRef(null);
+  const location = useLocation();
 
   const handleSearchChange = (event) => {
     const value = event.target.value;
     setSearchInput(value);
-    onSearch(value); // Pass value to parent component
+    onSearch(value);
   };
-  const location = useLocation();
-  const fileInputRef = useRef(null);
 
   const currentPath = location.pathname;
-
   const headerInfo = headerConfig?.find((item) =>
     currentPath?.startsWith(item.path)
   ) || {
@@ -43,18 +44,12 @@ const CommonHeader = ({
           const workbook = XLSX.read(e.target.result, { type: 'binary' });
           const sheetName = workbook.SheetNames[0];
           const worksheet = workbook.Sheets[sheetName];
-
-          // Convert worksheet to JSON
           const excelData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
-          // Optional: Remove header row if needed
-          const processedData = excelData;
-
-          // Call the callback if provided
           if (onExcelUpload) {
-            onExcelUpload(processedData);
+            onExcelUpload(excelData);
           } else {
-            console.log('Uploaded Excel data:', processedData);
+            console.log('Uploaded Excel data:', excelData);
           }
         } catch (error) {
           console.error('Error processing Excel file:', error);
@@ -116,9 +111,28 @@ const CommonHeader = ({
           </div>
           <div className="button-wrap">
             {exportExcel && (
-              <button className="btn export">
-                <img src={exportIcon} alt="" className="img" />{' '}
-                <span>Export as Excel</span>
+              <button
+                className="btn export"
+                onClick={exportExcel}
+                disabled={exportLoading}
+              >
+                {!exportLoading && (
+                  <img src={exportIcon} alt="" className="img" />
+                )}
+                <span>
+                  {exportLoading ? (
+                    <Spinner
+                      size="sm"
+                      as="span"
+                      animation="border"
+                      variant="light"
+                      aria-hidden="true"
+                      className="custom-spinner"
+                    />
+                  ) : (
+                    'Export as Excel'
+                  )}
+                </span>
               </button>
             )}
 
@@ -132,7 +146,7 @@ const CommonHeader = ({
                   onChange={handleFileUpload}
                 />
                 <button className="btn upload" onClick={triggerFileInput}>
-                  <img src={upload} alt="" className="img" />{' '}
+                  <img src={upload} alt="" className="img" />
                   <span>Upload Excel</span>
                 </button>
               </>

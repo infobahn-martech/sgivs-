@@ -32,7 +32,12 @@ const CustomActionModal = ({
         <button type="button" className="btn btn-cancel" onClick={closeModal}>
           Cancel
         </button>
-        <button type="submit" className="btn btn-primary" onClick={onSubmit}>
+        <button
+          type="submit"
+          className="btn btn-primary"
+          onClick={onSubmit}
+          disabled={isLoading}
+        >
           {isLoading ? (
             <Spinner
               size="sm"

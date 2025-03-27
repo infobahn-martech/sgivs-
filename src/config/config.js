@@ -2,6 +2,7 @@ import userImage from '../assets/images/user.svg';
 import InventoryIcon from '../assets/images/inventory-count.svg';
 import RentalManageIcon from '../assets/images/dashboard-4.svg';
 import moment from 'moment';
+import Gateway from './gateway';
 
 export const headerConfig = [
   {
@@ -41,3 +42,48 @@ export const getFirstLetters = (name) => {
 export const formatDate = (date) => moment(date)?.format('MMM D, YYYY');
 
 export const formatBoolean = (value) => (value ? 'Yes' : 'No');
+
+// excel export
+const baseUrl = import.meta.env.VITE_API_ENDPOINT;
+
+export const downloadFile = async ({
+  url,
+  params,
+  fileName,
+  method = 'GET',
+  extractFilePath,
+}) => {
+  try {
+    const response = await Gateway({
+      url,
+      method,
+      params: { ...params, isExcelExport: true },
+      headers: {
+        'x-timezone-offset': -new Date().getTimezoneOffset(),
+        'x-response-format': 'excel',
+      },
+    });
+
+    let filePath = extractFilePath(response);
+
+    if (!filePath) {
+      throw new Error('No file path received from API.');
+    }
+
+    if (!filePath.startsWith('http')) {
+      filePath = `${baseUrl}${filePath}`;
+    }
+
+    const fileResponse = await fetch(filePath);
+    const blob = await fileResponse.blob();
+
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.setAttribute('download', fileName);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  } catch (err) {
+    throw new Error(err?.message ?? 'File download failed.');
+  }
+};
