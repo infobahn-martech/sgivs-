@@ -6,7 +6,6 @@ const CustomActionModal = ({
   showModal,
   closeModal,
   message,
-  onCancel,
   onSubmit,
   isLoading,
 }) => {
@@ -16,7 +15,7 @@ const CustomActionModal = ({
         <div className="prompt-title">{message}</div>
       </div>
       <div className="modal-footer">
-        <button type="button" className="btn btn-cancel" onClick={onCancel}>
+        <button type="button" className="btn btn-cancel" onClick={closeModal}>
           Cancel
         </button>
         <button type="submit" className="btn btn-primary" onClick={onSubmit}>
