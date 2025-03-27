@@ -20,6 +20,9 @@ const useInventoryStore = create((set) => ({
   barcodeKey: null,
   inventoryItem: null,
   redirectToList: false,
+  set: (data) => {
+    set(data);
+  },
   createInventoryItem: async (formData) => {
     set({ isLoading: true, error: null });
     try {

@@ -108,11 +108,14 @@ const InventoryForm = () => {
     if (inventoryItem) {
       setValue('itemId', inventoryItem.itemId);
       setValue('itemName', inventoryItem.itemName);
+      setValue('addPart', inventoryItem.hasParts);
       setValue('quantity', '1');
       setUploadedFiles(inventoryItem.images || []);
     } else {
       reset();
       setUploadedFiles([]);
+      setCustomError(null);
+      setNewPart('');
     }
   }, [inventoryItem, setValue]);
 
@@ -178,11 +181,10 @@ const InventoryForm = () => {
         message: 'At least one image is required.',
       });
   };
-  // Custom Select Options
-  const quantityOptions = Array.from({ length: 10 }, (_, i) => ({
-    value: (i + 1).toString(),
-    label: `${i + 1}`,
-  }));
+  // const quantityOptions = Array.from({ length: 10 }, (_, i) => ({
+  //   value: (i + 1).toString(),
+  //   label: `${i + 1}`,
+  // }));
 
   // Handle Add Part
   const handleAddPart = () => {
@@ -248,10 +250,13 @@ const InventoryForm = () => {
 
     // Append parts if added
     if (data.addPart && data.parts) {
+      const parts = [];
       data.parts.forEach((part, index) => {
         console.log(' part', part);
-        formData.append(`parts`, part.value);
+        parts.push(part.value);
       });
+      formData.append(`parts`, parts);
+      console.log(' parts', parts);
     }
 
     // Append files
@@ -506,7 +511,7 @@ const InventoryForm = () => {
                         setCustomError(temp);
                       }}
                     />
-                    {customError.parts && (
+                    {customError?.parts && (
                       <p className="error">{customError.parts}</p>
                     )}
                   </div>
@@ -572,7 +577,7 @@ const InventoryForm = () => {
             onClick={() => {
               reset();
               setCustomError(null);
-              setNewPart("");
+              setNewPart('');
               setUploadedFiles([]);
             }}
           >
