@@ -123,6 +123,7 @@ const Profile = () => {
       </div>
       {isLogOut && (
         <CustomActionModal
+          isLogout
           showModal={isLogOut}
           closeModal={() => {
             setIsLogOut(false);

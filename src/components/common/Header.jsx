@@ -93,6 +93,7 @@ const Header = () => {
       </div>
       {isLogOut && (
         <CustomActionModal
+          isLogout
           showModal={isLogOut}
           closeModal={() => {
             setIsLogOut(false);
