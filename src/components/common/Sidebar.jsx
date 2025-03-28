@@ -94,7 +94,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
               <span className="icon">
                 <img src={menu.icon} alt="menu-icon" />
               </span>
-              <span className="txt p-2">{menu.name}</span>
+              <span className="txt">{menu.name}</span>
             </Link>
           </Fragment>
         ))}
