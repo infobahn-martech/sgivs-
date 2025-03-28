@@ -66,6 +66,9 @@ a {
   padding-right: 15px !important;
   margin-bottom: 5px !important;
 }
+.react-datepicker-wrapper {
+width: 100%;
+}
 .cursor-not{
   cursor: not-allowed;
 }

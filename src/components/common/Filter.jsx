@@ -2,6 +2,7 @@ import React from 'react';
 
 import calIcon from '../../assets/images/calend-icon.svg';
 import CustomSelect from './CustomSelect';
+import CustomDateRange from './DateRangePicker';
 
 const Filter = () => {
   return (
@@ -13,7 +14,7 @@ const Filter = () => {
             Created date :{' '}
           </label>
           <div className="col-sm-9 field-mask">
-            <input type="text" className="form-control" id="inputPassword" />
+            <CustomDateRange className="form-control w-100" />
             <span className="calendar-icon">
               <img src={calIcon} alt="" />
             </span>
