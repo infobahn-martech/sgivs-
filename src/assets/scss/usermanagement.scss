@@ -281,7 +281,7 @@
             color: #8897ad;
           }
           .form-check-input:checked[type='radio'] {
-            background-image: url(../img/radio-checked.svg);
+            background-image: url(../images/radio-checked.svg);
             background-color: transparent;
           }
         }
@@ -498,7 +498,7 @@
   height: calc(100vh - 258px);
   @media ($sm-1679) {
     padding: 0 20px 20px 20px;
-    height: calc(100vh - 215px);
+    height: calc(100vh - 260px);
   }
   @media (max-width: 1199px) {
     height: calc(100vh - 194px);
