@@ -3,6 +3,7 @@ import { useForm, useFieldArray } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import '../../assets/scss/add-inventory.scss';
+import '../../assets/scss/forms.scss';
 
 import userIcon from '../../assets/images/inventory_management.svg';
 import barcodeIcon from '../../assets/images/barcode.svg';
@@ -32,7 +33,9 @@ const InventoryForm = () => {
     redirectToList,
     set,
   } = useInventoryStore((state) => state);
-  const { uploadFiles, files, isUploading, deleteFile } = useCommonStore((state) => state);
+  const { uploadFiles, files, isUploading, deleteFile } = useCommonStore(
+    (state) => state
+  );
   const { error, clear } = useAlertReducer((state) => state);
 
   const params = useParams();
@@ -79,8 +82,8 @@ const InventoryForm = () => {
   }, []);
 
   useEffect(() => {
-    if (files.length) {      
-      setUploadedFiles([...uploadedFiles,...files]);
+    if (files.length) {
+      setUploadedFiles([...uploadedFiles, ...files]);
     }
   }, [files]);
 
@@ -137,8 +140,8 @@ const InventoryForm = () => {
       setValue('addPart', inventoryItem.hasParts);
       if (
         inventoryItem.eZPassNumber &&
-        (inventoryItem.eZPassNumber !== 'null' ||
-          inventoryItem.eZPassNumber !== '')
+        inventoryItem.eZPassNumber !== 'null' &&
+        inventoryItem.eZPassNumber !== ''
       ) {
         setValue('isEZPass', true);
         setValue('plateNumber', inventoryItem.eZPassNumber);
@@ -279,30 +282,12 @@ const InventoryForm = () => {
       error('Please generate barcode before submit!');
       return;
     }
-    console.log('data', data);
 
-    // Validate parts when hasParts is true
-
-    // Create FormData
-    const formData = new FormData();
-
-    // Append basic form fields
-    formData.append('itemName', data.itemName);
-    // formData.append('quantity', data.quantity.toString());
-    formData.append('eZPassNumber', isEZPass ? data.plateNumber || null : null);
-    formData.append('itemId', data.itemId);
-    formData.append('hasParts', data.addPart.toString());
-    formData.append('barcode', barcodeKey);
-    formData.append('label', isAddPartChecked ? data.buttonLabel : null);
-
-    // Append parts if added
     const parts = [];
     if (data.addPart && data.parts) {
       data.parts.forEach((part) => {
-        console.log(' part', part);
         parts.push(part.value);
       });
-      formData.append('parts', parts.join(','));
     }
 
     // Append files
@@ -310,9 +295,9 @@ const InventoryForm = () => {
     if (uploadedFiles.length) {
       uploadedFiles.forEach((file) => {
         imageKeys.push(file.key);
-        formData.append(`images`, file);
       });
     }
+
     const payload = {
       itemId: data.itemId,
       barcode: barcodeKey,
@@ -323,11 +308,6 @@ const InventoryForm = () => {
       eZPassNumber: isEZPass ? data.plateNumber || 'null' : 'null',
       label: isAddPartChecked ? data.buttonLabel : null,
     };
-
-    // Log FormData values
-    for (let [key, value] of formData.entries()) {
-      console.log(`${key}:`, value);
-    }
 
     if (params.id) updateInventoryItem(payload, params.id);
     else createInventoryItem(payload);
@@ -495,9 +475,7 @@ const InventoryForm = () => {
                       <div key={index} className="file-preview">
                         <img
                           className="pt-2 pro-pic"
-                          src={file.url || file
-
-                          }
+                          src={file.url || file}
                           alt={`Uploaded file ${index + 1}`}
                           style={{ width: 75 }}
                         />
@@ -537,20 +515,22 @@ const InventoryForm = () => {
                     <p className="error">{errors.itemId.message}</p>
                   )}
                 </div>
-                <div className="col-md-4 d-flex align-items-end pt-2">
-                  <button
-                    type="button"
-                    className="btn generate-btn"
-                    onClick={handleBarcode}
-                  >
-                    {!isBarcodeLoading && (
-                      <span className="bar-code">
-                        <img src={barcodeIcon} alt="bar-code" />
-                      </span>
-                    )}
-                    {isBarcodeLoading ? 'Please wait...' : 'Generate Barcode'}
-                  </button>
-                </div>
+                {!!barcodeId || (params?.id && null) || (
+                  <div className="col-md-4 d-flex align-items-end pt-2">
+                    <button
+                      type="button"
+                      className="btn generate-btn"
+                      onClick={handleBarcode}
+                    >
+                      {!isBarcodeLoading && (
+                        <span className="bar-code">
+                          <img src={barcodeIcon} alt="bar-code" />
+                        </span>
+                      )}
+                      {isBarcodeLoading ? 'Please wait...' : 'Generate Barcode'}
+                    </button>
+                  </div>
+                )}
               </div>
 
               {/* EZ pass Checkbox */}
