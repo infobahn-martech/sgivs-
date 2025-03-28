@@ -113,13 +113,12 @@
             font-weight: 500;
             font-size: 15px;
             display: flex;
-            padding: 20px;
-            border-radius: 20px;
+            padding:15px;
+            border-radius: 25px;
             margin-bottom: 20px;
             transition: padding 0.3s ease-in-out;
             @media ($sm-1679){
                 margin-bottom: 15px;
-                padding: 15px;
             }
             @media ($sm-1441){
                 margin-bottom: 10px;
