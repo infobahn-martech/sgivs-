@@ -1,5 +1,8 @@
 import React from 'react';
 
+import calIcon from '../../assets/images/calend-icon.svg';
+import CustomSelect from './CustomSelect';
+
 const Filter = () => {
   return (
     <div className="dropdown-menu dropdown-menu-end filter-dropdown ">
@@ -12,21 +15,22 @@ const Filter = () => {
           <div className="col-sm-9 field-mask">
             <input type="text" className="form-control" id="inputPassword" />
             <span className="calendar-icon">
-              <img src="img/calend-icon.svg" alt="" />
+              <img src={calIcon} alt="" />
             </span>
-          </div> 
+          </div>
         </div>
         <div className="row">
           <label for="inputPassword" className="col-sm-3 col-form-label">
             Visibility :
           </label>
           <div className="col-sm-9">
-            <select className="form-select" aria-label="Default select example">
-              <option selected>Open this select menu</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
+            <CustomSelect
+              className="form-select form-control"
+              options={[
+                { value: 'shown', label: 'shown' },
+                { value: 'hidden', label: 'hidden' },
+              ]}
+            />
           </div>
         </div>
         <div className="radio-wrps row">

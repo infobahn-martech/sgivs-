@@ -57,7 +57,7 @@ a {
   box-shadow: none !important;
   border-color: transparent !important;
   background-color: transparent !important;
-  border: none !important;
+  border: none !important; 
 }
 .css-t3ipsp-control:hover {
   border-color: none !important;

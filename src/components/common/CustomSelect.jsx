@@ -17,6 +17,7 @@ function CustomSelect({
   name,
   ...rest
 }) {
+  console.log(' options', options);
   const { isMulti } = { ...rest };
   const [selectedValue, setSelectedValue] = useState(value);
 
@@ -114,7 +115,8 @@ function CustomSelect({
   return (
     <Select
       menuPlacement={position}
-      menuPosition="fixed"
+      // menuPosition="fixed"
+      
       maxMenuHeight={maxheight}
       isLoading={isLoading}
       classNamePrefix={classNamePrefix}
@@ -124,9 +126,13 @@ function CustomSelect({
         isMulti ? 'multiple-select' : ''
       } react-select-custom p-1`}
       placeholder={placeholder}
-      options={options}
+      options={[
+        { value: 'shown', label: 'shown' },
+        { value: 'hidden', label: 'hidden' },
+      ]}
       isClearable
       name={name}
+      
       components={{
         ...(!showIndicator && {
           DropdownIndicator: () => null,
