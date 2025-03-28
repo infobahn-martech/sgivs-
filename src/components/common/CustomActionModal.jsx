@@ -1,6 +1,8 @@
 import React from 'react';
 import { Spinner } from 'react-bootstrap';
 
+import '../../assets/scss/modal.scss'
+
 import CustomModal from './CustomModal';
 import deleteIcon from '../../assets/images/delete-modal.svg';
 import logoutIcon from '../../assets/images/logout-modal.svg';
@@ -24,7 +26,7 @@ const CustomActionModal = ({
         <div className="modal-icon">
           <div className="icon-blk">
             <img
-              className="icon"
+              // className="icon"
               // src={notifyIcon}
               src={
                 isDelete
@@ -73,7 +75,7 @@ const CustomActionModal = ({
   return (
     <CustomModal
       closeButton
-      className="modal fade prompt-modal"
+      className="modal fade prompt-modal add-new-msg-modal"
       dialgName="modal-dialog modal-dialog-centered modal-dialog-scrollable"
       show={showModal}
       closeModal={() => closeModal(false)}

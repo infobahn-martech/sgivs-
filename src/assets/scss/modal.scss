@@ -281,7 +281,7 @@
                         color: #8897AD;
                     }
                     .form-check-input:checked[type=radio]{
-                        background-image: url(../img/radio-checked.svg) ;
+                        background-image: url(../images/radio-checked.svg) ;
                         background-color: transparent;
                     }
                 }
@@ -1015,4 +1015,223 @@
             }
         }
     }
+}
+.prompt-modal{
+  .modal-dialog{
+      max-width: 640px;
+      @media($sm-1199){
+          max-width: 500px;
+      }
+      @media($sm-579){
+          max-width: 90%;
+          margin-left: auto;
+          margin-right: auto;
+      }
+      @media($sm-479){
+          max-width: 95%;
+          margin-left: auto;
+          margin-right: auto;
+      }
+      .modal-content{
+          border-radius: 40px;
+          .modal-header{
+              padding: 0;
+              border-bottom: none;
+              .btn-close{
+                  width: 29px;
+                  height: 29px;
+                  border-radius: 29px;
+                  font-size: 10px;
+                  padding: 0;
+                  position: absolute;
+                  top: 30px;
+                  right: 30px;
+                  box-shadow: none;
+                  outline: none;
+                  background: url(../images/modal-close-btn.svg) #F2F5FA no-repeat center;
+                  background-size: 10px;
+                  opacity: 1;
+                  z-index: 1;
+              }
+              .modal-title{
+                  font-weight: 500;
+                  font-size: 20px;
+                  color: #092837;
+              }
+          }
+          .modal-body{
+              padding: 21px 86px 0;
+              min-height: 130px;
+              @media ($sm-1679){
+                  padding: 21px 60px 0;
+              }
+              @media ($sm-1441){
+                  padding: 21px 50px 0;
+              }
+              @media ($sm-1199){
+                  padding: 20px 40px 0;
+              }
+              @media ($sm-991){
+                  padding: 20px 30px 0;
+              }
+              @media ($sm-767){
+                  padding: 20px 20px 0;
+              }
+              &::-webkit-scrollbar {
+                  width: 4px;
+              }
+              &::-webkit-scrollbar-track {
+              box-shadow: inset 0 0 4px #D9D9D9;
+              }
+              &::-webkit-scrollbar-thumb {
+              background-color: #91ADBB;
+              outline: 1px solid #D9D9D9;
+              }
+              .modal-icon{
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  width: 100%;
+                  margin-bottom: 30px;
+                  margin-top: 47px;
+                  @media ($sm-1679){
+                      margin-bottom: 25px;
+                      margin-top: 40px;
+                  }
+                  @media ($sm-1441){
+                      margin-bottom: 20px;
+                      margin-top: 35px;
+                  }
+                  @media ($sm-1199){
+                      margin-top:30px;
+                      margin-bottom: 15px;
+                  }
+                  @media ($sm-991){
+                      margin-top:25px;
+                      margin-bottom: 0px;
+                  }
+                  @media ($sm-579){
+                      margin-top:20px;
+                  }
+                  .icon-blk{
+                      width:144px;
+                      height:144px;
+                      border-radius: 144px;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      img{
+                          width: 100%;
+                          height: 100%;
+                          object-fit: contain;
+                      }
+                      @media ($sm-1679){
+                          width: 120px;
+                          height: 120px;
+                          border-radius: 120px;
+                      }
+                      @media ($sm-1441){
+                          width: 100px;
+                          height: 100px;
+                          border-radius: 100px;
+                      }
+                      @media ($sm-1199){
+                          width: 80px;
+                          height: 80px;
+                          border-radius: 80px;
+                      }
+                      @media ($sm-991){
+                          width: 70px;
+                          height: 70px;
+                          border-radius: 70px;
+                      }
+                  }
+              }
+              .prompt-title{
+                  font-size: 18px;
+                  font-weight: 600;
+                  margin: 20px 0 0;
+                  text-align: center;
+                  color: #0E0E0E;
+                  max-width: 242px;
+                  text-align: center;
+                  margin: 13px auto;
+                  @media ($sm-1679){
+                      font-size: 17px;
+                  }
+                  @media ($sm-1441){
+                      font-size: 16px;
+                  }
+                  @media ($sm-1199){
+                      font-size: 15px;
+                  }
+              }
+          }
+          .modal-footer{
+              padding: 50px 86px;
+              border: none;
+              @media ($sm-1679){
+                  padding: 45px 60px;
+              }
+              @media ($sm-1441){
+                  padding: 45px 50px;
+              }
+              @media ($sm-1199){
+                  padding: 40px;
+              }
+              @media ($sm-991){
+                  padding: 30px 40px;
+              }
+              @media ($sm-991){
+                  padding: 30px;
+              }
+              @media ($sm-767){
+                  padding: 20px;
+              }
+
+              .btn{
+                  border-radius: 35px;
+                  margin: 0 8px;
+                  height: 49px;
+                  width: calc(50% - 16px);
+                  font-size: 20px;
+                  color: #0096DF;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  background:transparent;
+                  border:1px solid #0096DF;
+                  &.btn-primary{
+                      background: linear-gradient(90deg, #2CA0DA 0%, #3982A7 100%);
+                      color: #fff;
+                  }
+                  &.btn-cancel{
+                      background: transparent;
+                  }
+                  @media ($sm-1679){
+                      height: 45px;
+                      font-size: 18px;
+                  }
+                  @media ($sm-1441){
+                      font-size: 17px;
+                  }
+                  @media ($sm-1199){
+                      font-size: 16px;
+                      height: 40px;
+                      margin: 0 5px;
+                      width: calc(50% - 10px);
+                  }
+                  @media ($sm-479){
+                      width: 100%;
+                      margin-left: 0px;
+                      margin-top: 10px;
+                  }
+                  &:hover{
+                      background: #1081bad6 ;
+                      color: #fff;
+                  }
+              }
+          }
+      }
+  }
 }
