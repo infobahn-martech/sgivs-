@@ -46,10 +46,10 @@ const useInventoryStore = create((set) => ({
   updateInventoryItem: async (formData, itemId) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await updateInventoryItems(formData, itemId);
-      console.log(' response', response);
-
-      // Update the state with the new item
+      const { data } = await updateInventoryItems(formData, itemId);
+      const { success } = useAlertReducer.getState();
+      set({ isLoading: false, redirectToList: true }); // Set redirectToList to true
+      success(data.message);
     } catch (err) {
       const { error } = useAlertReducer.getState();
       error(err.response?.data?.message || 'Failed to create inventory item');
