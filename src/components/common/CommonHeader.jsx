@@ -12,6 +12,7 @@ import upload from '../../assets/images/upload-excel.svg';
 import Upload__icon from '../../assets/images/Upload__icon.svg';
 import addIcon from '../../assets/images/add-icon.svg';
 import CustomModal from './CustomModal';
+import Filter from './Filter';
 
 const CommonHeader = ({
   exportExcel,
@@ -273,9 +274,18 @@ const CommonHeader = ({
               />
             </div>
             <div className="filter-wrap">
-              <span>Filter</span>
-              <img src={filterImg} alt="" className="img" />
+              <a
+                className="dropdown-toggle"
+                role="button"
+                data-bs-toggle="dropdown"
+                data-bs-auto-close="false"
+                aria-expanded="false"
+              >
+                <span>Filter</span>
+                <img src={filterImg} alt="" className="img" />
+              </a>
             </div>
+            <Filter />
             <div className="button-wrap">
               {exportExcel && (
                 <button

@@ -1,0 +1,75 @@
+import React from 'react';
+
+const Filter = () => {
+  return (
+    <div className="dropdown-menu dropdown-menu-end filter-dropdown">
+      <div className="drop-title">Filter By</div>
+      <div className="drp-cont">
+        <div className="row">
+          <label for="staticEmail" className="col-sm-3 col-form-label">
+            Created date :{' '}
+          </label>
+          <div className="col-sm-9 field-mask">
+            <input type="text" className="form-control" id="inputPassword" />
+            <span className="calendar-icon">
+              <img src="img/calend-icon.svg" alt="" />
+            </span>
+          </div>
+        </div>
+        <div className="row">
+          <label for="inputPassword" className="col-sm-3 col-form-label">
+            Visibility :
+          </label>
+          <div className="col-sm-9">
+            <select className="form-select" aria-label="Default select example">
+              <option selected>Open this select menu</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+          </div>
+        </div>
+        <div className="radio-wrps row">
+          <label for="inputPassword" className="col-sm-3 col-form-label">
+            Parts found :
+          </label>
+          <div className="col-sm-9 d-flex align-items-center">
+            <div className="form-check form-check-inline">
+              <input
+                className="form-check-input"
+                type="radio"
+                name="inlineRadioOptions"
+                id="inlineRadio1"
+                value="option1"
+              />
+              <label className="form-check-label" for="inlineRadio1">
+                Yes
+              </label>
+            </div>
+            <div className="form-check form-check-inline">
+              <input
+                className="form-check-input"
+                type="radio"
+                name="inlineRadioOptions"
+                id="inlineRadio2"
+                value="option2"
+              />
+              <label className="form-check-label" for="inlineRadio2">
+                No
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="filter-ftr">
+        <button className="btn clr">Clear All Filters</button>
+        <div className="grp-btn">
+          <button className="btn btn-Cancel">Cancel</button>
+          <button className="btn btn-primary">Apply</button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Filter;
