@@ -498,6 +498,14 @@
                     justify-content: center;
                     @media ($sm-1679) {
                         height: 48px;
+                        font-size: 18px;
+                    }
+                    @media ($sm-1441) {
+                        font-size: 17px;
+                    }
+                    @media ($sm-1199) {
+                        height: 48px;
+                        font-size: 16px;
                     }
                     @media ($sm-767) {
                       

@@ -23,7 +23,7 @@ const Profile = () => {
   const { profileData, doLogout } = useAuthReducer((state) => state);
 
   return (
-    <div className='inner-scroll-outer profile'>
+    <div className="inner-scroll-outer profile">
       <div className="profile-sec">
         <div className="profile-title">
           <span className="pro-pic">
@@ -61,7 +61,7 @@ const Profile = () => {
                     <span>
                       <img src={proPic} alt="profile-icon" />
                     </span>
-                    Profile
+                    <span className="txt">Profile</span>
                   </button>
                 </li>
 
@@ -82,7 +82,7 @@ const Profile = () => {
                     <span>
                       <img src={lock} alt="lock" />
                     </span>
-                    Change Password
+                    <span className="txt">Change Password</span>
                   </button>
                 </li>
                 <li className="nav-item" role="presentation">
@@ -101,7 +101,7 @@ const Profile = () => {
                     <span>
                       <img src={logOut} alt="logout-icon" />
                     </span>
-                    Logout
+                    <span className="txt">Logout</span>
                   </button>
                 </li>
               </ul>
