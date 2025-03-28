@@ -1,10 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import calIcon from '../../assets/images/calend-icon.svg';
 import CustomSelect from './CustomSelect';
 import CustomDateRange from './DateRangePicker';
+import moment from 'moment';
 
-const Filter = () => {
+const Filter = ({ filterOptions, onChange, clearOptions }) => {
+  const initialFilters = filterOptions.reduce((acc, option) => {
+    if (option.defaultValue) {
+      acc[option.BE_keyName] = option.defaultValue.value;
+    }
+    return acc;
+  }, {});
+
+  const [filters, setFilters] = useState(initialFilters);
+  const [dateRange, setDateRange] = useState({
+    startDate: null,
+    endDate: null,
+  });
+  const handleInputChange = (fieldName, value, isDate = false) => {
+    if (fieldName === 'u_team_or_department.de_name') {
+      setFilters({ ...filters, role: '', level: '' });
+    }
+
+    if (isDate) {
+      value = moment(value).format('YYYY-MM-DD');
+    }
+    // if (Array.isArray(value)) {
+    //   value = JSON.stringify(value);
+    // }
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [fieldName]: value,
+      startDate: dateRange.startDate,
+      endDate: dateRange.endDate,
+    }));
+  };
   return (
     <div className="dropdown-menu dropdown-menu-end filter-dropdown ">
       <div className="drop-title">Filter By</div>
@@ -17,7 +48,7 @@ const Filter = () => {
             <CustomDateRange
               className="form-control w-100"
               onChange={({ startDate, endDate }) =>
-                console.log(startDate, endDate)
+                setFilters({ ...filters, startDate, endDate })
               }
             />
             <span className="calendar-icon">
