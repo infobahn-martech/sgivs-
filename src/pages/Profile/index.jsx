@@ -23,7 +23,7 @@ const Profile = () => {
   const { profileData, doLogout } = useAuthReducer((state) => state);
 
   return (
-    <>
+    <div className='inner-scroll-outer profile'>
       <div className="profile-sec">
         <div className="profile-title">
           <span className="pro-pic">
@@ -137,7 +137,7 @@ const Profile = () => {
           onSubmit={() => doLogout()}
         />
       )}
-    </>
+    </div>
   );
 };
 
