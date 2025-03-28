@@ -41,7 +41,6 @@ const useInventoryStore = create((set) => ({
         error: err.response?.data?.message || 'Failed to create inventory item',
         isLoading: false,
       });
-      throw error;
     }
   },
   updateInventoryItem: async (formData, itemId) => {

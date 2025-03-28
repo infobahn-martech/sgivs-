@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import * as XLSX from 'xlsx';
 import { Spinner } from 'react-bootstrap';
 
-import '../../assets/scss/modal.scss'
+import '../../assets/scss/modal.scss';
 
 import { headerConfig } from '../../config/config';
 import filterImg from '../../assets/images/sort.svg';
@@ -39,37 +39,36 @@ const CommonHeader = ({
 
   const currentPath = location.pathname;
 
-  const headerInfo = headerConfig?.find((item) =>
-    currentPath?.startsWith(item.path)
-  ) || {
-    title: 'Page Not Found',
-    icon: 'img/default.svg',
-  };
+  const headerInfo = headerConfig?.find(
+    (item) =>
+      currentPath === item.path ||
+      (currentPath !== '/' &&
+        currentPath?.startsWith(item.path) &&
+        item.path !== '/')
+  ) ||
+    headerConfig.find((item) => currentPath?.startsWith(item.path)) || {
+      title: 'Page Not Found',
+      icon: 'img/default.svg',
+    };
 
   const renderAddButton = (type) => {
     switch (type) {
       case 'link':
         return (
           <Link to={addButton.path} className="btn btn-submit">
-            
-            <img src={addIcon} alt="" className="img" />{' '}
-            {addButton.name}
+            <img src={addIcon} alt="" className="img" /> {addButton.name}
           </Link>
         );
       case 'button':
         return (
           <button className="btn export" onClick={addButton.action}>
-            
-            <img src={addIcon} alt="" className="img" />{' '}
-            {addButton.name}
+            <img src={addIcon} alt="" className="img" /> {addButton.name}
           </button>
         );
       default:
         return (
           <button className="btn export" onClick={addButton.action}>
-            
-            <img src={addIcon} alt="" className="img" />{' '}
-            {addButton.name}
+            <img src={addIcon} alt="" className="img" /> {addButton.name}
           </button>
         );
     }
@@ -245,12 +244,23 @@ const CommonHeader = ({
     <>
       {renderUploadModal()}
       <div className="table-header-wrap">
-        <div className="left-wrap">
-          <div className="icon-title">
-            <img src={headerInfo?.icon} alt="" className="img" />
-            <span>{headerInfo?.title}</span>
+        {headerInfo.path !== '/' ? (
+          <div className="left-wrap">
+            <div className="icon-title">
+              <img src={headerInfo?.icon} alt="" className="img" />
+              <span>{headerInfo?.title}</span>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="cta-info-blk p-0">
+            <div className="board-info">
+              <div className="icon-blk">
+                <img src={headerInfo?.icon} alt="" />
+              </div>
+              <span className="txt">{headerInfo?.title}</span>
+            </div>
+          </div>
+        )}
         {!hideRightSide && (
           <div className="right-wrap">
             <div className="search-wrap">

@@ -65,7 +65,7 @@ const router = createBrowserRouter([
               },
               {
                 element: <RentalManagement />,
-                path: '/rental-management',
+                path: '/loan-management',
               },
               {
                 element: <EZPassBilling />,

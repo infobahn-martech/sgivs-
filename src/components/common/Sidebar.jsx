@@ -13,6 +13,7 @@ import MessagesIcon from '../../assets/images/dashboard-5.svg';
 import EZIcon from '../../assets/images/dashboard-6.svg';
 import SettingsIcon from '../../assets/images/dashboard-7.svg';
 import ToggleIcon from '../../assets/images/toggle-btn.svg';
+import collapseLogo from '../../assets/images/collapse-logo.png';
 
 const Sidebar = ({ collapsed, setCollapsed }) => {
   const location = useLocation();
@@ -46,9 +47,9 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       ],
     },
     {
-      name: 'Rental Management',
+      name: 'Loan Management',
       icon: RentalManageIcon,
-      path: '/rental-management',
+      path: '/loan-management',
     },
     { name: 'EZ pass billing', icon: EZIcon, path: '/ez-pass-billing' },
     { name: 'Messages', icon: MessagesIcon, path: '/messages' },
@@ -60,8 +61,13 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       <div className="top-hold">
         <div className="logo">
           <img src={MainLogo} alt="logo" />
+          <img className="logo-collapse" src={collapseLogo} alt="" />
+
         </div>
-        <button className="toggle-nav" onClick={toggleSidebar}>
+        <button className="toggle-nav  close-nav" onClick={toggleSidebar}>
+          <img src={ToggleIcon} alt="Toggle Sidebar" />
+        </button>
+        <button className="toggle-nav  open-nav" onClick={toggleSidebar}>
           <img src={ToggleIcon} alt="Toggle Sidebar" />
         </button>
       </div>
