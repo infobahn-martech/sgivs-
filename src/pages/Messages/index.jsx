@@ -3,7 +3,7 @@ import React from 'react';
 import '../../assets/scss/messages.scss';
 
 import plusIcon from '../../assets/images/plus.svg';
-import messageIcon from '../../assets/images/message.svg';
+import messageIcon from '../../assets/images/Message.svg';
 import img1 from '../../assets/images/msg-img-1.png';
 import img2 from '../../assets/images/msg-img-2.png';
 
