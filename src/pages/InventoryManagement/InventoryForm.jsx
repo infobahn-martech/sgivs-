@@ -14,6 +14,8 @@ import CustomSelect from '../../components/common/CustomSelect';
 import useInventoryStore from '../../stores/InventoryReducer';
 import useAlertReducer from '../../stores/AlertReducer';
 import CustomActionModal from '../../components/common/CustomActionModal';
+import useCommonStore from '../../stores/CommonStore';
+import { Spinner } from 'react-bootstrap';
 
 const InventoryForm = () => {
   const {
@@ -30,7 +32,7 @@ const InventoryForm = () => {
     redirectToList,
     set,
   } = useInventoryStore((state) => state);
-  console.log(' inventoryItem', inventoryItem);
+  const { uploadFiles, files, isUploading } = useCommonStore((state) => state);
   const { error, clear } = useAlertReducer((state) => state);
 
   const params = useParams();
@@ -60,6 +62,7 @@ const InventoryForm = () => {
   });
 
   const [uploadedFiles, setUploadedFiles] = useState([]);
+  console.log(' uploadedFiles', uploadedFiles);
   const [newPart, setNewPart] = useState('');
   const [customError, setCustomError] = useState({});
   const [modalConfig, setModalConfig] = useState({ type: null, action: null });
@@ -74,6 +77,12 @@ const InventoryForm = () => {
       isBarcodeLoading: false,
     });
   }, []);
+
+  useEffect(() => {
+    if (files.length) {
+      setUploadedFiles(files);
+    }
+  }, [files]);
 
   useEffect(() => {
     if (params?.id) getItemById(params.id);
@@ -177,6 +186,7 @@ const InventoryForm = () => {
   // Handle File Upload Logic
   const handleFileUpload = (files) => {
     let newFiles = [...uploadedFiles];
+    const formData = new FormData();
 
     for (let file of files) {
       if (!allowedTypes.includes(file.type)) {
@@ -195,16 +205,18 @@ const InventoryForm = () => {
         return;
       }
 
+      formData.append('files', file);
       newFiles.push(file);
     }
-
-    setUploadedFiles(newFiles);
+    formData.append('folderPath', 'inventory');
+    uploadFiles(formData);
+    // setUploadedFiles(newFiles);
     clearErrors('fileUpload');
   };
 
   // Handle File Removal
-  const handleRemoveFile = (index) => {
-    const newFiles = uploadedFiles.filter((_, i) => i !== index);
+  const handleRemoveFile = (key) => {
+    const newFiles = uploadedFiles.filter((file) => file.key !== key);
     setUploadedFiles(newFiles);
     if (newFiles.length === 0)
       setError('fileUpload', {
@@ -418,11 +430,23 @@ const InventoryForm = () => {
                 <div
                   className="upload-box"
                   onDrop={handleDrop}
-                  onDragOver={(e) => e.preventDefault()}
+                  onDragOver={(e) => !isUploading &&e.preventDefault()}
+                  
                 >
-                  <div className="upload-ico">
-                    <img src={Upload__icon} alt="upload-ico" />
-                  </div>
+                  {isUploading ? (
+                    <Spinner
+                      size="lg"
+                      as="span"
+                      animation="border"
+                      variant="dark"
+                      aria-hidden="true"
+                      className="custom-spinner"
+                    />
+                  ) : (
+                    <div className="upload-ico">
+                      <img src={Upload__icon} alt="upload-ico" />
+                    </div>
+                  )}
                   <p className="txt">
                     Drag & drop files or{' '}
                     <label
@@ -439,6 +463,7 @@ const InventoryForm = () => {
                     accept="image/jpeg, image/png"
                     multiple
                     onChange={handleFileSelect}
+                    disabled = {isUploading}
                   />
                   <span className="btm-txt">
                     Supported formats: JPEG, PNG (Max: 10 images)
@@ -455,18 +480,14 @@ const InventoryForm = () => {
                       <div key={index} className="file-preview">
                         <img
                           className="pt-2 pro-pic"
-                          src={
-                            file instanceof File
-                              ? URL.createObjectURL(file)
-                              : file
-                          }
+                          src={file.url}
                           alt={`Uploaded file ${index + 1}`}
                           style={{ width: 75 }}
                         />
                         <button
                           type="button"
                           className="btn close-btn"
-                          onClick={() => handleRemoveFile(index)}
+                          onClick={() => handleRemoveFile(file.key)}
                         >
                           <span className="plus">
                             <img src={closMarkIcon} alt="Remove image" />
