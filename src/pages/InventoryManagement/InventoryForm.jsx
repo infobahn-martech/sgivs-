@@ -281,7 +281,7 @@ const InventoryForm = () => {
         console.log(' part', part);
         parts.push(part.value);
       });
-      formData.append('parts', parts);
+      formData.append('parts', parts.join(','));
     }
 
     // Append files

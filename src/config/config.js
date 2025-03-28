@@ -1,20 +1,26 @@
+import moment from 'moment';
+
 import userImage from '../assets/images/user.svg';
 import InventoryIcon from '../assets/images/inventory-count.svg';
-import RentalManageIcon from '../assets/images/dashboard-4.svg';
-import moment from 'moment';
+import dashboard from '../assets/images/dashboard-info-icon.svg';
 import Gateway from './gateway';
 
 export const headerConfig = [
+  {
+    title: 'Dashboard',
+    icon: dashboard,
+    path: '/',
+  },
   {
     title: 'Inventory Management',
     icon: InventoryIcon,
     path: '/inventory-management',
   },
   {
-    title: 'Rental Management',
+    title: 'Loan Management',
     // icon: RentalManageIcon,
     icon: userImage,
-    path: '/rental-management',
+    path: '/loan-management',
   },
   {
     title: 'EZ Pass Billing',
