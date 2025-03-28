@@ -43,13 +43,13 @@ const useInventoryStore = create((set) => ({
       });
     }
   },
-  updateInventoryItem: async (formData, itemId) => {
+  updateInventoryItem: async (formData, itemId, isImage = false) => {
     set({ isLoading: true, error: null });
     try {
       const { data } = await updateInventoryItems(formData, itemId);
       const { success } = useAlertReducer.getState();
-      set({ isLoading: false, redirectToList: true }); // Set redirectToList to true
-      success(data.message);
+      set({ isLoading: false, redirectToList: !isImage }); // Set redirectToList to true
+      if (!isImage) success(data.message);
     } catch (err) {
       const { error } = useAlertReducer.getState();
       error(err.response?.data?.message || 'Failed to create inventory item');

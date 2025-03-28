@@ -21,8 +21,8 @@ const CustomActionModal = ({
   const renderBody = () => (
     <>
       <div className="modal-body">
-        <div class="modal-icon">
-          <div class="icon-blk">
+        <div className="modal-icon">
+          <div className="icon-blk">
             <img
               className="icon"
               // src={notifyIcon}
