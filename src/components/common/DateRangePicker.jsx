@@ -13,6 +13,11 @@ const DateRangePicker = ({ className }) => {
       startDate={startDate}
       endDate={endDate}
       show
+      // showFullMonthYearPicker
+      showTwoColumnMonthYearPicker
+      showYearDropdown
+      showMonthDropdown
+      
       selectsRange
       className={className}
       placeholderText="Select date range"
