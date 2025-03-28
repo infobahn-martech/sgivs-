@@ -2,7 +2,7 @@ import React from 'react';
 
 const Filter = () => {
   return (
-    <div className="dropdown-menu dropdown-menu-end filter-dropdown">
+    <div className="dropdown-menu dropdown-menu-end filter-dropdown ">
       <div className="drop-title">Filter By</div>
       <div className="drp-cont">
         <div className="row">
@@ -14,7 +14,7 @@ const Filter = () => {
             <span className="calendar-icon">
               <img src="img/calend-icon.svg" alt="" />
             </span>
-          </div>
+          </div> 
         </div>
         <div className="row">
           <label for="inputPassword" className="col-sm-3 col-form-label">

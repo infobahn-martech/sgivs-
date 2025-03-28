@@ -284,8 +284,8 @@ const CommonHeader = ({
                 <span>Filter</span>
                 <img src={filterImg} alt="" className="img" />
               </a>
+              <Filter />
             </div>
-            <Filter />
             <div className="button-wrap">
               {exportExcel && (
                 <button
