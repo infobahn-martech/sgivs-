@@ -32,7 +32,7 @@ const InventoryForm = () => {
     redirectToList,
     set,
   } = useInventoryStore((state) => state);
-  const { uploadFiles, files, isUploading } = useCommonStore((state) => state);
+  const { uploadFiles, files, isUploading, deleteFile } = useCommonStore((state) => state);
   const { error, clear } = useAlertReducer((state) => state);
 
   const params = useParams();
@@ -79,8 +79,8 @@ const InventoryForm = () => {
   }, []);
 
   useEffect(() => {
-    if (files.length) {
-      setUploadedFiles(files);
+    if (files.length) {      
+      setUploadedFiles([...uploadedFiles,...files]);
     }
   }, [files]);
 
@@ -90,7 +90,10 @@ const InventoryForm = () => {
   }, [params]);
 
   useEffect(() => {
-    if (barcodeId) setValue('itemId', barcodeId);
+    if (barcodeId) {
+      setValue('itemId', barcodeId);
+      clearErrors('itemId');
+    }
   }, [barcodeId]);
 
   useEffect(() => {
@@ -216,6 +219,7 @@ const InventoryForm = () => {
 
   // Handle File Removal
   const handleRemoveFile = (key) => {
+    deleteFile(key);
     const newFiles = uploadedFiles.filter((file) => file.key !== key);
     setUploadedFiles(newFiles);
     if (newFiles.length === 0)
@@ -292,8 +296,8 @@ const InventoryForm = () => {
     formData.append('label', isAddPartChecked ? data.buttonLabel : null);
 
     // Append parts if added
+    const parts = [];
     if (data.addPart && data.parts) {
-      const parts = [];
       data.parts.forEach((part) => {
         console.log(' part', part);
         parts.push(part.value);
@@ -302,19 +306,31 @@ const InventoryForm = () => {
     }
 
     // Append files
+    const imageKeys = [];
     if (uploadedFiles.length) {
       uploadedFiles.forEach((file) => {
+        imageKeys.push(file.key);
         formData.append(`images`, file);
       });
     }
+    const payload = {
+      itemId: data.itemId,
+      barcode: barcodeKey,
+      itemName: data.itemName,
+      hasParts: data.addPart,
+      parts: isAddPartChecked ? parts.join(',') : null,
+      images: imageKeys.join(','),
+      eZPassNumber: isEZPass ? data.plateNumber || 'null' : 'null',
+      label: isAddPartChecked ? data.buttonLabel : null,
+    };
 
     // Log FormData values
     for (let [key, value] of formData.entries()) {
       console.log(`${key}:`, value);
     }
 
-    if (params.id) updateInventoryItem(formData, params.id);
-    else createInventoryItem(formData);
+    if (params.id) updateInventoryItem(payload, params.id);
+    else createInventoryItem(payload);
   };
 
   const handleBarcode = () => {
@@ -430,8 +446,7 @@ const InventoryForm = () => {
                 <div
                   className="upload-box"
                   onDrop={handleDrop}
-                  onDragOver={(e) => !isUploading &&e.preventDefault()}
-                  
+                  onDragOver={(e) => !isUploading && e.preventDefault()}
                 >
                   {isUploading ? (
                     <Spinner
@@ -463,7 +478,7 @@ const InventoryForm = () => {
                     accept="image/jpeg, image/png"
                     multiple
                     onChange={handleFileSelect}
-                    disabled = {isUploading}
+                    disabled={isUploading}
                   />
                   <span className="btm-txt">
                     Supported formats: JPEG, PNG (Max: 10 images)
@@ -480,7 +495,9 @@ const InventoryForm = () => {
                       <div key={index} className="file-preview">
                         <img
                           className="pt-2 pro-pic"
-                          src={file.url}
+                          src={file.url || file
+
+                          }
                           alt={`Uploaded file ${index + 1}`}
                           style={{ width: 75 }}
                         />
