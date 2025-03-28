@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import '../../assets/scss/add-inventory.scss';
 
-import userIcon from '../../assets/images/pro-pic.svg';
+import userIcon from '../../assets/images/inventory_management.svg';
 import barcodeIcon from '../../assets/images/barcode.svg';
 import closMarkIcon from '../../assets/images/close-mark.svg';
 import Close_LGIcon from '../../assets/images/Close_LG.svg';
@@ -360,7 +360,7 @@ const InventoryForm = () => {
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className="profile-title">
-          <span className="pro-pic">
+          <span className="pro-pic m-2 mt-0 mb-0">
             <img src={userIcon} alt="pro-pic" />
           </span>
           <span>Add Inventory</span>

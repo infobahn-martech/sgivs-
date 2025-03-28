@@ -8,6 +8,9 @@
   @media ($sm-1679) {
     padding: 20px;
   }
+  @media ($sm-1199) {
+    align-items: flex-start;
+  }
   @media (max-width: 850px) {
     flex-direction: column;
     align-items: flex-start;
@@ -75,6 +78,8 @@
     gap: 15px;
     flex: 1;
     justify-content: flex-end;
+    flex-wrap: wrap;
+    vertical-align: top;
     @media (max-width: 850px) {
       flex-wrap: wrap;
       width: 100%;
@@ -113,6 +118,9 @@
           height: 38px;
           padding: 5px 12px;
         }
+        @media ($sm-991) {
+          height: 36px;
+        }
         &::placeholder {
           opacity: 1;
           color: #aaaaaa;
@@ -135,6 +143,9 @@
       }
       @media ($sm-1199) {
         height: 38px;
+      }
+      @media ($sm-991) {
+        height: 36px;
       }
       @media ($sm-479) {
         max-width: 100%;
@@ -180,6 +191,9 @@
         @media ($sm-1199) {
           height: 38px;
         }
+        @media ($sm-991) {
+          height: 36px;
+        }
         @media ($sm-479) {
           width: 100%;
         }
@@ -203,6 +217,63 @@
           background: #ecf9ff;
           border: 1px solid #0096df;
           color: #0096df;
+        }
+        &.add {
+          background: linear-gradient(90deg, #2ca0da 0%, #3982a7 100%);
+          border: 1px solid #0096df;
+          font-weight: 600;
+          color: #fff;
+          width: 126px;
+          padding: 10px 25px;
+          justify-content: space-between;
+          @media ($sm-1679) {
+            padding: 10px 20px;
+            width: 116px;
+          }
+          @media ($sm-1441) {
+            padding: 10px 15px;
+            width: 106px;
+          }
+          @media ($sm-1199) {
+            padding: 10px 15px;
+            width: 90px;
+          }
+          @media ($sm-767) {
+            padding: 10px 15px;
+            width: 80px;
+          }
+          @media ($sm-479) {
+            padding: 10px 15px;
+            width: 100%;
+            justify-content: center;
+          }
+          img {
+            max-width: 77px;
+            @media ($sm-1679) {
+              max-width: 19px;
+            }
+            @media ($sm-1441) {
+              max-width: 17px;
+            }
+            @media ($sm-1199) {
+              max-width: 15px;
+            }
+          }
+          span {
+            font-size: 18px;
+            @media ($sm-1679) {
+              font-size: 16px;
+            }
+            @media ($sm-1441) {
+              font-size: 15px;
+            }
+            @media ($sm-1199) {
+              font-size: 14px;
+            }
+            @media ($sm-991) {
+              font-size: 13px;
+            }
+          }
         }
       }
     }
