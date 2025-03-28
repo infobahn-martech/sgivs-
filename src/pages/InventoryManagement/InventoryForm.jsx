@@ -131,9 +131,12 @@ const InventoryForm = () => {
       }
       if (inventoryItem.hasParts) {
         setValue('buttonLabel', inventoryItem.label);
-        setValue('parts', [
-          { value: inventoryItem['inventory_parts.partName'] },
-        ]);
+        setValue(
+          'parts',
+          inventoryItem.inventory_parts.map((part) => ({
+            value: part.partName,
+          }))
+        );
       }
       // setValue('quantity', '1');
       setUploadedFiles(inventoryItem.images || []);
