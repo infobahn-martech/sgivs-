@@ -22,7 +22,7 @@ export default function CustomTable({
   setLimit,
   showLoader,
   onView,
-  wrapClasses=''
+  wrapClasses = '',
 }) {
   const [tempCount, setTempCount] = useState(0);
   useEffect(() => {
@@ -142,7 +142,7 @@ export default function CustomTable({
                         onClick={() => sort && onSortChange(selector)}
                       >
                         {sort ? (
-                          <div className="sort-wrap">
+                          <div className="sort-wrap cursor-pointer">
                             {name}
                             <div className="sort">
                               <img src={sortUp} alt="Sort Ascending" />

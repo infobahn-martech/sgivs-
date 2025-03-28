@@ -1,56 +1,75 @@
 @import "partials";
 .header {
+    display: flex;
+    flex-direction: column;
     .header-inner {
         display: flex;
         justify-content: space-between;
         align-items: center;
         background-color: #c0d5ee;
-        padding: 0px 20px 0px 49px;
+        padding:20px 20px 20px 49px;
         border-radius: 40px 0 0 0;
         @media ($sm-1679) {
-            padding: 0px 15px 0px 40px;
+            padding: 15px 15px 15px 40px;
+        }
+        @media (max-width:650px) {
+            justify-content: center;
+            flex-direction: column-reverse;
+            gap: 15px;
+            padding: 10px 20px;
         }
         .user-details {
             display: flex;
             align-items: center;
             margin-left: auto;
-
+            @media ($sm-767) {
+                margin-left: auto;
+            }
             .user-drop {
-                padding: 20px 20px;
+                padding: 0px 20px;
                 @media ($sm-1679) {
-                    padding: 15px 15px;
+                    padding: 0px 15px;
                 }
                 @media ($sm-991) {
-                    padding: 10px;
+                    padding: 0px;
                 }
-                .usr-dtl{
+                .usr-dtl {
                     display: flex;
                     margin-right: 20px;
+                    @media ($sm-1679){
+                        margin-right: 15px;
+                    }
+                    @media ($sm-1199){
+                        margin-right: 10px;
+                    }
                 }
-                .usr-info{
+                .usr-info {
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
+                    @media ($sm-579){
+                        display: none;
+                    }
                 }
                 .name {
                     font-size: 18px;
                     font-weight: 600;
                     color: #000000;
                     margin-bottom: 6px;
-                    @media ($sm-1679){
+                    @media ($sm-1679) {
                         font-size: 17px;
                     }
-                    @media ($sm-1441){
+                    @media ($sm-1441) {
                         font-size: 16px;
                     }
-                    @media ($sm-1199){
+                    @media ($sm-1199) {
                         font-size: 15px;
                     }
-                    @media ($sm-767){
+                    @media ($sm-767) {
                         font-size: 14px;
                     }
                 }
-                .role{
+                .role {
                     font-size: 12px;
                     color: #000000;
                 }
@@ -69,8 +88,8 @@
                 @media ($sm-1481) {
                     font-size: 13px;
                 }
-                &::after{
-                    color: #4B164C;
+                &::after {
+                    color: #4b164c;
                     border-top: 6px solid;
                     border-right: 5px solid transparent;
                     border-left: 5px solid transparent;
@@ -148,8 +167,8 @@
                         top: -4px;
                     }
                 }
-                .notification-icon{
-                    img{
+                .notification-icon {
+                    img {
                         display: block;
                         max-width: 100%;
                     }
@@ -158,6 +177,11 @@
         }
         .search-control {
             position: relative;
+            margin-left: 40px;
+            @media (max-width:650px){
+                margin-left: 0;
+                width: 100%;
+            }
             .txt {
                 width: 385px;
                 height: 45px;
@@ -169,6 +193,22 @@
                 font-weight: 400;
                 outline: 0;
                 padding: 5px 50px 5px 20px;
+                @media ($sm-1679) {
+                    height: 42px;
+                    font-size: 14px;
+                    width: 350px;
+                }
+                @media ($sm-1199) {
+                    width: 300px;
+                }
+                @media ($sm-991) {
+                    width: 250px;
+                    height: 38px;
+                    padding: 5px 40px 5px 15px;
+                }
+                @media (max-width:650px){
+                    width: 100%;
+                }
                 &::placeholder {
                     opacity: 1;
                     color: #aaaaaa;
@@ -178,6 +218,10 @@
                 position: absolute;
                 margin: auto;
                 inset: 0 20px 0 auto;
+                max-width: 26px;
+                @media ($sm-1199) {
+                    max-width: 20px;
+                }
             }
         }
     }

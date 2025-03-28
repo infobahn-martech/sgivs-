@@ -3,6 +3,16 @@
     position: relative;
     padding-bottom: 50px;
 }
+.inner-scroll-outer{
+    overflow-y: auto;
+    max-height: calc(100vh - 140px);
+    @media ($sm-1679) {
+        max-height: calc(100vh - 125px);
+    }
+    @media (max-width:650px) {
+        max-height: calc(100vh - 160px);
+    }
+}
 .settings-wrap {
     width: 1120px;
     margin: 0 auto;
@@ -10,6 +20,25 @@
     @media ($sm-1679) {
         padding: 50px 0;
         width: 960px;
+    }
+    @media ($sm-1481) {
+        width: 800px;
+        padding: 45px 0;
+    }
+    @media ($sm-1199) {
+        width: 700px;
+        padding: 40px 0;
+    }
+    @media ($sm-991) {
+        width: 100%;
+        max-width: 500px;
+        padding: 30px 0;
+    }
+    @media ($sm-767) {
+        max-width: 90%;
+    }
+    @media ($sm-479) {
+        padding: 30px 0;
     }
     .head-wrap {
         padding: 0 0 35px 0;
@@ -25,6 +54,9 @@
             @media ($sm-1679) {
                 width: 40px;
             }
+            @media ($sm-991) {
+                width: 35px;
+            }
         }
         span {
             font-size: 18px;
@@ -32,6 +64,9 @@
             font-weight: 500;
             @media ($sm-1679) {
                 font-size: 16px;
+            }
+            @media ($sm-991) {
+                font-size: 14px;
             }
         }
     }
@@ -43,12 +78,24 @@
             @media ($sm-1679) {
                 padding: 45px 60px;
             }
+            @media ($sm-1199) {
+                padding: 35px 30px;
+            }
+            @media ($sm-991) {
+                padding: 25px 20px;
+            }
+            @media ($sm-479) {
+                padding: 20px 15px;
+            }
         }
         .form-group {
             margin: 0;
             padding-bottom: 60px;
             @media ($sm-1679) {
                 padding-bottom: 30px;
+            }
+            @media ($sm-579) {
+                padding-bottom: 20px;
             }
             .form-label {
                 font-size: 19px;
@@ -60,11 +107,24 @@
                     font-size: 16px;
                     padding-bottom: 15px;
                 }
+                @media ($sm-991) {
+                    font-size: 14px;
+                    padding-bottom: 10px;
+                }
             }
             .hour-days-wrap {
                 display: flex;
                 justify-content: space-between;
                 gap: 35px;
+                @media ($sm-991) {
+                    gap: 20px;
+                }
+                @media ($sm-579) {
+                    gap: 10px;
+                }
+                @media ($sm-479) {
+                    flex-direction: column;
+                }
                 .form-control {
                     color: #8897ad;
                     outline: 0;
@@ -72,6 +132,9 @@
                     background-color: #f7fbff !important;
                     padding: 5px 15px;
                     flex: 1;
+                    @media ($sm-479) {
+                        flex: auto;
+                    }
                     &::placeholder {
                         opacity: 1;
                         color: #8897ad;
@@ -91,6 +154,15 @@
                     @media ($sm-1679) {
                         height: 44px;
                         font-size: 14px;
+                    }
+                    @media ($sm-1199) {
+                        height: 40px;
+                    }
+                    @media ($sm-579) {
+                        width: 90px;
+                    }
+                    @media ($sm-479) {
+                        width: 100%;
                     }
                 }
             }
@@ -130,6 +202,17 @@
         align-items: center;
         justify-content: center;
         gap: 30px;
+        @media ($sm-1679) {
+            padding: 20px 60px;
+        }
+        @media ($sm-1199) {
+            padding: 20px 30px;
+        }
+        @media ($sm-479) {
+            padding: 20px 15px;
+            flex-direction: column;
+            gap: 10px;
+        }
         .btn {
             width: 50%;
             border-radius: 30px;
@@ -146,6 +229,14 @@
                 height: 48px;
                 font-size: 18px;
             }
+            @media ($sm-1199) {
+                font-size: 16px;
+                height: 40px;
+            }
+            @media ($sm-479) {
+                width: 100%;
+                font-size: 14px;
+            }
             &.clear {
             }
             &.submit {
@@ -159,7 +250,7 @@
     position: absolute;
     inset: 0;
     text-align: center;
-    inset: auto 0 10px 0;
+    inset: auto 0 20px 0;
     .des {
         font-size: 16px;
         color: #000000;

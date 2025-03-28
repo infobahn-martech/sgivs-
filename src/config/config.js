@@ -1,9 +1,12 @@
 import moment from 'moment';
+import Gateway from './gateway';
 
 import userImage from '../assets/images/user.svg';
-import InventoryIcon from '../assets/images/inventory-count.svg';
 import dashboard from '../assets/images/dashboard-info-icon.svg';
-import Gateway from './gateway';
+import settingsIcon from '../assets/images/Settings.svg';
+import messageIcon from '../assets/images/Message.svg';
+import loanImg from '../assets/images/Loan_Management.svg';
+import inventoryImg from '../assets/images/inventory_management.svg';
 
 export const headerConfig = [
   {
@@ -13,22 +16,21 @@ export const headerConfig = [
   },
   {
     title: 'Inventory Management',
-    icon: InventoryIcon,
+    icon: inventoryImg,
     path: '/inventory-management',
   },
   {
     title: 'Loan Management',
-    // icon: RentalManageIcon,
-    icon: userImage,
     path: '/loan-management',
+    icon: loanImg,
   },
   {
     title: 'EZ Pass Billing',
     icon: 'img/billing.svg',
     path: '/ez-pass-billing',
   },
-  { title: 'Messages', icon: 'img/messages.svg', path: '/messages' },
-  { title: 'Settings', icon: 'img/settings.svg', path: '/settings' },
+  { title: 'Messages', icon: messageIcon, path: '/messages' },
+  { title: 'Settings', icon: settingsIcon, path: '/settings' },
   { title: 'User Management', icon: userImage, path: '/user-management' },
 ];
 

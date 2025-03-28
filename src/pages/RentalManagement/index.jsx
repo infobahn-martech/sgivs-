@@ -153,7 +153,7 @@ const RentalManagement = () => {
     <>
       <CommonHeader
         onSearch={debouncedSearch}
-        exportExcel={exportExcel}
+        exportExcel={rentalData?.data?.length && exportExcel}
         exportLoading={isExportLoading}
         uploadExcel
         onExcelUpload={handleExcelUpload}
