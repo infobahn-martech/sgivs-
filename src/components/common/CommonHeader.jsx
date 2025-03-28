@@ -55,7 +55,7 @@ const CommonHeader = ({
     switch (type) {
       case 'link':
         return (
-          <Link to={addButton.path} className="btn btn-submit">
+          <Link to={addButton.path} className="btn export">
             <img src={addIcon} alt="" className="img" /> {addButton.name}
           </Link>
         );

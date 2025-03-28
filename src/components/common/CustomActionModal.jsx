@@ -5,6 +5,7 @@ import CustomModal from './CustomModal';
 import deleteIcon from '../../assets/images/delete-modal.svg';
 import logoutIcon from '../../assets/images/logout-modal.svg';
 import notifyIcon from '../../assets/images/notifications.svg';
+import warningIcon from '../../assets/images/warning.svg';
 
 const CustomActionModal = ({
   showModal,
@@ -14,6 +15,8 @@ const CustomActionModal = ({
   isLoading,
   isDelete,
   isLogout,
+  isWarning = false,
+  button = { primary: 'Submit', secondary: 'Cancel' },
 }) => {
   const renderBody = () => (
     <>
@@ -21,9 +24,17 @@ const CustomActionModal = ({
         <div class="modal-icon">
           <div class="icon-blk">
             <img
-            className='icon'
+              className="icon"
               // src={notifyIcon}
-              src={isDelete ? deleteIcon : isLogout ? logoutIcon : notifyIcon}
+              src={
+                isDelete
+                  ? deleteIcon
+                  : isLogout
+                  ? logoutIcon
+                  : isWarning
+                  ? warningIcon
+                  : notifyIcon
+              }
               alt=""
             />
           </div>
@@ -32,7 +43,7 @@ const CustomActionModal = ({
       </div>
       <div className="modal-footer">
         <button type="button" className="btn btn-cancel" onClick={closeModal}>
-          Cancel
+          {button.secondary}
         </button>
         <button
           type="submit"
@@ -49,8 +60,10 @@ const CustomActionModal = ({
               aria-hidden="true"
               className="custom-spinner"
             />
+          ) : isDelete ? (
+            'Delete'
           ) : (
-            isDelete ? 'Delete':'Submit'
+            button.primary
           )}
         </button>
       </div>
