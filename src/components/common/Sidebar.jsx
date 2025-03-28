@@ -82,22 +82,20 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
                 marginBottom: '10px',
               }}
             />
-            <span
+
+            <Link
               data-tooltip-content={menu.name}
               data-tooltip-hidden={!collapsed}
               data-tooltip-id={`tooltip-${index}`}
+              to={menu.path}
+              className={`nav-link ${isRouteActive(menu) ? 'active' : ''}`}
+              key={index}
             >
-              <Link
-                to={menu.path}
-                className={`nav-link ${isRouteActive(menu) ? 'active' : ''}`}
-                key={index}
-              >
-                <span className="icon">
-                  <img src={menu.icon} alt="menu-icon" />
-                </span>
-                <span className="txt p-2">{menu.name}</span>
-              </Link>
-            </span>
+              <span className="icon">
+                <img src={menu.icon} alt="menu-icon" />
+              </span>
+              <span className="txt p-2">{menu.name}</span>
+            </Link>
           </Fragment>
         ))}
       </nav>
