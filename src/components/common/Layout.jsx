@@ -15,7 +15,7 @@ const Layout = () => {
       <Sidebar setCollapsed={setCollapsed} collapsed={collapsed} />
       <div className={`right-pannel ${collapsed ? 'expanded' : ''}`}>
         <Header />
-        <div style={{ height: '100%' }}>
+        <div >
           <Outlet />
         </div>
         <Footer />

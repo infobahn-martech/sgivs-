@@ -62,7 +62,6 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         <div className="logo">
           <img src={MainLogo} alt="logo" />
           <img className="logo-collapse" src={collapseLogo} alt="" />
-
         </div>
         <button className="toggle-nav  close-nav" onClick={toggleSidebar}>
           <img src={ToggleIcon} alt="Toggle Sidebar" />
@@ -84,7 +83,6 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
               }}
             />
             <span
-              className="icon"
               data-tooltip-content={menu.name}
               data-tooltip-hidden={!collapsed}
               data-tooltip-id={`tooltip-${index}`}
@@ -94,7 +92,9 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
                 className={`nav-link ${isRouteActive(menu) ? 'active' : ''}`}
                 key={index}
               >
-                <img src={menu.icon} alt="menu-icon" />
+                <span className="icon">
+                  <img src={menu.icon} alt="menu-icon" />
+                </span>
                 <span className="txt p-2">{menu.name}</span>
               </Link>
             </span>

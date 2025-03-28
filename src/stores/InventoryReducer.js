@@ -20,6 +20,7 @@ const useInventoryStore = create((set) => ({
   barcodeKey: null,
   inventoryItem: null,
   redirectToList: false,
+  redirectId: null,
   set: (data) => {
     set(data);
   },
@@ -29,7 +30,11 @@ const useInventoryStore = create((set) => ({
       const { data } = await submitInventoryItems(formData);
       console.log(' response', data);
       const { success } = useAlertReducer.getState();
-      set({ isLoading: false, redirectToList: true }); // Set redirectToList to true
+      set({
+        isLoading: false,
+        redirectToList: true,
+        redirectId: data?.inventory?.id ?? null,
+      }); // Set redirectToList to true
       success(data.message);
 
       // Update the state with the new item
@@ -48,7 +53,11 @@ const useInventoryStore = create((set) => ({
     try {
       const { data } = await updateInventoryItems(formData, itemId);
       const { success } = useAlertReducer.getState();
-      set({ isLoading: false, redirectToList: !isImage }); // Set redirectToList to true
+      set({
+        isLoading: false,
+        redirectToList: !isImage,
+        redirectId: data?.inventory?.id ?? null,
+      }); // Set redirectToList to true
       if (!isImage) success(data.message);
     } catch (err) {
       const { error } = useAlertReducer.getState();
@@ -64,7 +73,6 @@ const useInventoryStore = create((set) => ({
     set({ isBarcodeLoading: true, error: null });
     try {
       const { data } = await getBarcode(itemId);
-      console.log(' response', data.barcode?.barcodeKey);
       set({
         isBarcodeLoading: false,
         barcodeId: data.barcode?.itemId,
@@ -91,7 +99,6 @@ const useInventoryStore = create((set) => ({
         isListLoading: false,
         inventoryList: data.inventories.data,
       });
-      console.log(' response', data);
     } catch (error) {
       console.log(' error', error);
     }

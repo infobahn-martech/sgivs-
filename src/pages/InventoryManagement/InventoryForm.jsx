@@ -32,6 +32,7 @@ const InventoryForm = () => {
     isBarcodeLoading,
     redirectToList,
     set,
+    redirectId,
   } = useInventoryStore((state) => state);
   const { uploadFiles, files, isUploading, deleteFile } = useCommonStore(
     (state) => state
@@ -77,6 +78,8 @@ const InventoryForm = () => {
       inventoryItem: null,
       barcodeKey: null,
       isBarcodeLoading: false,
+      redirectId: null,
+      redirectToList: false,
     });
   }, []);
 
@@ -100,7 +103,9 @@ const InventoryForm = () => {
 
   useEffect(() => {
     if (redirectToList) {
-      navigate('/inventory-management'); // Replace with your desired route
+      if (redirectId) {
+        navigate(`/inventory-management/view/${redirectId}`);
+      } else navigate('/inventory-management'); // Replace with your desired route
       set({ redirectToList: false }); // Reset the redirect state
     }
   }, [redirectToList, navigate, set]);
@@ -224,10 +229,10 @@ const InventoryForm = () => {
     setUploadedFiles(newFiles);
     if (newFiles.length === 0)
       setError('fileUpload', {
-    type: 'manual',
-    message: 'At least one image is required.',
-  });
-  else if (params.id) {
+        type: 'manual',
+        message: 'At least one image is required.',
+      });
+    else if (params.id) {
       await deleteFile(key);
       const data = handleGetFormValues();
       const parts = [];
@@ -331,10 +336,10 @@ const InventoryForm = () => {
       barcode: !params?.id ? barcodeKey : inventoryItem.barcode,
       itemName: data.itemName,
       hasParts: data.addPart,
-      parts: isAddPartChecked ? parts.join(',') : null,
+      parts: isAddPartChecked ? parts.join(',') : undefined,
       images: imageKeys.join(','),
       eZPassNumber: isEZPass ? data.plateNumber || 'null' : 'null',
-      label: isAddPartChecked ? data.buttonLabel : null,
+      label: isAddPartChecked ? data.buttonLabel : undefined,
     };
 
     if (params.id) updateInventoryItem(payload, params.id);
@@ -396,6 +401,7 @@ const InventoryForm = () => {
   return (
     <>
       {renderModal()}
+      <div className='inner-scroll-outer add-inventory'>
       <form
         className="add-inventory common-layout"
         onSubmit={handleSubmit(onSubmit)}
@@ -724,6 +730,7 @@ const InventoryForm = () => {
           </div>
         </div>
       </form>
+      </div>
     </>
   );
 };
