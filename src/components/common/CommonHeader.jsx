@@ -284,7 +284,27 @@ const CommonHeader = ({
                 <span>Filter</span>
                 <img src={filterImg} alt="" className="img" />
               </a>
-              <Filter />
+              <Filter
+                clearOptions={() => {}}
+                filterOptions={[
+                 
+                  {
+                    fieldName: 'Visibility',
+                    BE_keyName: 'al_sub_category_data.asc_name',
+                    fieldType: 'select',
+                    Options: [{ label: 'show', value: 'show' }],
+                  },
+                  {
+                    fieldName: 'PartsFound',
+                    BE_keyName: 'al_employee_data.userData.u_name',
+                    fieldType: 'radio',
+                    Options: ['Yes', 'No'],
+                  },
+                ]}
+                onChange={(values) => {
+                  console.log(values);
+                }}
+              />
             </div>
             <div className="button-wrap">
               {exportExcel && (
