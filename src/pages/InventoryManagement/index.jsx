@@ -25,7 +25,7 @@ const InventoryManagement = () => {
     pagination,
     deleteItemById,
     isLoading,
-    isListLoading
+    isListLoading,
   } = useInventoryStore((state) => state);
   const navigate = useNavigate();
   console.log(' inventoryList', inventoryList);
@@ -139,6 +139,7 @@ const InventoryManagement = () => {
           <span
             data-tooltip-id={`tooltip-${row.id || rowIndex}`} // Unique ID for the tooltip
             data-tooltip-content={'Hide/Show'} // Tooltip content
+            onClick={() => setModalConfig({ id: row.id, type: 'show' })}
           >
             <img src={showHideIcon} alt="Hide/Show" />
           </span>
@@ -175,7 +176,10 @@ const InventoryManagement = () => {
     switch (modalConfig.type) {
       case 'delete':
         return 'Are you sure you want to delete this?';
-
+      case 'show':
+        return 'Are you sure you want to show this?';
+      case 'hide':
+        return 'Are you sure you want to hide this?';
       default:
         break;
     }
@@ -186,22 +190,33 @@ const InventoryManagement = () => {
       isLoading={isLoading}
       message={renderMessage()}
       onSubmit={() => {
-        deleteItemById(modalConfig.id, params);
+        switch (modalConfig.type) {
+          case 'delete':
+            deleteItemById(modalConfig.id, params);
+            break;
+          case 'show':
+            break;
+          case 'hide':
+            break;
+
+          default:
+            break;
+        }
         setModalConfig({ type: null, action: null });
       }}
       showModal={modalConfig.type}
-      isDelete
+      isDelete={modalConfig.type === 'delete'}
     />
   );
 
-    const debouncedSearch = debounce((searchValue) => {
-      console.log(' searchValue', searchValue);
-      setParams((prevParams) => ({
-        ...prevParams,
-        search: searchValue,
-        page: 1,
-      }));
-    }, 500);
+  const debouncedSearch = debounce((searchValue) => {
+    console.log(' searchValue', searchValue);
+    setParams((prevParams) => ({
+      ...prevParams,
+      search: searchValue,
+      page: 1,
+    }));
+  }, 500);
 
   return (
     <>
