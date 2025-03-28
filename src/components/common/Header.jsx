@@ -45,8 +45,7 @@ const Header = () => {
                   </div>
                   <div className="usr-info">
                     <span className="name">
-                      {profileData?.employee?.firstName}{' '}
-                      {profileData?.employee?.lastName}
+                      {profileData?.name}
                     </span>
                     <span className="role">Administrator</span>
                   </div>
