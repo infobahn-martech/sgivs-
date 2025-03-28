@@ -180,3 +180,28 @@ a{
     }
 }
 
+.inner-scroll-outer{
+    &.settings{
+        overflow-y: auto;
+        max-height: calc(100vh - 140px);
+        @media ($sm-1679) {
+            max-height: calc(100vh - 125px);
+        }
+        @media (max-width:650px) {
+            max-height: calc(100vh - 160px);
+        }
+    }
+    &.profile{
+        overflow-y: auto;
+        max-height: calc(100vh - 164px);
+        @media ($sm-1679) {
+            max-height: calc(100vh - 135px);
+        }
+        @media ($sm-1199) {
+            max-height: calc(100vh - 116px);
+        }
+        @media (max-width:650px) {
+            max-height: calc(100vh - 97px);
+        }
+    }
+}
