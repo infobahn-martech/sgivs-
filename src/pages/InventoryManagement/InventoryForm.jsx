@@ -278,7 +278,7 @@ const InventoryForm = () => {
         type: 'manual',
         message: 'At least one image is required.',
       });
-    if (!barcodeId && itemId) {
+    if (!barcodeId && itemId && !params?.id) {
       error('Please generate barcode before submit!');
       return;
     }
@@ -300,7 +300,7 @@ const InventoryForm = () => {
 
     const payload = {
       itemId: data.itemId,
-      barcode: barcodeKey,
+      barcode: !params?.id ? barcodeKey : inventoryItem.barcode,
       itemName: data.itemName,
       hasParts: data.addPart,
       parts: isAddPartChecked ? parts.join(',') : null,
@@ -359,7 +359,7 @@ const InventoryForm = () => {
       isWarning
     />
   );
-
+  console.log(!barcodeId && !params.id);
   return (
     <>
       {renderModal()}
@@ -515,7 +515,7 @@ const InventoryForm = () => {
                     <p className="error">{errors.itemId.message}</p>
                   )}
                 </div>
-                {!!barcodeId || (params?.id && null) || (
+                {(!barcodeId && !params?.id && (
                   <div className="col-md-4 d-flex align-items-end pt-2">
                     <button
                       type="button"
@@ -530,7 +530,8 @@ const InventoryForm = () => {
                       {isBarcodeLoading ? 'Please wait...' : 'Generate Barcode'}
                     </button>
                   </div>
-                )}
+                )) ||
+                  null}
               </div>
 
               {/* EZ pass Checkbox */}
