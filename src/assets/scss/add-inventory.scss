@@ -49,7 +49,9 @@
   .inner-layout {
     border: 1px solid #b3c6dd;
     border-radius: 40px;
-
+    .form {
+      position: relative;
+    }
     .form-label {
       font-size: 16px;
       @media ($sm-991) {
