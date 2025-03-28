@@ -14,7 +14,12 @@ const Filter = () => {
             Created date :{' '}
           </label>
           <div className="col-sm-9 field-mask">
-            <CustomDateRange className="form-control w-100" />
+            <CustomDateRange
+              className="form-control w-100"
+              onChange={({ startDate, endDate }) =>
+                console.log(startDate, endDate)
+              }
+            />
             <span className="calendar-icon">
               <img src={calIcon} alt="" />
             </span>

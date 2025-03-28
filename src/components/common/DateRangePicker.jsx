@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-const DateRangePicker = ({ className }) => {
+const DateRangePicker = ({ className, onChange }) => {
   const [dateRange, setDateRange] = useState([null, null]);
   const [startDate, endDate] = dateRange;
+
+  useEffect(() => {
+    if (startDate && endDate) onChange({ startDate, endDate });
+  }, [dateRange]);
 
   return (
     <DatePicker
@@ -17,7 +21,6 @@ const DateRangePicker = ({ className }) => {
       showTwoColumnMonthYearPicker
       showYearDropdown
       showMonthDropdown
-      
       selectsRange
       className={className}
       placeholderText="Select date range"
