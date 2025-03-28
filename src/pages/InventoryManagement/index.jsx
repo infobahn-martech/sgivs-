@@ -124,6 +124,9 @@ const InventoryManagement = () => {
           <span
             data-tooltip-id={`tooltip-${row.id || rowIndex}`} // Unique ID for the tooltip
             data-tooltip-content={'View'} // Tooltip content
+            onClick={() => {
+              navigate(`/inventory-management/view/${row.id}`);
+            }}
           >
             <img src={viewIcon} alt="view" />
           </span>
@@ -175,11 +178,11 @@ const InventoryManagement = () => {
   const renderMessage = () => {
     switch (modalConfig.type) {
       case 'delete':
-        return 'Are you sure you want to delete this?';
+        return 'Are you sure you want to delete this item?';
       case 'show':
-        return 'Are you sure you want to show this?';
+        return 'Are you sure you want to show this item?';
       case 'hide':
-        return 'Are you sure you want to hide this?';
+        return 'Are you sure you want to hide this item?';
       default:
         break;
     }

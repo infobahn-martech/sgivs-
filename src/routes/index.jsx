@@ -18,6 +18,7 @@ import ForgotPassword from '../pages/ForgotPassword/Loader';
 import InventoryForm from '../pages/InventoryManagement/InventoryForm';
 import Profile from '../pages/Profile/Loader';
 import ResetPassword from '../pages/ResetPassword/Loader';
+import InventoryView from '../pages/InventoryManagement/InventoryView';
 
 const router = createBrowserRouter([
   {
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
               {
                 element: <InventoryForm />,
                 path: '/inventory-management/edit/:id',
+              },
+              {
+                element: <InventoryView />,
+                path: '/inventory-management/view/:id',
               },
               {
                 element: <RentalManagement />,

@@ -46,6 +46,7 @@ const InventoryForm = () => {
     handleSubmit,
     setValue,
     watch,
+    getValues, // Added getValues
     formState: { errors },
     clearErrors,
     setError,
@@ -56,7 +57,6 @@ const InventoryForm = () => {
       parts: [],
     },
   });
-  console.log(' errors', errors);
 
   // Use useFieldArray for dynamic parts management
   const { fields, append, remove } = useFieldArray({
@@ -65,7 +65,6 @@ const InventoryForm = () => {
   });
 
   const [uploadedFiles, setUploadedFiles] = useState([]);
-  console.log(' uploadedFiles', uploadedFiles);
   const [newPart, setNewPart] = useState('');
   const [customError, setCustomError] = useState({});
   const [modalConfig, setModalConfig] = useState({ type: null, action: null });
@@ -170,7 +169,6 @@ const InventoryForm = () => {
   const itemId = watch('itemId', null);
   // const parts = watch('parts', null);
   const isEZPass = watch('isEZPass', null);
-  // console.log(' parts', parts);
 
   useEffect(() => {
     if (!isAddPartChecked) {
@@ -221,15 +219,45 @@ const InventoryForm = () => {
   };
 
   // Handle File Removal
-  const handleRemoveFile = (key) => {
-    deleteFile(key);
+  const handleRemoveFile = async (key) => {
     const newFiles = uploadedFiles.filter((file) => file.key !== key);
     setUploadedFiles(newFiles);
     if (newFiles.length === 0)
       setError('fileUpload', {
-        type: 'manual',
-        message: 'At least one image is required.',
-      });
+    type: 'manual',
+    message: 'At least one image is required.',
+  });
+  else if (params.id) {
+      await deleteFile(key);
+      const data = handleGetFormValues();
+      const parts = [];
+      if (data.addPart && data.parts) {
+        data.parts.forEach((part) => {
+          parts.push(part.value);
+        });
+      }
+
+      // Append files
+      const imageKeys = [];
+      if (newFiles.length) {
+        newFiles.forEach((file) => {
+          imageKeys.push(file.key);
+        });
+      }
+
+      const payload = {
+        itemId: data.itemId,
+        barcode: !params?.id ? barcodeKey : inventoryItem.barcode,
+        itemName: data.itemName,
+        hasParts: data.addPart,
+        parts: isAddPartChecked ? parts.join(',') : null,
+        images: imageKeys.join(','),
+        eZPassNumber: isEZPass ? data.plateNumber || 'null' : 'null',
+        label: isAddPartChecked ? data.buttonLabel : null,
+      };
+
+      updateInventoryItem(payload, params.id, true);
+    }
   };
   // const quantityOptions = Array.from({ length: 10 }, (_, i) => ({
   //   value: (i + 1).toString(),
@@ -359,7 +387,12 @@ const InventoryForm = () => {
       isWarning
     />
   );
-  console.log(!barcodeId && !params.id);
+
+  // Example function to log all form values
+  const handleGetFormValues = () => {
+    return getValues();
+  };
+
   return (
     <>
       {renderModal()}
@@ -405,7 +438,6 @@ const InventoryForm = () => {
                   options={quantityOptions}
                   value={quantity}
                   onChange={() => {
-                    // console.log(' selectedOption', selectedOption);
                     // setValue('quantity', selectedOption);
                     clearErrors('quantity');
                   }}
@@ -675,7 +707,7 @@ const InventoryForm = () => {
             </button>
             <button
               type="button"
-              className="btn export"
+              className="btn btn-info"
               onClick={() => {
                 setModalConfig({ type: 'cancel' });
               }}
