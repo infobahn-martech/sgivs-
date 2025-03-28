@@ -26,7 +26,7 @@ export const headerConfig = [
   },
   {
     title: 'EZ Pass Billing',
-    icon: 'img/billing.svg',
+    icon: userImage,
     path: '/ez-pass-billing',
   },
   { title: 'Messages', icon: messageIcon, path: '/messages' },

@@ -3,16 +3,7 @@
     position: relative;
     padding-bottom: 50px;
 }
-.inner-scroll-outer{
-    overflow-y: auto;
-    max-height: calc(100vh - 140px);
-    @media ($sm-1679) {
-        max-height: calc(100vh - 125px);
-    }
-    @media (max-width:650px) {
-        max-height: calc(100vh - 160px);
-    }
-}
+
 .settings-wrap {
     width: 1120px;
     margin: 0 auto;

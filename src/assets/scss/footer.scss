@@ -24,9 +24,16 @@
 .dashboard-outer{
     .right-pannel{
         .ftr{
-            padding-bottom: 25px;
-            @media ($sm-579){
-                margin-top: auto;
+            padding: 25px 0;
+            margin-top: 0;
+            @media ($sm-1679){
+                padding: 20px 0;
+            }
+            @media ($sm-1441){
+                padding: 15px 0;
+            }
+            @media ($sm-991){
+                padding: 10px 0;
             }
         }
     }

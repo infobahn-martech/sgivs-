@@ -121,10 +121,10 @@
             }
             @media ($sm-991){
                 flex-direction: column;
-                max-height: calc(100vh - 146px);
+                max-height: calc(100vh - 160px);
             }
             @media ($sm-767){
-                max-height: calc(100vh - 165px);
+                max-height: calc(100vh - 150px);
             }
             .panel-wrp{
                 display: flex;
@@ -170,7 +170,7 @@
                     }
                     @media ($sm-767){
                         padding: 0 20px;
-                        height: 165px;
+                        height: 135px;
                     }
                     .greetings-title{
                         font-size: 30px;

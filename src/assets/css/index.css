@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+@@ -1,82 +1,207 @@
+ @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 /*** all Mobile Screen (iphone 6,7,8) ***/
 /*** mobile Landscape Size ***/
 /*** medium devices (tablets, less than 992px) ***/
@@ -24,7 +25,6 @@ body {
 a {
   text-decoration: none;
 }
-
 .title {
   font-size: 36px;
   font-weight: 600;
@@ -45,23 +45,9 @@ a {
     font-size: 30px;
   }
 }
-@media (max-width: 991px) {
-  .title {
-    font-size: 28px;
-  }
+a {
+  text-decoration: none;
 }
-@media (max-width: 767px) {
-  .title {
-    font-size: 26px;
-  }
-}
-.cursor-pointer {
-  cursor: pointer !important;
-}
-.cursor-not {
-  cursor: not-allowed !important;
-}
-
 /* custom dropdown */
 .css-13cymwt-control {
   background-color: transparent !important;
