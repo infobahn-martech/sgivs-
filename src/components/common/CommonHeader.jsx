@@ -54,20 +54,20 @@ const CommonHeader = ({
 
   const renderAddButton = (type) => {
     switch (type) {
-      case 'link':
-        return (
-          <Link to={addButton.path} className="btn add">
-            <img src={addIcon} alt="" className="img" />{' '}
-            <span>{addButton?.name}</span>
-          </Link>
-        );
       // case 'link':
       //   return (
-      //     <button type="button" className="btn add" onClick={addButton?.action}>
+      //     <Link to={addButton.path} className="btn add">
       //       <img src={addIcon} alt="" className="img" />{' '}
       //       <span>{addButton?.name}</span>
-      //     </button>
+      //     </Link>
       //   );
+      case 'link':
+        return (
+          <button type="button" className="btn add" onClick={addButton?.action}>
+            <img src={addIcon} alt="" className="img" />{' '}
+            <span>{addButton?.name}</span>
+          </button>
+        );
       case 'button':
         return (
           <button
