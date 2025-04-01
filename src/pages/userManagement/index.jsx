@@ -179,7 +179,7 @@ const UserManagement = () => {
 
   return (
     <>
-      <CommonHeader onSearch={debouncedSearch} />
+      <CommonHeader onSearch={debouncedSearch} hideFilter />
       <CustomTable
         pagination={{ currentPage: params.page, limit: params.limit }}
         count={usersData?.pagination?.totalRecords}

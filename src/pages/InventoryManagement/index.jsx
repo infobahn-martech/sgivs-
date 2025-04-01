@@ -226,6 +226,21 @@ const InventoryManagement = () => {
     }));
   }, 500);
 
+  const filterOptions = [
+    {
+      fieldName: 'Visibility',
+      BE_keyName: 'al_sub_category_data.asc_name',
+      fieldType: 'select',
+      Options: [{ label: 'show', value: 'show' }],
+    },
+    {
+      fieldName: 'PartsFound',
+      BE_keyName: 'al_employee_data.userData.u_name',
+      fieldType: 'radio',
+      Options: ['Yes', 'No'],
+    },
+  ];
+
   return (
     <>
       {renderModal()}
@@ -240,6 +255,7 @@ const InventoryManagement = () => {
           path: '/inventory-management/add',
         }}
         onSearch={debouncedSearch}
+        filterOptions={filterOptions}
       />
       <CustomTable
         pagination={pagination}

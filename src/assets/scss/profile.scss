@@ -73,7 +73,7 @@
         border-radius: 50px;
 
         .profile-picture{
-            background-image: url(../images/profile-picture-bg.png);
+            background-image: url(../img/profile-picture-bg.png);
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
@@ -99,7 +99,7 @@
             &::after{
                 position: absolute;
                 content: "";
-                background-image: url('../images/profile-botm-img.png');
+                background-image: url('../img/profile-botm-img.png');
                 width: 235px;
                 height: 130px;
                 background-repeat: no-repeat;
@@ -232,24 +232,24 @@
                     // }
                     &:first-child {
                         .nav-link {
-                            border-top-left-radius: 30px;
+                            border-top-left-radius: 20px;
                             @media ($sm-1199){
-                                border-top-left-radius: 20px;
+                                border-top-left-radius: 15px;
                             }
                             @media ($sm-991){
-                                border-top-left-radius: 15px;
+                                border-top-left-radius: 10px;
                             }
                        
                         }
                     }
                     &:last-child {
                         .nav-link {
-                            border-top-right-radius: 30px;
+                            border-top-right-radius: 20px;
                             @media ($sm-1199){
-                                border-top-right-radius: 20px;
+                                border-top-right-radius: 15px;
                             }
                             @media ($sm-991){
-                                border-top-right-radius: 15px;
+                                border-top-right-radius: 10px;
                             }
                         }
                     }
@@ -261,6 +261,7 @@
                     color: rgba(98, 114, 138, 1);
                     font-size: 16px;
                     font-weight: 400;
+                    width: 100%;
                     border: none;
                    
                     @media ($sm-1679) {
@@ -290,6 +291,9 @@
                             @media ($sm-1199) {
                                 max-width: 15px;
                             }
+                            @media ($sm-767) {
+                                max-width: 12px;
+                            }
                         }
                     }
                     .txt{
@@ -300,15 +304,15 @@
                     &.active {
                         background-color: #fff;
                         color: $primaryBgColor;
-                        border-top-left-radius: 30px;
-                        border-top-right-radius: 30px;
+                        border-top-left-radius: 20px;
+                        border-top-right-radius: 20px;
                         @media ($sm-1199){
-                            border-top-left-radius: 20px;
-                            border-top-right-radius: 20px;
-                        }
-                        @media ($sm-991){
                             border-top-left-radius: 15px;
                             border-top-right-radius: 15px;
+                        }
+                        @media ($sm-991){
+                            border-top-left-radius: 10px;
+                            border-top-right-radius: 10px;
                         }
                     }
                    

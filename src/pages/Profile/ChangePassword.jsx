@@ -41,7 +41,8 @@ const ChangePassword = () => {
   };
 
   return (
-    <form className="change-pass" onSubmit={handleSubmit(onSubmit)}>
+    <div className="change-pass">
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className="mb-3 row input-grp">
         <div className="col-md-6 input-wrp">
           <label className="form-label">Old password</label>
@@ -95,6 +96,7 @@ const ChangePassword = () => {
         </button>
       </div>
     </form>
+    </div>
   );
 };
 
