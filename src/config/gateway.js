@@ -2,7 +2,6 @@ import axios from 'axios';
 
 const url = import.meta.env.VITE_API_ENDPOINT;
 
-
 const Gateway = axios.create({
   baseURL: `${url}api/v1/`,
   headers: {
@@ -49,18 +48,18 @@ Gateway.interceptors.response.use(
       !['v1/auth/login', 'v1/auth/token'].includes(response.config.url)
     ) {
       // Call refresh token API to get both new tokens
-      const refreshResponse = await axios.post(`${url}api/v1/auth/token`, {
-        refreshToken: localStorage.getItem('refreshToken'),
-      });
-      if (refreshResponse.status === 200) {
-        const { token: newAccessToken } = refreshResponse.data;
+      // const refreshResponse = await axios.post(`${url}api/v1/auth/token`, {
+      //   refreshToken: localStorage.getItem('refreshToken'),
+      // });
+      // if (refreshResponse.status === 200) {
+      //   const { token: newAccessToken } = refreshResponse.data;
 
-        // Store new tokens in localStorage
-        await localStorage.setItem('accessToken', newAccessToken);
-        // Update the original request with the new access token and retry it
-        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-        return Gateway(originalRequest);
-      }
+      //   // Store new tokens in localStorage
+      //   await localStorage.setItem('accessToken', newAccessToken);
+      //   // Update the original request with the new access token and retry it
+      //   originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+      //   return Gateway(originalRequest);
+      // }
       // Adjust status code if necessary
       localStorage.clear(); // Clear all localStorage
     }
