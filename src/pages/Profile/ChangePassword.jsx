@@ -41,46 +41,47 @@ const ChangePassword = () => {
   };
 
   return (
-    <div className="change-pass">
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="mb-3 row input-grp">
-        <div className="col-md-6 input-wrp">
-          <label className="form-label">Old password</label>
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Enter the current password"
-            {...register('currentPassword')}
-          />
-          {errors.currentPassword && (
-            <span className="error">{errors.currentPassword.message}</span>
-          )}
+      <div className="change-pass">
+        <div className="mb-3 row input-grp">
+          <div className="col-md-6 input-wrp">
+            <label className="form-label">Old password</label>
+            <input
+              type="password"
+              className="form-control"
+              placeholder="Enter the current password"
+              {...register('currentPassword')}
+            />
+            {errors.currentPassword && (
+              <span className="error">{errors.currentPassword.message}</span>
+            )}
+          </div>
         </div>
-      </div>
-      <div className="mb-3 row input-grp">
-        <div className="col-md-6 input-wrp">
-          <label className="form-label">New password</label>
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Enter the new password"
-            {...register('password')}
-          />
-          {errors.password && (
-            <span className="error">{errors.password.message}</span>
-          )}
-        </div>
-        <div className="col-md-6 input-wrp">
-          <label className="form-label">Re-enter the new password</label>
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Re-enter the new password"
-            {...register('confirmPassword')}
-          />
-          {errors.confirmPassword && (
-            <span className="error">{errors.confirmPassword.message}</span>
-          )}
+        <div className="mb-3 row input-grp">
+          <div className="col-md-6 input-wrp">
+            <label className="form-label">New password</label>
+            <input
+              type="password"
+              className="form-control"
+              placeholder="Enter the new password"
+              {...register('password')}
+            />
+            {errors.password && (
+              <span className="error">{errors.password.message}</span>
+            )}
+          </div>
+          <div className="col-md-6 input-wrp">
+            <label className="form-label">Re-enter the new password</label>
+            <input
+              type="password"
+              className="form-control"
+              placeholder="Re-enter the new password"
+              {...register('confirmPassword')}
+            />
+            {errors.confirmPassword && (
+              <span className="error">{errors.confirmPassword.message}</span>
+            )}
+          </div>
         </div>
       </div>
       <div className="bottom-btn-sec">
@@ -96,7 +97,6 @@ const ChangePassword = () => {
         </button>
       </div>
     </form>
-    </div>
   );
 };
 

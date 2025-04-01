@@ -11,6 +11,7 @@ import exportIcon from '../../assets/images/export-excel.svg';
 import upload from '../../assets/images/upload-excel.svg';
 import Upload__icon from '../../assets/images/Upload__icon.svg';
 import addIcon from '../../assets/images/add-icon.svg';
+import searchIcon from '../../assets/images/blue-search-icon.svg';
 import CustomModal from './CustomModal';
 import Filter from './Filter';
 
@@ -284,6 +285,9 @@ const CommonHeader = ({
                 value={searchInput}
                 onChange={handleSearchChange}
               />
+              <button class="btn">
+                <img src={searchIcon} alt="" />
+              </button>
             </div>
             {!hideFilter && (
               <div className="filter-wrap">
