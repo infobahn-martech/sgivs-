@@ -556,7 +556,7 @@ const InventoryForm = () => {
                   </div>
                 </div>
                 {(!barcodeId && !params?.id && (
-                  <div className="col-md-4 d-flex align-items-end pt-2">
+                  <div className="col-md-4 d-flex align-items-end">
                     <div className="form-group">
                     <button
                       type="button"
