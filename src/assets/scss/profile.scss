@@ -467,23 +467,23 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                padding: 30px 200px 0px 200px;
+                padding: 30px 0 0px 0px;
                 @media($sm-1679){
-                    padding: 30px 180px;
+                    padding: 30px 0px;
                 }
                 @media($sm-1481){
-                    padding: 25px 160px;
+                    padding: 25px 0px;
                 }
                 @media ($sm-1199) {
-                    padding: 30px 100px;
+                    padding: 30px 0px;
                 }
                 @media ($sm-991) {
-                    padding: 20px;
+                    padding: 20px 0;
                     border-bottom-left-radius: 30px;
                     border-bottom-right-radius: 30px;
                 }
                 @media ($sm-579) {
-                    padding: 15px 10px;
+                    padding: 15px 0px;
                     gap: 10px;
                     flex-wrap: wrap;
                 }
