@@ -17,6 +17,7 @@ import CustomTable from '../../components/common/CustomTable';
 import useInventoryStore from '../../stores/InventoryReducer';
 import { downloadContent } from '../../helpers/utils';
 import CustomActionModal from '../../components/common/CustomActionModal';
+import InventoryView from './InventoryView';
 
 const InventoryManagement = () => {
   const {
@@ -26,10 +27,13 @@ const InventoryManagement = () => {
     deleteItemById,
     isLoading,
     isListLoading,
+    getItemById,
+    inventoryItem,
   } = useInventoryStore((state) => state);
   const navigate = useNavigate();
   console.log(' inventoryList', inventoryList);
   const [modalConfig, setModalConfig] = useState({ type: null, action: null });
+  const [modal, setModal] = useState(null);
   const [params, setParams] = useState({
     search: '',
     page: '1',
@@ -125,7 +129,8 @@ const InventoryManagement = () => {
             data-tooltip-id={`tooltip-${row.id || rowIndex}`} // Unique ID for the tooltip
             data-tooltip-content={'View'} // Tooltip content
             onClick={() => {
-              navigate(`/inventory-management/view/${row.id}`);
+              setModal({ id: row.id, mode: 'VIEW' });
+              getItemById(row.id);
             }}
           >
             <img src={viewIcon} alt="view" />
@@ -247,6 +252,13 @@ const InventoryManagement = () => {
         onSortChange={handleSortChange}
         wrapClasses="inventory-table-wrap"
       />
+      {modal?.mode === 'VIEW' && (
+        <InventoryView
+          showModal={modal}
+          closeModal={() => setModal(null)}
+          inventoryItem={inventoryItem}
+        />
+      )}
     </>
   );
 };
