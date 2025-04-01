@@ -72,7 +72,7 @@ const ResetPassword = () => {
           </div>
           <div class="quotes-wrp">
             Today is a new day. It's your day. You shape it.
-            <br /> Sign in to start managing your projects
+            <br /> Sign in to start managing your projects.
           </div>
         </div>
         <div class="panel-right">
