@@ -230,7 +230,7 @@ const InventoryManagement = () => {
     },
     {
       fieldName: 'PartsFound',
-      BE_keyName: 'al_employee_data.userData.u_name',
+      BE_keyName: 'hasParts',
       fieldType: 'radio',
       Options: ['Yes', 'No'],
     },
@@ -251,6 +251,7 @@ const InventoryManagement = () => {
         }}
         onSearch={debouncedSearch}
         filterOptions={filterOptions}
+        submitFilter={(filter) => setParams({ ...params, ...filter })}
       />
       <CustomTable
         pagination={pagination}
