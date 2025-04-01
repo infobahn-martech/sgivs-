@@ -71,8 +71,8 @@ const ResetPassword = () => {
             <img src={logo} alt="" />
           </div>
           <div class="quotes-wrp">
-            Today is a new day. It's your day. You shape it.
-            <br /> Sign in to start managing your projects.
+            Today is a new day. It's your day. You shape it. Sign in to <br />{' '}
+            start managing your projects.
           </div>
         </div>
         <div class="panel-right">
