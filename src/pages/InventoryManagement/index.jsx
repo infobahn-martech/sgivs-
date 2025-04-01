@@ -233,6 +233,7 @@ const InventoryManagement = () => {
           name: 'Add Item',
           type: 'link',
           path: '/inventory-management/add',
+          // action: navigate('/inventory-management/add'),
         }}
         onSearch={debouncedSearch}
       />

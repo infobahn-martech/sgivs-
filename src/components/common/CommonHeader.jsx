@@ -61,15 +61,30 @@ const CommonHeader = ({
             <span>{addButton?.name}</span>
           </Link>
         );
+      // case 'link':
+      //   return (
+      //     <button type="button" className="btn add" onClick={addButton?.action}>
+      //       <img src={addIcon} alt="" className="img" />{' '}
+      //       <span>{addButton?.name}</span>
+      //     </button>
+      //   );
       case 'button':
         return (
-          <button className="btn export" onClick={addButton?.action}>
+          <button
+            type="button"
+            className="btn export"
+            onClick={addButton?.action}
+          >
             <img src={addIcon} alt="" className="img" /> {addButton?.name}
           </button>
         );
       default:
         return (
-          <button className="btn export" onClick={addButton.action}>
+          <button
+            type="button"
+            className="btn export"
+            onClick={addButton.action}
+          >
             <img src={addIcon} alt="" className="img" /> {addButton?.name}
           </button>
         );
@@ -309,6 +324,7 @@ const CommonHeader = ({
             <div className="button-wrap">
               {exportExcel && (
                 <button
+                  type="button"
                   className="btn export"
                   onClick={exportExcel}
                   disabled={exportLoading}
@@ -343,6 +359,7 @@ const CommonHeader = ({
                     onChange={handleFileUpload}
                   />
                   <button
+                    type="button"
                     className="btn upload"
                     onClick={() => setOpenUpload(true)}
                   >
@@ -351,7 +368,7 @@ const CommonHeader = ({
                   </button>
                 </>
               )}
-              {addButton && renderAddButton(addButton.type)}
+              {addButton && renderAddButton(addButton?.type)}
             </div>
           </div>
         )}
