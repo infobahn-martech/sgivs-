@@ -87,32 +87,32 @@ const EZPassBilling = () => {
   const formatDateTime = (date) =>
     date ? moment(date).format('MMM D, YYYY : hh:mm A') : '-';
 
-  const renderStatusClass = (status)=>{
+  const renderStatusClass = (status) => {
     switch (status) {
       case 1:
-        return ''
+        return '';
       case 2:
-        return 'returned'
+        return 'returned';
       case 3:
-        return 'missing'
-    
+        return 'missing';
+
       default:
         break;
     }
-  }
-  const renderStatus = (status)=>{
+  };
+  const renderStatus = (status) => {
     switch (status) {
       case 1:
-        return 'Overdue'
+        return 'Overdue';
       case 2:
-        return 'Returned'
+        return 'Returned';
       case 3:
-        return 'Missing'
-    
+        return 'Missing';
+
       default:
         break;
     }
-  }
+  };
 
   const columns = [
     {
@@ -155,7 +155,8 @@ const EZPassBilling = () => {
       cell: (row) => (
         <>
           <div class={`status-wrap ${renderStatusClass(row.status)}`}>
-            <span>{renderStatus(row.status)}</span> <img src={penIcon} alt="" className="img" />
+            <span>{renderStatus(row.status)}</span>{' '}
+            <img src={penIcon} alt="" className="img" />
           </div>
         </>
       ),
@@ -179,7 +180,7 @@ const EZPassBilling = () => {
   ];
   return (
     <>
-      <CommonHeader />
+      <CommonHeader hideFilter />
       <CustomTable
         pagination={pagination}
         count={pagination.totalRecords}
