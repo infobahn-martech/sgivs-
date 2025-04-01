@@ -605,10 +605,10 @@ const InventoryForm = () => {
                           : false,
                       })}
                     />
-                  </div>
-                  {errors.plateNumber && (
+                                      {errors.plateNumber && (
                     <p className="error">{errors.plateNumber.message}</p>
                   )}
+                  </div>
                 </div>
               )}
               {/* Add Part Checkbox */}
