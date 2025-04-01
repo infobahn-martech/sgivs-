@@ -57,19 +57,20 @@ const CommonHeader = ({
       case 'link':
         return (
           <Link to={addButton.path} className="btn add">
-            <img src={addIcon} alt="" className="img" /> <span>{addButton.name}</span>
+            <img src={addIcon} alt="" className="img" />{' '}
+            <span>{addButton?.name}</span>
           </Link>
         );
       case 'button':
         return (
-          <button className="btn export" onClick={addButton.action}>
-            <img src={addIcon} alt="" className="img" /> {addButton.name}
+          <button className="btn export" onClick={addButton?.action}>
+            <img src={addIcon} alt="" className="img" /> {addButton?.name}
           </button>
         );
       default:
         return (
           <button className="btn export" onClick={addButton.action}>
-            <img src={addIcon} alt="" className="img" /> {addButton.name}
+            <img src={addIcon} alt="" className="img" /> {addButton?.name}
           </button>
         );
     }
@@ -81,11 +82,11 @@ const CommonHeader = ({
     if (file) {
       // Validate file type
       const validTypes = ['.xlsx', '.xls'];
-      const fileExtension = '.' + file.name.split('.').pop()?.toLowerCase();
+      const fileExtension = '.' + file?.name.split('.').pop()?.toLowerCase();
 
       if (!validTypes.includes(fileExtension)) {
         setUploadError(
-          `Invalid file type. Please upload ${validTypes.join(', ')} files.`
+          `Invalid file type. Please upload ${validTypes?.join(', ')} files.`
         );
         return;
       }
@@ -287,7 +288,6 @@ const CommonHeader = ({
               <Filter
                 clearOptions={() => {}}
                 filterOptions={[
-                 
                   {
                     fieldName: 'Visibility',
                     BE_keyName: 'al_sub_category_data.asc_name',
