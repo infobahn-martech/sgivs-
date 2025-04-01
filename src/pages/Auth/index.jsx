@@ -40,7 +40,7 @@ const Login = () => {
           </div>
           <div class="quotes-wrp">
             Today is a new day. It's your day. You shape it.
-            <br /> Sign in to start managing your projects
+            <br /> Sign in to start managing your projects.
           </div>
         </div>
         <div class="panel-right">
@@ -101,7 +101,7 @@ const Login = () => {
             </div>
           </div>
           <footer class="ftr">
-            <p class="copy">© 2023 ALL RIGHTS RESERVED</p>
+            <p class="copy">© 2025 ALL RIGHTS RESERVED</p>
           </footer>
         </div>
       </div>
