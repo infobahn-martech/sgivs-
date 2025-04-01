@@ -232,25 +232,24 @@
                     // }
                     &:first-child {
                         .nav-link {
-                            border-top-left-radius: 30px;
+                            border-top-left-radius: 20px;
                             @media ($sm-1199){
-                                border-top-left-radius: 20px;
+                                border-top-left-radius: 15px;
                             }
                             @media ($sm-991){
-                                border-top-left-radius: 15px;
+                                border-top-left-radius: 10px;
                             }
                        
                         }
                     }
                     &:last-child {
                         .nav-link {
-                            border-top-right-radius: 30px;
-                            width: 100%;
+                            border-top-right-radius: 20px;
                             @media ($sm-1199){
-                                border-top-right-radius: 20px;
+                                border-top-right-radius: 15px;
                             }
                             @media ($sm-991){
-                                border-top-right-radius: 15px;
+                                border-top-right-radius: 10px;
                             }
                         }
                     }
@@ -302,15 +301,15 @@
                     &.active {
                         background-color: #fff;
                         color: $primaryBgColor;
-                        border-top-left-radius: 30px;
-                        border-top-right-radius: 30px;
+                        border-top-left-radius: 20px;
+                        border-top-right-radius: 20px;
                         @media ($sm-1199){
-                            border-top-left-radius: 20px;
-                            border-top-right-radius: 20px;
-                        }
-                        @media ($sm-991){
                             border-top-left-radius: 15px;
                             border-top-right-radius: 15px;
+                        }
+                        @media ($sm-991){
+                            border-top-left-radius: 10px;
+                            border-top-right-radius: 10px;
                         }
                     }
                    
