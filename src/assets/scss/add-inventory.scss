@@ -214,6 +214,8 @@
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
+        width: 100px;
+        margin-left: auto;
         @media($sm-1679){
             height: 34px;
             font-size: 11px;

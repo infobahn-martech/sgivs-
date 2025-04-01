@@ -52,7 +52,10 @@
     font-size: 14px;
     position: absolute;
 }
-
+.form-check-input:checked{
+    background-color: #2ca0da;
+    border-color: #2ca0da;
+}
 .btn-rounded{
     border-radius: 30px;
     height: 52px;
