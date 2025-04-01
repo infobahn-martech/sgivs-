@@ -5,7 +5,7 @@
     display: flex;
     flex-direction: column;
     padding: 43px 44px;
-    background: url("../images/login-bottom-img.png") #fff no-repeat bottom right;
+    background: url(../img/login-bottom-img.png) #fff no-repeat bottom right;
     background-size: 320px;
     @media ($sm-1679){
         padding: 30px;
@@ -29,7 +29,7 @@
             justify-content: center;
         }
         .panel-left{
-            background: url('../images/login-left-bg.png') no-repeat top 90px right #0096DF;
+            background: url('../img/login-left-bg.png') no-repeat top 90px right #0096DF;
             background-size: contain;
             border-radius: 31px;
             padding: 56px;
@@ -140,7 +140,7 @@
                     text-align: center;
                 }
                 br{
-                    @media (max-width:650px){
+                    @media (max-width:900px){
                         display: none;
                     }
                 }
