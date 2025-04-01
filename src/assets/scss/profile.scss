@@ -291,6 +291,9 @@
                             @media ($sm-1199) {
                                 max-width: 15px;
                             }
+                            @media ($sm-767) {
+                                max-width: 12px;
+                            }
                         }
                     }
                     .txt{
