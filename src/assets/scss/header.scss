@@ -57,16 +57,16 @@
                     color: #000000;
                     margin-bottom: 6px;
                     @media ($sm-1679) {
-                        font-size: 17px;
-                    }
-                    @media ($sm-1441) {
                         font-size: 16px;
                     }
-                    @media ($sm-1199) {
+                    @media ($sm-1441) {
                         font-size: 15px;
                     }
-                    @media ($sm-767) {
+                    @media ($sm-1199) {
                         font-size: 14px;
+                    }
+                    @media ($sm-767) {
+                        font-size: 13px;
                     }
                 }
                 .role {
@@ -120,7 +120,16 @@
                     width: 35px;
                     height: 35px;
                 }
-
+                &.alphabet{
+                    background-color: #d8e1ed;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    span{
+                        color: #216A8D;
+                        font-size: 16px;
+                    }
+                }
                 img {
                     width: 100%;
                     height: 100%;
@@ -147,6 +156,12 @@
                     width: 35px;
                     height: 35px;
                     padding: 0px 9px;
+                }
+                @media ($sm-991){
+                    margin-right: 10px;
+                }
+                @media ($sm-579){
+                    margin-right: 7px;
                 }
                 .no-of-notification {
                     position: absolute;

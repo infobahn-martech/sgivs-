@@ -146,7 +146,7 @@
                 }
                 .greetings-blk{
                     border-radius: 24px;
-                    background: url('../images/greetings-dashboard.png') no-repeat;
+                    background: url('../img/greetings-dashboard.png') no-repeat;
                     background-position: right bottom;
                     background-size: cover;
                     height: 282px;
@@ -188,6 +188,13 @@
                             font-size: 22px;
                             margin-bottom: 10px;
                         }
+                        @media ($sm-991){
+                            font-size: 20px;
+    
+                        }
+                        @media ($sm-579){
+                            font-size: 18px;
+                        }
                     }
                     .greetings-txt{
                         font-size: 18px;
@@ -203,6 +210,9 @@
                         }
                         @media ($sm-991){
                             font-size: 14px;
+                        }
+                        @media ($sm-579){
+                            font-size: 13px;
                         }
                         br{
                             @media ($sm-1199){
