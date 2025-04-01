@@ -23,6 +23,8 @@ const CommonHeader = ({
   onSearch,
   uploadTitle = '',
   exportLoading,
+  hideFilter,
+  filterOptions,
 }) => {
   const [searchInput, setSearchInput] = useState('');
   const [openUpload, setOpenUpload] = useState(false);
@@ -61,13 +63,6 @@ const CommonHeader = ({
             <span>{addButton?.name}</span>
           </Link>
         );
-      // case 'link':
-      //   return (
-      //     <button type="button" className="btn add" onClick={addButton?.action}>
-      //       <img src={addIcon} alt="" className="img" />{' '}
-      //       <span>{addButton?.name}</span>
-      //     </button>
-      //   );
       case 'button':
         return (
           <button
@@ -289,38 +284,28 @@ const CommonHeader = ({
                 onChange={handleSearchChange}
               />
             </div>
-            <div className="filter-wrap">
-              <a
-                className="dropdown-toggle"
-                role="button"
-                data-bs-toggle="dropdown"
-                data-bs-auto-close="false"
-                aria-expanded="false"
-              >
-                <span>Filter</span>
-                <img src={filterImg} alt="" className="img" />
-              </a>
-              <Filter
-                clearOptions={() => {}}
-                filterOptions={[
-                  {
-                    fieldName: 'Visibility',
-                    BE_keyName: 'al_sub_category_data.asc_name',
-                    fieldType: 'select',
-                    Options: [{ label: 'show', value: 'show' }],
-                  },
-                  {
-                    fieldName: 'PartsFound',
-                    BE_keyName: 'al_employee_data.userData.u_name',
-                    fieldType: 'radio',
-                    Options: ['Yes', 'No'],
-                  },
-                ]}
-                onChange={(values) => {
-                  console.log(values);
-                }}
-              />
-            </div>
+            {!hideFilter && (
+              <div className="filter-wrap">
+                <a
+                  className="dropdown-toggle"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  data-bs-auto-close="false"
+                  aria-expanded="false"
+                >
+                  <span>Filter</span>
+                  <img src={filterImg} alt="" className="img" />
+                </a>
+                <Filter
+                  clearOptions={() => {}}
+                  filterOptions={filterOptions}
+                  onChange={(values) => {
+                    console.log(values);
+                  }}
+                />
+              </div>
+            )}
+
             <div className="button-wrap">
               {exportExcel && (
                 <button

@@ -157,6 +157,7 @@ const RentalManagement = () => {
         exportLoading={isExportLoading}
         uploadExcel
         onExcelUpload={handleExcelUpload}
+        hideFilter
       />
       <CustomTable
         pagination={{ currentPage: params.page, limit: params.limit }}
