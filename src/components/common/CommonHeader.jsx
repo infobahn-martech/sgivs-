@@ -25,6 +25,7 @@ const CommonHeader = ({
   exportLoading,
   hideFilter,
   filterOptions,
+  submitFilter,
 }) => {
   const [searchInput, setSearchInput] = useState('');
   const [openUpload, setOpenUpload] = useState(false);
@@ -300,8 +301,9 @@ const CommonHeader = ({
                   clearOptions={() => {}}
                   filterOptions={filterOptions}
                   onChange={(values) => {
-                    console.log(values);
+                    console.log('values', values);
                   }}
+                  submitFilter={submitFilter}
                 />
               </div>
             )}

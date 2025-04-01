@@ -73,7 +73,7 @@
         border-radius: 50px;
 
         .profile-picture{
-            background-image: url(../img/profile-picture-bg.png);
+            background-image: url("../images/profile-picture-bg.png");
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
@@ -99,7 +99,7 @@
             &::after{
                 position: absolute;
                 content: "";
-                background-image: url('../img/profile-botm-img.png');
+                background-image: url("../images/profile-botm-img.png");
                 width: 235px;
                 height: 130px;
                 background-repeat: no-repeat;

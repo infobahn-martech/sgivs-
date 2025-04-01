@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import calIcon from '../../assets/images/calend-icon.svg';
-import CustomSelect from './CustomSelect';
+// import CustomSelect from './CustomSelect';
 import CustomDateRange from './DateRangePicker';
 import moment from 'moment';
+import CommonSelect from './CommonSelect';
 
-const Filter = ({ filterOptions, onChange, clearOptions }) => {
+const Filter = ({ filterOptions, onChange, clearOptions, submitFilter }) => {
   const initialFilters = filterOptions.reduce((acc, option) => {
     if (option.defaultValue) {
       acc[option.BE_keyName] = option.defaultValue.value;
@@ -13,6 +14,8 @@ const Filter = ({ filterOptions, onChange, clearOptions }) => {
   }, {});
 
   const [filters, setFilters] = useState(initialFilters);
+
+  console.log('filters', filters);
 
   useEffect(() => {
     onChange(filters);
@@ -26,6 +29,20 @@ const Filter = ({ filterOptions, onChange, clearOptions }) => {
       ...prevFilters,
       [fieldName]: value,
     }));
+  };
+
+  // const handleFilterChange = (fieldName, value) => {
+  //   setFilters((prev) => ({ ...prev, [fieldName]: value }));
+  // };
+
+  const handleFilterChange = (fieldName, value, fieldType) => {
+    let updatedValue = value;
+
+    if (fieldType === 'radio') {
+      updatedValue = value === 'Yes'; // Convert "Yes" to true and "No" to false
+    }
+
+    setFilters((prev) => ({ ...prev, [fieldName]: updatedValue }));
   };
 
   const clearFilters = () => {
@@ -55,36 +72,40 @@ const Filter = ({ filterOptions, onChange, clearOptions }) => {
                 />
               )}
               {option.fieldType === 'select' && (
-                <CustomSelect
+                <CommonSelect
                   className="form-select form-control"
                   options={option.Options}
-                  value={filters[option.BE_keyName] || ''}
-                  onChange={(value) =>
-                    handleInputChange(option.BE_keyName, value)
-                  }
+                  value={filters[option?.BE_keyName] || ''}
+                  onChange={({ value }) => {
+                    handleFilterChange(option.BE_keyName, value);
+                  }}
                 />
               )}
               {option.fieldType === 'radio' && (
-                <>
-                  <div className="radio-wrps row">
-                    <div className="col-sm-9 d-flex align-items-center">
-                      {option.Options.map((val) => (
-                        <div className="form-check form-check-inline">
-                          <input
-                            className="form-check-input"
-                            type="radio"
-                            name="inlineRadioOptions"
-                            id={val}
-                            value="option1"
-                          />
-                          <label className="form-check-label" for={val}>
-                            {val}
-                          </label>
-                        </div>
-                      ))}
-                    </div>
+                <div className="radio-wrps row">
+                  <div className="col-sm-9 d-flex align-items-center">
+                    {option.Options.map((val) => (
+                      <div className="form-check form-check-inline" key={val}>
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          name={option.BE_keyName} // Ensure each radio group is unique
+                          id={val}
+                          value={val}
+                          checked={
+                            filters[option.BE_keyName] === (val === 'Yes')
+                          }
+                          onChange={() =>
+                            handleFilterChange(option.BE_keyName, val, 'radio')
+                          }
+                        />
+                        <label className="form-check-label" htmlFor={val}>
+                          {val}
+                        </label>
+                      </div>
+                    ))}
                   </div>
-                </>
+                </div>
               )}
             </div>
           </div>
@@ -110,7 +131,10 @@ const Filter = ({ filterOptions, onChange, clearOptions }) => {
         </button>
         <div className="grp-btn">
           <button className="btn btn-Cancel">Cancel</button>
-          <button className="btn btn-primary" onClick={() => onChange(filters)}>
+          <button
+            className="btn btn-primary"
+            onClick={() => submitFilter(filters)}
+          >
             Apply
           </button>
         </div>

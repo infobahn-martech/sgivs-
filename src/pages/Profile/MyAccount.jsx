@@ -4,15 +4,15 @@ import { dateFormat } from '../../utils/helpers';
 const MyAccount = () => {
   const { profileData } = useAuthReducer((state) => state);
 
+  console.log('profileData', profileData);
+
   return (
     <div className="box-section">
       <div className="col-md-6 boxes">
         <div className="box-inner">
           <div className="lft-txt">
             <span className="light">First name</span>
-            <span className="dark-name">
-              {profileData?.employee?.firstName}
-            </span>
+            <span className="dark-name">{profileData?.user?.firstName}</span>
           </div>
         </div>
       </div>
@@ -20,10 +20,7 @@ const MyAccount = () => {
         <div className="box-inner">
           <div className="lft-txt">
             <span className="light">Last name</span>
-            <span className="dark-name">
-              {' '}
-              {profileData?.employee?.lastName}
-            </span>
+            <span className="dark-name"> {profileData?.user?.lastName}</span>
           </div>
         </div>
       </div>
@@ -31,7 +28,7 @@ const MyAccount = () => {
         <div className="box-inner">
           <div className="lft-txt">
             <span className="light">Email Address</span>
-            <span className="dark-name">{profileData?.employee?.email}</span>
+            <span className="dark-name">{profileData?.user?.email}</span>
           </div>
         </div>
       </div>
@@ -40,8 +37,7 @@ const MyAccount = () => {
           <div className="lft-txt">
             <span className="light">Phone Number</span>
             <span className="dark-name">
-              {profileData?.employee?.countryCode +
-                profileData?.employee?.phone}
+              {profileData?.user?.countryCode + profileData?.user?.phone}
             </span>
           </div>
         </div>
@@ -51,7 +47,7 @@ const MyAccount = () => {
           <div className="lft-txt">
             <span className="light">Joined date</span>
             <span className="dark-name">
-              {dateFormat(profileData?.employee?.createdAt)}
+              {dateFormat(profileData?.user?.createdAt)}
             </span>
           </div>
         </div>
@@ -61,7 +57,7 @@ const MyAccount = () => {
           <div className="lft-txt">
             <span className="light">Credit card available</span>
             <span className="dark-name">
-              {profileData?.employee?.isCreditCardAvailable ? 'Yes' : 'No'}
+              {profileData?.user?.isCreditCardAvailable ? 'Yes' : 'No'}
             </span>
           </div>
         </div>
