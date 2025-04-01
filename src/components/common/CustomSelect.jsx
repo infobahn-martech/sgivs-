@@ -70,10 +70,10 @@ function CustomSelect({
 
   const fetchValue = () => {
     if (isMulti) {
-      return options.filter((option) => selectedValue?.includes(option.value));
+      return options?.filter((option) => selectedValue?.includes(option.value));
     }
     return (
-      options.find((option) => option.value === selectedValue?.value) || null
+      options?.find((option) => option.value === selectedValue?.value) || null
     );
   };
 
@@ -116,7 +116,7 @@ function CustomSelect({
     <Select
       menuPlacement={position}
       // menuPosition="fixed"
-      
+
       maxMenuHeight={maxheight}
       isLoading={isLoading}
       classNamePrefix={classNamePrefix}
@@ -126,13 +126,13 @@ function CustomSelect({
         isMulti ? 'multiple-select' : ''
       } react-select-custom p-1`}
       placeholder={placeholder}
-      options={[
-        { value: 'shown', label: 'shown' },
-        { value: 'hidden', label: 'hidden' },
-      ]}
+      // options={[
+      //   { value: 'shown', label: 'shown' },
+      //   { value: 'hidden', label: 'hidden' },
+      // ]}
+      options={options}
       isClearable
       name={name}
-      
       components={{
         ...(!showIndicator && {
           DropdownIndicator: () => null,

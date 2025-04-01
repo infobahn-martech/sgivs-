@@ -4,16 +4,21 @@ import Button from '../../components/common/Button';
 import CustomSelet from '../../components/common/CustomSelect';
 import alertIcon from '../../assets/images/alert.svg';
 import '../../assets/scss/settings.scss';
+import useSettingsReducer from '../../stores/SettingsReducer';
 
 const Settings = () => {
+  const { postData } = useSettingsReducer((state) => state);
+
   const [form, setForm] = useState({
-    deadLine: '',
-    deadLineIntrvl: '',
-    ezDeadline: '',
-    ezDeadlineIntrvl: '',
-    notification: true,
+    itemReturnDeadline: '',
+    itemReturnDeadlineUnit: '',
+    thuFriDeadline: '',
+    thuFriDeadlineUnit: '',
+    isNotificationOn: true,
   });
   const [err, setErr] = useState({});
+
+  console.log('form', form);
 
   const handleChange = (val, name) => {
     setErr((prev) => ({ ...prev, [name]: '' }));
@@ -25,8 +30,7 @@ const Settings = () => {
     setErr(errField);
 
     if (!Object.entries(errField)?.length) {
-      // API{
-      console.log('submit');
+      postData(form);
     }
   };
 
@@ -53,19 +57,21 @@ const Settings = () => {
                         type="text"
                         className="form-control"
                         onChange={(e) =>
-                          handleChange(e.target.value, 'deadLine')
+                          handleChange(e.target.value, 'itemReturnDeadline')
                         }
-                        placeholder="Hours"
+                        // placeholder="Hours"
                       />
                       <CustomSelet
                         className="select"
                         options={durationOption}
                         onChange={(e) =>
-                          handleChange(e.target.value, 'deadLineIntrvl')
+                          handleChange(e.target.value, 'itemReturnDeadlineUnit')
                         }
                       />
                     </div>
-                    {errorText(err?.deadLine ?? err?.deadLineIntrvl)}
+                    {errorText(
+                      err?.itemReturnDeadline ?? err?.itemReturnDeadlineUnit
+                    )}
                   </div>
                 </div>
               </div>
@@ -80,19 +86,19 @@ const Settings = () => {
                         type="text"
                         className="form-control"
                         onChange={(e) =>
-                          handleChange(e.target.value, 'ezDeadline')
+                          handleChange(e.target.value, 'thuFriDeadline')
                         }
-                        placeholder="Hours"
+                        // placeholder="Hours"
                       />
                       <CustomSelet
                         className="select"
                         options={durationOption}
                         onChange={(e) =>
-                          handleChange(e.target.value, 'ezDeadlineIntrvl')
+                          handleChange(e.target.value, 'thuFriDeadlineUnit')
                         }
                       />
                     </div>
-                    {errorText(err?.ezDeadline ?? err?.ezDeadlineIntrvl)}
+                    {errorText(err?.thuFriDeadline ?? err?.thuFriDeadlineUnit)}
                   </div>
                 </div>
               </div>
@@ -107,9 +113,12 @@ const Settings = () => {
                         className="form-check-input"
                         type="checkbox"
                         id="flexSwitchCheckDefault"
-                        checked={form.notification}
+                        checked={form.isNotificationOn}
                         onChange={() =>
-                          handleChange(!form.notification, 'notification')
+                          handleChange(
+                            !form.isNotificationOn,
+                            'isNotificationOn'
+                          )
                         }
                       />
                       <label
