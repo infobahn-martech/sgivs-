@@ -230,10 +230,9 @@ const InventoryManagement = () => {
         onExcelUpload={handleExcelUpload}
         uploadTitle="Bulk Upload Inventory"
         addButton={{
-          name: 'Add',
+          name: 'Add Item',
           type: 'link',
           path: '/inventory-management/add',
-          // action: navigate('/inventory-management/add'),
         }}
         onSearch={debouncedSearch}
       />
