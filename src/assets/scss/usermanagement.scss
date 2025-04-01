@@ -90,6 +90,9 @@
         .search-wrap {
             max-width: 385px;
             width: 100%;
+            border: 1px solid #d9d9d9;
+            border-radius: 30px;
+            display: flex;
             @media ($sm-1679) {
                 width: 300px;
             }
@@ -105,16 +108,18 @@
                 width: 100%;
             }
             .txt {
-                border: 1px solid #d9d9d9;
+                border: none;
+                box-shadow: none;
+                outline: none;
                 height: 45px;
-                border-radius: 30px;
                 font-size: 16px;
                 color: #aaaaaa;
                 font-weight: 400;
                 outline: 0;
                 font-family: $primaryFont;
                 padding: 5px 20px;
-                width: 100%;
+                width: calc(100% - 25px);
+                border-radius: 30px;
                 @media ($sm-1679) {
                     font-size: 14px;
                     height: 40px;
@@ -131,6 +136,21 @@
                 &::placeholder {
                     opacity: 1;
                     color: #aaaaaa;
+                }
+            }
+            .btn{
+                background-color: transparent;
+                border: none;
+                padding: 0;
+                margin: 0;
+                box-shadow: none;
+                outline: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding-right: 15px;
+                img{
+                    height: 18px;
                 }
             }
         }
