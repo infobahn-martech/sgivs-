@@ -417,7 +417,7 @@ const InventoryForm = () => {
           <div className="inner-sec">
             <div className="form">
               <div className="row mb-3">
-                <div className="col-md-6">
+                <div className="col-md-6 form-group">
                   <label htmlFor="itemName" className="form-label">
                     Item Name
                   </label>
@@ -459,7 +459,7 @@ const InventoryForm = () => {
               </div>
 
               {/* Drag & Drop Upload Box */}
-              <div className="mb-3">
+              <div className="mb-3 form-group">
                 <label className="form-label">Upload Image</label>
                 <div
                   className="upload-box"
@@ -534,6 +534,7 @@ const InventoryForm = () => {
 
               <div className="row mb-3">
                 <div className="col-md-6">
+                  <div className="form-group">
                   <label htmlFor="itemId" className="form-label">
                     Item ID
                   </label>
@@ -552,9 +553,11 @@ const InventoryForm = () => {
                   {errors.itemId && (
                     <p className="error">{errors.itemId.message}</p>
                   )}
+                  </div>
                 </div>
                 {(!barcodeId && !params?.id && (
                   <div className="col-md-4 d-flex align-items-end pt-2">
+                    <div className="form-group">
                     <button
                       type="button"
                       className="btn generate-btn"
@@ -567,13 +570,14 @@ const InventoryForm = () => {
                       )}
                       {isBarcodeLoading ? 'Please wait...' : 'Generate Barcode'}
                     </button>
+                    </div>
                   </div>
                 )) ||
                   null}
               </div>
 
               {/* EZ pass Checkbox */}
-              <div className="mb-3">
+              <div className="mb-3 form-group">
                 <div className="form-check">
                   <input
                     className="form-check-input"
@@ -590,7 +594,7 @@ const InventoryForm = () => {
               {/* Dynamic Part Fields */}
               {isEZPass && (
                 <div className="mb-3">
-                  <div className="col-md-10">
+                  <div className="col-md-10 form-group">
                     <input
                       type="text"
                       className="form-control"
@@ -628,11 +632,12 @@ const InventoryForm = () => {
                   <label htmlFor="partPopupTitle" className="form-label">
                     Part Pop-up Title
                   </label>
-                  <div className="part-sec">
-                    <div>
+                  <div className="part-sec row">
+                    <div className="col-md-6">
+                    <div className='form-group'>
                       <input
                         type="text"
-                        className="form-control m-2"
+                        className="form-control"
                         placeholder="Part Pop-up Title"
                         value={newPart}
                         onChange={(e) => {
@@ -646,10 +651,12 @@ const InventoryForm = () => {
                         <p className="error">{customError.parts}</p>
                       )}
                     </div>
-                    <div>
+                    </div>
+                    <div className="col-md-6">
+                    <div className='form-group'>
                       <input
                         type="text"
-                        className="form-control m-2"
+                        className="form-control"
                         placeholder="Button Label"
                         id="buttonLabel"
                         {...register('buttonLabel', {
@@ -662,6 +669,8 @@ const InventoryForm = () => {
                         <p className="error">{errors.buttonLabel.message}</p>
                       )}
                     </div>
+                    </div>
+                    <div className="col-12">
                     <button
                       type="button"
                       className="btn add-btn"
@@ -672,6 +681,7 @@ const InventoryForm = () => {
                       </span>{' '}
                       Add Part
                     </button>
+                    </div>
                   </div>
 
                   {fields.map((field, index) => (
