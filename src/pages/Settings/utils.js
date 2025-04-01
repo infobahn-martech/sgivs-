@@ -1,6 +1,6 @@
 export const durationOption = [
-  { label: 'Days', value: 1 },
-  { label: 'Hours', value: 2 },
+  { label: 'Days', value: 'Days' },
+  { label: 'Hours', value: 'Hours' },
 ];
 
 export const isValid = (obj) => {
