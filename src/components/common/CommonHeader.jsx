@@ -62,14 +62,14 @@ const CommonHeader = ({
         );
       case 'button':
         return (
-          <button className="btn export" onClick={addButton.action}>
-            <img src={addIcon} alt="" className="img" /> {addButton.name}
+          <button className="btn add" onClick={addButton.action}>
+            <img src={addIcon} alt="" className="img" /> <span>{addButton.name}</span>
           </button>
         );
       default:
         return (
-          <button className="btn export" onClick={addButton.action}>
-            <img src={addIcon} alt="" className="img" /> {addButton.name}
+          <button className="btn add" onClick={addButton.action}>
+            <img src={addIcon} alt="" className="img" /> <span>{addButton.name}</span>
           </button>
         );
     }

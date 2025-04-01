@@ -462,8 +462,9 @@
                 }
                 span {
                     font-size: 14px;
+                    white-space: nowrap;
                     @media ($sm-1679) {
-                        font-size: 12px;
+                        font-size: 13px;
                     }
                     @media ($sm-1281){
                         display: none;
