@@ -73,7 +73,7 @@
         border-radius: 50px;
 
         .profile-picture{
-            background-image: url(../images/profile-picture-bg.png);
+            background-image: url(../img/profile-picture-bg.png);
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
@@ -99,7 +99,7 @@
             &::after{
                 position: absolute;
                 content: "";
-                background-image: url('../images/profile-botm-img.png');
+                background-image: url('../img/profile-botm-img.png');
                 width: 235px;
                 height: 130px;
                 background-repeat: no-repeat;
@@ -245,6 +245,7 @@
                     &:last-child {
                         .nav-link {
                             border-top-right-radius: 30px;
+                            width: 100%;
                             @media ($sm-1199){
                                 border-top-right-radius: 20px;
                             }
@@ -261,6 +262,7 @@
                     color: rgba(98, 114, 138, 1);
                     font-size: 16px;
                     font-weight: 400;
+                    width: 100%;
                     border: none;
                    
                     @media ($sm-1679) {
