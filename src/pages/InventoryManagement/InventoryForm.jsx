@@ -632,8 +632,8 @@ const InventoryForm = () => {
                   <label htmlFor="partPopupTitle" className="form-label">
                     Part Pop-up Title
                   </label>
-                  <div className="part-sec row">
-                    <div className="col-md-6">
+                  <div className="part-sec">
+                    <div className="part-col-title">
                     <div className='form-group'>
                       <input
                         type="text"
@@ -652,7 +652,7 @@ const InventoryForm = () => {
                       )}
                     </div>
                     </div>
-                    <div className="col-md-6">
+                    <div className="part-col-label">
                     <div className='form-group'>
                       <input
                         type="text"
@@ -670,7 +670,7 @@ const InventoryForm = () => {
                       )}
                     </div>
                     </div>
-                    <div className="col-12">
+                    <div className='form-group add-btn-wrp'>
                     <button
                       type="button"
                       className="btn add-btn"
