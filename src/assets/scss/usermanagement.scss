@@ -462,8 +462,9 @@
                 }
                 span {
                     font-size: 14px;
+                    white-space: nowrap;
                     @media ($sm-1679) {
-                        font-size: 12px;
+                        font-size: 13px;
                     }
                     @media ($sm-1281){
                         display: none;
@@ -488,7 +489,7 @@
                     justify-content: space-between;
                     @media ($sm-1679){
                         padding: 10px 20px;
-                        width: 116px;
+                        width: 120px;
                     }
                     @media ($sm-1441){
                         padding: 10px 15px;
@@ -722,24 +723,24 @@
                             flex: 0 0 55px;
                             margin: 0;
                             @media ($sm-1679) {
-                                width: 50px;
-                                height: 50px;
-                                flex: 0 0 50px;
-                            }
-                            @media ($sm-1441) {
-                                width: 45px;
-                                height: 45px;
-                                flex: 0 0 45px;
-                            }
-                            @media ($sm-1199) {
                                 width: 40px;
                                 height: 40px;
                                 flex: 0 0 40px;
                             }
+                            @media ($sm-1441) {
+                                width: 38px;
+                                height: 38px;
+                                flex: 0 0 38px;
+                            }
+                            @media ($sm-1199) {
+                                width: 36px;
+                                height: 36px;
+                                flex: 0 0 36px;
+                            }
                             @media ($sm-991) {
-                                width: 35px;
-                                height: 35px;
-                                flex: 0 0 35px;
+                                width: 34px;
+                                height: 34px;
+                                flex: 0 0 34px;
                             }
                             @media ($sm-579) {
                                 width: 30px;
@@ -757,24 +758,29 @@
                                 border-radius: 54px;
                                 flex-shrink: 0;
                                 @media ($sm-1679){
-                                    width: 50px;
-                                    height: 50px;
-                                    flex: 0 0 50px;
-                                }
-                                @media ($sm-1441){
-                                    width: 45px;
-                                    height: 45px;
-                                    flex: 0 0 45px;
-                                }
-                                @media ($sm-1199){
                                     width: 40px;
                                     height: 40px;
                                     flex: 0 0 40px;
                                 }
+                                @media ($sm-1441){
+                                    width: 38px;
+                                    height: 38px;
+                                    flex: 0 0 38px;
+                                }
+                                @media ($sm-1199){
+                                    width: 36px;
+                                    height: 36px;
+                                    flex: 0 0 36px;
+                                }
                                 @media ($sm-991){
-                                    width: 35px;
-                                    height: 35px;
-                                    flex: 0 0 35px;
+                                    width: 34px;
+                                    height: 34px;
+                                    flex: 0 0 34px;
+                                }
+                                @media ($sm-579) {
+                                    width: 30px;
+                                    height: 30px;
+                                    flex: 0 0 30px;
                                 }
                                 .txt{
                                     font-size: 16px;
@@ -993,9 +999,9 @@
 .table-footer-wrap {
     display: flex;
     justify-content: space-between;
-    padding: 0 25px 25px 25px;
+    padding: 0 25px 0px 25px;
     @media ($sm-1679){
-        padding: 0 20px 15px 20px;
+        padding: 0 20px 0px 20px;
     }
     @media ($sm-579){
         flex-direction: column;
