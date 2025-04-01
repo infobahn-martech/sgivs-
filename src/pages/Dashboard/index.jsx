@@ -38,7 +38,7 @@ const Dashboard = () => {
       <div className="content-wrp-outer">
         <div className="panel-wrp">
           <div className="greetings-blk">
-            <div className="greetings-title">Hi {profileData.name} 👋</div>
+            <div className="greetings-title">Hi {profileData?.name} 👋</div>
             <div className="greetings-txt">
               Today is a new day. It's your day. You shape it. Sign in to
               <br /> start managing your projects.
