@@ -20,7 +20,7 @@
     }
     .left-wrap {
         margin-right: 20px;
-        @media (max-width:1074px){
+        @media (max-width:850px){
             margin-bottom: 20px;
         }
         .icon-title {
@@ -549,13 +549,13 @@
 .table-body-wrap {
     padding: 0 25px 25px 25px;
     overflow-y: auto;
-    height: calc(100vh - 258px);
+    height: calc(100vh - 290px);
     @media ($sm-1679){
         padding: 0 20px 20px 20px;
-        height: calc(100vh - 260px);
+        height: calc(100vh - 246px);
     }
     @media (max-width:1199px){
-        height: calc(100vh - 194px);
+        height: calc(100vh - 214px);
         padding: 0 15px 15px 15px;
     }
     @media (max-width:850px){
@@ -864,23 +864,23 @@
                 border-radius: 10px;
                 overflow: hidden;
                 margin: 0;
-                width: 60px;
-                height: 60px;
+                width: 55px;
+                height: 55px;
                 @media ($sm-1679) {
-                    width: 50px;
-                    height: 50px;
-                }
-                @media ($sm-1441) {
-                    width: 45px;
-                    height: 45px;
-                }
-                @media ($sm-1199) {
                     width: 40px;
                     height: 40px;
                 }
+                @media ($sm-1441) {
+                    width: 38px;
+                    height: 38px;
+                }
+                @media ($sm-1199) {
+                    width: 36px;
+                    height: 36px;
+                }
                 @media ($sm-991) {
-                    width: 35px;
-                    height: 35px;
+                    width: 34px;
+                    height: 34px;
                 }
                 @media ($sm-579) {
                     width: 30px;
