@@ -229,9 +229,12 @@ const InventoryManagement = () => {
   const filterOptions = [
     {
       fieldName: 'Visibility',
-      BE_keyName: 'al_sub_category_data.asc_name',
+      BE_keyName: 'isVisible',
       fieldType: 'select',
-      Options: [{ label: 'show', value: 'show' }],
+      Options: [
+        { label: 'Shown', value: true },
+        { label: 'Hidden', value: false },
+      ],
     },
     {
       fieldName: 'PartsFound',
