@@ -166,7 +166,14 @@ const UserManagement = () => {
             className="cursor-pointer"
             onClick={() => handleDeleteClick(row)}
           />
-          <Tooltip id="delete-tooltip" place="top" effect="solid" />
+          <Tooltip
+            id="delete-tooltip"
+            place="top"
+            effect="solid"
+            style={{
+              backgroundColor: '#2ca0da',
+            }}
+          />
 
           <img
             src={row?.status === 2 ? activeIcon : blockIcon}
@@ -180,6 +187,9 @@ const UserManagement = () => {
             id={`status-tooltip-${row?.id}`}
             place="top"
             effect="solid"
+            style={{
+              backgroundColor: '#2ca0da',
+            }}
           />
         </>
       ),

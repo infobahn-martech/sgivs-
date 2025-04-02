@@ -8,11 +8,16 @@ import '../../assets/scss/usermanagement.scss';
 import penIcon from '../../assets/images/pen.svg';
 import noteIcon from '../../assets/images/note.svg';
 import alertIcon from '../../assets/images/alert.svg';
+import deadlineIcon from '../../assets/images/calendar.svg';
+
 import dummyImg from '../../assets/images/avatar.png';
 import { debounce } from 'lodash';
 import moment from 'moment';
 import { getPaymentStatus, paymentStatus } from './utils';
 import CustomSelect from '../../components/common/CommonSelect';
+import DeadLineModal from './DeadLineModal';
+import InitialsAvatar from '../../components/common/InitialsAvatar';
+import { Tooltip } from 'react-tooltip';
 
 const RentalManagement = () => {
   const {
@@ -26,6 +31,8 @@ const RentalManagement = () => {
   } = useRentalReducer((state) => state);
 
   const [changeStatus, setChangeStatus] = useState({});
+  const [deadlineModal, setdeadlineModal] = useState(false);
+  const [deadlineId, setdeadlineId] = useState(null);
 
   console.log('changeStatus', changeStatus);
 
@@ -168,6 +175,11 @@ const RentalManagement = () => {
     );
   };
 
+  const handleDeadlineClick = (row) => {
+    setdeadlineId(row?.id);
+    setdeadlineModal(true);
+  };
+
   const columns = [
     {
       name: 'User',
@@ -176,9 +188,8 @@ const RentalManagement = () => {
       contentClass: 'user-pic',
       cell: (row) => (
         <>
-          <figure>
-            <img src={dummyImg} alt="" className="img" />
-          </figure>
+          <InitialsAvatar name={row?.['user.firstName']} />
+
           <span>{row?.['user.firstName'] || '-'}</span>
         </>
       ),
@@ -219,10 +230,53 @@ const RentalManagement = () => {
       selector: 'action',
       titleClasses: 'tw7',
       contentClass: 'action-wrap',
-      cell: () => (
+      cell: (row) => (
         <>
-          <img src={noteIcon} alt="Note" />
-          <img src={alertIcon} alt="Alert" />
+          <img
+            src={noteIcon}
+            alt="Note"
+            data-tooltip-id="note-tooltip"
+            data-tooltip-content="Add Note"
+          />
+          <img
+            src={alertIcon}
+            alt="Alert"
+            data-tooltip-id="alert-tooltip"
+            data-tooltip-content="Alert"
+          />
+          <img
+            src={deadlineIcon}
+            alt="Deadline"
+            onClick={() => handleDeadlineClick(row)}
+            data-tooltip-id="deadline-tooltip"
+            data-tooltip-content="Set Deadline"
+          />
+
+          {/* Tooltips */}
+          <Tooltip
+            id="note-tooltip"
+            place="top"
+            effect="solid"
+            style={{
+              backgroundColor: '#2ca0da',
+            }}
+          />
+          <Tooltip
+            id="alert-tooltip"
+            place="top"
+            effect="solid"
+            style={{
+              backgroundColor: '#2ca0da',
+            }}
+          />
+          <Tooltip
+            id="deadline-tooltip"
+            place="top"
+            effect="solid"
+            style={{
+              backgroundColor: '#2ca0da',
+            }}
+          />
         </>
       ),
     },
@@ -266,6 +320,15 @@ const RentalManagement = () => {
         onSortChange={handleSortChange}
         wrapClasses="rm-table-wrap"
       />
+
+      {deadlineModal && (
+        <DeadLineModal
+          showModal={deadlineModal}
+          closeModal={() => setdeadlineModal(false)}
+          deadlineId={deadlineId}
+          setdeadlineModal={setdeadlineModal}
+        />
+      )}
     </>
   );
 };
