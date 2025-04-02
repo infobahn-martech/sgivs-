@@ -7,26 +7,35 @@ import CommonSelect from './CommonSelect';
 
 const Filter = ({
   filterOptions,
-  onChange,
   clearOptions,
   submitFilter,
   show,
   onCancel,
+  savedFilters = {},
+  isFilterApplied,
 }) => {
-  const initialFilters = filterOptions.reduce((acc, option) => {
-    if (option.defaultValue) {
-      acc[option.BE_keyName] = option.defaultValue.value;
-    }
-    return acc;
-  }, {});
+  const getInitialFilters = () => {
+    if (Object.keys(savedFilters).length) return savedFilters;
 
-  const [filters, setFilters] = useState(initialFilters);
+    return filterOptions?.reduce((acc, option) => {
+      if (option.defaultValue) {
+        acc[option.BE_keyName] = option.defaultValue.value;
+      }
+      return acc;
+    }, {});
+  };
 
-  console.log('filters', filters);
+  const [filters, setFilters] = useState(getInitialFilters());
 
   useEffect(() => {
-    onChange(filters);
-  }, [filters]);
+    if (show) {
+      setFilters(getInitialFilters());
+    }
+  }, [show]);
+
+  // useEffect(() => {
+  //   onChange(filters);
+  // }, [filters]);
 
   const handleInputChange = (fieldName, value, isDate = false) => {
     if (isDate) {
@@ -53,12 +62,26 @@ const Filter = ({
   };
 
   const clearFilters = () => {
-    setFilters({
-      ...initialFilters,
-      startDate: null,
-      endDate: null,
+    const cleared = {};
+
+    filterOptions.forEach((option) => {
+      if (option && option.BE_keyName) {
+        cleared[option.BE_keyName] = '';
+      }
     });
+
+    cleared.startDate = null;
+    cleared.endDate = null;
+
+    setFilters(cleared);
     clearOptions();
+  };
+  const cancelFilter = () => {
+    onCancel();
+    console.log('isFilterApplied', isFilterApplied);
+    isFilterApplied && clearFilters();
+
+    // savedFilters && clearFilters();
   };
 
   // const clearFilters = () => {
@@ -87,6 +110,7 @@ const Filter = ({
                     type="text"
                     className="form-control"
                     placeholder={option.placeholder}
+                    key={option.BE_keyName + (filters[option.BE_keyName] || '')}
                     value={filters[option.BE_keyName] || ''}
                     onChange={(e) =>
                       handleInputChange(option.BE_keyName, e.target.value)
@@ -96,6 +120,7 @@ const Filter = ({
                 {option.fieldType === 'select' && (
                   <CommonSelect
                     className="form-select form-control"
+                    key={option.BE_keyName + (filters[option.BE_keyName] || '')}
                     options={option.Options}
                     value={filters[option?.BE_keyName] || ''}
                     onChange={({ value }) => {
@@ -109,6 +134,10 @@ const Filter = ({
                       {option.Options?.map((val) => (
                         <div className="form-check form-check-inline" key={val}>
                           <input
+                            key={
+                              option.BE_keyName +
+                              (filters[option.BE_keyName] || '')
+                            }
                             className="form-check-input"
                             type="radio"
                             name={option.BE_keyName} // Ensure each radio group is unique
@@ -141,6 +170,7 @@ const Filter = ({
             <label className="col-sm-3 col-form-label">Created Date:</label>
             <div className="col-sm-9 field-mask">
               <CustomDateRange
+                key={filters.startDate + '_' + filters.endDate}
                 className="form-control w-100"
                 value={[
                   filters.startDate ? new Date(filters.startDate) : null,
@@ -167,7 +197,7 @@ const Filter = ({
           Clear All Filters
         </button>
         <div className="grp-btn">
-          <button className="btn btn-Cancel" onClick={onCancel}>
+          <button className="btn btn-Cancel" onClick={cancelFilter}>
             Cancel
           </button>
           <button
