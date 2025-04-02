@@ -9,6 +9,7 @@ import viewIcon from '../../assets/images/eye.svg';
 import showHideIcon from '../../assets/images/eye-close.svg';
 import editIcon from '../../assets/images/edit.svg';
 import downloadIcon from '../../assets/images/download.svg';
+import dummyImage from '../../assets/images/dummyIcon.svg';
 
 import '../../assets/scss/usermanagement.scss';
 
@@ -18,6 +19,7 @@ import useInventoryStore from '../../stores/InventoryReducer';
 import { downloadContent } from '../../helpers/utils';
 import CustomActionModal from '../../components/common/CustomActionModal';
 import InventoryView from './InventoryView';
+import CommonSkeleton from '../../components/common/CommonSkeleton';
 
 const InventoryManagement = () => {
   const {
@@ -59,6 +61,8 @@ const InventoryManagement = () => {
     }));
   };
 
+  const [imageLoading, setimageLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
   const columns = [
     {
       name: 'Image',
@@ -67,7 +71,21 @@ const InventoryManagement = () => {
       contentClass: '',
       cell: (row) => (
         <figure className="in-img">
-          <img src={row.images[0]} alt="" className="img" />
+          {/* Skeleton Loader */}
+          {imageLoading && <CommonSkeleton height={40} />}
+
+          {/* Image */}
+          <img
+            src={hasError || !row.images[0] ? dummyImage : row.images[0]}
+            alt="Item"
+            className="img"
+            onLoad={() => setimageLoading(false)}
+            onError={() => {
+              setimageLoading(false);
+              setHasError(true);
+            }}
+            style={{ display: imageLoading ? 'none' : 'block' }}
+          />
         </figure>
       ),
     },
@@ -87,6 +105,10 @@ const InventoryManagement = () => {
       selector: 'eZPassNumber',
       titleClasses: 'tw1',
       contentClass: 'user-pic',
+      cell: (row) =>
+        row?.eZPassNumber && row.eZPassNumber !== 'null'
+          ? row.eZPassNumber
+          : '-',
     },
     // {
     //   name: 'Quantity Available',
@@ -128,7 +150,6 @@ const InventoryManagement = () => {
             place="bottom"
             style={{
               backgroundColor: '#2ca0da',
-              maxWidth: 500,
             }}
           />
           <span
