@@ -223,6 +223,8 @@
                 border-radius: 21px;
                 box-shadow: 3px 15px 14.9px 0px #0000000F;
                 margin-top: 20px !important;
+                top: 30px;
+                right: -25px;
                 @media ($sm-1679){
                     width: 520px;
                 }
@@ -339,7 +341,7 @@
                         color: #8897AD;
                     }
                     .form-check-input:checked[type=radio]{
-                        background-image: url("../images/radio-checked.svg") ;
+                        background-image: url(../img/radio-checked.svg) ;
                         background-color: transparent;
                     }
                 }

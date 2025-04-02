@@ -6,7 +6,7 @@
             width: 29px;
             height: 29px;
             border-radius: 29px;
-            background-image: url("../images/modal-close-btn.svg");
+            background-image: url(../images/modal-close-btn.svg);
             background-repeat: no-repeat;
             background-position: center;
             background-color: #F2F5FA;
@@ -447,6 +447,7 @@
             }
             @media ($sm-991){
                 margin: 20px;
+                border-radius: 20px;
             }
             .modal-header{
                 padding: 30px 39px;
@@ -584,7 +585,43 @@
             }
         }
     }
+    &.billing{
+        .modal-dialog{
+            max-width: 1239px;
+            @media ($sm-767){
+                max-width: 95%;
+            }
+            @media ($sm-579){
+                max-width: 100%;
+            }
+            .modal-content {
+                .modal-body{
+                    padding: 36px 51px 82px;
+                        @media ($sm-1679){
+                            padding: 30px 45px 62px;
+                        }
+                        @media ($sm-1199){
+                            padding: 25px 40px 52px;
+                        }
+                        @media ($sm-991){
+                            padding: 20px 30px 30px;
+                        }
+                        @media ($sm-579){
+                            padding: 20px;
+                        }
+                    .table {
+                        th{
+                            &.th-amount{
+                                width: 48%;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
+
 
 .note-modal{
     .modal-dialog{
