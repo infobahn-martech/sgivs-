@@ -34,7 +34,8 @@ const InventoryManagement = () => {
   console.log(' inventoryList', inventoryList);
   const [modalConfig, setModalConfig] = useState({ type: null, action: null });
   const [modal, setModal] = useState(null);
-  const [params, setParams] = useState({
+
+  const initialParams = {
     search: '',
     page: '1',
     limit: '10',
@@ -42,17 +43,22 @@ const InventoryManagement = () => {
     toDate: null,
     sortBy: 'createdAt',
     sortOrder: 'DESC',
-  });
+  };
+
+  const [params, setParams] = useState(initialParams);
 
   useEffect(() => {
     getInventoryList(params);
   }, [params]);
 
-  // const [data, setData] = useState(dummyData);
-
   const handleSortChange = (selector) => {
-    console.log(' selector', selector);
+    setParams((prevParams) => ({
+      ...prevParams,
+      sortBy: selector,
+      sortOrder: prevParams.sortOrder === 'ASC' ? 'DESC' : 'ASC',
+    }));
   };
+
   const columns = [
     {
       name: 'Image',
@@ -242,6 +248,9 @@ const InventoryManagement = () => {
       fieldType: 'radio',
       Options: ['Yes', 'No'],
     },
+    {
+      showDateRange: true,
+    },
   ];
 
   return (
@@ -259,7 +268,20 @@ const InventoryManagement = () => {
         }}
         onSearch={debouncedSearch}
         filterOptions={filterOptions}
-        submitFilter={(filter) => setParams({ ...params, ...filter })}
+        submitFilter={(filters) => {
+          const { startDate, endDate, ...rest } = filters;
+
+          setParams({
+            ...params,
+            ...rest,
+            fromDate: startDate ? moment(startDate).format('YYYY-MM-DD') : null,
+            toDate: endDate ? moment(endDate).format('YYYY-MM-DD') : null,
+            // page: '1',
+          });
+        }}
+        clearOptions={() => {
+          setParams(initialParams);
+        }}
       />
       <CustomTable
         pagination={pagination}

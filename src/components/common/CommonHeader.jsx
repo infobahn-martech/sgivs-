@@ -27,11 +27,13 @@ const CommonHeader = ({
   hideFilter,
   filterOptions,
   submitFilter,
+  clearOptions,
 }) => {
   const [searchInput, setSearchInput] = useState('');
   const [openUpload, setOpenUpload] = useState(false);
   const [uploadedFile, setUploadedFile] = useState(null);
   const [uploadError, setUploadError] = useState(null);
+  const [showFilterModal, setShowFilterModal] = useState(false);
 
   const handleSearchChange = (event) => {
     const value = event.target.value;
@@ -294,21 +296,25 @@ const CommonHeader = ({
                 <a
                   className="dropdown-toggle"
                   role="button"
-                  data-bs-toggle="dropdown"
-                  data-bs-auto-close="false"
-                  aria-expanded="false"
+                  onClick={() => setShowFilterModal((prev) => !prev)}
                 >
                   <span>Filter</span>
                   <img src={filterImg} alt="" className="img" />
                 </a>
-                <Filter
-                  clearOptions={() => {}}
-                  filterOptions={filterOptions}
-                  onChange={(values) => {
-                    console.log('values', values);
-                  }}
-                  submitFilter={submitFilter}
-                />
+                {showFilterModal && (
+                  <Filter
+                    clearOptions={clearOptions}
+                    filterOptions={filterOptions}
+                    onChange={(values) => {
+                      console.log('values', values);
+                    }}
+                    submitFilter={(filters) => {
+                      submitFilter(filters);
+                    }}
+                    onCancel={() => setShowFilterModal(false)} // Close on Cancel
+                    show={showFilterModal}
+                  />
+                )}
               </div>
             )}
 
