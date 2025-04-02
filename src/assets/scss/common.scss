@@ -183,12 +183,12 @@ a{
 .inner-scroll-outer{
     &.settings{
         overflow-y: auto;
-        max-height: calc(100vh - 165px);
+        height: calc(100vh - 165px);
         @media ($sm-1679) {
-            max-height: calc(100vh - 140px);
+            height: calc(100vh - 136px);
         }
         @media (max-width:650px) {
-            max-height: calc(100vh - 160px);
+            height: calc(100vh - 160px);
         }
     }
     &.profile{
