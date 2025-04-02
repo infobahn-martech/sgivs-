@@ -149,7 +149,7 @@ const EZPassBilling = () => {
       titleClasses: 'tw6',
     },
     {
-      name: 'Rental Status',
+      name: 'Loan Status',
       selector: 'status',
       titleClasses: 'tw6',
       cell: (row) => (

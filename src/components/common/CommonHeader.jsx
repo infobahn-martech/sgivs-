@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import * as XLSX from 'xlsx';
 import { Spinner } from 'react-bootstrap';
@@ -283,7 +283,7 @@ const CommonHeader = ({
               <input
                 type="text"
                 className="txt"
-                placeholder="Search Controls"
+                placeholder="Search"
                 value={searchInput}
                 onChange={handleSearchChange}
               />
