@@ -68,7 +68,7 @@ const Filter = ({
 
   return (
     <div
-      className={`dropdown-menu dropdown-menu-end filter-dropdown ${
+      className={`dropdown-menu dropdown-menu-end filter-dropdown dropdown ${
         show ? 'show' : ''
       } `}
     >

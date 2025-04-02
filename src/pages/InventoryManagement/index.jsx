@@ -105,6 +105,10 @@ const InventoryManagement = () => {
       selector: 'eZPassNumber',
       titleClasses: 'tw1',
       contentClass: 'user-pic',
+      cell: (row) =>
+        row?.eZPassNumber && row.eZPassNumber !== 'null'
+          ? row.eZPassNumber
+          : '-',
     },
     // {
     //   name: 'Quantity Available',
