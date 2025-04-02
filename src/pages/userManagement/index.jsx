@@ -4,13 +4,14 @@ import CustomTable from '../../components/common/CustomTable';
 import deleteIcon from '../../assets/images/delete.svg';
 import activeIcon from '../../assets/images/close.svg';
 import blockIcon from '../../assets/images/block.svg';
-import dummyImg from '../../assets/images/avatar.png';
+// import dummyImg from '../../assets/images/avatar.png';
 import '../../assets/scss/usermanagement.scss';
 import CommonHeader from '../../components/common/CommonHeader';
 import useAuthReducer from '../../stores/AuthReducer';
 import { formatBoolean, formatDate } from '../../config/config';
 import CustomActionModal from '../../components/common/CustomActionModal';
 import { debounce } from 'lodash';
+import InitialsAvatar from '../../components/common/InitialsAvatar';
 
 const UserManagement = () => {
   const {
@@ -106,9 +107,7 @@ const UserManagement = () => {
       contentClass: 'user-pic',
       cell: (row) => (
         <>
-          <figure>
-            <img src={dummyImg} alt="" className="img" />
-          </figure>
+          <InitialsAvatar name={row.firstName} />
           <span>{row.firstName}</span>
         </>
       ),
