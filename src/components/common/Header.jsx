@@ -41,12 +41,13 @@ const Header = () => {
               >
                 <div className="usr-dtl">
                   <div className="user-image">
-                    <img src={UserIcon} alt="user" />
+                    <img
+                      src={profileData?.user?.imageThumb || UserIcon}
+                      alt="user"
+                    />
                   </div>
                   <div className="usr-info">
-                    <span className="name">
-                      {profileData?.name}
-                    </span>
+                    <span className="name">{profileData?.name}</span>
                     <span className="role">Administrator</span>
                   </div>
                 </div>

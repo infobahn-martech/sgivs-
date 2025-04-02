@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import useRentalReducer from '../../stores/RentalReducer';
 import CustomTable from '../../components/common/CustomTable';
 import CommonHeader from '../../components/common/CommonHeader';
@@ -11,6 +11,8 @@ import alertIcon from '../../assets/images/alert.svg';
 import dummyImg from '../../assets/images/avatar.png';
 import { debounce } from 'lodash';
 import moment from 'moment';
+import { getPaymentStatus, paymentStatus } from './utils';
+import CustomSelect from '../../components/common/CommonSelect';
 
 const RentalManagement = () => {
   const {
@@ -19,7 +21,13 @@ const RentalManagement = () => {
     isRentalLoading,
     exportRental,
     isExportLoading,
+    changeStatus: postChangeStatus,
+    successMessage,
   } = useRentalReducer((state) => state);
+
+  const [changeStatus, setChangeStatus] = useState({});
+
+  console.log('changeStatus', changeStatus);
 
   const [params, setParams] = useState({
     page: 1,
@@ -31,6 +39,37 @@ const RentalManagement = () => {
     // toDate: null,
   });
   // const [modalConfig, setModalConfig] = useState({ type: null, data: null });
+
+  const statusEditRef = useRef(null);
+
+  useEffect(() => {
+    // Event listener to detect click outside the status edit div
+    const handleClickOutside = (event) => {
+      if (
+        statusEditRef.current &&
+        !statusEditRef.current.contains(event.target)
+      ) {
+        // Clear changeStatus if click is outside
+        setChangeStatus({});
+      }
+    };
+
+    // Adding event listener for clicks
+    document.addEventListener('mousedown', handleClickOutside);
+
+    // Cleanup the event listener when component unmounts
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (successMessage) {
+      handleGetAllRentals();
+      setChangeStatus({});
+      useRentalReducer.setState({ successMessage: '' });
+    }
+  }, [successMessage]);
 
   const handleGetAllRentals = () => {
     getAllRentals(params);
@@ -65,6 +104,69 @@ const RentalManagement = () => {
 
   const formatDateTime = (date) =>
     date ? moment(date).format('MMMM D, YYYY : hh:mm A') : '-';
+
+  const renderStatus = (row) => {
+    const { label, className } = getPaymentStatus(row.status);
+    if (changeStatus.id === row.id) {
+      const handleSubmit = () => {
+        if (row.status === changeStatus.status) {
+          // Prevent submit if no change
+          setChangeStatus({});
+          return;
+        }
+        postChangeStatus({
+          id: changeStatus.id,
+          status: changeStatus.status,
+        });
+      };
+
+      return (
+        <div className="d-flex" ref={statusEditRef}>
+          <CustomSelect
+            classNamePrefix="status-select"
+            showIndicator
+            isClearable={false}
+            options={paymentStatus}
+            value={row.status}
+            onChange={({ value }) =>
+              setChangeStatus((prev) => ({
+                ...prev,
+                status: value,
+              }))
+            }
+          />
+          <button onClick={handleSubmit} className="btn-save-trans">
+            Save
+          </button>
+        </div>
+      );
+    }
+
+    return (
+      <>
+        <div className="d-flex justify-content-center">
+          <span className={`status-wrap ${className}`}>{label}</span>
+          {!row.isOld && (
+            <span
+              className=" ms-2 cursor-pointer flex-shrink-0"
+              onClick={() => {
+                setChangeStatus({
+                  id: row.id,
+                  status: row.status,
+                });
+              }}
+            >
+              <img
+                style={{ cursor: 'pointer' }}
+                src={penIcon}
+                alt="edit-icon"
+              />
+            </span>
+          )}
+        </div>
+      </>
+    );
+  };
 
   const columns = [
     {
@@ -107,16 +209,10 @@ const RentalManagement = () => {
       titleClasses: 'tw6',
     },
     {
-      name: 'Rental Status',
+      name: 'Loan Status',
       selector: 'status',
       titleClasses: 'tw6',
-      cell: (row) => (
-        <>
-          <div class="status-wrap">
-            <span>Overdue</span> <img src={penIcon} alt="" className="img" />
-          </div>
-        </>
-      ),
+      cell: (row) => renderStatus(row),
     },
     {
       name: 'Action',

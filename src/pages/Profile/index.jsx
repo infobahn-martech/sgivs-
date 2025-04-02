@@ -5,7 +5,8 @@ import '../../assets/scss/footer.scss';
 import '../../assets/scss/signin.scss';
 
 import proPic from '../../assets/images/pro-pic.svg';
-import proPict from '../../assets/images/profile-picture.svg';
+import proPict from '../../assets/images/avatar.png';
+
 import lock from '../../assets/images/lock.svg';
 import logOut from '../../assets/images/log-out.svg';
 import MyAccount from './MyAccount';
@@ -34,12 +35,14 @@ const Profile = () => {
         <div className="profile-inner">
           <div className="profile-picture">
             <div className="img-sec">
-              <img src={proPict} alt="profile-picture" />
+              <img
+                src={profileData?.user?.imageThumb || proPict}
+                alt="profile-picture"
+              />
             </div>
             <div className="u-name">
               {' '}
-              {profileData?.employee?.firstName}{' '}
-              {profileData?.employee?.lastName}
+              {profileData?.user?.firstName} {profileData?.user?.lastName}
             </div>
           </div>
 

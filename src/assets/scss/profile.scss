@@ -73,7 +73,7 @@
         border-radius: 50px;
 
         .profile-picture{
-            background-image: url("../images/profile-picture-bg.png");
+            background-image: url(../img/profile-picture-bg.png);
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
@@ -99,7 +99,7 @@
             &::after{
                 position: absolute;
                 content: "";
-                background-image: url("../images/profile-botm-img.png");
+                background-image: url('../img/profile-botm-img.png');
                 width: 235px;
                 height: 130px;
                 background-repeat: no-repeat;
@@ -320,11 +320,41 @@
             }
             .profile-card {
                 position: relative;
-               
+                .btn-edit{
+                    background-color: #d8e1edbe;
+                    border: none;
+                    box-shadow: none;
+                    padding: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    position: absolute;
+                    right: 0px;
+                    top: 0px;
+                    width: 43px;
+                    height: 43px;
+                    border-radius: 5px;
+                    @media ($sm-1679){
+                        width: 40px;
+                        height: 40px;
+                    }
+                    @media ($sm-1441){
+                        width: 38px;
+                        height: 38px;
+                    }
+                    @media ($sm-1199){
+                        width: 34px;
+                        height: 34px;
+                    }
+                    img{
+                        width: 14px;
+
+                    }
+                }
                 .box-section {
                     width: 69%;
                     border-radius: 15px;
-                  
+                    position: relative;
                     margin: auto;
                     display: flex;
                     flex-wrap: wrap;
