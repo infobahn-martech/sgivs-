@@ -195,9 +195,11 @@
         gap: 30px;
         @media ($sm-1679) {
             padding: 20px 60px;
+            gap: 20px;
         }
         @media ($sm-1199) {
             padding: 20px 30px;
+            gap: 15px;
         }
         @media ($sm-479) {
             padding: 20px 15px;
@@ -220,9 +222,17 @@
                 height: 48px;
                 font-size: 18px;
             }
+            @media ($sm-1441) {
+                height: 44px;
+                font-size: 17px;
+            }
             @media ($sm-1199) {
                 font-size: 16px;
                 height: 40px;
+            }
+            @media ($sm-991) {
+                font-size: 15px;
+                height: 38px;
             }
             @media ($sm-479) {
                 width: 100%;
