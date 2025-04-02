@@ -14,6 +14,7 @@ import useAuthReducer from '../../stores/AuthReducer';
 import { useNavigate } from 'react-router-dom';
 import CustomActionModal from './CustomActionModal';
 import InitialsAvatar from './InitialsAvatar';
+import { getFirstLetters } from '../../config/config';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -45,7 +46,9 @@ const Header = () => {
                     {profileData?.user?.imageThumb ? (
                       <img src={profileData?.user?.imageThumb} alt="user" />
                     ) : (
-                      <InitialsAvatar name={profileData?.name} />
+                      <div class="user-image alphabet">
+                        <span>{getFirstLetters(profileData?.name)} </span>
+                      </div>
                     )}
                   </div>
                   <div className="usr-info">
