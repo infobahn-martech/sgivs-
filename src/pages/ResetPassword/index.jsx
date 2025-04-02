@@ -133,7 +133,7 @@ const ResetPassword = () => {
             </div>
           </div>
           <footer class="ftr">
-            <p class="copy">© 2023 ALL RIGHTS RESERVED</p>
+            <p class="copy">© 2025 ALL RIGHTS RESERVED</p>
           </footer>
         </div>
       </div>
