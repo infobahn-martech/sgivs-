@@ -6,9 +6,11 @@ import Gateway from '../config/gateway';
 
 const useRentalReducer = create((set) => ({
   rentalData: null,
+  notes: null,
   errorMessage: '',
   successMessage: '',
   isRentalLoading: false,
+  isNoteLoading: false,
   isExportLoading: false,
   userActionLoading: false,
   statusLoading: false,
@@ -69,6 +71,22 @@ const useRentalReducer = create((set) => ({
         successMessage: null,
         statusLoading: false,
       });
+    }
+  },
+
+  getRentalNotes: async (params) => {
+    try {
+      console.log('params', params);
+      set({ isNoteLoading: true, successMessage: '' });
+      const { data } = await rentalService.getNotes(params);
+      const notes = data.rental;
+      set({ notes, isNoteLoading: false });
+    } catch (err) {
+      const { error } = useAlertReducer.getState();
+      set({
+        isNoteLoading: false,
+      });
+      error(err?.response?.data?.message ?? err.message);
     }
   },
 }));

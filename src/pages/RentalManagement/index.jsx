@@ -18,6 +18,7 @@ import CustomSelect from '../../components/common/CommonSelect';
 import DeadLineModal from './DeadLineModal';
 import InitialsAvatar from '../../components/common/InitialsAvatar';
 import { Tooltip } from 'react-tooltip';
+import RentalNote from './rentalNotes';
 
 const RentalManagement = () => {
   const {
@@ -28,13 +29,14 @@ const RentalManagement = () => {
     isExportLoading,
     changeStatus: postChangeStatus,
     successMessage,
+    getRentalNotes,
+    notes,
   } = useRentalReducer((state) => state);
 
   const [changeStatus, setChangeStatus] = useState({});
   const [deadlineModal, setdeadlineModal] = useState(false);
   const [deadlineId, setdeadlineId] = useState(null);
-
-  console.log('changeStatus', changeStatus);
+  const [modal, setModal] = useState(null);
 
   const initialParams = {
     page: 1,
@@ -235,10 +237,17 @@ const RentalManagement = () => {
       cell: (row) => (
         <>
           <img
+           
             src={noteIcon}
+           
             alt="Note"
             data-tooltip-id="note-tooltip"
             data-tooltip-content="Add Note"
+         
+            onClick={() => {
+              setModal({ id: row.id, mode: 'VIEW' });
+              getRentalNotes({ rentalId: row.id });
+            }}
           />
           <img
             src={alertIcon}
@@ -344,6 +353,13 @@ const RentalManagement = () => {
           closeModal={() => setdeadlineModal(false)}
           deadlineId={deadlineId}
           setdeadlineModal={setdeadlineModal}
+        />
+      )}
+      {modal?.mode === 'VIEW' && (
+        <RentalNote
+          showModal={modal}
+          closeModal={() => setModal(null)}
+          noteContent={notes}
         />
       )}
     </>
