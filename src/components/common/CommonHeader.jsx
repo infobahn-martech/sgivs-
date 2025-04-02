@@ -281,7 +281,7 @@ const CommonHeader = ({
               <input
                 type="text"
                 className="txt"
-                placeholder="Search Controls"
+                placeholder="Search"
                 value={searchInput}
                 onChange={handleSearchChange}
               />
