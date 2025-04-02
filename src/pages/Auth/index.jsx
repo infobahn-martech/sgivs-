@@ -32,77 +32,79 @@ const Login = () => {
   };
 
   return (
-    <div class="user-log-wrp">
-      <div class="inner-wrp">
-        <div class="panel-left">
-          <div class="logo-wrp">
-            <img src={logo} alt="" />
+    <div className="user-log-wrp">
+      <div className="inner-wrp">
+        <div className="panel-left">
+          <div className="logo-wrp">
+            <img src={logo} alt="Logo" />
           </div>
-          <div class="quotes-wrp">
+          <div className="quotes-wrp">
             Today is a new day. It's your day. You shape it. Sign in to
             <br />
             start managing your projects.
           </div>
         </div>
-        <div class="panel-right">
-          <div class="form-wrp-center login">
-            <div class="top-blk">
-              <div class="title">
-                Welcome Back <span class="icon">👋</span>
+        <div className="panel-right">
+          <div className="form-wrp-center login">
+            <div className="top-blk">
+              <div className="title">
+                Welcome Back <span className="icon">👋</span>
               </div>
-              <div class="desc">
+              <div className="desc">
                 Today is a new day. It's your day. You shape it. Sign in to
                 start managing your projects.
               </div>
             </div>
-            <div class="form-sec-wrp">
-              <div class="form-group">
-                <label class="form-label" for="">
-                  Email
-                </label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter your email"
-                  {...register('email')}
-                />
-                {errors.email && (
-                  <span htmlFor="" className="error">
-                    {errors.email.message}
-                  </span>
-                )}
+            {/* Wrap the form fields inside a form element */}
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="form-sec-wrp">
+                <div className="form-group">
+                  <label className="form-label" htmlFor="email">
+                    Email
+                  </label>
+                  <input
+                    id="email"
+                    type="text"
+                    className="form-control"
+                    placeholder="Enter your email"
+                    {...register('email')}
+                  />
+                  {errors.email && (
+                    <span className="error">{errors.email.message}</span>
+                  )}
+                </div>
+                <div className="form-group">
+                  <label className="form-label" htmlFor="password">
+                    Password
+                  </label>
+                  <input
+                    id="password"
+                    type="password"
+                    className="form-control"
+                    placeholder="Enter your password"
+                    {...register('password')}
+                  />
+                  {errors.password && (
+                    <span className="error">{errors.password.message}</span>
+                  )}
+                </div>
+                <Link
+                  className="link"
+                  onClick={() => {
+                    navigate('/forgot-password');
+                  }}
+                >
+                  Forgot Password?
+                </Link>
+                {/* Change button type to submit to enable Enter key functionality */}
+                <button className="btn btn-rounded" type="submit">
+                  {isLoginLoading ? 'Loading...' : 'Login'}
+                </button>
               </div>
-              <div class="form-group">
-                <label class="form-label" for="">
-                  Password
-                </label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter your password"
-                  {...register('password')}
-                />
-                {errors.password && (
-                  <span htmlFor="" className="error">
-                    {errors.password.message}
-                  </span>
-                )}
-              </div>
-              <Link
-                class="link"
-                onClick={() => {
-                  navigate('/forgot-password');
-                }}
-              >
-                Forgot Password?
-              </Link>
-              <button class="btn btn-rounded" onClick={handleSubmit(onSubmit)}>
-                {isLoginLoading ? 'Loading...' : 'Login'}
-              </button>
-            </div>
+            </form>
           </div>
-          <footer class="ftr">
-            <p class="copy">© 2025 ALL RIGHTS RESERVED</p>
+          <footer className="ftr">
+            <p className="copy">© 2025 ALL RIGHTS RESERVED</p>
           </footer>
         </div>
       </div>
