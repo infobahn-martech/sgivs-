@@ -36,15 +36,17 @@ const RentalManagement = () => {
 
   console.log('changeStatus', changeStatus);
 
-  const [params, setParams] = useState({
+  const initialParams = {
     page: 1,
     limit: 10,
     search: '',
     sortOrder: 'DESC',
     // sortBy: 'joinedDate',
-    // fromDate: null,
-    // toDate: null,
-  });
+    fromDate: null,
+    toDate: null,
+  };
+
+  const [params, setParams] = useState(initialParams);
   // const [modalConfig, setModalConfig] = useState({ type: null, data: null });
 
   const statusEditRef = useRef(null);
@@ -281,23 +283,25 @@ const RentalManagement = () => {
       ),
     },
   ];
-  const handleExcelUpload = (data) => {
-    // Process the uploaded Excel data
-    console.log('Processed Excel data:', data);
-    exportRental({
-      page: 1,
-      limit: 10,
-      search: '',
-      sortOrder: 'DESC',
-      // sortBy: 'joinedDate',
-      // fromDate: null,
-      // toDate: null,
-    });
-  };
 
   const exportExcel = async () => {
     exportRental(params);
   };
+
+  const filterOptions = [
+    {
+      fieldName: 'User Status',
+      BE_keyName: 'status',
+      fieldType: 'select',
+      Options: [
+        { label: 'Active', value: 1 },
+        { label: 'Blocked', value: 2 },
+      ],
+    },
+    {
+      showDateRange: true,
+    },
+  ];
 
   return (
     <>
@@ -305,9 +309,22 @@ const RentalManagement = () => {
         onSearch={debouncedSearch}
         exportExcel={rentalData?.data?.length && exportExcel}
         exportLoading={isExportLoading}
-        uploadExcel
-        onExcelUpload={handleExcelUpload}
-        hideFilter
+        filterOptions={filterOptions}
+        submitFilter={(filters) => {
+          const { startDate, endDate, ...rest } = filters;
+
+          setParams({
+            ...params,
+            ...rest,
+            fromDate: startDate ? moment(startDate).format('YYYY-MM-DD') : null,
+            toDate: endDate ? moment(endDate).format('YYYY-MM-DD') : null,
+            page: '1',
+          });
+        }}
+        clearOptions={() => {
+          setParams(initialParams);
+        }}
+        // hideFilter
       />
       <CustomTable
         pagination={{ currentPage: params.page, limit: params.limit }}

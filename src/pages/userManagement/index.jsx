@@ -34,15 +34,7 @@ const UserManagement = () => {
     sortOrder: 'DESC',
   };
 
-  const [params, setParams] = useState({
-    search: '',
-    page: '1',
-    limit: '10',
-    fromDate: null,
-    toDate: null,
-    sortBy: 'createdAt',
-    sortOrder: 'DESC',
-  });
+  const [params, setParams] = useState(initialParams);
 
   const [statusModalOpen, setstatusModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);

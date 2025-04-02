@@ -8,6 +8,7 @@ import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
 import useRentalReducer from '../../stores/RentalReducer';
 import { Spinner } from 'react-bootstrap';
+import moment from 'moment';
 
 const DeadLineModal = ({
   showModal,
@@ -36,8 +37,8 @@ const DeadLineModal = ({
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      const formattedDate = deadlineDate.toISOString().split('T')[0];
-      const formattedTime = deadlineTime;
+      const formattedDate = moment(deadlineDate).format('YYYY-MM-DD');
+      const formattedTime = moment(deadlineTime, 'hh:mm A').format('HH:mm');
 
       postChangeStatus({
         id: deadlineId,
@@ -102,7 +103,7 @@ const DeadLineModal = ({
                   setErrors((prev) => ({ ...prev, time: undefined }));
                 }}
                 value={deadlineTime}
-                format="HH:mm"
+                format="hh:mm a"
                 disableClock
                 clearIcon={null}
                 className="form-control"
