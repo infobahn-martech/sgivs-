@@ -13,6 +13,7 @@ import { debounce } from 'lodash';
 import moment from 'moment';
 import { getPaymentStatus, paymentStatus } from './utils';
 import CustomSelect from '../../components/common/CommonSelect';
+import RentalNote from './rentalNotes';
 
 const RentalManagement = () => {
   const {
@@ -23,11 +24,12 @@ const RentalManagement = () => {
     isExportLoading,
     changeStatus: postChangeStatus,
     successMessage,
+    getRentalNotes,
+    notes,
   } = useRentalReducer((state) => state);
 
   const [changeStatus, setChangeStatus] = useState({});
-
-  console.log('changeStatus', changeStatus);
+  const [modal, setModal] = useState(null);
 
   const [params, setParams] = useState({
     page: 1,
@@ -219,9 +221,16 @@ const RentalManagement = () => {
       selector: 'action',
       titleClasses: 'tw7',
       contentClass: 'action-wrap',
-      cell: () => (
+      cell: (row) => (
         <>
-          <img src={noteIcon} alt="Note" />
+          <img
+            src={noteIcon}
+            alt="Note"
+            onClick={() => {
+              setModal({ id: row.id, mode: 'VIEW' });
+              getRentalNotes({ rentalId: row.id });
+            }}
+          />
           <img src={alertIcon} alt="Alert" />
         </>
       ),
@@ -266,6 +275,13 @@ const RentalManagement = () => {
         onSortChange={handleSortChange}
         wrapClasses="rm-table-wrap"
       />
+      {modal?.mode === 'VIEW' && (
+        <RentalNote
+          showModal={modal}
+          closeModal={() => setModal(null)}
+          noteContent={notes}
+        />
+      )}
     </>
   );
 };
