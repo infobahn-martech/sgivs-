@@ -14,7 +14,7 @@ const useRentalReducer = create((set) => ({
 
   getAllRentals: async (params) => {
     try {
-      set({ isRentalLoading: true });
+      set({ isRentalLoading: true, successMessage: '' });
       const { data } = await rentalService.getAllRentals(params);
       const rentalData = data.rental;
       set({ rentalData, isRentalLoading: false });
@@ -28,7 +28,7 @@ const useRentalReducer = create((set) => ({
   },
 
   exportRental: async (params) => {
-    set({ isExportLoading: true });
+    set({ isExportLoading: true, successMessage: '' });
 
     try {
       await downloadFile({
@@ -42,6 +42,25 @@ const useRentalReducer = create((set) => ({
     } catch (err) {
       useAlertReducer.getState().error(err.message);
       set({ isExportLoading: false });
+    }
+  },
+  changeStatus: async ({ id, status }) => {
+    const { success, error } = useAlertReducer.getState();
+    try {
+      set({ successMessage: '' });
+      const { data } = await rentalService.changeStatus({
+        id,
+        status,
+      });
+      success(data.message);
+      set({
+        successMessage: data.message,
+      });
+    } catch (err) {
+      error(err?.response?.data?.message ?? err?.message);
+      set({
+        successMessage: null,
+      });
     }
   },
 }));
