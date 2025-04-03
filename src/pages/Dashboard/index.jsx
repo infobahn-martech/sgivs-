@@ -48,7 +48,8 @@ const Dashboard = () => {
             <div className="greetings-blk">
               <div className="greetings-title">Hi {profileData?.name} 👋</div>
               <div className="greetings-txt">
-                Today is a new day. It's your day. You shape it.<br /> Sign in to start managing your projects.
+                Today is a new day. It's your day. You shape it. Sign in to
+                <br /> start managing your projects.
               </div>
             </div>
           </div>
