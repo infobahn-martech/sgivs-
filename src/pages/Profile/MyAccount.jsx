@@ -65,7 +65,7 @@ const MyAccount = () => {
             </div>
           </div>
         </div>
-        <div className="col-md-6 boxes">
+        {/* <div className="col-md-6 boxes">
           <div className="box-inner">
             <div className="lft-txt">
               <span className="light">Joined Date</span>
@@ -84,7 +84,7 @@ const MyAccount = () => {
               </span>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
       {isEdit && (
         <EditProfile
