@@ -9,7 +9,7 @@ import downloadCountIcon from '../../assets/images/download-count.svg';
 import deleteIcon from '../../assets/images/delete.svg';
 import closeIcon from '../../assets/images/close.svg';
 
-import inventoryMangIcon from '../../assets/images/inventory.svg';
+// import inventoryMangIcon from '../../assets/images/inventory.svg';
 import userMangIcon from '../../assets/images/User_Management.svg';
 
 import useAuthReducer from '../../stores/AuthReducer';
@@ -97,7 +97,7 @@ const Dashboard = () => {
             <div className="top-blk">
               <div className="left-wrap">
                 <div className="icon-title">
-                  <img src={inventoryMangIcon} alt="" className="img" />
+                  {/* <img src={inventoryMangIcon} alt="" className="img" /> */}
                   <span>Inventory management</span>
                 </div>
               </div>
