@@ -1,6 +1,5 @@
 import { createRoot } from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
-
 import './assets/css/index.css';
 import './assets/scss/common.scss';
 
