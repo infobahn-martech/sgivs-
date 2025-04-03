@@ -36,10 +36,10 @@ const useRentalReducer = create((set) => ({
 
     try {
       await downloadFile({
-        url: 'rental',
+        url: 'loan',
         params,
-        fileName: 'rental_data.xlsx',
-        extractFilePath: (response) => response?.data?.rental,
+        fileName: 'loan_data.xlsx',
+        extractFilePath: (response) => response?.data?.loan,
       });
 
       set({ isExportLoading: false });

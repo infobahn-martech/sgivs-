@@ -11,9 +11,12 @@ import {
 } from '../services/inventoryServices';
 import useAlertReducer from './AlertReducer';
 
+import { downloadFile } from '../config/config';
+
 const useInventoryStore = create((set) => ({
   inventoryList: [],
   isListLoading: false,
+  isExportLoading: false,
   isBarcodeLoading: false,
   pagination: {},
   isLoading: false,
@@ -101,7 +104,9 @@ const useInventoryStore = create((set) => ({
       set({
         pagination: data.inventories.pagination,
         isListLoading: false,
-        inventoryList: data.inventories.data,
+        inventoryList: data.inventories.data
+          ? data.inventories.data
+          : data.inventories,
       });
     } catch (error) {
       console.log(' error', error);
@@ -161,6 +166,23 @@ const useInventoryStore = create((set) => ({
         inventoryItem: null,
       });
       console.log(' error', error);
+    }
+  },
+  exportInventory: async (params) => {
+    set({ isExportLoading: true, successMessage: '' });
+
+    try {
+      await downloadFile({
+        url: 'inventory',
+        params,
+        fileName: 'inventory_data.xlsx',
+        extractFilePath: (response) => response?.data?.inventories,
+      });
+
+      set({ isExportLoading: false });
+    } catch (err) {
+      useAlertReducer.getState().error(err.message);
+      set({ isExportLoading: false });
     }
   },
   clearItemById: () => set({ inventoryItem: null }),

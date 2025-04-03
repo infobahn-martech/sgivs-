@@ -21,6 +21,7 @@ import CustomActionModal from '../../components/common/CustomActionModal';
 import InventoryView from './InventoryView';
 import CommonSkeleton from '../../components/common/CommonSkeleton';
 import { Spinner } from 'react-bootstrap';
+import { excelExport } from '../../utils/helpers';
 
 const InventoryManagement = () => {
   const {
@@ -33,6 +34,8 @@ const InventoryManagement = () => {
     getItemById,
     inventoryItem,
     showHide,
+    exportInventory,
+    isExportLoading,
   } = useInventoryStore((state) => state);
   const navigate = useNavigate();
   console.log(' inventoryList', inventoryList);
@@ -47,6 +50,7 @@ const InventoryManagement = () => {
     toDate: null,
     sortBy: 'createdAt',
     sortOrder: 'DESC',
+    isExcelExport: 'false',
   };
 
   const [params, setParams] = useState(initialParams);
@@ -255,9 +259,9 @@ const InventoryManagement = () => {
       isLoading={isLoading}
       message={renderMessage()}
       onSubmit={async () => {
-        console.log("Modal Config:", modalConfig); // Debugging
+        console.log('Modal Config:', modalConfig); // Debugging
         if (!modalConfig.id) return; // Prevent errors
-  
+
         try {
           switch (modalConfig.type) {
             case 'delete':
@@ -274,7 +278,7 @@ const InventoryManagement = () => {
           }
           setModalConfig({ type: null, action: null }); // Reset only after successful execution
         } catch (error) {
-          console.error("Error in modal action:", error);
+          console.error('Error in modal action:', error);
         }
       }}
       showModal={modalConfig.type}
@@ -282,7 +286,6 @@ const InventoryManagement = () => {
       isWarning={modalConfig.type === 'show' || modalConfig.type === 'hide'}
     />
   );
-  
 
   const debouncedSearch = debounce((searchValue) => {
     console.log(' searchValue', searchValue);
@@ -316,12 +319,15 @@ const InventoryManagement = () => {
       toKey: 'toDate',
     },
   ];
-
+  const exportExcel = async () => {
+    exportInventory(params);
+  };
   return (
     <>
       {renderModal()}
       <CommonHeader
-        exportExcel={() => {}}
+        exportExcel={inventoryList?.length && exportExcel}
+        exportLoading={isExportLoading}
         uploadExcel
         onExcelUpload={handleExcelUpload}
         uploadTitle="Bulk Upload Inventory"
