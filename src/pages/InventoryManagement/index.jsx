@@ -21,7 +21,7 @@ import CustomActionModal from '../../components/common/CustomActionModal';
 import InventoryView from './InventoryView';
 import CommonSkeleton from '../../components/common/CommonSkeleton';
 import { Spinner } from 'react-bootstrap';
-
+import ImageCell from './ImageCell';
 
 const InventoryManagement = () => {
   const {
@@ -67,34 +67,16 @@ const InventoryManagement = () => {
     }));
   };
 
-  const [imageLoading, setimageLoading] = useState(true);
+  // const [imageLoading, setimageLoading] = useState(true);
   const [downloadingRowId, setDownloadingRowId] = useState(null);
-  const [hasError, setHasError] = useState(false);
+  // const [hasError, setHasError] = useState(false);
   const columns = [
     {
       name: 'Image',
       selector: 'image',
       titleClasses: 'tw1',
       contentClass: '',
-      cell: (row) => (
-        <figure className="in-img">
-          {/* Skeleton Loader */}
-          {imageLoading && <CommonSkeleton height={40} />}
-
-          {/* Image */}
-          <img
-            src={hasError || !row.images[0] ? dummyImage : row.images[0]}
-            alt="Item"
-            className="img"
-            onLoad={() => setimageLoading(false)}
-            onError={() => {
-              setimageLoading(false);
-              setHasError(true);
-            }}
-            style={{ display: imageLoading ? 'none' : 'block' }}
-          />
-        </figure>
-      ),
+      cell: (row) => <ImageCell src={row.images?.[0]} />,
     },
     {
       name: 'Item ID',
