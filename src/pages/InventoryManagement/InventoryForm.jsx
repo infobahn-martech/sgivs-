@@ -257,7 +257,7 @@ const InventoryForm = () => {
         hasParts: data.addPart,
         parts: isAddPartChecked ? parts.join(',') : null,
         images: imageKeys.join(','),
-        eZPassNumber: isEZPass ? data.plateNumber || 'null' : 'null',
+        eZPassNumber: isEZPass ? data.plateNumber || null: null,
         label: isAddPartChecked ? data.buttonLabel : null,
       };
 
@@ -337,7 +337,7 @@ const InventoryForm = () => {
       hasParts: data.addPart,
       parts: isAddPartChecked ? parts.join(',') : undefined,
       images: imageKeys.join(','),
-      eZPassNumber: isEZPass ? data.plateNumber || 'null' : 'null',
+      eZPassNumber: isEZPass ? data.plateNumber || null : null,
       label: isAddPartChecked ? data.buttonLabel : undefined,
     };
 
@@ -467,7 +467,9 @@ const InventoryForm = () => {
 
                 {/* Drag & Drop Upload Box */}
                 <div className="mb-3 form-group">
-                  <label className="form-label">Upload Image<small classname="text-danger">*</small></label>
+                  <label className="form-label">
+                    Upload Image<small classname="text-danger">*</small>
+                  </label>
                   <div
                     className="upload-box"
                     onDrop={handleDrop}
