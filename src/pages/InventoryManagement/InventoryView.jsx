@@ -45,10 +45,10 @@ const InventoryView = ({ showModal, closeModal, inventoryItem }) => {
               <div className="title">Item ID</div>
               <span className="value">#{inventoryItem?.itemId || 'N/A'}</span>
             </div>
-            <div className="blks">
+            {/* <div className="blks">
               <div className="title">Quantity</div>
               <span className="value">{inventoryItem?.quantity || 'N/A'}</span>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="middle-blk">
