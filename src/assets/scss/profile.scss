@@ -196,6 +196,8 @@
                     border-top-right-radius: 30px;
                     position: relative;
                     z-index: 999;
+                    padding-left: 1px;
+                    padding-right: 1px;
                     @media ($sm-1679){
                         margin: 0px 60px;
                     }

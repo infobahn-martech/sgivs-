@@ -133,6 +133,10 @@
             padding-right: 0px !important;
         }
     }
+    .status-select__option{
+        font-size: 13px;
+        cursor: pointer;
+    }
 }
 .btn-save-trans{
     background-color: $primaryColor;
