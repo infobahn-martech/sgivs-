@@ -426,7 +426,7 @@ const InventoryForm = () => {
                 <div className="row mb-3">
                   <div className="col-md-6 form-group">
                     <label htmlFor="itemName" className="form-label">
-                      Item Name<small classname="text-danger">*</small>
+                      Item Name<small classname="req">*</small>
                     </label>
                     <input
                       type="text"

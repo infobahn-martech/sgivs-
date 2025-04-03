@@ -179,9 +179,7 @@ a{
         }
     }
 }
-.text-danger{
-    color: #dc3545;
-}
+
 .inner-scroll-outer{
     &.settings{
         overflow-y: auto;
@@ -222,4 +220,8 @@ a{
 }
 .cursor-pointer{
     cursor: pointer;
+}
+
+.req{
+    color: #dc3545 !important;
 }
