@@ -1,7 +1,7 @@
 import React from 'react';
 import { Spinner } from 'react-bootstrap';
 
-import '../../assets/scss/modal.scss'
+import '../../assets/scss/modal.scss';
 
 import CustomModal from './CustomModal';
 import deleteIcon from '../../assets/images/delete-modal.svg';
@@ -20,6 +20,16 @@ const CustomActionModal = ({
   isWarning = false,
   button = { primary: 'Submit', secondary: 'Cancel' },
 }) => {
+  const renderHeader = () => (
+    <>
+      <button
+        type="button"
+        className="btn-close nn"
+        onClick={closeModal}
+        aria-label="Close"
+      ></button>
+    </>
+  );
   const renderBody = () => (
     <>
       <div className="modal-body">
@@ -74,11 +84,12 @@ const CustomActionModal = ({
 
   return (
     <CustomModal
-      closeButton
+      // closeButton
       className="modal fade prompt-modal add-new-msg-modal"
       dialgName="modal-dialog modal-dialog-centered modal-dialog-scrollable"
       show={showModal}
-      closeModal={() => closeModal(false)}
+      header={renderHeader()}
+      closeModal={closeModal}
       body={renderBody()}
     />
   );

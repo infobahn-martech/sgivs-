@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import CommonHeader from '../../components/common/CommonHeader';
 import CustomModal from '../../components/common/CustomModal';
 import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
@@ -145,7 +144,6 @@ const DeadLineModal = ({
 
   return (
     <>
-      <CommonHeader hideRightSide />
       <CustomModal
         className="modal fade set-deadline-modal"
         dialgName="modal-dialog modal-dialog-centered"
