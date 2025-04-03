@@ -91,22 +91,21 @@ const useRentalReducer = create((set) => ({
       error(err?.response?.data?.message ?? err.message);
     }
   },
-  updateNote: async (id, note) => {
+  updateNote: async (id, note,cb) => {
     set({ noteeditLoading: true });
 
-    const { success, error } = useAlertReducer.getRentalNotes();
+    const { success, error } = useAlertReducer.getState();
     try {
       set({ successMessage: '' });
-      const { data } = await rentalService.editNote({
-        rentalId: id,
-        note,
-      });
+      const { data } = await rentalService.editNote(id, note);
       success(data.message);
       set({
         successMessage: data.message,
         noteeditLoading: false,
       });
-      // cb && cb();
+      cb && cb();
+     
+      useRentalReducer.getState().getRentalNotes({ rentalId:id });
     } catch (err) {
       error(err?.response?.data?.message ?? err?.message);
       set({
