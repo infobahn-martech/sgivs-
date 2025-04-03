@@ -7,7 +7,7 @@ import '../../assets/scss/settings.scss';
 import useSettingsReducer from '../../stores/SettingsReducer';
 
 const Settings = () => {
-  const { postData } = useSettingsReducer((state) => state);
+  const { postData, isLoading } = useSettingsReducer((state) => state);
 
   const [form, setForm] = useState({
     itemReturnDeadline: '',
@@ -134,7 +134,10 @@ const Settings = () => {
             </div>
             <div className="settng-footer-wrap">
               <button className="btn clear">Clear</button>
-              <Button onClick={() => handleSubmit()}></Button>
+              <Button
+                isLoading={isLoading}
+                onClick={() => handleSubmit()}
+              ></Button>
             </div>
           </div>
         </div>
