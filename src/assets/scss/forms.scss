@@ -111,3 +111,15 @@
         color: #fff;
     }
 }
+
+
+.react-select-custom{
+    .status-select__control{
+        width: 160px;
+        .status-select__value-container{
+            .status-select__single-value{
+                font-size: 13px;
+            }
+        }
+    }
+}

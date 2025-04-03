@@ -958,6 +958,7 @@
             border-radius: 30px;
             background: #fdebeb;
             gap: 15px;
+            font-size: 13px;
             @media ($sm-1679){
                 height: 35px;
             }
@@ -979,9 +980,12 @@
                     color: #c5860f;
                 }
             }
+            &.overdue{
+                color: #e53030;
+                background: #fdebeb;
+            }
             span {
                 font-size: 13px;
-                color: #e53030;
             }
             .img {
                 width: 11px;
