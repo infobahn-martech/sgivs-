@@ -1,5 +1,5 @@
 import React from 'react';
-// import noImgpic from '../../assets/img/no-data.svg';
+import noImgpic from '../../assets/images/block-new.svg';
 
 function NoTableData({ columns }) {
   return (
@@ -9,7 +9,7 @@ function NoTableData({ columns }) {
           <div className="no-data">
             <div className="no-data-content">
               <div className="no-data-img">
-                {/* <img src={noImgpic} alt="no- data" /> */}
+                <img src={noImgpic} alt="no- data" />
               </div>
               <div className="no-data-txt">NO DATA FOUND</div>
             </div>
