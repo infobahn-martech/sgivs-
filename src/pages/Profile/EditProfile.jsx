@@ -5,10 +5,17 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import CustomModal from '../../components/common/CustomModal';
 import useAuthReducer from '../../stores/AuthReducer';
 import { Spinner } from 'react-bootstrap';
+import PhoneInput from 'react-phone-number-input';
+import 'react-phone-number-input/style.css';
 
 const profileSchema = z.object({
   firstName: z.string().nonempty('First Name is required'),
   lastName: z.string().nonempty('Last Name is required'),
+  phoneNumber: z.string().nonempty('Phone number is required'),
+  email: z
+    .string()
+    .nonempty('Email is required')
+    .email('Invalid email address'),
 });
 
 const EditProfile = ({ showModal, closeModal, profileData }) => {
@@ -19,12 +26,15 @@ const EditProfile = ({ showModal, closeModal, profileData }) => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(profileSchema),
     defaultValues: {
       firstName: profileData?.user?.firstName || '',
       lastName: profileData?.user?.lastName || '',
+      phoneNumber: profileData?.user?.phone || '',
+      email: profileData?.user?.email || '',
     },
   });
 
@@ -76,6 +86,37 @@ const EditProfile = ({ showModal, closeModal, profileData }) => {
               />
               {errors.lastName && (
                 <span className="error">{errors.lastName.message}</span>
+              )}
+            </div>
+            <div className="form-group">
+              <label htmlFor="phoneNumber" className="form-label">
+                Phone Number
+              </label>
+              <PhoneInput
+                id="phoneNumber"
+                className="form-control"
+                placeholder="Enter phone number"
+                defaultCountry="US"
+                {...register('phoneNumber')}
+              />
+              {errors.phoneNumber && (
+                <span className="error">{errors.phoneNumber.message}</span>
+              )}
+            </div>
+            <div className="form-group">
+              <label htmlFor="email" className="form-label">
+                Email
+              </label>
+              <input
+                id="email"
+                type="text"
+                className="form-control"
+                placeholder="Email"
+                {...register('email')}
+                disabled
+              />
+              {errors.email && (
+                <span className="error">{errors.email.message}</span>
               )}
             </div>
             <div className="modal-footer">
