@@ -225,3 +225,27 @@ a{
 .req{
     color: #dc3545 !important;
 }
+
+.no-data{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .no-data-content{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        max-width: 300px;
+        flex-direction: column;
+        .no-data-img{
+            padding: 20px;
+            img{
+                display: block;
+                max-width: 100%;
+            }
+        }
+        .no-data-txt{
+            padding-top: 0px;
+        }
+    }
+}
