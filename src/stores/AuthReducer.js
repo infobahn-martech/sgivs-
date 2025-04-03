@@ -14,7 +14,7 @@ const useAuthReducer = create((set) => ({
   errorMessage: '',
   successMessage: '',
   profileData: null,
-  profileEditLoader: null,
+  profileEditLoader: false,
   usersData: null,
   isUsersLoading: false,
   userActionLoading: false,
@@ -180,20 +180,24 @@ const useAuthReducer = create((set) => ({
     }
   },
 
-  patchUserProfile: async ({ value, cb }) => {
+  patchUserProfile: async (value) => {
     try {
-      set({ profileEditLoader: true });
+      set({ profileEditLoader: true, successMessage: '' });
       const { data } = await authService.editUserProfile(value);
       const profileData = data.data;
-      set({ profileData, profileEditLoader: false });
+      set({
+        profileData,
+        profileEditLoader: false,
+        successMessage: data.message,
+      });
       const { success } = useAlertReducer.getState();
       success(data && data.message);
-      cb && cb();
     } catch (err) {
       const { error } = useAlertReducer.getState();
       set({
         errorMessage: 'Something went wrong updating user profile',
         profileEditLoader: false,
+        successMessage: '',
       });
       error(err?.response?.data?.message ?? err.message);
     }
