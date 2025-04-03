@@ -40,8 +40,7 @@ const Login = () => {
             <img src={logo} alt="Logo" />
           </div>
           <div className="quotes-wrp">
-            Today is a new day. It's your day. You shape it. Sign in to
-            <br />
+            Today is a new day. It's your day. You shape it.<br /> Sign in to
             start managing your projects.
           </div>
         </div>
