@@ -24,7 +24,8 @@ const useInventoryStore = create((set) => ({
   set: (data) => {
     set(data);
   },
-  createInventoryItem: async (formData) => {
+  createInventoryItem: async (formData, params) => {
+    console.log('params', params);
     set({ isLoading: true, error: null });
     try {
       const { data } = await submitInventoryItems(formData);
@@ -33,10 +34,10 @@ const useInventoryStore = create((set) => ({
       set({
         isLoading: false,
         redirectToList: true,
-        redirectId: data?.inventory?.id ?? null,
+        // redirectId: data?.inventory?.id ?? null,
       }); // Set redirectToList to true
       success(data.message);
-
+      useInventoryStore.getState().getInventoryList(params);
       // Update the state with the new item
     } catch (err) {
       console.log(' err', err);
@@ -48,7 +49,8 @@ const useInventoryStore = create((set) => ({
       });
     }
   },
-  updateInventoryItem: async (formData, itemId, isImage = false) => {
+  updateInventoryItem: async (formData, itemId, isImage = false, params) => {
+    console.log('isImage', isImage);
     set({ isLoading: true, error: null });
     try {
       const { data } = await updateInventoryItems(formData, itemId);
@@ -56,9 +58,10 @@ const useInventoryStore = create((set) => ({
       set({
         isLoading: false,
         redirectToList: !isImage,
-        redirectId: data?.inventory?.id ?? null,
+        // redirectId: data?.inventory?.id ?? null,
       }); // Set redirectToList to true
       if (!isImage) success(data.message);
+      useInventoryStore.getState().getInventoryList(params);
     } catch (err) {
       const { error } = useAlertReducer.getState();
       error(err.response?.data?.message || 'Failed to create inventory item');
