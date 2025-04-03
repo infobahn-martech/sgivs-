@@ -50,8 +50,6 @@ const RentalManagement = () => {
     search: '',
     sortOrder: 'DESC',
     // sortBy: 'joinedDate',
-    fromDate: null,
-    toDate: null,
   };
 
   const [params, setParams] = useState(initialParams);
@@ -346,7 +344,26 @@ const RentalManagement = () => {
     },
   ];
 
-  console.log('notes', notes);
+  const handleFilterSubmit = (filters) => {
+    const formattedFilters = {};
+
+    Object.entries(filters).forEach(([key, value]) => {
+      if ((key.endsWith('_start') || key.endsWith('_end')) && value) {
+        formattedFilters[key] = moment(value).format('YYYY-MM-DD');
+      } else if (key === 'user' && Array.isArray(value)) {
+        formattedFilters[key] = value.filter(Boolean);
+      } else {
+        formattedFilters[key] = value;
+      }
+    });
+
+    setParams({
+      ...params,
+      ...formattedFilters,
+      page: '1',
+    });
+  };
+
   return (
     <>
       <CommonHeader
@@ -354,16 +371,7 @@ const RentalManagement = () => {
         exportExcel={rentalData?.data?.length && exportExcel}
         exportLoading={isExportLoading}
         filterOptions={filterOptions}
-        submitFilter={(filters) => {
-          const { ...rest } = filters;
-
-          setParams({
-            ...params,
-            ...rest,
-
-            page: '1',
-          });
-        }}
+        submitFilter={handleFilterSubmit}
         clearOptions={() => {
           setParams(initialParams);
         }}
