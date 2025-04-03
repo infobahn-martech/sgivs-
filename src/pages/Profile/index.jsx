@@ -13,6 +13,7 @@ import MyAccount from './MyAccount';
 import ChangePassword from './ChangePassword';
 import useAuthReducer from '../../stores/AuthReducer';
 import CustomActionModal from '../../components/common/CustomActionModal';
+import { getFirstLetters } from '../../config/config';
 
 const Profile = () => {
   const [tab, setTab] = useState({
@@ -35,10 +36,16 @@ const Profile = () => {
         <div className="profile-inner">
           <div className="profile-picture">
             <div className="img-sec">
-              <img
-                src={profileData?.user?.imageThumb || proPict}
-                alt="profile-picture"
-              />
+              {profileData?.user?.imageThumb ? (
+                <img
+                  src={profileData?.user?.imageThumb}
+                  alt="profile-picture"
+                />
+              ) : (
+                <div class="user-image alphabet">
+                  <span>{getFirstLetters(profileData?.name)} </span>
+                </div>
+              )}
             </div>
             <div className="">
               {' '}
