@@ -20,6 +20,7 @@ import { downloadContent } from '../../helpers/utils';
 import CustomActionModal from '../../components/common/CustomActionModal';
 import InventoryView from './InventoryView';
 import CommonSkeleton from '../../components/common/CommonSkeleton';
+import { Spinner } from 'react-bootstrap';
 
 const InventoryManagement = () => {
   const {
@@ -62,6 +63,7 @@ const InventoryManagement = () => {
   };
 
   const [imageLoading, setimageLoading] = useState(true);
+  const [downloadingRowId, setDownloadingRowId] = useState(null);
   const [hasError, setHasError] = useState(false);
   const columns = [
     {
@@ -186,13 +188,31 @@ const InventoryManagement = () => {
             <img src={deleteIcon} alt="Delete" />
           </span>
           <span
-            data-tooltip-id={`tooltip-${row.id || rowIndex}`} // Unique ID for the tooltip
-            data-tooltip-content={'Download Barcode'} // Tooltip content
-            onClick={() => {
-              downloadContent(row.barcode, `${row.itemId}.png`);
+            data-tooltip-id={`tooltip-${row.id || rowIndex}`}
+            data-tooltip-content={'Download Barcode'}
+            onClick={async () => {
+              const rowId = row.id || rowIndex;
+              setDownloadingRowId(rowId);
+
+              try {
+                await downloadContent(row.barcode, `${row.itemId}.png`);
+              } catch (err) {
+                console.error('Download failed', err);
+              } finally {
+                setDownloadingRowId(null);
+              }
             }}
           >
-            <img src={downloadIcon} alt="Download" />
+            {downloadingRowId === (row?.id || rowIndex) ? (
+              <Spinner
+                size="sm"
+                animation="border"
+                variant="primary"
+                className="ms-2"
+              />
+            ) : (
+              <img src={downloadIcon} alt="Download" />
+            )}
           </span>
         </>
       ),
