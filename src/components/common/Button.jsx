@@ -1,11 +1,11 @@
-import React from 'react'
+import React from 'react';
 
-const Button = ({ children = 'Submit', onClick }) => {
-    return (
-        <button onClick={onClick} type='submit' className="btn submit">
-            {children}
-        </button>
-    )
-}
+const Button = ({ children = 'Submit', onClick, isLoading }) => {
+  return (
+    <button onClick={onClick} type="submit" className="btn submit">
+      {isLoading ? 'Loading...' : children}
+    </button>
+  );
+};
 
-export default Button
+export default Button;
