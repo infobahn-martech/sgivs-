@@ -297,18 +297,37 @@ const RentalManagement = () => {
 
   const filterOptions = [
     {
-      fieldName: 'User Status',
+      fieldName: 'Borrowed Date',
+      BE_keyName: 'borrowedAt',
+      fieldType: 'dateRange',
+    },
+    {
+      fieldName: 'Deadline Date',
+      BE_keyName: 'deadline_date',
+      fieldType: 'dateRange',
+    },
+    {
+      fieldName: 'Returned Date',
+      BE_keyName: 'returnedAt',
+      fieldType: 'dateRange',
+    },
+    {
+      fieldName: 'Rental Status',
       BE_keyName: 'status',
       fieldType: 'select',
       Options: [
-        { label: 'Active', value: 1 },
-        { label: 'Blocked', value: 2 },
+        { label: 'Borrowed', value: 'borrowed' },
+        { label: 'Returned', value: 'returned' },
+        { label: 'Overdue', value: 'overdue' },
       ],
     },
     {
-      showDateRange: true,
+      fieldName: 'User',
+      BE_keyName: 'user',
+      fieldType: 'select',
     },
   ];
+
   console.log('notes', notes);
   return (
     <>
@@ -318,13 +337,12 @@ const RentalManagement = () => {
         exportLoading={isExportLoading}
         filterOptions={filterOptions}
         submitFilter={(filters) => {
-          const { startDate, endDate, ...rest } = filters;
+          const { ...rest } = filters;
 
           setParams({
             ...params,
             ...rest,
-            fromDate: startDate ? moment(startDate).format('YYYY-MM-DD') : null,
-            toDate: endDate ? moment(endDate).format('YYYY-MM-DD') : null,
+
             page: '1',
           });
         }}

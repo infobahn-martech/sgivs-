@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import calIcon from '../../assets/images/calend-icon.svg';
-// import CustomSelect from './CustomSelect';
 import CustomDateRange from './DateRangePicker';
 import moment from 'moment';
 import CommonSelect from './CommonSelect';
@@ -33,10 +32,6 @@ const Filter = ({
     }
   }, [show]);
 
-  // useEffect(() => {
-  //   onChange(filters);
-  // }, [filters]);
-
   const handleInputChange = (fieldName, value, isDate = false) => {
     if (isDate) {
       value = moment(value).format('YYYY-MM-DD');
@@ -47,15 +42,11 @@ const Filter = ({
     }));
   };
 
-  // const handleFilterChange = (fieldName, value) => {
-  //   setFilters((prev) => ({ ...prev, [fieldName]: value }));
-  // };
-
   const handleFilterChange = (fieldName, value, fieldType) => {
     let updatedValue = value;
 
     if (fieldType === 'radio') {
-      updatedValue = value === 'Yes'; // Convert "Yes" to true and "No" to false
+      updatedValue = value === 'Yes'; // Convert "Yes" to true
     }
 
     setFilters((prev) => ({ ...prev, [fieldName]: updatedValue }));
@@ -65,42 +56,45 @@ const Filter = ({
     const cleared = {};
 
     filterOptions.forEach((option) => {
-      if (option && option.BE_keyName) {
+      if (!option) return;
+
+      if (option.fieldType === 'dateRangeCombined') {
+        cleared[option.fromKey] = '';
+        cleared[option.toKey] = '';
+      } else if (option.fieldType === 'dateRange') {
+        cleared[`${option.BE_keyName}_start`] = '';
+        cleared[`${option.BE_keyName}_end`] = '';
+      } else if (option.BE_keyName) {
         cleared[option.BE_keyName] = '';
       }
     });
 
-    cleared.startDate = null;
-    cleared.endDate = null;
-
     setFilters(cleared);
     clearOptions();
   };
+
   const cancelFilter = () => {
     onCancel();
-    console.log('isFilterApplied', isFilterApplied);
     isFilterApplied && clearFilters();
-
-    // savedFilters && clearFilters();
   };
-
-  // const clearFilters = () => {
-  //   setFilters(initialFilters);
-  //   clearOptions();
-  // };
 
   return (
     <div
-      className={`dropdown-menu dropdown-menu-end filter-dropdown  ${
+      className={`dropdown-menu dropdown-menu-end filter-dropdown ${
         show ? 'show' : ''
-      } `}
+      }`}
     >
       <div className="drop-title">Filter By</div>
       <div className="drp-cont">
         {filterOptions
-          ?.filter((option) => option && option.BE_keyName && option.fieldType)
-          ?.map((option) => (
-            <div className="row" key={option.BE_keyName}>
+          ?.filter(
+            (option) =>
+              option &&
+              option.fieldType &&
+              (option.BE_keyName || option.fieldType === 'dateRangeCombined')
+          )
+          ?.map((option, idx) => (
+            <div className="row" key={option.BE_keyName || idx}>
               <label className="col-sm-3 col-form-label">
                 {option.fieldName}:
               </label>
@@ -110,17 +104,16 @@ const Filter = ({
                     type="text"
                     className="form-control"
                     placeholder={option.placeholder}
-                    key={option.BE_keyName + (filters[option.BE_keyName] || '')}
                     value={filters[option.BE_keyName] || ''}
                     onChange={(e) =>
                       handleInputChange(option.BE_keyName, e.target.value)
                     }
                   />
                 )}
+
                 {option.fieldType === 'select' && (
                   <CommonSelect
                     className="form-select form-control"
-                    key={option.BE_keyName + (filters[option.BE_keyName] || '')}
                     options={option.Options}
                     value={filters[option?.BE_keyName] || ''}
                     onChange={({ value }) => {
@@ -128,19 +121,16 @@ const Filter = ({
                     }}
                   />
                 )}
+
                 {option.fieldType === 'radio' && (
                   <div className="radio-wrps row">
                     <div className="col-sm-9 d-flex align-items-center">
                       {option.Options?.map((val) => (
                         <div className="form-check form-check-inline" key={val}>
                           <input
-                            key={
-                              option.BE_keyName +
-                              (filters[option.BE_keyName] || '')
-                            }
                             className="form-check-input"
                             type="radio"
-                            name={option.BE_keyName} // Ensure each radio group is unique
+                            name={option.BE_keyName}
                             id={val}
                             value={val}
                             checked={
@@ -162,35 +152,71 @@ const Filter = ({
                     </div>
                   </div>
                 )}
+
+                {option.fieldType === 'dateRange' && (
+                  <div className="field-mask">
+                    <CustomDateRange
+                      key={
+                        (filters[`${option.BE_keyName}_start`] || '') +
+                        '_' +
+                        (filters[`${option.BE_keyName}_end`] || '')
+                      }
+                      className="form-control w-100"
+                      value={[
+                        filters[`${option.BE_keyName}_start`]
+                          ? new Date(filters[`${option.BE_keyName}_start`])
+                          : null,
+                        filters[`${option.BE_keyName}_end`]
+                          ? new Date(filters[`${option.BE_keyName}_end`])
+                          : null,
+                      ]}
+                      onChange={({ startDate, endDate }) =>
+                        setFilters((prev) => ({
+                          ...prev,
+                          [`${option.BE_keyName}_start`]: startDate,
+                          [`${option.BE_keyName}_end`]: endDate,
+                        }))
+                      }
+                    />
+                    <span className="calendar-icon">
+                      <img src={calIcon} alt="calendar icon" />
+                    </span>
+                  </div>
+                )}
+
+                {option.fieldType === 'dateRangeCombined' && (
+                  <div className="field-mask">
+                    <CustomDateRange
+                      key={
+                        (filters[option.fromKey] || '') +
+                        '_' +
+                        (filters[option.toKey] || '')
+                      }
+                      className="form-control w-100"
+                      value={[
+                        filters[option.fromKey]
+                          ? new Date(filters[option.fromKey])
+                          : null,
+                        filters[option.toKey]
+                          ? new Date(filters[option.toKey])
+                          : null,
+                      ]}
+                      onChange={({ startDate, endDate }) =>
+                        setFilters((prev) => ({
+                          ...prev,
+                          [option.fromKey]: startDate,
+                          [option.toKey]: endDate,
+                        }))
+                      }
+                    />
+                    <span className="calendar-icon">
+                      <img src={calIcon} alt="calendar icon" />
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
           ))}
-        {filterOptions.some((opt) => opt.showDateRange) && (
-          <div className="row">
-            <label className="col-sm-3 col-form-label">Created Date:</label>
-            <div className="col-sm-9 field-mask">
-              <CustomDateRange
-                key={filters.startDate + '_' + filters.endDate}
-                className="form-control w-100"
-                value={[
-                  filters.startDate ? new Date(filters.startDate) : null,
-                  filters.endDate ? new Date(filters.endDate) : null,
-                ]}
-                onChange={({ startDate, endDate }) =>
-                  setFilters((prev) => ({
-                    ...prev,
-                    startDate,
-                    endDate,
-                  }))
-                }
-              />
-
-              <span className="calendar-icon">
-                <img src={calIcon} alt="calendar icon" />
-              </span>
-            </div>
-          </div>
-        )}
       </div>
       <div className="filter-ftr">
         <button className="btn clr" onClick={clearFilters}>

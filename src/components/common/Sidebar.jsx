@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 
 import '../../assets/scss/sidebar.scss';
@@ -55,11 +55,12 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
     { name: 'Messages', icon: MessagesIcon, path: '/messages' },
     { name: 'Settings', icon: SettingsIcon, path: '/settings' },
   ];
+  const navigate = useNavigate();
 
   return (
     <div className={`sidebar ${collapsed ? 'collapsed' : ''}`}>
       <div className="top-hold">
-        <div className="logo">
+        <div className="logo" onClick={() => navigate('/')}>
           <img src={MainLogo} alt="logo" />
           <img className="logo-collapse" src={collapseLogo} alt="" />
         </div>
