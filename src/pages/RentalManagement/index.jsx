@@ -369,7 +369,7 @@ const RentalManagement = () => {
     <>
       <CommonHeader
         onSearch={debouncedSearch}
-        exportExcel={rentalData?.data?.length && exportExcel}
+        exportExcel={rentalData?.data?.length ? exportExcel : null}
         exportLoading={isExportLoading}
         filterOptions={filterOptions}
         submitFilter={handleFilterSubmit}
