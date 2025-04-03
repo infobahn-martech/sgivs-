@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { durationOption, isValid } from './utils';
 import Button from '../../components/common/Button';
 import CustomSelet from '../../components/common/CustomSelect';
@@ -7,7 +7,11 @@ import '../../assets/scss/settings.scss';
 import useSettingsReducer from '../../stores/SettingsReducer';
 
 const Settings = () => {
-  const { postData, isLoading } = useSettingsReducer((state) => state);
+  const { postData, isLoading, userData, getData } = useSettingsReducer(
+    (state) => state
+  );
+
+  console.log('userData', userData);
 
   const [form, setForm] = useState({
     itemReturnDeadline: '',
@@ -15,15 +19,44 @@ const Settings = () => {
     thuFriDeadline: '',
     thuFriDeadlineUnit: '',
     isNotificationOn: true,
+    transactionFee: '',
   });
   const [err, setErr] = useState({});
+
+  // Fetch userData when component mounts
+  useEffect(() => {
+    getData();
+  }, []);
+
+  // Populate form when userData is available
+  useEffect(() => {
+    if (userData?.data) {
+      setForm({
+        itemReturnDeadline:
+          userData.data.isItemHours === true
+            ? userData.data.itemDeadlineHours
+            : userData.data.itemDeadlineDays,
+        itemReturnDeadlineUnit:
+          userData.data.isItemHours === true ? 'Hours' : 'Days',
+        thuFriDeadline:
+          userData.data.isSpecialHours === true
+            ? userData.data.specialDeadlineHours
+            : userData.data.specialDeadlineDays,
+        thuFriDeadlineUnit:
+          userData.data.isSpecialHours === true ? 'Hours' : 'Days',
+        isNotificationOn: userData.data.isNotificationOn,
+        transactionFee: userData?.data?.transactionFee,
+      });
+    }
+  }, [userData]);
 
   console.log('form', form);
 
   const handleChange = (val, name) => {
-    // Allow only positive integers
-    if (['itemReturnDeadline', 'thuFriDeadline'].includes(name)) {
-      if (!/^\d*$/.test(val)) return; // Prevent non-numeric input
+    if (
+      ['itemReturnDeadline', 'thuFriDeadline', 'transactionFee'].includes(name)
+    ) {
+      if (!/^\d*\.?\d*$/.test(val)) return; // Allows decimals
     }
 
     setErr((prev) => ({ ...prev, [name]: '' }));
@@ -65,7 +98,6 @@ const Settings = () => {
                         onChange={(e) =>
                           handleChange(e.target.value, 'itemReturnDeadline')
                         }
-                        // placeholder="Hours"
                       />
                       <CustomSelet
                         className="select"
@@ -96,7 +128,6 @@ const Settings = () => {
                         onChange={(e) =>
                           handleChange(e.target.value, 'thuFriDeadline')
                         }
-                        // placeholder="Hours"
                       />
                       <CustomSelet
                         className="select"
@@ -108,6 +139,26 @@ const Settings = () => {
                       />
                     </div>
                     {errorText(err?.thuFriDeadline ?? err?.thuFriDeadlineUnit)}
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="form-group">
+                    <label className="form-label" htmlFor="">
+                      EZ Pass Transaction Fee
+                    </label>
+                    <div className="hour-days-wrap">
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={form.transactionFee}
+                        onChange={(e) =>
+                          handleChange(e.target.value, 'transactionFee')
+                        }
+                      />
+                    </div>
+                    {errorText(err?.transactionFee ?? err?.transactionFee)}
                   </div>
                 </div>
               </div>

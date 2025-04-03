@@ -518,11 +518,11 @@ const InventoryForm = () => {
 
                   {/* Display Uploaded Images */}
                   {uploadedFiles.length > 0 && (
-                    <div className="uploaded-files d-flex">
+                    <div className="uploaded-files">
                       {uploadedFiles.map((file, index) => (
                         <div key={index} className="file-preview">
                           <img
-                            className="pt-2 pro-pic"
+                            className="pro-pic"
                             src={file.url || file}
                             alt={`Uploaded file ${index + 1}`}
                           />
@@ -531,9 +531,7 @@ const InventoryForm = () => {
                             className="btn close-btn"
                             onClick={() => handleRemoveFile(file.key)}
                           >
-                            <span className="plus">
                               <img src={closMarkIcon} alt="Remove image" />
-                            </span>
                           </button>
                         </div>
                       ))}
