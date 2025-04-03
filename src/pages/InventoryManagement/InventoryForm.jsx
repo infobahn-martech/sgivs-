@@ -525,7 +525,6 @@ const InventoryForm = () => {
                             className="pro-pic"
                             src={file.url || file}
                             alt={`Uploaded file ${index + 1}`}
-                            style={{ width: 75 }}
                           />
                           <button
                             type="button"
