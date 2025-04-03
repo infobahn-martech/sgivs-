@@ -30,8 +30,8 @@ const UserManagement = () => {
     limit: '10',
     fromDate: null,
     toDate: null,
-    sortBy: 'createdAt',
-    sortOrder: 'DESC',
+    sortBy: 'firstName',
+    sortOrder: 'ASC',
   };
 
   const [params, setParams] = useState(initialParams);
