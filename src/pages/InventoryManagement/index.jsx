@@ -278,10 +278,10 @@ const InventoryManagement = () => {
     <>
       {renderModal()}
       <CommonHeader
-        // exportExcel={() => {}}
-        // uploadExcel
-        // onExcelUpload={handleExcelUpload}
-        // uploadTitle="Bulk Upload Inventory"
+        exportExcel={() => {}}
+        uploadExcel
+        onExcelUpload={handleExcelUpload}
+        uploadTitle="Bulk Upload Inventory"
         addButton={{
           name: 'Add Item',
           type: 'link',
