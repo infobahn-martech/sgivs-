@@ -116,10 +116,30 @@
 .react-select-custom{
     .status-select__control{
         width: 160px;
+        border: 1px solid rgba(75, 22, 76, 0.1) !important;
+        border-radius: 20px !important;
+        height: 32px;
         .status-select__value-container{
+            padding-left: 20px;
+            padding-right: 0;
             .status-select__single-value{
                 font-size: 13px;
             }
+            .status-select__input-container{
+                height: 24px;
+            }
+        }
+        .status-select__indicators{
+            padding-right: 0px !important;
         }
     }
+}
+.btn-save-trans{
+    background-color: $primaryColor;
+    color: #fff;
+    font-size: 13px;
+    border: none;
+    border-radius: 5px;
+    height: 35px;
+    align-self: center;
 }
