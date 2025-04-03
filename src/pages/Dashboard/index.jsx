@@ -32,14 +32,14 @@ const Dashboard = () => {
     };
   return (
     <>
-      <div className="cta-info-blk">
+      {/* <div className="cta-info-blk">
         <div className="board-info">
           <div className="icon-blk">
             <img src={headerInfo?.icon} alt="" />
           </div>
           <span className="txt">{headerInfo?.title}</span>
         </div>
-      </div>
+      </div> */}
 
       <div className="content-wrp-outer">
         <div className="dash-top">

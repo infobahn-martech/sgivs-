@@ -10,11 +10,6 @@ import inventoryImg from '../assets/images/inventory_management.svg';
 
 export const headerConfig = [
   {
-    title: 'Dashboard',
-    icon: dashboard,
-    path: '/',
-  },
-  {
     title: 'Inventory Management',
     icon: inventoryImg,
     path: '/inventory-management',
