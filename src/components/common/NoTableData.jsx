@@ -1,5 +1,5 @@
 import React from 'react';
-import noImgpic from '../../assets/images/block-new.svg';
+import noImgpic from '../../assets/images/no-data.svg';
 
 function NoTableData({ columns }) {
   return (
