@@ -10,6 +10,7 @@ const useRentalReducer = create((set) => ({
   errorMessage: '',
   successMessage: '',
   isRentalLoading: false,
+  noteeditLoading: false,
   isNoteLoading: false,
   isExportLoading: false,
   userActionLoading: false,
@@ -79,7 +80,8 @@ const useRentalReducer = create((set) => ({
       console.log('params', params);
       set({ isNoteLoading: true, successMessage: '' });
       const { data } = await rentalService.getNotes(params);
-      const notes = data.rental;
+      console.log('data', data);
+      const notes = data.data;
       set({ notes, isNoteLoading: false });
     } catch (err) {
       const { error } = useAlertReducer.getState();
@@ -87,6 +89,30 @@ const useRentalReducer = create((set) => ({
         isNoteLoading: false,
       });
       error(err?.response?.data?.message ?? err.message);
+    }
+  },
+  updateNote: async (id, note) => {
+    set({ noteeditLoading: true });
+
+    const { success, error } = useAlertReducer.getRentalNotes();
+    try {
+      set({ successMessage: '' });
+      const { data } = await rentalService.editNote({
+        rentalId: id,
+        note,
+      });
+      success(data.message);
+      set({
+        successMessage: data.message,
+        noteeditLoading: false,
+      });
+      // cb && cb();
+    } catch (err) {
+      error(err?.response?.data?.message ?? err?.message);
+      set({
+        successMessage: null,
+        noteeditLoading: false,
+      });
     }
   },
 }));

@@ -31,6 +31,7 @@ const RentalManagement = () => {
     successMessage,
     getRentalNotes,
     notes,
+    updateNote,
   } = useRentalReducer((state) => state);
 
   const [changeStatus, setChangeStatus] = useState({});
@@ -237,13 +238,10 @@ const RentalManagement = () => {
       cell: (row) => (
         <>
           <img
-           
             src={noteIcon}
-           
             alt="Note"
             data-tooltip-id="note-tooltip"
             data-tooltip-content="Add Note"
-         
             onClick={() => {
               setModal({ id: row.id, mode: 'VIEW' });
               getRentalNotes({ rentalId: row.id });
@@ -311,7 +309,7 @@ const RentalManagement = () => {
       showDateRange: true,
     },
   ];
-
+  console.log('notes', notes);
   return (
     <>
       <CommonHeader
@@ -360,6 +358,7 @@ const RentalManagement = () => {
           showModal={modal}
           closeModal={() => setModal(null)}
           noteContent={notes}
+          updateNote={updateNote}
         />
       )}
     </>
