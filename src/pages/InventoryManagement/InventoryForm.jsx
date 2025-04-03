@@ -746,7 +746,20 @@ const InventoryForm = () => {
                 className="btn btn-submit"
                 disabled={isLoading || isBarcodeLoading}
               >
-                {isLoading ? 'Loading...' : params.id ? 'Update' : 'Submit'}
+                {isLoading ? (
+                  <Spinner
+                    size="sm"
+                    as="span"
+                    animation="border"
+                    variant="light"
+                    aria-hidden="true"
+                    className="custom-spinner"
+                  />
+                ) : params.id ? (
+                  'Update'
+                ) : (
+                  'Submit'
+                )}
               </button>
             </div>
           </div>

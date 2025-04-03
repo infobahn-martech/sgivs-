@@ -9,6 +9,7 @@ import '../../assets/scss/signin.scss';
 import logo from '../../assets/images/logo.svg';
 import useAuthReducer from '../../stores/AuthReducer';
 import { Link, useNavigate } from 'react-router-dom';
+import { Spinner } from 'react-bootstrap';
 
 const loginSchema = z.object({
   email: z.string().nonempty('Email is required').email('Invalid email format'),
@@ -79,7 +80,18 @@ const ForgotPassword = () => {
                 Back to login?
               </Link>
               <button class="btn btn-rounded" onClick={handleSubmit(onSubmit)}>
-                {isForgotLoading ? 'Loading...' : 'Submit'}
+                {isForgotLoading ? (
+                  <Spinner
+                    size="sm"
+                    as="span"
+                    animation="border"
+                    variant="light"
+                    aria-hidden="true"
+                    className="custom-spinner"
+                  />
+                ) : (
+                  'Submit'
+                )}
               </button>
             </div>
           </div>
