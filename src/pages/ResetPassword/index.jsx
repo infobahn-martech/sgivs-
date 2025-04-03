@@ -78,7 +78,7 @@ const ResetPassword = () => {
         </div>
         <div class="panel-right">
           <div class="form-wrp-center login">
-            <div class="top-blk">
+            <div class="top-blk reset">
               <div class="title">
                 Reset Password
                 {/* Welcome Back <span class="icon">👋</span> */}

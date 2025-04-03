@@ -45,7 +45,7 @@ const ForgotPassword = () => {
         </div>
         <div class="panel-right">
           <div class="form-wrp-center login">
-            <div class="top-blk">
+            <div class="top-blk reset">
               <div class="title">
                 Forgot Password
                 {/* Welcome Back <span class="icon">👋</span> */}

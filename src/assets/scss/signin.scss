@@ -196,7 +196,9 @@
                     }
                     .desc{
                         font-size: 20px;
-                        color: #313957;
+                        // color: #313957;
+                        color: #8B8B8D;
+                        font-weight: 400;
                         @media ($sm-1679){
                             font-size: 18px;
                         }
@@ -227,6 +229,12 @@
                     }
                     @media ($sm-767){
                         margin-bottom: 20px;
+                    }
+                    &.reset{
+                        .desc{
+                            color: #313957;
+                            font-weight: 400;
+                        }
                     }
                 }
                 .form-sec-wrp{
