@@ -14,6 +14,7 @@ const showHideService = (itemId, show) =>
 
 const getBarcode = (itemId) => Gateway.post(`inventory/barcode`, { itemId });
 
+
 export {
   getInventoryListService,
   submitInventoryItems,
