@@ -97,8 +97,8 @@ const Dashboard = () => {
             <div className="top-blk">
               <div className="left-wrap">
                 <div className="icon-title">
-                  <img src={inventoryMangIcon} alt="" className="img" />
-                  <span>Inventory management</span>
+                  <img src={userMangIcon} alt="" className="img" />
+                  <span>User management</span>
                 </div>
               </div>
               <button className="btn btn-view">View All</button>
@@ -314,8 +314,8 @@ const Dashboard = () => {
             <div className="top-blk">
               <div className="left-wrap">
                 <div className="icon-title">
-                  <img src={userMangIcon} alt="" className="img" />
-                  <span>User management</span>
+                  <img src={inventoryMangIcon} alt="" className="img" />
+                  <span>Inventory management</span>
                 </div>
               </div>
               <button className="btn btn-view">View All</button>
