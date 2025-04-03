@@ -19,6 +19,7 @@ const useAuthReducer = create((set) => ({
   isUsersLoading: false,
   userActionLoading: false,
   isChangePassLoading: false,
+  pagination: {},
 
   login: async ({ email, password, platform }) => {
     try {
@@ -143,7 +144,11 @@ const useAuthReducer = create((set) => ({
       set({ isUsersLoading: true });
       const { data } = await authService.getAllUsers(params);
       const usersData = data.users;
-      set({ usersData, isUsersLoading: false });
+      set({
+        usersData,
+        isUsersLoading: false,
+        pagination: data.users.pagination,
+      });
     } catch (err) {
       const { error } = useAlertReducer.getState();
       set({

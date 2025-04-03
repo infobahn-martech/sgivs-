@@ -27,11 +27,13 @@ const CommonHeader = ({
   hideFilter,
   filterOptions,
   submitFilter,
+  clearOptions,
 }) => {
   const [searchInput, setSearchInput] = useState('');
   const [openUpload, setOpenUpload] = useState(false);
   const [uploadedFile, setUploadedFile] = useState(null);
   const [uploadError, setUploadError] = useState(null);
+  // const [showFilterModal, setShowFilterModal] = useState(false);
 
   const handleSearchChange = (event) => {
     const value = event.target.value;
@@ -236,6 +238,22 @@ const CommonHeader = ({
     setUploadedFile(null);
     setUploadError(null);
   };
+  const [showFilterModal, setShowFilterModal] = useState(false);
+  const [savedFilters, setSavedFilters] = useState({});
+  const [isFilterApplied, setIsFilterApplied] = useState(false);
+
+  const handleSubmitFilter = (filters) => {
+    setSavedFilters(filters); // Persist applied filters
+    setIsFilterApplied(true);
+    setShowFilterModal(false); // Close modal
+    submitFilter(filters); // existing logic
+  };
+
+  const handleClearOptions = () => {
+    setSavedFilters({}); // Clear applied filters
+    setIsFilterApplied(false);
+    clearOptions(); // existing logic
+  };
 
   const renderUploadModal = () => (
     <CustomModal
@@ -290,25 +308,31 @@ const CommonHeader = ({
               </button>
             </div>
             {!hideFilter && (
-              <div className="filter-wrap">
+              <div className="filter-wrap dropdown">
                 <a
-                  className="dropdown-toggle"
+                  className="dropdown-toggle "
                   role="button"
-                  data-bs-toggle="dropdown"
-                  data-bs-auto-close="false"
-                  aria-expanded="false"
+                  onClick={() => setShowFilterModal((prev) => !prev)}
                 >
-                  <span>Filter</span>
+                  <span>
+                    Filter{' '}
+                    {isFilterApplied && (
+                      <small className="text-danger">*</small>
+                    )}
+                  </span>
                   <img src={filterImg} alt="" className="img" />
                 </a>
-                <Filter
-                  clearOptions={() => {}}
-                  filterOptions={filterOptions}
-                  onChange={(values) => {
-                    console.log('values', values);
-                  }}
-                  submitFilter={submitFilter}
-                />
+                {showFilterModal && (
+                  <Filter
+                    clearOptions={handleClearOptions}
+                    filterOptions={filterOptions}
+                    submitFilter={handleSubmitFilter}
+                    savedFilters={savedFilters}
+                    isFilterApplied={isFilterApplied}
+                    onCancel={() => setShowFilterModal(false)} // Close on Cancel
+                    show={showFilterModal}
+                  />
+                )}
               </div>
             )}
 

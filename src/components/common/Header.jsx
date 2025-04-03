@@ -9,10 +9,12 @@ import '../../assets/scss/footer.scss';
 import '../../assets/scss/header.scss';
 
 import NotificationIcon from '../../assets/images/notifications.svg';
-import UserIcon from '../../assets/images/avatar.png';
+// import UserIcon from '../../assets/images/avatar.png';
 import useAuthReducer from '../../stores/AuthReducer';
 import { useNavigate } from 'react-router-dom';
 import CustomActionModal from './CustomActionModal';
+import InitialsAvatar from './InitialsAvatar';
+import { getFirstLetters } from '../../config/config';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -41,10 +43,13 @@ const Header = () => {
               >
                 <div className="usr-dtl">
                   <div className="user-image">
-                    <img
-                      src={profileData?.user?.imageThumb || UserIcon}
-                      alt="user"
-                    />
+                    {profileData?.user?.imageThumb ? (
+                      <img src={profileData?.user?.imageThumb} alt="user" />
+                    ) : (
+                      <div class="user-image alphabet">
+                        <span>{getFirstLetters(profileData?.name)} </span>
+                      </div>
+                    )}
                   </div>
                   <div className="usr-info">
                     <span className="name">{profileData?.name}</span>

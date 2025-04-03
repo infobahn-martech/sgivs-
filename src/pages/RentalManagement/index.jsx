@@ -8,11 +8,17 @@ import '../../assets/scss/usermanagement.scss';
 import penIcon from '../../assets/images/pen.svg';
 import noteIcon from '../../assets/images/note.svg';
 import alertIcon from '../../assets/images/alert.svg';
+import deadlineIcon from '../../assets/images/calendar.svg';
+
 import dummyImg from '../../assets/images/avatar.png';
 import { debounce } from 'lodash';
 import moment from 'moment';
 import { getPaymentStatus, paymentStatus } from './utils';
 import CustomSelect from '../../components/common/CommonSelect';
+import DeadLineModal from './DeadLineModal';
+import InitialsAvatar from '../../components/common/InitialsAvatar';
+import { Tooltip } from 'react-tooltip';
+import RentalNote from './rentalNotes';
 
 const RentalManagement = () => {
   const {
@@ -23,21 +29,26 @@ const RentalManagement = () => {
     isExportLoading,
     changeStatus: postChangeStatus,
     successMessage,
+    getRentalNotes,
+    notes,
   } = useRentalReducer((state) => state);
 
   const [changeStatus, setChangeStatus] = useState({});
+  const [deadlineModal, setdeadlineModal] = useState(false);
+  const [deadlineId, setdeadlineId] = useState(null);
+  const [modal, setModal] = useState(null);
 
-  console.log('changeStatus', changeStatus);
-
-  const [params, setParams] = useState({
+  const initialParams = {
     page: 1,
     limit: 10,
     search: '',
     sortOrder: 'DESC',
     // sortBy: 'joinedDate',
-    // fromDate: null,
-    // toDate: null,
-  });
+    fromDate: null,
+    toDate: null,
+  };
+
+  const [params, setParams] = useState(initialParams);
   // const [modalConfig, setModalConfig] = useState({ type: null, data: null });
 
   const statusEditRef = useRef(null);
@@ -168,6 +179,11 @@ const RentalManagement = () => {
     );
   };
 
+  const handleDeadlineClick = (row) => {
+    setdeadlineId(row?.id);
+    setdeadlineModal(true);
+  };
+
   const columns = [
     {
       name: 'User',
@@ -176,9 +192,8 @@ const RentalManagement = () => {
       contentClass: 'user-pic',
       cell: (row) => (
         <>
-          <figure>
-            <img src={dummyImg} alt="" className="img" />
-          </figure>
+          <InitialsAvatar name={row?.['user.firstName']} />
+
           <span>{row?.['user.firstName'] || '-'}</span>
         </>
       ),
@@ -219,31 +234,83 @@ const RentalManagement = () => {
       selector: 'action',
       titleClasses: 'tw7',
       contentClass: 'action-wrap',
-      cell: () => (
+      cell: (row) => (
         <>
-          <img src={noteIcon} alt="Note" />
-          <img src={alertIcon} alt="Alert" />
+          <img
+           
+            src={noteIcon}
+           
+            alt="Note"
+            data-tooltip-id="note-tooltip"
+            data-tooltip-content="Add Note"
+         
+            onClick={() => {
+              setModal({ id: row.id, mode: 'VIEW' });
+              getRentalNotes({ rentalId: row.id });
+            }}
+          />
+          <img
+            src={alertIcon}
+            alt="Alert"
+            data-tooltip-id="alert-tooltip"
+            data-tooltip-content="Alert"
+          />
+          <img
+            src={deadlineIcon}
+            alt="Deadline"
+            onClick={() => handleDeadlineClick(row)}
+            data-tooltip-id="deadline-tooltip"
+            data-tooltip-content="Set Deadline"
+          />
+
+          {/* Tooltips */}
+          <Tooltip
+            id="note-tooltip"
+            place="top"
+            effect="solid"
+            style={{
+              backgroundColor: '#2ca0da',
+            }}
+          />
+          <Tooltip
+            id="alert-tooltip"
+            place="top"
+            effect="solid"
+            style={{
+              backgroundColor: '#2ca0da',
+            }}
+          />
+          <Tooltip
+            id="deadline-tooltip"
+            place="top"
+            effect="solid"
+            style={{
+              backgroundColor: '#2ca0da',
+            }}
+          />
         </>
       ),
     },
   ];
-  const handleExcelUpload = (data) => {
-    // Process the uploaded Excel data
-    console.log('Processed Excel data:', data);
-    exportRental({
-      page: 1,
-      limit: 10,
-      search: '',
-      sortOrder: 'DESC',
-      // sortBy: 'joinedDate',
-      // fromDate: null,
-      // toDate: null,
-    });
-  };
 
   const exportExcel = async () => {
     exportRental(params);
   };
+
+  const filterOptions = [
+    {
+      fieldName: 'User Status',
+      BE_keyName: 'status',
+      fieldType: 'select',
+      Options: [
+        { label: 'Active', value: 1 },
+        { label: 'Blocked', value: 2 },
+      ],
+    },
+    {
+      showDateRange: true,
+    },
+  ];
 
   return (
     <>
@@ -251,9 +318,22 @@ const RentalManagement = () => {
         onSearch={debouncedSearch}
         exportExcel={rentalData?.data?.length && exportExcel}
         exportLoading={isExportLoading}
-        uploadExcel
-        onExcelUpload={handleExcelUpload}
-        hideFilter
+        filterOptions={filterOptions}
+        submitFilter={(filters) => {
+          const { startDate, endDate, ...rest } = filters;
+
+          setParams({
+            ...params,
+            ...rest,
+            fromDate: startDate ? moment(startDate).format('YYYY-MM-DD') : null,
+            toDate: endDate ? moment(endDate).format('YYYY-MM-DD') : null,
+            page: '1',
+          });
+        }}
+        clearOptions={() => {
+          setParams(initialParams);
+        }}
+        // hideFilter
       />
       <CustomTable
         pagination={{ currentPage: params.page, limit: params.limit }}
@@ -266,6 +346,22 @@ const RentalManagement = () => {
         onSortChange={handleSortChange}
         wrapClasses="rm-table-wrap"
       />
+
+      {deadlineModal && (
+        <DeadLineModal
+          showModal={deadlineModal}
+          closeModal={() => setdeadlineModal(false)}
+          deadlineId={deadlineId}
+          setdeadlineModal={setdeadlineModal}
+        />
+      )}
+      {modal?.mode === 'VIEW' && (
+        <RentalNote
+          showModal={modal}
+          closeModal={() => setModal(null)}
+          noteContent={notes}
+        />
+      )}
     </>
   );
 };

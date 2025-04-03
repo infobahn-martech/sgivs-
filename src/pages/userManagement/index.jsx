@@ -12,6 +12,7 @@ import { formatBoolean, formatDate } from '../../config/config';
 import CustomActionModal from '../../components/common/CustomActionModal';
 import { debounce } from 'lodash';
 import InitialsAvatar from '../../components/common/InitialsAvatar';
+import moment from 'moment';
 
 const UserManagement = () => {
   const {
@@ -20,19 +21,20 @@ const UserManagement = () => {
     isUsersLoading,
     usersAction,
     userActionLoading,
+    pagination,
   } = useAuthReducer((state) => state);
 
-  const [params, setParams] = useState({
-    page: 1,
-    limit: 10,
+  const initialParams = {
     search: '',
-    sortOrder: 'ASC',
-    sortBy: 'firstName',
-    // isCardAdded: 1,
-    // status: 1,
+    page: '1',
+    limit: '10',
     fromDate: null,
     toDate: null,
-  });
+    sortBy: 'createdAt',
+    sortOrder: 'DESC',
+  };
+
+  const [params, setParams] = useState(initialParams);
 
   const [statusModalOpen, setstatusModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -156,7 +158,14 @@ const UserManagement = () => {
             className="cursor-pointer"
             onClick={() => handleDeleteClick(row)}
           />
-          <Tooltip id="delete-tooltip" place="top" effect="solid" />
+          <Tooltip
+            id="delete-tooltip"
+            place="top"
+            effect="solid"
+            style={{
+              backgroundColor: '#2ca0da',
+            }}
+          />
 
           <img
             src={row?.status === 2 ? activeIcon : blockIcon}
@@ -170,17 +179,52 @@ const UserManagement = () => {
             id={`status-tooltip-${row?.id}`}
             place="top"
             effect="solid"
+            style={{
+              backgroundColor: '#2ca0da',
+            }}
           />
         </>
       ),
     },
   ];
 
+  const filterOptions = [
+    {
+      fieldName: 'User Status',
+      BE_keyName: 'status',
+      fieldType: 'select',
+      Options: [
+        { label: 'Active', value: 1 },
+        { label: 'Blocked', value: 2 },
+      ],
+    },
+    {
+      showDateRange: true,
+    },
+  ];
+
   return (
     <>
-      <CommonHeader onSearch={debouncedSearch} hideFilter />
+      <CommonHeader
+        onSearch={debouncedSearch}
+        filterOptions={filterOptions}
+        submitFilter={(filters) => {
+          const { startDate, endDate, ...rest } = filters;
+
+          setParams({
+            ...params,
+            ...rest,
+            fromDate: startDate ? moment(startDate).format('YYYY-MM-DD') : null,
+            toDate: endDate ? moment(endDate).format('YYYY-MM-DD') : null,
+            page: '1',
+          });
+        }}
+        clearOptions={() => {
+          setParams(initialParams);
+        }}
+      />
       <CustomTable
-        pagination={{ currentPage: params.page, limit: params.limit }}
+        pagination={pagination}
         count={usersData?.pagination?.totalRecords}
         columns={columns}
         data={usersData?.data || []}
