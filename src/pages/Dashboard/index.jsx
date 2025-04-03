@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
 
 import CommonHeader from '../../components/common/CommonHeader';
 import userCountIcon from '../../assets/images/user-count.svg';
@@ -9,27 +9,28 @@ import downloadCountIcon from '../../assets/images/download-count.svg';
 import deleteIcon from '../../assets/images/delete.svg';
 import closeIcon from '../../assets/images/close.svg';
 
-import inventoryMangIcon from '../../assets/images/inventory_management.svg';
+import inventoryMangIcon from '../../assets/images/inventory.svg';
+import userMangIcon from '../../assets/images/User_Management.svg';
 
 import useAuthReducer from '../../stores/AuthReducer';
-import { headerConfig } from '../../config/config';
+// import { headerConfig } from '../../config/config';
 
 const Dashboard = () => {
   const { profileData } = useAuthReducer((state) => state);
-  const location = useLocation();
+  // const location = useLocation();
 
-  const currentPath = location.pathname;
-  const headerInfo = headerConfig?.find(
-    (item) =>
-      currentPath === item.path ||
-      (currentPath !== '/' &&
-        currentPath?.startsWith(item.path) &&
-        item.path !== '/')
-  ) ||
-    headerConfig.find((item) => currentPath?.startsWith(item.path)) || {
-      title: 'Page Not Found',
-      icon: 'img/default.svg',
-    };
+  // const currentPath = location.pathname;
+  // const headerInfo = headerConfig?.find(
+  //   (item) =>
+  //     currentPath === item.path ||
+  //     (currentPath !== '/' &&
+  //       currentPath?.startsWith(item.path) &&
+  //       item.path !== '/')
+  // ) ||
+  //   headerConfig.find((item) => currentPath?.startsWith(item.path)) || {
+  //     title: 'Page Not Found',
+  //     icon: 'img/default.svg',
+  //   };
   return (
     <>
       {/* <div className="cta-info-blk">
@@ -313,8 +314,8 @@ const Dashboard = () => {
             <div className="top-blk">
               <div className="left-wrap">
                 <div className="icon-title">
-                  <img src={inventoryMangIcon} alt="" className="img" />
-                  <span>Inventory management</span>
+                  <img src={userMangIcon} alt="" className="img" />
+                  <span>User management</span>
                 </div>
               </div>
               <button className="btn btn-view">View All</button>
