@@ -35,16 +35,14 @@ const Profile = () => {
         </div>
         <div className="profile-inner">
           <div className="profile-picture">
-            <div className="img-sec">
+            <div className="img-sec alphabet">
               {profileData?.user?.imageThumb ? (
                 <img
                   src={profileData?.user?.imageThumb}
                   alt="profile-picture"
                 />
               ) : (
-                <div class="user-image alphabet">
                   <span>{getFirstLetters(profileData?.name)} </span>
-                </div>
               )}
             </div>
             <div className="">
