@@ -24,10 +24,7 @@ const getAllUsers = (params) => Gateway.get('user', { params });
 const usersActionService = (userId, action) =>
   Gateway.patch(`user/${userId}/status/${action}`);
 
-const editUserProfile = (value) =>
-  Gateway.patch('user/profile', value, {
-    headers: { 'Content-Type': 'Multipart/formdata' },
-  });
+const editUserProfile = (value) => Gateway.patch('user/profile', value);
 
 export default {
   doLoginValidate,

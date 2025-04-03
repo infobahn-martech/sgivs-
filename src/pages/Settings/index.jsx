@@ -56,6 +56,7 @@ const Settings = () => {
                       <input
                         type="text"
                         className="form-control"
+                        value={form.itemReturnDeadline}
                         onChange={(e) =>
                           handleChange(e.target.value, 'itemReturnDeadline')
                         }
@@ -64,6 +65,7 @@ const Settings = () => {
                       <CustomSelet
                         className="select"
                         options={durationOption}
+                        value={form.itemReturnDeadlineUnit}
                         onChange={(e) =>
                           handleChange(e.target.value, 'itemReturnDeadlineUnit')
                         }
@@ -85,6 +87,7 @@ const Settings = () => {
                       <input
                         type="text"
                         className="form-control"
+                        value={form.thuFriDeadline}
                         onChange={(e) =>
                           handleChange(e.target.value, 'thuFriDeadline')
                         }
@@ -93,6 +96,7 @@ const Settings = () => {
                       <CustomSelet
                         className="select"
                         options={durationOption}
+                        value={form.thuFriDeadlineUnit}
                         onChange={(e) =>
                           handleChange(e.target.value, 'thuFriDeadlineUnit')
                         }
@@ -133,7 +137,20 @@ const Settings = () => {
               </div>
             </div>
             <div className="settng-footer-wrap">
-              <button className="btn clear">Clear</button>
+              <button
+                className="btn clear"
+                onClick={() =>
+                  setForm({
+                    itemReturnDeadline: '',
+                    itemReturnDeadlineUnit: '',
+                    thuFriDeadline: '',
+                    thuFriDeadlineUnit: '',
+                    isNotificationOn: true,
+                  })
+                }
+              >
+                Clear
+              </button>
               <Button
                 isLoading={isLoading}
                 onClick={() => handleSubmit()}

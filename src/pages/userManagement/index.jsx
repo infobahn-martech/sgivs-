@@ -199,7 +199,10 @@ const UserManagement = () => {
       ],
     },
     {
-      showDateRange: true,
+      fieldName: 'Joined Date',
+      fieldType: 'dateRangeCombined',
+      fromKey: 'fromDate',
+      toKey: 'toDate',
     },
   ];
 
@@ -209,13 +212,13 @@ const UserManagement = () => {
         onSearch={debouncedSearch}
         filterOptions={filterOptions}
         submitFilter={(filters) => {
-          const { startDate, endDate, ...rest } = filters;
+          const { fromDate, toDate, ...rest } = filters;
 
           setParams({
             ...params,
             ...rest,
-            fromDate: startDate ? moment(startDate).format('YYYY-MM-DD') : null,
-            toDate: endDate ? moment(endDate).format('YYYY-MM-DD') : null,
+            fromDate: fromDate ? moment(fromDate).format('YYYY-MM-DD') : null,
+            toDate: toDate ? moment(toDate).format('YYYY-MM-DD') : null,
             page: '1',
           });
         }}
