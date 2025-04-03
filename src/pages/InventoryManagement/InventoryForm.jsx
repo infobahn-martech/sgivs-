@@ -252,7 +252,7 @@ const InventoryForm = () => {
 
       const payload = {
         itemId: data.itemId,
-        barcode: !params?.id ? barcodeKey : inventoryItem.barcode,
+        // barcode: !params?.id ? barcodeKey : inventoryItem.barcode,
         itemName: data.itemName,
         hasParts: data.addPart,
         parts: isAddPartChecked ? parts.join(',') : null,
@@ -261,7 +261,7 @@ const InventoryForm = () => {
         label: isAddPartChecked ? data.buttonLabel : null,
       };
 
-      updateInventoryItem(payload, params.id, true);
+      updateInventoryItem(payload, params.id, true, params);
     }
   };
   // const quantityOptions = Array.from({ length: 10 }, (_, i) => ({
@@ -298,42 +298,41 @@ const InventoryForm = () => {
   };
 
   // Handle Form Submission
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
+    const errors = {};
+
+    // Validate parts
     if (data.hasParts && (!data.parts || data.parts.length === 0)) {
-      setCustomError({
-        parts: 'At least one part is required when "Add Part" is checked',
+      setError('parts', {
+        type: 'manual',
+        message: 'At least one part is required when "Add Part" is checked.',
       });
-      return;
+      return; // Stop submission
     }
 
-    if (uploadedFiles.length === 0)
+    // Validate file upload
+    if (uploadedFiles.length === 0) {
       setError('fileUpload', {
         type: 'manual',
         message: 'At least one image is required.',
       });
+      return; // Stop submission
+    }
+
+    // Validate barcode
     if (!barcodeId && itemId && !params?.id) {
-      error('Please generate barcode before submit!');
-      return;
+      error('Please generate barcode before submitting!');
+      return; // Stop submission
     }
 
-    const parts = [];
-    if (data.addPart && data.parts) {
-      data.parts.forEach((part) => {
-        parts.push(part.value);
-      });
-    }
+    // Prepare parts data
+    const parts =
+      data.addPart && data.parts ? data.parts.map((part) => part.value) : [];
 
-    // Append files
-    const imageKeys = [];
-    if (uploadedFiles.length) {
-      uploadedFiles.forEach((file) => {
-        imageKeys.push(file.key);
-      });
-    }
-
+    // Append file keys
+    const imageKeys = uploadedFiles.map((file) => file.key);
     const payload = {
       itemId: data.itemId,
-      barcode: !params?.id ? barcodeKey : inventoryItem.barcode,
       itemName: data.itemName,
       hasParts: data.addPart,
       parts: isAddPartChecked ? parts.join(',') : undefined,
@@ -342,8 +341,16 @@ const InventoryForm = () => {
       label: isAddPartChecked ? data.buttonLabel : undefined,
     };
 
-    if (params.id) updateInventoryItem(payload, params.id);
-    else createInventoryItem(payload);
+    // Include barcode only when creating a new item
+    if (!params?.id) {
+      payload.barcode = barcodeKey;
+    }
+
+    if (params.id) {
+      await updateInventoryItem(payload, params.id, false, params);
+    } else {
+      await createInventoryItem(payload, params);
+    }
   };
 
   const handleBarcode = () => {
@@ -397,7 +404,7 @@ const InventoryForm = () => {
   const handleGetFormValues = () => {
     return getValues();
   };
-
+  console.log('errors', errors);
   return (
     <>
       {renderModal()}
