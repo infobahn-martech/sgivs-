@@ -105,7 +105,7 @@ const useRentalReducer = create((set) => ({
       });
       cb && cb();
      
-      useRentalReducer.getState().getRentalNotes({ rentalId:id });
+      useRentalReducer.getState().getRentalNotes({ loanId:id });
     } catch (err) {
       error(err?.response?.data?.message ?? err?.message);
       set({
