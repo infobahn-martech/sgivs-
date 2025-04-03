@@ -142,6 +142,7 @@ const UserManagement = () => {
       selector: 'isCreditCardAvailable',
       titleClasses: 'tw6',
       cell: (row) => <span>{formatBoolean(row?.isCreditCardAvailable)}</span>,
+      colClassName: 'text-center'
     },
     {
       name: 'Action',
