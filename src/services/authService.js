@@ -20,6 +20,7 @@ const getUserProfile = (details) =>
   Gateway.get(`user/profile?details=${details}`);
 
 const getAllUsers = (params) => Gateway.get('user', { params });
+const getAllUsersListRole = (params) => Gateway.get('user', { params });
 
 const usersActionService = (userId, action) =>
   Gateway.patch(`user/${userId}/status/${action}`);
@@ -35,4 +36,5 @@ export default {
   restPassword,
   usersActionService,
   changePassword,
+  getAllUsersListRole,
 };

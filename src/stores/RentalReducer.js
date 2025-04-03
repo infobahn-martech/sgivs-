@@ -20,7 +20,7 @@ const useRentalReducer = create((set) => ({
     try {
       set({ isRentalLoading: true, successMessage: '' });
       const { data } = await rentalService.getAllRentals(params);
-      const rentalData = data.rental;
+      const rentalData = data.loan;
       set({ rentalData, isRentalLoading: false });
     } catch (err) {
       const { error } = useAlertReducer.getState();

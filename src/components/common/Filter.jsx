@@ -115,8 +115,15 @@ const Filter = ({
                   <CommonSelect
                     className="form-select form-control"
                     options={option.Options}
-                    value={filters[option?.BE_keyName] || ''}
-                    onChange={({ value }) => {
+                    value={
+                      filters[option?.BE_keyName] || (option.isMulti ? [] : '')
+                    }
+                    isMulti={option.isMulti}
+                    isLoading={option.isLoading}
+                    onChange={(selected) => {
+                      const value = option.isMulti
+                        ? selected?.map((item) => item.value)
+                        : selected?.value;
                       handleFilterChange(option.BE_keyName, value);
                     }}
                   />
