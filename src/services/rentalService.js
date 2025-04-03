@@ -7,7 +7,10 @@ const getNotes = (params) => Gateway.get('loan/list-notes', { params });
 const changeStatus = ({ id, status, dueDate }) =>
   Gateway.put(`loan/${id}`, { status, dueDate });
 const editNote = (rentalId, note) =>
-  Gateway.put(`loan/edit-note/${rentalId}`, { note });
+  Gateway.patch(`loan/edit-note`, {
+    rentalId, // Pass rentalId in the request body
+    note, // Pass note in the request body
+  });
 
 export default {
   getAllRentals,

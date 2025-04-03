@@ -60,7 +60,11 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
   return (
     <div className={`sidebar ${collapsed ? 'collapsed' : ''}`}>
       <div className="top-hold">
-        <div className="logo" onClick={() => navigate('/')}>
+        <div
+          className="logo"
+          style={{ cursor: 'pointer' }}
+          onClick={() => navigate('/')}
+        >
           <img src={MainLogo} alt="logo" />
           <img className="logo-collapse" src={collapseLogo} alt="" />
         </div>
