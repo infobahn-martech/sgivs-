@@ -15,9 +15,7 @@ const Layout = () => {
       <Sidebar setCollapsed={setCollapsed} collapsed={collapsed} />
       <div className={`right-pannel ${collapsed ? 'expanded' : ''}`}>
         <Header />
-        {/* <div > */}
         <Outlet />
-        {/* </div> */}
         <Footer />
       </div>
     </div>

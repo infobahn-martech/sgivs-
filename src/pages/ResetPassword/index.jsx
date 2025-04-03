@@ -9,6 +9,7 @@ import '../../assets/scss/signin.scss';
 import logo from '../../assets/images/logo.svg';
 import useAuthReducer from '../../stores/AuthReducer';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Spinner } from 'react-bootstrap';
 
 const resetPasswordSchema = z
   .object({
@@ -128,7 +129,18 @@ const ResetPassword = () => {
                 Back to login?
               </Link>
               <button class="btn btn-rounded" onClick={handleSubmit(onSubmit)}>
-                {isResetPassLoading ? 'Loading...' : 'Submit'}
+                {isResetPassLoading ? (
+                  <Spinner
+                    size="sm"
+                    as="span"
+                    animation="border"
+                    variant="light"
+                    aria-hidden="true"
+                    className="custom-spinner"
+                  />
+                ) : (
+                  'Submit'
+                )}
               </button>
             </div>
           </div>
