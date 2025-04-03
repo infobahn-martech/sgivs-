@@ -341,6 +341,7 @@ const RentalManagement = () => {
       fieldName: 'User',
       BE_keyName: 'user',
       fieldType: 'select',
+      isMulti: true,
       Options: getUserOptions(),
     },
   ];
