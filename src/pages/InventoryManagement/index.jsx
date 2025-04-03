@@ -270,7 +270,10 @@ const InventoryManagement = () => {
       Options: ['Yes', 'No'],
     },
     {
-      showDateRange: true,
+      fieldName: 'Created Date',
+      fieldType: 'dateRangeCombined',
+      fromKey: 'fromDate',
+      toKey: 'toDate',
     },
   ];
 
@@ -290,14 +293,14 @@ const InventoryManagement = () => {
         onSearch={debouncedSearch}
         filterOptions={filterOptions}
         submitFilter={(filters) => {
-          const { startDate, endDate, ...rest } = filters;
+          const { fromDate, toDate, ...rest } = filters;
 
           setParams({
             ...params,
             ...rest,
-            fromDate: startDate ? moment(startDate).format('YYYY-MM-DD') : null,
-            toDate: endDate ? moment(endDate).format('YYYY-MM-DD') : null,
-            // page: '1',
+            fromDate: fromDate ? moment(fromDate).format('YYYY-MM-DD') : null,
+            toDate: toDate ? moment(toDate).format('YYYY-MM-DD') : null,
+            page: '1',
           });
         }}
         clearOptions={() => {
