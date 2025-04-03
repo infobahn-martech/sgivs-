@@ -52,7 +52,7 @@ const Login = () => {
                 Welcome Back <span className="icon">👋</span>
               </div>
               <div className="desc">
-                Today is a new day. It's your day. You shape it. Sign in to
+                Today is a new day. It's your day. You shape it.<br /> Sign in to
                 start managing your projects.
               </div>
             </div>
