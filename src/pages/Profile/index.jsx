@@ -40,7 +40,7 @@ const Profile = () => {
                 alt="profile-picture"
               />
             </div>
-            <div className="u-name">
+            <div className="">
               {' '}
               {profileData?.user?.firstName} {profileData?.user?.lastName}
             </div>
