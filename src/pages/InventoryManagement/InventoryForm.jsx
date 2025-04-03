@@ -426,7 +426,7 @@ const InventoryForm = () => {
                 <div className="row mb-3">
                   <div className="col-md-6 form-group">
                     <label htmlFor="itemName" className="form-label">
-                      Item Name
+                      Item Name<small classname="text-danger">*</small>
                     </label>
                     <input
                       type="text"
@@ -467,7 +467,7 @@ const InventoryForm = () => {
 
                 {/* Drag & Drop Upload Box */}
                 <div className="mb-3 form-group">
-                  <label className="form-label">Upload Image</label>
+                  <label className="form-label">Upload Image<small classname="text-danger">*</small></label>
                   <div
                     className="upload-box"
                     onDrop={handleDrop}
@@ -543,7 +543,7 @@ const InventoryForm = () => {
                   <div className="col-md-6">
                     <div className="form-group">
                       <label htmlFor="itemId" className="form-label">
-                        Item ID
+                        Item ID<small classname="text-danger">*</small>
                       </label>
                       <input
                         type="text"

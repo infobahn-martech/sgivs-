@@ -14,7 +14,7 @@ const InventoryView = ({ showModal, closeModal, inventoryItem }) => {
   // useEffect(() => {
   //   if (params.id) getItemById(params.id);
   // }, [params?.id]);
-  console.log('first', inventoryItem);
+
   const renderHeader = () => (
     <>
       <h5 className="modal-title" id="uploadModalLabel">
