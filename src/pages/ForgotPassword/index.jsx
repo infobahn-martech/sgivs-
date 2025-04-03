@@ -39,8 +39,7 @@ const ForgotPassword = () => {
             <img src={logo} alt="" />
           </div>
           <div class="quotes-wrp">
-            Today is a new day. It's your day. You shape it. Sign in to
-            <br /> start managing your projects.
+            Today is a new day. It's your day. You shape it.<br /> Sign in to start managing your projects.
           </div>
         </div>
         <div class="panel-right">
@@ -51,8 +50,7 @@ const ForgotPassword = () => {
                 {/* Welcome Back <span class="icon">👋</span> */}
               </div>
               <div class="desc">
-                Today is a new day. It's your day. You shape it. Sign in to
-                start managing your projects.
+                Today is a new day. It's your day. You shape it.<br /> Sign in to start managing your projects.
               </div>
             </div>
             <div class="form-sec-wrp">
