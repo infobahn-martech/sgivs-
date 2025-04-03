@@ -1027,7 +1027,7 @@
 .prompt-modal{
     .modal-dialog{
         max-width: 640px;
-        @media($sm-1199){
+        @media($sm-1679){
             max-width: 500px;
         }
         @media($sm-579){
@@ -1071,13 +1071,10 @@
                 padding: 21px 86px 0;
                 min-height: 130px;
                 @media ($sm-1679){
-                    padding: 21px 60px 0;
-                }
-                @media ($sm-1441){
-                    padding: 21px 50px 0;
+                    padding: 21px 40px 0;
                 }
                 @media ($sm-1199){
-                    padding: 20px 40px 0;
+                    padding: 20px 35px 0;
                 }
                 @media ($sm-991){
                     padding: 20px 30px 0;
