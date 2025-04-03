@@ -196,6 +196,10 @@
                 @media ($sm-991){
                     display: none;
                 }
+                .dots{
+                    position: absolute;
+                    top: 3px;
+                }
             }
             img {
                 width: 20px;

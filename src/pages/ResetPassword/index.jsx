@@ -72,19 +72,19 @@ const ResetPassword = () => {
             <img src={logo} alt="" />
           </div>
           <div class="quotes-wrp">
-            Today is a new day. It's your day. You shape it. Sign in to <br />{' '}
+            Today is a new day. It's your day. You shape it.<br /> Sign in to{' '}
             start managing your projects.
           </div>
         </div>
         <div class="panel-right">
           <div class="form-wrp-center login">
-            <div class="top-blk">
+            <div class="top-blk reset">
               <div class="title">
                 Reset Password
                 {/* Welcome Back <span class="icon">👋</span> */}
               </div>
               <div class="desc">
-                Today is a new day. It's your day. You shape it. Sign in to
+                Today is a new day. It's your day. You shape it.<br /> Sign in to
                 start managing your projects.
               </div>
             </div>

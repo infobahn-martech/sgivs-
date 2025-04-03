@@ -317,7 +317,7 @@ const CommonHeader = ({
                   <span>
                     Filter{' '}
                     {isFilterApplied && (
-                      <small className="text-danger">*</small>
+                      <small className="text-danger dots">●</small>
                     )}
                   </span>
                   <img src={filterImg} alt="" className="img" />
