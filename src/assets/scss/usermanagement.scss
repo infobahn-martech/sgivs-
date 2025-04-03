@@ -834,8 +834,9 @@
                         @media ($sm-1199){
                             gap: 10px;
                         }
-                        img {
+                        .btn,img {
                             width: 37px;
+                            cursor: pointer;
                             @media ($sm-1679) {
                                 width: 35px;
                             }
@@ -1077,6 +1078,7 @@
                 color: #0096df;
                 font-weight: 400;
                 list-style: none;
+                cursor: pointer;
                 @media ($sm-1679){
                     font-size: 15px;
                 }
@@ -1091,6 +1093,7 @@
                     justify-content: center;
                     width: 30px;
                     height: 30px;
+                    cursor: pointer;
                     @media ($sm-1679){
                         width: 28px;
                         height: 28px;

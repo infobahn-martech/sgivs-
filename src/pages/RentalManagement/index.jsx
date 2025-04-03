@@ -330,9 +330,10 @@ const RentalManagement = () => {
       BE_keyName: 'status',
       fieldType: 'select',
       Options: [
-        { label: 'Borrowed', value: 'borrowed' },
-        { label: 'Returned', value: 'returned' },
-        { label: 'Overdue', value: 'overdue' },
+        { label: 'Borrowed', value: 1 },
+        { label: 'Returned', value: 2 },
+        { label: 'Overdue', value: 3 },
+        { label: 'Missing', value: 4 },
       ],
     },
     {
