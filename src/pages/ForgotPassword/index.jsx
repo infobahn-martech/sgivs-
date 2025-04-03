@@ -47,7 +47,8 @@ const ForgotPassword = () => {
           <div class="form-wrp-center login">
             <div class="top-blk">
               <div class="title">
-                Welcome Back <span class="icon">👋</span>
+                Forgot Password
+                {/* Welcome Back <span class="icon">👋</span> */}
               </div>
               <div class="desc">
                 Today is a new day. It's your day. You shape it. Sign in to
