@@ -426,7 +426,7 @@ const InventoryForm = () => {
                 <div className="row mb-3">
                   <div className="col-md-6 form-group">
                     <label htmlFor="itemName" className="form-label">
-                      Item Name<small classname="text-danger">*</small>
+                      Item Name<small classname="req">*</small>
                     </label>
                     <input
                       type="text"
@@ -518,23 +518,20 @@ const InventoryForm = () => {
 
                   {/* Display Uploaded Images */}
                   {uploadedFiles.length > 0 && (
-                    <div className="uploaded-files d-flex">
+                    <div className="uploaded-files">
                       {uploadedFiles.map((file, index) => (
                         <div key={index} className="file-preview">
                           <img
-                            className="pt-2 pro-pic"
+                            className="pro-pic"
                             src={file.url || file}
                             alt={`Uploaded file ${index + 1}`}
-                            style={{ width: 75 }}
                           />
                           <button
                             type="button"
                             className="btn close-btn"
                             onClick={() => handleRemoveFile(file.key)}
                           >
-                            <span className="plus">
                               <img src={closMarkIcon} alt="Remove image" />
-                            </span>
                           </button>
                         </div>
                       ))}
