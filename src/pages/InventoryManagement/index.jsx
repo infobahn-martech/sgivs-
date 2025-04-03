@@ -21,7 +21,7 @@ import CustomActionModal from '../../components/common/CustomActionModal';
 import InventoryView from './InventoryView';
 import CommonSkeleton from '../../components/common/CommonSkeleton';
 import { Spinner } from 'react-bootstrap';
-import { excelExport } from '../../utils/helpers';
+
 
 const InventoryManagement = () => {
   const {
