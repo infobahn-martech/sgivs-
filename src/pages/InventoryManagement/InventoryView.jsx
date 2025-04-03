@@ -14,7 +14,7 @@ const InventoryView = ({ showModal, closeModal, inventoryItem }) => {
   // useEffect(() => {
   //   if (params.id) getItemById(params.id);
   // }, [params?.id]);
-  console.log('first', inventoryItem);
+
   const renderHeader = () => (
     <>
       <h5 className="modal-title" id="uploadModalLabel">
@@ -45,10 +45,10 @@ const InventoryView = ({ showModal, closeModal, inventoryItem }) => {
               <div className="title">Item ID</div>
               <span className="value">#{inventoryItem?.itemId || 'N/A'}</span>
             </div>
-            <div className="blks">
+            {/* <div className="blks">
               <div className="title">Quantity</div>
               <span className="value">{inventoryItem?.quantity || 'N/A'}</span>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="middle-blk">

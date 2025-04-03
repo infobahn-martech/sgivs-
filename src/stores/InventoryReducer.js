@@ -7,6 +7,7 @@ import {
   getItemByIdService,
   submitInventoryItems,
   updateInventoryItems,
+  showHideService,
 } from '../services/inventoryServices';
 import useAlertReducer from './AlertReducer';
 
@@ -127,6 +128,26 @@ const useInventoryStore = create((set) => ({
     set({ isLoading: true });
     try {
       const { data } = await deleteItemByIdService(itemId);
+      set({
+        isLoading: false,
+        inventoryItem: data.inventory,
+      });
+      const { success } = useAlertReducer.getState();
+      success(data.message);
+      useInventoryStore.getState().getInventoryList(params);
+    } catch (error) {
+      set({
+        isLoading: false,
+        inventoryItem: null,
+      });
+      console.log(' error', error);
+    }
+  },
+  showHide: async (itemId, show, params) => {
+    console.log('first', itemId, show, params);
+    set({ isLoading: true });
+    try {
+      const { data } = await showHideService(itemId, show);
       set({
         isLoading: false,
         inventoryItem: data.inventory,
