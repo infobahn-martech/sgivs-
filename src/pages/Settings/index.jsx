@@ -144,15 +144,16 @@ const Settings = () => {
             <div className="settng-footer-wrap">
               <button
                 className="btn clear"
-                onClick={() =>
+                onClick={() => {
                   setForm({
                     itemReturnDeadline: '',
                     itemReturnDeadlineUnit: '',
                     thuFriDeadline: '',
                     thuFriDeadlineUnit: '',
                     isNotificationOn: true,
-                  })
-                }
+                  });
+                  setErr({});
+                }}
               >
                 Clear
               </button>
