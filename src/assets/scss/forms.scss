@@ -39,6 +39,26 @@
     &::placeholder{
         color: #8897AD;
     }
+    &.react-time-picker{
+        padding: 0 16px;
+        .react-time-picker__wrapper{
+            border: none;
+        }
+        .react-time-picker__inputGroup__input{
+            width: 20px !important;
+            text-align: center;
+            &:focus{
+                border: none;
+                outline: none;
+                box-shadow: none;
+            }
+        }
+        select{
+            &.react-time-picker__inputGroup__input{
+                min-width: 44px;
+            }
+        }
+    }
 }
 .form-group{
     margin-bottom: 24px;
