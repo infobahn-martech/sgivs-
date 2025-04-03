@@ -253,7 +253,7 @@ const RentalManagement = () => {
             data-tooltip-content="Add Note"
             onClick={() => {
               setModal({ id: row.id, mode: 'VIEW' });
-              getRentalNotes({ rentalId: row.id });
+              getRentalNotes({ loanId: row.id });
             }}
           />
           <img

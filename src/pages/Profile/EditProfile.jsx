@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import CustomModal from '../../components/common/CustomModal';
 import useAuthReducer from '../../stores/AuthReducer';
+import { Spinner } from 'react-bootstrap';
 
 const profileSchema = z.object({
   firstName: z.string().nonempty('First Name is required'),
@@ -86,7 +87,18 @@ const EditProfile = ({ showModal, closeModal, profileData }) => {
                 Cancel
               </button>
               <button type="submit" className="btn btn-primary">
-                {profileEditLoader ? 'Loading..' : 'Submit'}
+                {profileEditLoader ? (
+                  <Spinner
+                    size="sm"
+                    as="span"
+                    animation="border"
+                    variant="light"
+                    aria-hidden="true"
+                    className="custom-spinner"
+                  />
+                ) : (
+                  'Submit'
+                )}
               </button>
             </div>
           </form>
