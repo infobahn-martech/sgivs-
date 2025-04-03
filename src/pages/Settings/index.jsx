@@ -21,6 +21,11 @@ const Settings = () => {
   console.log('form', form);
 
   const handleChange = (val, name) => {
+    // Allow only positive integers
+    if (['itemReturnDeadline', 'thuFriDeadline'].includes(name)) {
+      if (!/^\d*$/.test(val)) return; // Prevent non-numeric input
+    }
+
     setErr((prev) => ({ ...prev, [name]: '' }));
     setForm((prev) => ({ ...prev, [name]: val }));
   };
