@@ -31,6 +31,7 @@ const InventoryManagement = () => {
     isListLoading,
     getItemById,
     inventoryItem,
+    showHide,
   } = useInventoryStore((state) => state);
   const navigate = useNavigate();
   console.log(' inventoryList', inventoryList);
@@ -171,13 +172,22 @@ const InventoryManagement = () => {
           >
             <img src={editIcon} alt="Edit" />
           </span>
-          {/* <span
+          <span
             data-tooltip-id={`tooltip-${row.id || rowIndex}`} // Unique ID for the tooltip
-            data-tooltip-content={'Hide/Show'} // Tooltip content
-            onClick={() => setModalConfig({ id: row.id, type: 'show' })}
+            data-tooltip-content={row.isVisible ? 'Show' : 'Hide'} // Dynamic tooltip content
+            onClick={() =>
+              setModalConfig({
+                id: row.id,
+                type: row.isVisible ? 'show' : 'hide',
+              })
+            }
           >
-            <img src={showHideIcon} alt="Hide/Show" />
-          </span> */}
+            <img
+              src={row.isVisible ? viewIcon : showHideIcon}
+              alt={row.isVisible ? 'Hide' : 'Show'}
+            />
+          </span>
+
           <span
             data-tooltip-id={`tooltip-${row.id || rowIndex}`} // Unique ID for the tooltip
             data-tooltip-content={'Delete'} // Tooltip content
@@ -212,9 +222,9 @@ const InventoryManagement = () => {
       case 'delete':
         return 'Are you sure you want to delete this item?';
       case 'show':
-        return 'Are you sure you want to show this item?';
-      case 'hide':
         return 'Are you sure you want to hide this item?';
+      case 'hide':
+        return 'Are you sure you want to show this item?';
       default:
         break;
     }
@@ -224,25 +234,35 @@ const InventoryManagement = () => {
       closeModal={closeModal}
       isLoading={isLoading}
       message={renderMessage()}
-      onSubmit={() => {
-        switch (modalConfig.type) {
-          case 'delete':
-            deleteItemById(modalConfig.id, params);
-            break;
-          case 'show':
-            break;
-          case 'hide':
-            break;
-
-          default:
-            break;
+      onSubmit={async () => {
+        console.log("Modal Config:", modalConfig); // Debugging
+        if (!modalConfig.id) return; // Prevent errors
+  
+        try {
+          switch (modalConfig.type) {
+            case 'delete':
+              await deleteItemById(modalConfig.id, params);
+              break;
+            case 'show':
+              await showHide(modalConfig.id, false, params); // Ensure API expects true to show
+              break;
+            case 'hide':
+              await showHide(modalConfig.id, true, params); // Ensure API expects false to hide
+              break;
+            default:
+              break;
+          }
+          setModalConfig({ type: null, action: null }); // Reset only after successful execution
+        } catch (error) {
+          console.error("Error in modal action:", error);
         }
-        setModalConfig({ type: null, action: null });
       }}
       showModal={modalConfig.type}
       isDelete={modalConfig.type === 'delete'}
+      isWarning={modalConfig.type === 'show' || modalConfig.type === 'hide'}
     />
   );
+  
 
   const debouncedSearch = debounce((searchValue) => {
     console.log(' searchValue', searchValue);
