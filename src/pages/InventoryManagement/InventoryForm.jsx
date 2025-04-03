@@ -257,7 +257,7 @@ const InventoryForm = () => {
         hasParts: data.addPart,
         parts: isAddPartChecked ? parts.join(',') : null,
         images: imageKeys.join(','),
-        eZPassNumber: isEZPass ? data.plateNumber || null: null,
+        eZPassNumber: isEZPass ? data.plateNumber || null : null,
         label: isAddPartChecked ? data.buttonLabel : null,
       };
 
@@ -494,6 +494,7 @@ const InventoryForm = () => {
                       <label
                         htmlFor="fileUpload"
                         className="browse-link cursor-pointer"
+                        style={{ cursor: 'pointer' }}
                       >
                         Browse
                       </label>
