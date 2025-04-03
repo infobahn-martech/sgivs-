@@ -1,6 +1,15 @@
 import Gateway from '../config/gateway';
 
-const getAllRentals = (params) => Gateway.get('loan', { params });
+const getAllRentals = (params) => {
+  const formattedParams = {
+    ...params,
+    user: JSON.stringify(params.user),
+  };
+
+  return Gateway.get('loan', {
+    params: formattedParams,
+  });
+};
 
 const getNotes = (params) => Gateway.get('loan/list-notes', { params });
 
