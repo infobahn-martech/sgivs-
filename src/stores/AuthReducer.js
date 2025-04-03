@@ -20,6 +20,9 @@ const useAuthReducer = create((set) => ({
   userActionLoading: false,
   isChangePassLoading: false,
   pagination: {},
+  usersRoleData: null,
+  isUsersListLoading: false,
+  usersListpagination: {},
 
   login: async ({ email, password, platform }) => {
     try {
@@ -153,6 +156,25 @@ const useAuthReducer = create((set) => ({
       const { error } = useAlertReducer.getState();
       set({
         isUsersLoading: false,
+      });
+      error(err?.response?.data?.message ?? err.message);
+    }
+  },
+
+  getAllUsersListByRole: async (params) => {
+    try {
+      set({ isUsersListLoading: true });
+      const { data } = await authService.getAllUsersListRole(params);
+      const usersRoleData = data.users;
+      set({
+        usersRoleData,
+        isUsersListLoading: false,
+        usersListpagination: data.users.pagination,
+      });
+    } catch (err) {
+      const { error } = useAlertReducer.getState();
+      set({
+        isUsersListLoading: false,
       });
       error(err?.response?.data?.message ?? err.message);
     }

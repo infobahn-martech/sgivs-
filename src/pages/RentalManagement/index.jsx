@@ -19,6 +19,7 @@ import DeadLineModal from './DeadLineModal';
 import InitialsAvatar from '../../components/common/InitialsAvatar';
 import { Tooltip } from 'react-tooltip';
 import RentalNote from './rentalNotes';
+import useAuthReducer from '../../stores/AuthReducer';
 
 const RentalManagement = () => {
   const {
@@ -33,6 +34,10 @@ const RentalManagement = () => {
     notes,
     updateNote,
   } = useRentalReducer((state) => state);
+
+  const { getAllUsersListByRole, usersRoleData } = useAuthReducer(
+    (state) => state
+  );
 
   const [changeStatus, setChangeStatus] = useState({});
   const [deadlineModal, setdeadlineModal] = useState(false);
@@ -82,6 +87,10 @@ const RentalManagement = () => {
       useRentalReducer.setState({ successMessage: '' });
     }
   }, [successMessage]);
+
+  useEffect(() => {
+    getAllUsersListByRole({ role: 2 });
+  }, []);
 
   const handleGetAllRentals = () => {
     getAllRentals(params);
@@ -294,6 +303,13 @@ const RentalManagement = () => {
   const exportExcel = async () => {
     exportRental(params);
   };
+  const getUserOptions = () =>
+    usersRoleData?.data
+      ?.map(({ id, firstName }) => ({
+        value: id,
+        label: firstName,
+      }))
+      ?.sort((a, b) => a.label?.localeCompare(b.label));
 
   const filterOptions = [
     {
@@ -325,6 +341,7 @@ const RentalManagement = () => {
       fieldName: 'User',
       BE_keyName: 'user',
       fieldType: 'select',
+      Options: getUserOptions(),
     },
   ];
 
