@@ -95,7 +95,7 @@ const UserManagement = () => {
   const handleDeleUser = () => {
     if (selectedUser) {
       usersAction(selectedUser.id, 3, () => {
-        setstatusModalOpen(false);
+        setDeleteModalOpen(false);
         handleGetAllUsers();
       });
     }
