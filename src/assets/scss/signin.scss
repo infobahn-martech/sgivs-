@@ -273,7 +273,10 @@
                     }
                 }
                 &.login{
-                    max-width: 388px;
+                    max-width: 402px;
+                    @media ($sm-1679){
+                        max-width: 388px;
+                    }
                 }
                 &:not(.login){
                     .form-sec-wrp{
