@@ -171,13 +171,13 @@ const InventoryManagement = () => {
           >
             <img src={editIcon} alt="Edit" />
           </span>
-          <span
+          {/* <span
             data-tooltip-id={`tooltip-${row.id || rowIndex}`} // Unique ID for the tooltip
             data-tooltip-content={'Hide/Show'} // Tooltip content
             onClick={() => setModalConfig({ id: row.id, type: 'show' })}
           >
             <img src={showHideIcon} alt="Hide/Show" />
-          </span>
+          </span> */}
           <span
             data-tooltip-id={`tooltip-${row.id || rowIndex}`} // Unique ID for the tooltip
             data-tooltip-content={'Delete'} // Tooltip content
@@ -278,10 +278,10 @@ const InventoryManagement = () => {
     <>
       {renderModal()}
       <CommonHeader
-        exportExcel={() => {}}
-        uploadExcel
-        onExcelUpload={handleExcelUpload}
-        uploadTitle="Bulk Upload Inventory"
+        // exportExcel={() => {}}
+        // uploadExcel
+        // onExcelUpload={handleExcelUpload}
+        // uploadTitle="Bulk Upload Inventory"
         addButton={{
           name: 'Add Item',
           type: 'link',
