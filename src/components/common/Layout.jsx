@@ -16,7 +16,7 @@ const Layout = () => {
       <div className={`right-pannel ${collapsed ? 'expanded' : ''}`}>
         <Header />
         {/* <div > */}
-          <Outlet />
+        <Outlet />
         {/* </div> */}
         <Footer />
       </div>
