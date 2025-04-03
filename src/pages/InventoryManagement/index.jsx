@@ -308,7 +308,7 @@ const InventoryManagement = () => {
     <>
       {renderModal()}
       <CommonHeader
-        exportExcel={inventoryList?.length && exportExcel}
+        exportExcel={inventoryList?.length ? exportExcel : null}
         exportLoading={isExportLoading}
         uploadExcel
         onExcelUpload={handleExcelUpload}
