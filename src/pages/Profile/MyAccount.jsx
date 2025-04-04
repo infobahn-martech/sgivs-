@@ -34,7 +34,7 @@ const MyAccount = () => {
         <div className="col-md-6 boxes">
           <div className="box-inner">
             <div className="lft-txt">
-              <span className="light">First Name</span>
+              <span className="light">First Namesssssss</span>
               <span className="dark-name">{profileData?.user?.firstName}</span>
             </div>
           </div>
