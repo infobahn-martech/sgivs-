@@ -36,6 +36,7 @@ const InventoryManagement = () => {
     showHide,
     exportInventory,
     isExportLoading,
+    bulkUploadFiles,
   } = useInventoryStore((state) => state);
   const navigate = useNavigate();
   console.log(' inventoryList', inventoryList);
@@ -215,10 +216,17 @@ const InventoryManagement = () => {
     },
   ];
 
-  const handleExcelUpload = (data) => {
-    // Process the uploaded Excel data
-    console.log('Processed Excel data:', data);
+  const handleExcelUpload = (files) => {
+    console.log('Files to upload:', files);
+
+    const formData = new FormData();
+    files.forEach((file) => {
+      formData.append('file', file); // Append each file
+    });
+
+    bulkUploadFiles(formData); // Pass FormData to your API function
   };
+
   const closeModal = () => {
     setModalConfig({ type: null, action: null });
   };
