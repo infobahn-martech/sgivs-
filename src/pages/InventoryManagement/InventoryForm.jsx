@@ -251,7 +251,7 @@ const InventoryForm = () => {
       }
 
       const payload = {
-        itemId: data.itemId,
+        itemId: data.itemId?.toUpperCase(),
         // barcode: !params?.id ? barcodeKey : inventoryItem.barcode,
         itemName: data.itemName,
         hasParts: data.addPart,
@@ -316,7 +316,7 @@ const InventoryForm = () => {
       });
       return; // Stop submission
     }
-
+    console.log('first', barcodeId, itemId, params.id);
     // Validate barcode
     if (!barcodeId && itemId && !params?.id) {
       error('Please generate barcode before submitting!');
@@ -330,7 +330,7 @@ const InventoryForm = () => {
     // Append file keys
     const imageKeys = uploadedFiles.map((file) => file.key);
     const payload = {
-      itemId: data.itemId,
+      itemId: data.itemId?.toUpperCase(),
       itemName: data.itemName,
       hasParts: data.addPart,
       parts: isAddPartChecked ? parts.join(',') : undefined,

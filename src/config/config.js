@@ -51,7 +51,7 @@ export const handleDownloadSample = () => {
     [
       'usetest 4',
       '123456',
-      'abc,abcd,abcde',
+      'abc',
       'https://images.unsplash.com/photo-1575936123452-b67c3203c357?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D',
     ],
     [
@@ -63,7 +63,7 @@ export const handleDownloadSample = () => {
     [
       'sample 4',
       '123456',
-      'abc,abcde',
+      'abc',
       'https://images.unsplash.com/photo-1575936123452-b67c3203c357?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D',
     ],
   ];
