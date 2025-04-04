@@ -225,6 +225,7 @@ const CommonHeader = ({
 
       {openUpload && (
         <BulkUpload
+          uploadLoading={uploadLoading}
           show={openUpload}
           onClose={() => setOpenUpload(false)}
           uploadTitle={uploadTitle}
