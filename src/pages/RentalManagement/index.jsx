@@ -226,7 +226,12 @@ const RentalManagement = () => {
     },
     {
       name: 'Returned date and time',
-      cell: (row) => formatDateTime(row?.returnedAt),
+      cell: (row) =>
+        row?.dueDate < row?.returnedAt ? (
+          <span className="text-danger">{formatDateTime(row?.returnedAt)}</span>
+        ) : (
+          formatDateTime(row?.returnedAt)
+        ),
       titleClasses: 'tw6',
     },
     {
