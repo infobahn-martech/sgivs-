@@ -43,10 +43,10 @@ const EditProfile = ({ showModal, closeModal, profileData }) => {
       ...data,
     });
   };
-
+  // edit-profile-modal
   return (
     <CustomModal
-      className="modal modal-small-width fade edit-profile-modal"
+      className="modal modal-small-width fade set-deadline-modal edit-profile-modal"
       dialgName="modal-dialog modal-dialog-centered modal-dialog-scrollable"
       show={showModal}
       header={
@@ -56,8 +56,12 @@ const EditProfile = ({ showModal, closeModal, profileData }) => {
         </>
       }
       body={
+        <>
+        <form onSubmit={handleSubmit(onSubmit)}>
         <div className="modal-body modal-form">
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="set-dealine-wrp">
+            <div className="row">
+            <div className="col-sm-6">
             <div className="form-group">
               <label htmlFor="firstName" className="form-label">
                 First Name
@@ -73,6 +77,8 @@ const EditProfile = ({ showModal, closeModal, profileData }) => {
                 <span className="error">{errors.firstName.message}</span>
               )}
             </div>
+            </div>
+            <div className="col-sm-6">
             <div className="form-group">
               <label htmlFor="lastName" className="form-label">
                 Last Name
@@ -88,6 +94,8 @@ const EditProfile = ({ showModal, closeModal, profileData }) => {
                 <span className="error">{errors.lastName.message}</span>
               )}
             </div>
+            </div>
+            <div className="col-sm-6">
             <div className="form-group">
               <label htmlFor="phoneNumber" className="form-label">
                 Phone Number
@@ -103,6 +111,8 @@ const EditProfile = ({ showModal, closeModal, profileData }) => {
                 <span className="error">{errors.phoneNumber.message}</span>
               )}
             </div>
+            </div>
+            <div className="col-sm-6">
             <div className="form-group">
               <label htmlFor="email" className="form-label">
                 Email
@@ -119,31 +129,36 @@ const EditProfile = ({ showModal, closeModal, profileData }) => {
                 <span className="error">{errors.email.message}</span>
               )}
             </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                onClick={closeModal}
-              >
-                Cancel
-              </button>
-              <button type="submit" className="btn btn-primary">
-                {profileEditLoader ? (
-                  <Spinner
-                    size="sm"
-                    as="span"
-                    animation="border"
-                    variant="light"
-                    aria-hidden="true"
-                    className="custom-spinner"
-                  />
-                ) : (
-                  'Submit'
-                )}
-              </button>
             </div>
+          </div>
+          </div>  
+          </div>
+          <div className="modal-footer bottom-btn-sec">
+            <button
+              type="button"
+              className="btn btn-cancel"
+              onClick={closeModal}
+            >
+              Cancel
+            </button>
+            <button type="submit" className="btn btn-submit">
+              {profileEditLoader ? (
+                <Spinner
+                  size="sm"
+                  as="span"
+                  animation="border"
+                  variant="light"
+                  aria-hidden="true"
+                  className="custom-spinner"
+                />
+              ) : (
+                'Submit'
+              )}
+            </button>
+          </div>
           </form>
-        </div>
+          </>
+          
       }
     />
   );
