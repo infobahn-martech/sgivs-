@@ -142,8 +142,7 @@ const RentalManagement = () => {
       return (
         <div className="d-flex" ref={statusEditRef}>
           <CustomSelect
-            classNamePrefix="status-select"
-            showIndicator
+            classNamePrefix="react-select"
             isClearable={false}
             options={paymentStatus}
             value={row.status}
