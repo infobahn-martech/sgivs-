@@ -170,7 +170,7 @@ const RentalManagement = () => {
           </span>
           {!row.isOld && (
             <span
-              className=" ms-2 cursor-pointer flex-shrink-0"
+              className="flex-shrink-0"
               onClick={() => {
                 setChangeStatus({
                   id: row.id,

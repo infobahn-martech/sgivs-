@@ -184,6 +184,7 @@ const InventoryManagement = () => {
             <img src={deleteIcon} alt="Delete" />
           </span>
           <span
+          className='d-flex align-items-center justify-content-center'
             data-tooltip-id={`tooltip-${row.id || rowIndex}`}
             data-tooltip-content={'Download Barcode'}
             onClick={async () => {
@@ -204,7 +205,6 @@ const InventoryManagement = () => {
               size="sm"
               animation="border"
               variant="primary"
-              className="ms-2"
             />
             {/* ) : (
               <img src={downloadIcon} alt="Download" />
