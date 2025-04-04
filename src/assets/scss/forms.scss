@@ -117,8 +117,7 @@
     .status-select__control{
         width: 160px;
         border: 1px solid rgba(75, 22, 76, 0.1) !important;
-        border-radius: 20px !important;
-        height: 32px;
+        border-radius: 12px !important;
         .status-select__value-container{
             padding-left: 20px;
             padding-right: 0;
@@ -143,10 +142,10 @@
     padding: 0 !important;
 }
 .react-select__control.react-select__control {
-    min-height: 45px;
+    min-height: 48px;
     border: 1px solid #d9d9d9;
     background-color: transparent;
-    border-radius: 30px;
+    border-radius: 12px;
     padding-right: 20px;
     cursor: pointer;
     &:hover {
@@ -157,8 +156,11 @@
       box-shadow: none;
     }
     @media (max-width: 1679px) {
-      min-height: 40px;
+      min-height: 44px;
     }
+    @media (max-width: 1199px) {
+        min-height: 40px;
+      }
     .react-select__indicators {
         padding-right: 0px !important;
         margin-bottom: 0px !important;
@@ -221,4 +223,11 @@
     border-radius: 5px;
     height: 35px;
     align-self: center;
+    margin-left: 15px;
+    @media ($sm-1679){
+        margin-left: 12px;
+    }
+    @media ($sm-1199){
+        margin-left: 10px;
+    }
 }

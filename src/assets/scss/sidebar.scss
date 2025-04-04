@@ -18,7 +18,12 @@
     @media ($sm-1679){
         width: 280px;
         max-width: 280px;
-        flex: 0 0 330px;
+        flex: 0 0 280px;
+    }
+    @media ($sm-1481){
+        width: 250px;
+        max-width: 250px;
+        flex: 0 0 250px;
     }
     .close-nav{
         position: absolute;
@@ -79,6 +84,9 @@
         .logo {
             max-width: 205px;
             margin: 0;
+            @media ($sm-1481){
+                max-width: 170px;
+            }
             img {
                 width: 100%;
             }

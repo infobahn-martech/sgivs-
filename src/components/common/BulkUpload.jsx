@@ -126,11 +126,13 @@ const BulkUpload = ({
 
       // If headers are valid, proceed to upload
       if (onExcelUpload) {
-        onExcelUpload(uploadedFiles);
+        onExcelUpload(uploadedFiles, () => {
+          onClose();
+        });
       }
-
+      
       setUploadedFiles([]);
-      onClose();
+      // onClose();
     } catch (error) {
       setUploadError(error.toString());
     }
@@ -161,8 +163,8 @@ const BulkUpload = ({
             </a>
           </p>
           <span className="btm-txt">Supported formats: xlsx, xls,csv</span>
+          {uploadError && <span className="error">{uploadError}</span>}
         </div>
-        {uploadError && <p className="error">{uploadError}</p>}
 
         <ul className="uploaded-files-list">
           {uploadedFiles.map((file, i) => (

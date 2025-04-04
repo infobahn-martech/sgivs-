@@ -141,7 +141,7 @@ const RentalManagement = () => {
       };
 
       return (
-        <div className="d-flex" ref={statusEditRef}>
+        <div className="loan-status-wrp" ref={statusEditRef}>
           <CustomSelect
             classNamePrefix="react-select"
             isClearable={false}
@@ -216,13 +216,17 @@ const RentalManagement = () => {
         <>
           <InitialsAvatar name={row?.['user.firstName']} />
 
-          <span>{row?.['user.firstName'] || '-'}</span>
+          <span>
+            {row?.['user.firstName'] || row?.['user.lastName']
+              ? `${row?.['user.firstName']} ${row?.['user.lastName']}`
+              : '-'}
+          </span>
         </>
       ),
     },
     {
       name: 'Item Id',
-      selector: 'id',
+      selector: 'inventory.itemId',
       titleClasses: 'tw2',
     },
     {
