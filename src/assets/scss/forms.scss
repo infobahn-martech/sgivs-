@@ -138,6 +138,72 @@
         cursor: pointer;
     }
 }
+
+.react-select__control.react-select__control {
+    min-height: 45px;
+    border: 1px solid var(--formBorder);
+    background-color: var(--formBg);
+    border-radius: 30px;
+    padding-right: 20px;
+    cursor: pointer;
+    &:hover {
+      border: 1px solid var(--formBorder);
+    }
+    &--is-focused {
+      border: 1px solid var(--formBorder);
+      box-shadow: none;
+    }
+    @media (max-width: 1679px) {
+      min-height: 40px;
+    }
+  
+    .react-select__value-container {
+      padding: 2px 8px 2px 15px;
+      &--is-multi {
+        // flex-wrap: nowrap;
+        flex-wrap: wrap;
+        padding:5px 8px 5px 15px;
+  
+        .react-select__multi-value {
+        }
+      }
+      .react-select__single-value {
+        color: var(--subText);
+        font-size: 14px;
+        @media ($sm-1679) {
+          font-size: 12px;
+        }
+      }
+  
+      // react multi select
+      .react-select__multi-value {
+        background-color: var(--backbtn-bg);
+        border-radius: 10px;
+      }
+      .react-select__multi-value__label {
+        color: var(--labelTxt);
+        padding-top: 2px;
+        padding-bottom: 2px;
+        font-size: 13px;
+        @media ($sm-1679) {
+          font-size: 12px;
+        }
+      }
+  
+      .react-select__multi-value__remove {
+        background-color: transparent;
+        color: var(--labelTxt);
+        &:hover {
+          color: var(--rejectText);
+        }
+      }
+    }
+  
+    .react-select__placeholder {
+      color: var(--labelTxt);
+    }
+  }
+
 .btn-save-trans{
     background-color: $primaryColor;
     color: #fff;
