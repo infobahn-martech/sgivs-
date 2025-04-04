@@ -20,8 +20,8 @@
             margin-left: 280px;
         }
         @media($sm-1481){
-            width: calc(100% - 200px);
-            margin-left: 200px;
+            width: calc(100% - 250px);
+            margin-left: 250px;
         }
         @media($sm-1199){
             width: calc(100% - 180px);
@@ -251,17 +251,22 @@
                     margin: 7px;
                     // height: 133px;
                     align-items: center;
+                    background-size: contain;
                     &.user{
                         background: url(../images/dating_dash.svg) no-repeat right bottom #F0F9FD;
+                        background-size: 90px;
                     }
                     &.inventory{
                         background: url(../images/inventory_ic.svg) no-repeat right bottom #F0F9FD;
+                        background-size: 70px;
                     }
                     &.returned{
                         background: url(../images/retun_ic.svg) no-repeat right bottom #F0F9FD;
+                        background-size: 70px;
                     }
                     &.borrowed{
                         background: url(../images/cuurently.svg) no-repeat right bottom #F0F9FD;
+                        background-size: 60px;
                     }
                     @media ($sm-1679){
                         padding: 20px;
