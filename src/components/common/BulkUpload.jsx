@@ -163,8 +163,8 @@ const BulkUpload = ({
             </a>
           </p>
           <span className="btm-txt">Supported formats: xlsx, xls,csv</span>
+          {uploadError && <span className="error">{uploadError}</span>}
         </div>
-        {uploadError && <p className="error">{uploadError}</p>}
 
         <ul className="uploaded-files-list">
           {uploadedFiles.map((file, i) => (
