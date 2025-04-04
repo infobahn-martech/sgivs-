@@ -6,7 +6,7 @@ import '../../assets/scss/modal.scss';
 import CustomModal from './CustomModal';
 import deleteIcon from '../../assets/images/delete-modal.svg';
 import logoutIcon from '../../assets/images/logout-modal.svg';
-import notifyIcon from '../../assets/images/notifications.svg';
+// import notifyIcon from '../../assets/images/notifications.svg';
 import warningIcon from '../../assets/images/warning.svg';
 
 const CustomActionModal = ({
@@ -45,7 +45,7 @@ const CustomActionModal = ({
                   ? logoutIcon
                   : isWarning
                   ? warningIcon
-                  : notifyIcon
+                  : warningIcon
               }
               alt=""
             />

@@ -21,7 +21,6 @@ function CustomSelect({
   const { isMulti } = { ...rest };
   const [selectedValue, setSelectedValue] = useState(value);
 
-  // Sync the initial value prop with the internal selected value
   useEffect(() => {
     if (value && isMulti) setSelectedValue(value);
     else if (!value) setSelectedValue(null);
@@ -32,12 +31,10 @@ function CustomSelect({
   }, [value, isMulti]);
 
   const handleChange = (selectedOption) => {
-    // If clear button clicked, selectedOption is null
     console.log(' selectedOption', selectedOption);
     if (!selectedOption) {
       setSelectedValue(isMulti ? [] : null);
 
-      // Modify this part to work with react-hook-form
       if (onChange) {
         if (typeof onChange === 'function') {
           onChange({
@@ -49,10 +46,8 @@ function CustomSelect({
         }
       }
     } else {
-      // Update selected value and notify parent
       setSelectedValue(selectedOption);
 
-      // Modify this part to work with react-hook-form
       if (onChange) {
         if (typeof onChange === 'function') {
           onChange({
@@ -77,16 +72,13 @@ function CustomSelect({
     );
   };
 
-  // Custom Option component with tooltip
   const CustomOption = (props) => {
     const { data } = props;
     const labelRef = useRef(null);
     const [isTruncated, setIsTruncated] = useState(false);
 
-    // Check if the label is truncated (i.e., if text overflowed)
     useEffect(() => {
       if (labelRef.current) {
-        // Compare the offsetWidth (visible width) with scrollWidth (full content width)
         setIsTruncated(
           labelRef.current.offsetWidth < labelRef.current.scrollWidth
         );
@@ -138,7 +130,7 @@ function CustomSelect({
           DropdownIndicator: () => null,
           IndicatorSeparator: () => null,
         }),
-        Option: CustomOption, // Use custom option with tooltip
+        Option: CustomOption,
       }}
       {...rest}
     />
