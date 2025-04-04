@@ -124,7 +124,7 @@ function CustomSelect({
       onChange={handleChange}
       className={`${className} ${
         isMulti ? 'multiple-select' : ''
-      } react-select-custom p-1`}
+      } react-select-container p-1`}
       placeholder={placeholder}
       // options={[
       //   { value: 'shown', label: 'shown' },

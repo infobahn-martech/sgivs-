@@ -138,25 +138,34 @@
         cursor: pointer;
     }
 }
-
+.react-select-container{
+    background: url(../images/down.svg) no-repeat right .75rem center;
+    padding: 0 !important;
+}
 .react-select__control.react-select__control {
     min-height: 45px;
-    border: 1px solid var(--formBorder);
-    background-color: var(--formBg);
+    border: 1px solid #d9d9d9;
+    background-color: transparent;
     border-radius: 30px;
     padding-right: 20px;
     cursor: pointer;
     &:hover {
-      border: 1px solid var(--formBorder);
+      border: 1px solid #d9d9d9;
     }
     &--is-focused {
-      border: 1px solid var(--formBorder);
+      border: 1px solid #d9d9d9;
       box-shadow: none;
     }
     @media (max-width: 1679px) {
       min-height: 40px;
     }
-  
+    .react-select__indicators {
+        padding-right: 0px !important;
+        margin-bottom: 0px !important;
+        .react-select__clear-indicator svg{
+            width: 15px;
+        }
+    }
     .react-select__value-container {
       padding: 2px 8px 2px 15px;
       &--is-multi {
@@ -168,20 +177,20 @@
         }
       }
       .react-select__single-value {
-        color: var(--subText);
+        color: #8897AD;
         font-size: 14px;
         @media ($sm-1679) {
-          font-size: 12px;
+          font-size: 13px;
         }
       }
   
       // react multi select
       .react-select__multi-value {
-        background-color: var(--backbtn-bg);
+        background-color: #d9d9d9;
         border-radius: 10px;
       }
       .react-select__multi-value__label {
-        color: var(--labelTxt);
+        color: #8897AD;
         padding-top: 2px;
         padding-bottom: 2px;
         font-size: 13px;
@@ -192,15 +201,15 @@
   
       .react-select__multi-value__remove {
         background-color: transparent;
-        color: var(--labelTxt);
+        color: #8897AD;
         &:hover {
-          color: var(--rejectText);
+          color: $primaryColor;
         }
       }
     }
   
     .react-select__placeholder {
-      color: var(--labelTxt);
+      color: #000;
     }
   }
 

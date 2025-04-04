@@ -100,6 +100,7 @@ const Settings = () => {
                         }
                       />
                       <CustomSelet
+                        classNamePrefix="react-select"
                         className="select"
                         options={durationOption}
                         value={form.itemReturnDeadlineUnit}
@@ -130,6 +131,7 @@ const Settings = () => {
                         }
                       />
                       <CustomSelet
+                        classNamePrefix="react-select"
                         className="select"
                         options={durationOption}
                         value={form.thuFriDeadlineUnit}
