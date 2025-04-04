@@ -105,8 +105,8 @@ const InventoryForm = () => {
     if (redirectToList) {
       if (redirectId) {
         navigate(`/inventory-management/view/${redirectId}`);
-      } else navigate('/inventory-management'); // Replace with your desired route
-      set({ redirectToList: false }); // Reset the redirect state
+      } else navigate('/inventory-management');
+      set({ redirectToList: false });
     }
   }, [redirectToList, navigate, set]);
 
@@ -177,7 +177,7 @@ const InventoryForm = () => {
 
   useEffect(() => {
     if (!isAddPartChecked) {
-      remove(); // Clear parts when checkbox is unchecked
+      remove();
     }
   }, [isAddPartChecked, remove]);
 
@@ -223,7 +223,6 @@ const InventoryForm = () => {
     clearErrors('fileUpload');
   };
 
-  // Handle File Removal
   const handleRemoveFile = async (key) => {
     const newFiles = uploadedFiles.filter((file) => file.key !== key);
     setUploadedFiles(newFiles);
@@ -242,7 +241,6 @@ const InventoryForm = () => {
         });
       }
 
-      // Append files
       const imageKeys = [];
       if (newFiles.length) {
         newFiles.forEach((file) => {
@@ -272,7 +270,6 @@ const InventoryForm = () => {
   // Handle Add Part
   const handleAddPart = () => {
     if (newPart.trim()) {
-      // Check for duplicate parts (case-insensitive)
       const isDuplicate = fields.some(
         (field) =>
           field.value.trim().toLowerCase() === newPart.trim().toLowerCase()
@@ -283,7 +280,6 @@ const InventoryForm = () => {
         return;
       }
 
-      // Add the part using useFieldArray
       append({ value: newPart.trim() });
       setNewPart('');
       const tempError = { ...customError };
@@ -292,43 +288,36 @@ const InventoryForm = () => {
     }
   };
 
-  // Handle Remove Part
   const handleRemovePart = (index) => {
     remove(index);
   };
 
-  // Handle Form Submission
   const onSubmit = async (data) => {
-    // Validate parts
     if (data.hasParts && (!data.parts || data.parts.length === 0)) {
       setError('parts', {
         type: 'manual',
         message: 'At least one part is required when "Add Part" is checked.',
       });
-      return; // Stop submission
+      return;
     }
 
-    // Validate file upload
     if (uploadedFiles.length === 0) {
       setError('fileUpload', {
         type: 'manual',
         message: 'At least one image is required.',
       });
-      return; // Stop submission
+      return;
     }
     console.log('first', barcodeId, itemId, params.id);
-    // Validate barcode
     if (!barcodeId && itemId && !params?.id) {
       error('Please generate barcode before submitting!');
-      return; // Stop submission
+      return;
     }
 
-    // Prepare parts data
     const parts =
       data.addPart && data.parts ? data.parts.map((part) => part.value) : [];
 
-    // Append file keys
-    const imageKeys = uploadedFiles.map((file) => file.key);
+    const imageKeys = uploadedFiles?.map((file) => file.key);
     const payload = {
       itemId: data.itemId?.toUpperCase(),
       itemName: data.itemName,
@@ -339,7 +328,6 @@ const InventoryForm = () => {
       label: isAddPartChecked ? data.buttonLabel : undefined,
     };
 
-    // Include barcode only when creating a new item
     if (!params?.id) {
       payload.barcode = barcodeKey;
     }
@@ -693,7 +681,7 @@ const InventoryForm = () => {
                       </div>
                     </div>
 
-                    {fields.map((field, index) => (
+                    {fields?.map((field, index) => (
                       <div className="part-sec part-sec1" key={field.id}>
                         <div className="part-col-title">
                           <input

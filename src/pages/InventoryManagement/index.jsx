@@ -147,8 +147,8 @@ const InventoryManagement = () => {
             }}
           />
           <span
-            data-tooltip-id={`tooltip-${row.id || rowIndex}`} // Unique ID for the tooltip
-            data-tooltip-content={'View'} // Tooltip content
+            data-tooltip-id={`tooltip-${row.id || rowIndex}`}
+            data-tooltip-content={'View'}
             onClick={() => {
               setModal({ id: row.id, mode: 'VIEW' });
               getItemById(row.id);
@@ -157,8 +157,8 @@ const InventoryManagement = () => {
             <img src={viewIcon} alt="view" />
           </span>
           <span
-            data-tooltip-id={`tooltip-${row.id || rowIndex}`} // Unique ID for the tooltip
-            data-tooltip-content={'Edit'} // Tooltip content
+            data-tooltip-id={`tooltip-${row.id || rowIndex}`}
+            data-tooltip-content={'Edit'}
             onClick={() => {
               navigate(`/inventory-management/edit/${row.id}`);
             }}
@@ -166,8 +166,8 @@ const InventoryManagement = () => {
             <img src={editIcon} alt="Edit" />
           </span>
           <span
-            data-tooltip-id={`tooltip-${row.id || rowIndex}`} // Unique ID for the tooltip
-            data-tooltip-content={row.isVisible ? 'Show' : 'Hide'} // Dynamic tooltip content
+            data-tooltip-id={`tooltip-${row.id || rowIndex}`}
+            data-tooltip-content={row.isVisible ? 'Show' : 'Hide'}
             onClick={() =>
               setModalConfig({
                 id: row.id,
@@ -183,8 +183,8 @@ const InventoryManagement = () => {
           </span>
 
           <span
-            data-tooltip-id={`tooltip-${row.id || rowIndex}`} // Unique ID for the tooltip
-            data-tooltip-content={'Delete'} // Tooltip content
+            data-tooltip-id={`tooltip-${row.id || rowIndex}`}
+            data-tooltip-content={'Delete'}
             onClick={() =>
               setModalConfig({
                 id: row.id,
@@ -230,10 +230,10 @@ const InventoryManagement = () => {
 
     const formData = new FormData();
     files.forEach((file) => {
-      formData.append('file', file); // Append each file
+      formData.append('file', file);
     });
 
-    bulkUploadFiles(formData, params, onClose); // Pass FormData to your API function
+    bulkUploadFiles(formData, params, onClose);
   };
 
   const closeModal = () => {
@@ -259,8 +259,7 @@ const InventoryManagement = () => {
       isLoading={isLoading}
       message={renderMessage()}
       onSubmit={async () => {
-        console.log('Modal Config:', modalConfig); // Debugging
-        if (!modalConfig.id) return; // Prevent errors
+        if (!modalConfig.id) return;
 
         try {
           switch (modalConfig.type) {
@@ -268,15 +267,15 @@ const InventoryManagement = () => {
               await deleteItemById(modalConfig.id, params);
               break;
             case 'show':
-              await showHide(modalConfig.id, false, params); // Ensure API expects true to show
+              await showHide(modalConfig.id, false, params);
               break;
             case 'hide':
-              await showHide(modalConfig.id, true, params); // Ensure API expects false to hide
+              await showHide(modalConfig.id, true, params);
               break;
             default:
               break;
           }
-          setModalConfig({ type: null, action: null, name: null }); // Reset only after successful execution
+          setModalConfig({ type: null, action: null, name: null });
         } catch (error) {
           console.error('Error in modal action:', error);
         }

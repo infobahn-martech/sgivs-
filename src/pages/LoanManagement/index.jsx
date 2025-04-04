@@ -59,21 +59,17 @@ const LoanManagement = () => {
   const statusEditRef = useRef(null);
 
   useEffect(() => {
-    // Event listener to detect click outside the status edit div
     const handleClickOutside = (event) => {
       if (
         statusEditRef.current &&
         !statusEditRef.current.contains(event.target)
       ) {
-        // Clear changeStatus if click is outside
         setChangeStatus({});
       }
     };
 
-    // Adding event listener for clicks
     document.addEventListener('mousedown', handleClickOutside);
 
-    // Cleanup the event listener when component unmounts
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
