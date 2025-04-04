@@ -82,9 +82,10 @@ const BulkUpload = ({
       const readFileAsJson = (file) =>
         new Promise((resolve, reject) => {
           const reader = new FileReader();
+
           reader.onload = (e) => {
             try {
-              const workbook = XLSX.read(e.target.result, { type: 'binary' });
+              const workbook = XLSX.read(e.target.result, { type: 'array' }); // Updated
               const sheetName = workbook.SheetNames[0];
               const worksheet = workbook.Sheets[sheetName];
               const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
@@ -93,13 +94,17 @@ const BulkUpload = ({
               reject(`Error processing ${file.name}`);
             }
           };
+
           reader.onerror = () => reject(`Failed to read ${file.name}`);
-          reader.readAsBinaryString(file);
+          reader.readAsArrayBuffer(file);
         });
 
-      const allFilesData = await Promise.all(uploadedFiles.map(readFileAsJson));
-      onExcelUpload(allFilesData); // Pass array of { fileName, data }
-      onClose(); // Close modal
+      const allFilesData = await Promise.all(
+        uploadedFiles?.map(readFileAsJson)
+      );
+
+      onExcelUpload(allFilesData);
+      onClose();
     } catch (error) {
       setUploadError(error.toString());
     }
