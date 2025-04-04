@@ -70,7 +70,7 @@ const InventoryForm = () => {
   const [newPart, setNewPart] = useState('');
   const [customError, setCustomError] = useState({});
   const [modalConfig, setModalConfig] = useState({ type: null, action: null });
-
+  const [partsList, setPartsList] = useState([]); // Store entered parts
   useEffect(() => {
     clear();
     set({
@@ -143,6 +143,7 @@ const InventoryForm = () => {
       setValue('itemId', inventoryItem.itemId);
       setValue('itemName', inventoryItem.itemName);
       setValue('addPart', inventoryItem.hasParts);
+  
       if (
         inventoryItem.eZPassNumber &&
         inventoryItem.eZPassNumber !== 'null' &&
@@ -151,24 +152,33 @@ const InventoryForm = () => {
         setValue('isEZPass', true);
         setValue('plateNumber', inventoryItem.eZPassNumber);
       }
+  
       if (inventoryItem.hasParts) {
         setValue('buttonLabel', inventoryItem.label);
-        setValue(
-          'parts',
-          inventoryItem.inventory_parts.map((part) => ({
-            value: part.partName,
-          }))
-        );
+  
+        // ✅ Set parts field
+        const formattedParts = inventoryItem.inventory_parts.map((part) => ({
+          value: part.partName,
+        }));
+        setValue('parts', formattedParts);
+  
+        // ✅ Also update `partsList` so that UI updates
+        setPartsList(formattedParts);
+      } else {
+        setPartsList([]); // Ensure it's empty when no parts
       }
-      // setValue('quantity', '1');
+  
+      // ✅ Set uploaded images
       setUploadedFiles(inventoryItem.images || []);
     } else {
       reset();
       setUploadedFiles([]);
       setCustomError(null);
       setNewPart('');
+      setPartsList([]); // Reset partsList when no inventory item
     }
   }, [inventoryItem, setValue]);
+  
 
   // watchers
   const isAddPartChecked = watch('addPart', false);
@@ -281,7 +291,13 @@ const InventoryForm = () => {
         return;
       }
 
+      // 🔹 Ensure new parts are added to the state
       append({ value: newPart.trim() });
+
+      // 🔹 Force a state update by updating the partList
+      setPartsList([...fields, { value: newPart.trim() }]); // ✅ Fix
+
+      // Reset input & error
       setNewPart('');
       const tempError = { ...customError };
       delete tempError.parts;
@@ -290,7 +306,10 @@ const InventoryForm = () => {
   };
 
   const handleRemovePart = (index) => {
-    remove(index);
+    remove(index); // Remove from useFieldArray
+
+    // 🔹 Ensure the state updates correctly
+    setPartsList((prevParts) => prevParts.filter((_, i) => i !== index));
   };
 
   const onSubmit = async (data) => {
@@ -540,11 +559,12 @@ const InventoryForm = () => {
                         }`}
                         id="itemId"
                         readOnly={!!barcodeId || params?.id || isBarcodeLoading}
-                       
                         {...register('itemId', {
                           required: 'Item ID is required',
                         })}
-                        onInput={(e) => (e.target.value = e.target.value.toUpperCase())} // Converts to uppercase as user types
+                        onInput={(e) =>
+                          (e.target.value = e.target.value.toUpperCase())
+                        } // Converts to uppercase as user types
                         style={{ textTransform: 'uppercase' }} // Ensures visual uppercase input
                       />
                       {errors.itemId && (
@@ -735,29 +755,31 @@ const InventoryForm = () => {
 
                     </div> */}
 
-                    {fields?.map((field, index) => (
-                      <div className="part-sec part-sec1" key={field.id}>
-                        <div className="part-col-title">
-                          <input
-                            type="text"
-                            className="form-control"
-                            value={field.value}
-                            readOnly
-                          />
-                        </div>
-                        <button
-                          type="button"
-                          className="btn close-btn"
-                          onClick={() => handleRemovePart(index)}
-                        >
-                          <span className="plus">
-                            <img src={closMarkIcon} alt="Remove Part" />
-                          </span>
-                        </button>
+                    {/* List of Entered Parts */}
+                    {partsList.length > 0 && (
+                      <div className="mt-3">
+                        {partsList.map((part, index) => (
+                          <div className="part-sec part-sec1" key={index}>
+                            <div className="part-col-title">
+                              <input
+                                type="text"
+                                className="form-control"
+                                value={part.value} // ✅ Use part.value instead of part
+                                readOnly
+                              />
+                            </div>
+                            <button
+                              type="button"
+                              className="btn close-btn"
+                              onClick={() => handleRemovePart(index)}
+                            >
+                              <span className="plus">
+                                <img src={closMarkIcon} alt="Remove Part" />
+                              </span>
+                            </button>
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                    {errors.parts && (
-                      <p className="error">{errors.parts.message}</p>
                     )}
                   </div>
                 )}
