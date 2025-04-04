@@ -699,7 +699,7 @@ const InventoryForm = () => {
                       <div className="part-sec part-sec1" key={field.id}>
                         <input
                           type="text"
-                          className="form-control mb-2"
+                          className="form-control"
                           value={field.value}
                           readOnly
                         />
