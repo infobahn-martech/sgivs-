@@ -128,7 +128,8 @@ const EditProfile = ({ showModal, closeModal, profileData }) => {
                 id="phoneNumber"
                 className="form-control"
                 placeholder="Enter phone number"
-                defaultCountry="IN"
+                defaultCountry="US"
+                limitMaxLength={13}
                 value={fullPhoneNumber}
                 onChange={setFullPhoneNumber}
               />
