@@ -51,23 +51,31 @@ export const handleDownloadSample = () => {
     [
       'usetest 4',
       '123456',
-      '	abc,abcd,abcde',
+      'abc,abcd,abcde',
       'https://images.unsplash.com/photo-1575936123452-b67c3203c357?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D',
     ],
-    ['test 22', '654321', 'test', 'https://images.unsplash.com/photo-1575936123452-b67c3203c357?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D'],
+    [
+      'test 22',
+      '654321',
+      'test',
+      'https://images.unsplash.com/photo-1575936123452-b67c3203c357?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D',
+    ],
     [
       'sample 4',
       '123456',
-      '	abc,abcde',
+      'abc,abcde',
       'https://images.unsplash.com/photo-1575936123452-b67c3203c357?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D',
     ],
   ];
 
-  const worksheet = XLSX.utils.aoa_to_sheet(sampleData);
-  const workbook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(workbook, worksheet, 'SampleTemplate');
-
-  XLSX.writeFile(workbook, 'sample_template.xlsx');
+  const csvContent = sampleData.map((row) => row.join(',')).join('\n');
+  const blob = new Blob([csvContent], { type: 'text/csv' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.setAttribute('download', 'sample_template.csv');
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 };
 
 // excel export
