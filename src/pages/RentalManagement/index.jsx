@@ -164,7 +164,10 @@ const RentalManagement = () => {
     return (
       <>
         <div className="d-flex justify-content-center">
-          <span className={`status-wrap ${className}`}>{label}</span>
+          <span className={`status-wrap ${className}`}>
+            <span>{label}</span>{' '}
+            <img style={{ cursor: 'pointer' }} src={penIcon} alt="edit-icon" />
+          </span>
           {!row.isOld && (
             <span
               className="flex-shrink-0"
@@ -174,13 +177,7 @@ const RentalManagement = () => {
                   status: row.status,
                 });
               }}
-            >
-              <img
-                style={{ cursor: 'pointer' }}
-                src={penIcon}
-                alt="edit-icon"
-              />
-            </span>
+            ></span>
           )}
         </div>
       </>
