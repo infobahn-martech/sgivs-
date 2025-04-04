@@ -114,6 +114,7 @@ const Filter = ({
                 {option.fieldType === 'select' && (
                   <CommonSelect
                     className="form-select form-control"
+                    classNamePrefix="react-select"
                     options={option.Options}
                     value={
                       filters[option?.BE_keyName] || (option.isMulti ? [] : '')

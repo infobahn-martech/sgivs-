@@ -280,8 +280,11 @@
                 }
                 .drp-cont{
                     padding: 36px 30px 30px;
+                    max-height: 385px;
+                    overflow-y: auto;
                     @media ($sm-1679){
                         padding: 25px;  
+                        max-height: 275px;
                     }
                     @media ($sm-1199){
                         padding: 20px;  
