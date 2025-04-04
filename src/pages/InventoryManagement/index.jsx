@@ -40,7 +40,11 @@ const InventoryManagement = () => {
   } = useInventoryStore((state) => state);
   const navigate = useNavigate();
   console.log(' inventoryList', inventoryList);
-  const [modalConfig, setModalConfig] = useState({ type: null, action: null });
+  const [modalConfig, setModalConfig] = useState({
+    type: null,
+    action: null,
+    name: null,
+  });
   const [modal, setModal] = useState(null);
 
   const initialParams = {
@@ -168,6 +172,7 @@ const InventoryManagement = () => {
               setModalConfig({
                 id: row.id,
                 type: row.isVisible ? 'show' : 'hide',
+                name: row?.itemName,
               })
             }
           >
@@ -180,7 +185,13 @@ const InventoryManagement = () => {
           <span
             data-tooltip-id={`tooltip-${row.id || rowIndex}`} // Unique ID for the tooltip
             data-tooltip-content={'Delete'} // Tooltip content
-            onClick={() => setModalConfig({ id: row.id, type: 'delete' })}
+            onClick={() =>
+              setModalConfig({
+                id: row.id,
+                type: 'delete',
+                name: row?.itemName,
+              })
+            }
           >
             <img src={deleteIcon} alt="Delete" />
           </span>
@@ -226,21 +237,22 @@ const InventoryManagement = () => {
   };
 
   const closeModal = () => {
-    setModalConfig({ type: null, action: null });
+    setModalConfig({ type: null, action: null, name: null });
   };
 
   const renderMessage = () => {
     switch (modalConfig.type) {
       case 'delete':
-        return 'Are you sure you want to delete this item?';
+        return `Are you sure you want to delete item ${modalConfig.name} ?`;
       case 'show':
-        return 'Are you sure you want to hide this item?';
+        return `Are you sure you want to hide item ${modalConfig.name}?`;
       case 'hide':
-        return 'Are you sure you want to show this item?';
+        return `Are you sure you want to show item ${modalConfig.name}?`;
       default:
         break;
     }
   };
+  console.log(modalConfig);
   const renderModal = () => (
     <CustomActionModal
       closeModal={closeModal}
@@ -264,7 +276,7 @@ const InventoryManagement = () => {
             default:
               break;
           }
-          setModalConfig({ type: null, action: null }); // Reset only after successful execution
+          setModalConfig({ type: null, action: null, name: null }); // Reset only after successful execution
         } catch (error) {
           console.error('Error in modal action:', error);
         }
