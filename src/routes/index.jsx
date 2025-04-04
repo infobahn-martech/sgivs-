@@ -8,7 +8,6 @@ import Page404 from '../components/common/Page404';
 import Layout from '../components/common/Layout';
 import Login from '../pages/Auth/Loader';
 import InventoryManagement from '../pages/InventoryManagement/Loader';
-import RentalManagement from '../pages/LoanManagement/Loader';
 import EZPassBilling from '../pages/EZPassBilling/Loader';
 import Messages from '../pages/Messages/Loader';
 import Settings from '../pages/Settings/Loader';
@@ -19,6 +18,7 @@ import InventoryForm from '../pages/InventoryManagement/InventoryForm';
 import Profile from '../pages/Profile/Loader';
 import ResetPassword from '../pages/ResetPassword/Loader';
 import InventoryView from '../pages/InventoryManagement/InventoryView';
+import LoanManagement from '../pages/LoanManagement';
 
 const router = createBrowserRouter([
   {
@@ -69,7 +69,7 @@ const router = createBrowserRouter([
                 path: '/inventory-management/view/:id',
               },
               {
-                element: <RentalManagement />,
+                element: <LoanManagement />,
                 path: '/loan-management',
               },
               {

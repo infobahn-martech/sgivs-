@@ -21,7 +21,7 @@ import RentalNote from './rentalNotes';
 import useAuthReducer from '../../stores/AuthReducer';
 import { Spinner } from 'react-bootstrap';
 
-const RentalManagement = () => {
+const LoanManagement = () => {
   const {
     getAllRentals,
     rentalData,
@@ -433,4 +433,4 @@ const RentalManagement = () => {
   );
 };
 
-export default RentalManagement;
+export default LoanManagement;
