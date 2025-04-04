@@ -433,6 +433,17 @@
         }
     
     }
+    &.edit-profile-modal{
+        .modal-dialog{
+            .modal-content{
+                .modal-body{
+                    .set-dealine-wrp{
+                        margin: 0;
+                    }
+                }
+            }
+        }
+    }
 }
 
 .transaction-view-modal{

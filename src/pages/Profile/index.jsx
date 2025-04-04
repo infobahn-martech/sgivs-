@@ -42,7 +42,7 @@ const Profile = () => {
                   alt="profile-picture"
                 />
               ) : (
-                  <span>{getFirstLetters(profileData?.name)} </span>
+                <span>{getFirstLetters(profileData?.name)} </span>
               )}
             </div>
             <div className="">
