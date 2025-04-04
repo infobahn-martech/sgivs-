@@ -19,7 +19,7 @@ const BulkUpload = ({
   const fileInputRef = useRef(null);
 
   const maxSize = 5 * 1024 * 1024; // 5MB
-  const validTypes = ['.xlsx', '.xls'];
+  const validTypes = ['.xlsx', '.xls', '.csv'];
 
   const validateAndSetFiles = (files) => {
     setUploadError(null);
@@ -78,20 +78,27 @@ const BulkUpload = ({
       return;
     }
 
+    const requiredHeaders = ['itemName', 'EzPassNumber', 'parts', 'images'];
+
     try {
-      const readFileAsJson = (file) =>
+      const readFileHeaders = (file) =>
         new Promise((resolve, reject) => {
           const reader = new FileReader();
 
           reader.onload = (e) => {
             try {
-              const workbook = XLSX.read(e.target.result, { type: 'array' }); // Updated
+              const workbook = XLSX.read(e.target.result, { type: 'array' });
               const sheetName = workbook.SheetNames[0];
               const worksheet = workbook.Sheets[sheetName];
-              const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-              resolve({ fileName: file.name, data });
+              const firstRow = XLSX.utils.sheet_to_json(worksheet, {
+                header: 1,
+                range: 0,
+                raw: false,
+              })[0];
+
+              resolve({ file, headers: firstRow });
             } catch (err) {
-              reject(`Error processing ${file.name}`);
+              reject(`Error reading ${file.name}`);
             }
           };
 
@@ -99,11 +106,30 @@ const BulkUpload = ({
           reader.readAsArrayBuffer(file);
         });
 
-      const allFilesData = await Promise.all(
-        uploadedFiles?.map(readFileAsJson)
+      const filesWithHeaders = await Promise.all(
+        uploadedFiles.map(readFileHeaders)
       );
 
-      onExcelUpload(allFilesData);
+      const invalidFiles = filesWithHeaders.filter(({ headers }) => {
+        return !requiredHeaders.every((h) => headers.includes(h));
+      });
+
+      if (invalidFiles.length) {
+        const fileNames = invalidFiles.map((f) => f.file.name).join(', ');
+        setUploadError(
+          `Invalid headers in: ${fileNames}. Required headers: ${requiredHeaders.join(
+            ', '
+          )}`
+        );
+        return;
+      }
+
+      // If headers are valid, proceed to upload
+      if (onExcelUpload) {
+        onExcelUpload(uploadedFiles);
+      }
+
+      setUploadedFiles([]);
       onClose();
     } catch (error) {
       setUploadError(error.toString());
@@ -134,7 +160,7 @@ const BulkUpload = ({
               Browse
             </a>
           </p>
-          <span className="btm-txt">Supported formats: xlsx, xls</span>
+          <span className="btm-txt">Supported formats: xlsx, xls,csv</span>
         </div>
         {uploadError && <p className="error">{uploadError}</p>}
 
@@ -148,7 +174,7 @@ const BulkUpload = ({
           type="file"
           ref={fileInputRef}
           multiple
-          accept=".xlsx, .xls"
+          accept=".xlsx, .xls,.csv"
           style={{ display: 'none' }}
           onChange={handleFileUpload}
         />

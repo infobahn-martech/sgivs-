@@ -47,9 +47,14 @@ export const formatBoolean = (value) => (value ? 'Yes' : 'No');
 
 export const handleDownloadSample = () => {
   const sampleData = [
-    ['Name', 'Email', 'Phone'], // headers
-    ['John Doe', 'john@example.com', '1234567890'],
-    ['Jane Smith', 'jane@example.com', '9876543210'],
+    ['itemName', 'EzPassNumbe', 'parts', 'images'], // headers
+    [
+      'Laptop',
+      '123456',
+      '	abc,abcd,abcde',
+      'https://example.com/image1.jpg,https://example.com/image2.jpg',
+    ],
+    ['Keyboard', '654321', 'test', 'https://example.com/image3.jpg'],
   ];
 
   const worksheet = XLSX.utils.aoa_to_sheet(sampleData);
