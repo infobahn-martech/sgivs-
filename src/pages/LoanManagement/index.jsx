@@ -214,8 +214,11 @@ const LoanManagement = () => {
       contentClass: 'user-pic',
       cell: (row) => (
         <>
-          <InitialsAvatar name={row?.['user.firstName']} />
-
+          <InitialsAvatar
+            name={`${row?.['user.firstName'] || ''} ${
+              row?.['user.lastName'] || ''
+            }`.trim()}
+          />
           <span>
             {row?.['user.firstName'] || row?.['user.lastName']
               ? `${row?.['user.firstName']} ${row?.['user.lastName']}`
