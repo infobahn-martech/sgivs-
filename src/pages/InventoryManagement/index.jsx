@@ -186,9 +186,7 @@ const InventoryManagement = () => {
           </span>
           <span
             className={`${
-              downloadingRowId === (row?.id || rowIndex)
-                ? 'd-flex align-items-center justify-content-center'
-                : ''
+              downloadingRowId === (row?.id || rowIndex) ? 'loader-wrp' : ''
             }`}
             data-tooltip-id={`tooltip-${row.id || rowIndex}`}
             data-tooltip-content={'Download Barcode'}
