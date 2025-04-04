@@ -166,19 +166,21 @@ const RentalManagement = () => {
         <div className="d-flex justify-content-center">
           <span className={`status-wrap ${className}`}>
             <span>{label}</span>{' '}
-            <img style={{ cursor: 'pointer' }} src={penIcon} alt="edit-icon" />
+            {!row.isOld && (
+              <img
+                style={{ cursor: 'pointer' }}
+                src={penIcon}
+                alt="edit-icon"
+                className="flex-shrink-0"
+                onClick={() => {
+                  setChangeStatus({
+                    id: row.id,
+                    status: row.status,
+                  });
+                }}
+              />
+            )}
           </span>
-          {!row.isOld && (
-            <span
-              className="flex-shrink-0"
-              onClick={() => {
-                setChangeStatus({
-                  id: row.id,
-                  status: row.status,
-                });
-              }}
-            ></span>
-          )}
         </div>
       </>
     );
