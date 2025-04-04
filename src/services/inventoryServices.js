@@ -14,6 +14,12 @@ const showHideService = (itemId, show) =>
 
 const getBarcode = (itemId) => Gateway.post(`inventory/barcode`, { itemId });
 
+const bulkUpload = (formData) =>
+  Gateway.post('inventory/bulk-upload', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
 
 export {
   getInventoryListService,
@@ -23,4 +29,5 @@ export {
   updateInventoryItems,
   deleteItemByIdService,
   showHideService,
+  bulkUpload,
 };
