@@ -143,7 +143,7 @@ const InventoryForm = () => {
       setValue('itemId', inventoryItem.itemId);
       setValue('itemName', inventoryItem.itemName);
       setValue('addPart', inventoryItem.hasParts);
-  
+
       if (
         inventoryItem.eZPassNumber &&
         inventoryItem.eZPassNumber !== 'null' &&
@@ -152,22 +152,22 @@ const InventoryForm = () => {
         setValue('isEZPass', true);
         setValue('plateNumber', inventoryItem.eZPassNumber);
       }
-  
+
       if (inventoryItem.hasParts) {
         setValue('buttonLabel', inventoryItem.label);
-  
+
         // ✅ Set parts field
         const formattedParts = inventoryItem.inventory_parts.map((part) => ({
           value: part.partName,
         }));
         setValue('parts', formattedParts);
-  
+
         // ✅ Also update `partsList` so that UI updates
         setPartsList(formattedParts);
       } else {
         setPartsList([]); // Ensure it's empty when no parts
       }
-  
+
       // ✅ Set uploaded images
       setUploadedFiles(inventoryItem.images || []);
     } else {
@@ -178,7 +178,6 @@ const InventoryForm = () => {
       setPartsList([]); // Reset partsList when no inventory item
     }
   }, [inventoryItem, setValue]);
-  
 
   // watchers
   const isAddPartChecked = watch('addPart', false);
@@ -423,7 +422,7 @@ const InventoryForm = () => {
             <span className="pro-pic m-2 mt-0 mb-0">
               <img src={userIcon} alt="pro-pic" />
             </span>
-            <span>Add Inventory</span>
+            <span>{params?.id ? 'Edit' : 'Add'} Inventory</span>
           </div>
 
           <div className="inventory-box inner-layout">
@@ -519,7 +518,10 @@ const InventoryForm = () => {
                     </span>
                   </div>
                   {errors.fileUpload && (
-                    <p className="error">{errors.fileUpload.message}</p>
+                    <>
+                      <p className="error">{errors.fileUpload.message}</p>
+                      <br />
+                    </>
                   )}
 
                   {/* Display Uploaded Images */}
@@ -598,7 +600,7 @@ const InventoryForm = () => {
                 {/* EZ pass Checkbox */}
                 <div className="mb-3 form-group">
                   <div className="form-check">
-                  <label className="form-check-label" htmlFor="isEZPass">
+                    <label className="form-check-label" htmlFor="isEZPass">
                       Is this an EZ Pass Device ?
                     </label>
                     <input
@@ -648,8 +650,53 @@ const InventoryForm = () => {
                 {/* Dynamic Part Fields */}
                 {isAddPartChecked && (
                   <div id="partFields" className="mb-3">
+                    <div className="row mb-3">
+                      <div className="col-md-6">
+                        <div className="form-group">
+                          <label htmlFor="itemId" className="form-label">
+                            Label
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Label"
+                            id="buttonLabel"
+                            {...register('buttonLabel', {
+                              required: isAddPartChecked
+                                ? 'Label is required'
+                                : false,
+                            })}
+                          />
+                          {errors.buttonLabel && (
+                            <p className="error">
+                              {errors.buttonLabel.message}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
                     <div className="part-sec">
-                      {/* <div className="form-group add-btn-wrp">
+                      <div className="form-group">
+                        <label htmlFor="partPopupTitle" className="form-label">
+                          Part Name
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Enter Part Name"
+                          value={newPart}
+                          onChange={(e) => setNewPart(e.target.value)}
+                          onBlur={handleAddPart} // Auto-add when user leaves the field
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                              e.preventDefault(); // 🔹 Prevents form submission
+                              handleAddPart();
+                            }
+                          }} // Add on Enter
+                        />
+                      </div>
+                      <div className="form-group add-btn-wrp part-col-label">
+                        <label className="form-label"></label>
                         <button
                           type="button"
                           className="btn add-btn"
@@ -660,30 +707,12 @@ const InventoryForm = () => {
                           </span>{' '}
                           Add Part
                         </button>
-                      </div> */}
-                      <div className="col-md-10 form-group">
-                      <label htmlFor="itemId" className="form-label">
-                      Button Label
-                      </label>
-                      <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Button Label"
-                            id="buttonLabel"
-                            {...register('buttonLabel', {
-                              required: isAddPartChecked
-                                ? 'Button label is required'
-                                : false,
-                            })}
-                          />
-                          {errors.buttonLabel && (
-                            <p className="error">
-                              {errors.buttonLabel.message}
-                            </p>
-                          )}
                       </div>
                     </div>
-                    <div className="part-sec">
+
+                    {/* List of Entered Parts */}
+
+                    {/* <div className="part-sec">
                     <div className="col-md-10 form-group">
                       <label htmlFor="itemId" className="form-label">
                       Part Titile
@@ -708,7 +737,8 @@ const InventoryForm = () => {
                     <ul className="groups">
                       <li>Part Pop up Titile<span><img src={CloseGroup} alt="" /></span></li>
                       <li>Part Pop up Titile<span><img src={CloseGroup} alt="" /></span></li>
-                    </ul>
+                    </ul> */}
+
                     {/* <label htmlFor="partPopupTitle" className="form-label">
                       Part Pop-up Title
                     </label> */}
@@ -796,7 +826,7 @@ const InventoryForm = () => {
               >
                 Clear
               </button>
-              {/* <button
+              <button
                 type="button"
                 className="btn btn-info"
                 onClick={() => {
@@ -804,7 +834,7 @@ const InventoryForm = () => {
                 }}
               >
                 Cancel
-              </button> */}
+              </button>
               <button
                 type="submit"
                 className="btn btn-submit"
