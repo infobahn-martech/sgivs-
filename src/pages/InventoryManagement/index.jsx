@@ -184,7 +184,11 @@ const InventoryManagement = () => {
             <img src={deleteIcon} alt="Delete" />
           </span>
           <span
-          className='d-flex align-items-center justify-content-center'
+            className={`${
+              downloadingRowId === (row?.id || rowIndex)
+                ? 'd-flex align-items-center justify-content-center'
+                : ''
+            }`}
             data-tooltip-id={`tooltip-${row.id || rowIndex}`}
             data-tooltip-content={'Download Barcode'}
             onClick={async () => {
@@ -200,15 +204,11 @@ const InventoryManagement = () => {
               }
             }}
           >
-            {/* {downloadingRowId === (row?.id || rowIndex) ? ( */}
-            <Spinner
-              size="sm"
-              animation="border"
-              variant="primary"
-            />
-            {/* ) : (
+            {downloadingRowId === (row?.id || rowIndex) ? (
+              <Spinner size="sm" animation="border" variant="primary" />
+            ) : (
               <img src={downloadIcon} alt="Download" />
-            )} */}
+            )}
           </span>
         </>
       ),
