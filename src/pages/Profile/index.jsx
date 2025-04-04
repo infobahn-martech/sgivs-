@@ -5,7 +5,6 @@ import '../../assets/scss/footer.scss';
 import '../../assets/scss/signin.scss';
 
 import proPic from '../../assets/images/pro-pic.svg';
-import proPict from '../../assets/images/avatar.png';
 
 import lock from '../../assets/images/lock.svg';
 import logOut from '../../assets/images/log-out.svg';

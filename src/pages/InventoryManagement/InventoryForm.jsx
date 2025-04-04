@@ -299,8 +299,6 @@ const InventoryForm = () => {
 
   // Handle Form Submission
   const onSubmit = async (data) => {
-    const errors = {};
-
     // Validate parts
     if (data.hasParts && (!data.parts || data.parts.length === 0)) {
       setError('parts', {
@@ -531,7 +529,7 @@ const InventoryForm = () => {
                             className="btn close-btn"
                             onClick={() => handleRemoveFile(file.key)}
                           >
-                              <img src={closMarkIcon} alt="Remove image" />
+                            <img src={closMarkIcon} alt="Remove image" />
                           </button>
                         </div>
                       ))}
@@ -698,12 +696,12 @@ const InventoryForm = () => {
                     {fields.map((field, index) => (
                       <div className="part-sec part-sec1" key={field.id}>
                         <div className="part-col-title">
-                        <input
-                          type="text"
-                          className="form-control"
-                          value={field.value}
-                          readOnly
-                        />
+                          <input
+                            type="text"
+                            className="form-control"
+                            value={field.value}
+                            readOnly
+                          />
                         </div>
                         <button
                           type="button"

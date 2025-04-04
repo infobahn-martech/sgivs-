@@ -8,7 +8,7 @@ import Page404 from '../components/common/Page404';
 import Layout from '../components/common/Layout';
 import Login from '../pages/Auth/Loader';
 import InventoryManagement from '../pages/InventoryManagement/Loader';
-import RentalManagement from '../pages/RentalManagement/Loader';
+import RentalManagement from '../pages/LoanManagement/Loader';
 import EZPassBilling from '../pages/EZPassBilling/Loader';
 import Messages from '../pages/Messages/Loader';
 import Settings from '../pages/Settings/Loader';

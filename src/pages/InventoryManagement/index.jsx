@@ -9,7 +9,6 @@ import viewIcon from '../../assets/images/eye.svg';
 import showHideIcon from '../../assets/images/eye-close.svg';
 import editIcon from '../../assets/images/edit.svg';
 import downloadIcon from '../../assets/images/download.svg';
-import dummyImage from '../../assets/images/dummyIcon.svg';
 
 import '../../assets/scss/usermanagement.scss';
 
