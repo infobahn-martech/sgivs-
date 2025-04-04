@@ -10,7 +10,6 @@ import noteIcon from '../../assets/images/note.svg';
 import alertIcon from '../../assets/images/alert.svg';
 import deadlineIcon from '../../assets/images/calendar.svg';
 
-import dummyImg from '../../assets/images/avatar.png';
 import { debounce } from 'lodash';
 import moment from 'moment';
 import { getPaymentStatus, paymentStatus } from './utils';
@@ -20,6 +19,7 @@ import InitialsAvatar from '../../components/common/InitialsAvatar';
 import { Tooltip } from 'react-tooltip';
 import RentalNote from './rentalNotes';
 import useAuthReducer from '../../stores/AuthReducer';
+import { Spinner } from 'react-bootstrap';
 
 const RentalManagement = () => {
   const {
@@ -33,6 +33,7 @@ const RentalManagement = () => {
     getRentalNotes,
     notes,
     updateNote,
+    statusLoading,
   } = useRentalReducer((state) => state);
 
   const { getAllUsersListByRole, usersRoleData } = useAuthReducer(
@@ -153,8 +154,23 @@ const RentalManagement = () => {
               }))
             }
           />
-          <button onClick={handleSubmit} className="btn-save-trans">
-            Save
+          <button
+            onClick={handleSubmit}
+            className="btn-save-trans"
+            disabled={statusLoading}
+          >
+            {statusLoading ? (
+              <Spinner
+                size="sm"
+                as="span"
+                animation="border"
+                variant="light"
+                aria-hidden="true"
+                className="custom-spinner"
+              />
+            ) : (
+              'Save'
+            )}
           </button>
         </div>
       );
