@@ -62,6 +62,8 @@ const RentalNote = ({ showModal, closeModal, noteContent, updateNote }) => {
     </div>
   );
 
+  console.log('isEditing', typeof isEditing);
+
   const renderFooter = () => (
     <div className="modal-footer">
       <button className="btn btn-cancel" onClick={closeModal}>
@@ -74,11 +76,13 @@ const RentalNote = ({ showModal, closeModal, noteContent, updateNote }) => {
         {isEditing ? (
           'Save'
         ) : (
-          <span className="icon">
-            <img src={editIcon} alt="Edit" />
-          </span>
+          <>
+            <span className="icon">
+              <img src={editIcon} alt="Edit" />
+            </span>
+            {!noteContent?.note ? 'Add' : 'Edit'} Note
+          </>
         )}
-        {isEditing ? '' : 'Edit Note'}
       </button>
     </div>
   );

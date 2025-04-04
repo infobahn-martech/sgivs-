@@ -20,8 +20,8 @@
             margin-left: 280px;
         }
         @media($sm-1481){
-            width: calc(100% - 200px);
-            margin-left: 200px;
+            width: calc(100% - 250px);
+            margin-left: 250px;
         }
         @media($sm-1199){
             width: calc(100% - 180px);
@@ -251,17 +251,42 @@
                     margin: 7px;
                     // height: 133px;
                     align-items: center;
+                    background-size: contain;
                     &.user{
                         background: url(../images/dating_dash.svg) no-repeat right bottom #F0F9FD;
+                        @media ($sm-1679){
+                        background-size: 90px;
+                        }
+                        @media ($sm-1199){
+                            background-size: 80px;
+                        }
                     }
                     &.inventory{
                         background: url(../images/inventory_ic.svg) no-repeat right bottom #F0F9FD;
+                        @media ($sm-1679){
+                        background-size: 70px;
+                        }
+                        @media ($sm-1199){
+                            background-size: 60px;
+                        }
                     }
                     &.returned{
                         background: url(../images/retun_ic.svg) no-repeat right bottom #F0F9FD;
+                        @media ($sm-1679){
+                        background-size: 70px;
+                        }
+                        @media ($sm-1199){
+                            background-size: 60px;
+                        }
                     }
                     &.borrowed{
                         background: url(../images/cuurently.svg) no-repeat right bottom #F0F9FD;
+                        @media ($sm-1679){
+                        background-size: 60px;
+                        }
+                        @media ($sm-1199){
+                            background-size: 50px;
+                        }
                     }
                     @media ($sm-1679){
                         padding: 20px;
@@ -387,6 +412,13 @@
                         display: flex;
                         align-items: center;
                         margin-bottom: 26px;
+                        @media ($sm-1679){
+                            margin-bottom: 20px;
+                        }
+                        @media ($sm-479){
+                            flex-direction: column;
+                           align-items: flex-start;
+                        }
                         .btn-view{
                             font-size: 13px;
                             border-radius: 15px;
@@ -404,6 +436,9 @@
                         margin-right: 20px;
                         @media (max-width:850px){
                             margin-bottom: 20px;
+                        }
+                        @media ($sm-479){
+                            margin-bottom: 10px;
                         }
                         .icon-title {
                             display: flex;

@@ -98,6 +98,7 @@ const BulkUpload = ({
 
               resolve({ file, headers: firstRow });
             } catch (err) {
+              console.error(err);
               reject(`Error reading ${file.name}`);
             }
           };
@@ -130,7 +131,7 @@ const BulkUpload = ({
           onClose();
         });
       }
-      
+
       setUploadedFiles([]);
       // onClose();
     } catch (error) {
@@ -163,8 +164,8 @@ const BulkUpload = ({
             </a>
           </p>
           <span className="btm-txt">Supported formats: xlsx, xls,csv</span>
+          {uploadError && <span className="error">{uploadError}</span>}
         </div>
-        {uploadError && <p className="error">{uploadError}</p>}
 
         <ul className="uploaded-files-list">
           {uploadedFiles.map((file, i) => (
