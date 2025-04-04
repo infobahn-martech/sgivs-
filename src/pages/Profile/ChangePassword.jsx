@@ -45,7 +45,7 @@ const ChangePassword = () => {
       <div className="change-pass">
         <div className="mb-3 row input-grp">
           <div className="col-md-6 input-wrp">
-            <label className="form-label">Old password</label>
+            <label className="light">Old password</label>
             <input
               type="password"
               className="form-control"
@@ -59,7 +59,7 @@ const ChangePassword = () => {
         </div>
         <div className="mb-3 row input-grp">
           <div className="col-md-6 input-wrp">
-            <label className="form-label">New password</label>
+            <label className="light">New password</label>
             <input
               type="password"
               className="form-control"
@@ -71,7 +71,7 @@ const ChangePassword = () => {
             )}
           </div>
           <div className="col-md-6 input-wrp">
-            <label className="form-label">Re-enter the new password</label>
+            <label className="light">Re-enter the new password</label>
             <input
               type="password"
               className="form-control"

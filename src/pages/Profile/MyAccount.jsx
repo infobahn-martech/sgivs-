@@ -60,7 +60,9 @@ const MyAccount = () => {
             <div className="lft-txt">
               <span className="light">Phone Number</span>
               <span className="dark-name">
-                {profileData?.user?.countryCode + profileData?.user?.phone}
+                {profileData?.user?.countryCode +
+                  ' ' +
+                  profileData?.user?.phone}
               </span>
             </div>
           </div>

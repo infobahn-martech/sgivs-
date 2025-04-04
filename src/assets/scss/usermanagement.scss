@@ -842,7 +842,12 @@
                         @media ($sm-1199){
                             gap: 10px;
                         }
-                        .btn,img {
+                        .loader-wrp{
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+                        .btn,img,.loader-wrp {
                             width: 37px;
                             cursor: pointer;
                             @media ($sm-1679) {

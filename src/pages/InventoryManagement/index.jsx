@@ -36,6 +36,7 @@ const InventoryManagement = () => {
     showHide,
     exportInventory,
     isExportLoading,
+    bulkUploadFiles,
   } = useInventoryStore((state) => state);
   const navigate = useNavigate();
   console.log(' inventoryList', inventoryList);
@@ -184,6 +185,9 @@ const InventoryManagement = () => {
             <img src={deleteIcon} alt="Delete" />
           </span>
           <span
+            className={`${
+              downloadingRowId === (row?.id || rowIndex) ? 'loader-wrp' : ''
+            }`}
             data-tooltip-id={`tooltip-${row.id || rowIndex}`}
             data-tooltip-content={'Download Barcode'}
             onClick={async () => {
@@ -199,26 +203,28 @@ const InventoryManagement = () => {
               }
             }}
           >
-            {/* {downloadingRowId === (row?.id || rowIndex) ? ( */}
-            <Spinner
-              size="sm"
-              animation="border"
-              variant="primary"
-              className="ms-2"
-            />
-            {/* ) : (
+            {downloadingRowId === (row?.id || rowIndex) ? (
+              <Spinner size="sm" animation="border" variant="primary" />
+            ) : (
               <img src={downloadIcon} alt="Download" />
-            )} */}
+            )}
           </span>
         </>
       ),
     },
   ];
 
-  const handleExcelUpload = (data) => {
-    // Process the uploaded Excel data
-    console.log('Processed Excel data:', data);
+  const handleExcelUpload = (files) => {
+    console.log('Files to upload:', files);
+
+    const formData = new FormData();
+    files.forEach((file) => {
+      formData.append('file', file); // Append each file
+    });
+
+    bulkUploadFiles(formData); // Pass FormData to your API function
   };
+
   const closeModal = () => {
     setModalConfig({ type: null, action: null });
   };
@@ -311,6 +317,7 @@ const InventoryManagement = () => {
         exportExcel={inventoryList?.length ? exportExcel : null}
         exportLoading={isExportLoading}
         uploadExcel
+        uploadLoading={false}
         onExcelUpload={handleExcelUpload}
         uploadTitle="Bulk Upload Inventory"
         addButton={{

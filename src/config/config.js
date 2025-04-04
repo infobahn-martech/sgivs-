@@ -1,8 +1,7 @@
 import moment from 'moment';
 import Gateway from './gateway';
-
+import * as XLSX from 'xlsx';
 import userImage from '../assets/images/user.svg';
-import dashboard from '../assets/images/dashboard-info-icon.svg';
 import settingsIcon from '../assets/images/Settings.svg';
 import messageIcon from '../assets/images/message-ico.svg';
 import loanImg from '../assets/images/Loan_Management.svg';
@@ -45,6 +44,25 @@ export const getFirstLetters = (name) => {
 export const formatDate = (date) => moment(date)?.format('MMM D, YYYY');
 
 export const formatBoolean = (value) => (value ? 'Yes' : 'No');
+
+export const handleDownloadSample = () => {
+  const sampleData = [
+    ['itemName', 'EzPassNumbe', 'parts', 'images'], // headers
+    [
+      'Laptop',
+      '123456',
+      '	abc,abcd,abcde',
+      'https://example.com/image1.jpg,https://example.com/image2.jpg',
+    ],
+    ['Keyboard', '654321', 'test', 'https://example.com/image3.jpg'],
+  ];
+
+  const worksheet = XLSX.utils.aoa_to_sheet(sampleData);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'SampleTemplate');
+
+  XLSX.writeFile(workbook, 'sample_template.xlsx');
+};
 
 // excel export
 const baseUrl = import.meta.env.VITE_API_ENDPOINT;

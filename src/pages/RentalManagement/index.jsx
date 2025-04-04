@@ -5,7 +5,7 @@ import CommonHeader from '../../components/common/CommonHeader';
 
 import '../../assets/scss/usermanagement.scss';
 
-import penIcon from '../../assets/images/pen.svg';
+import penIcon from '../../assets/images/edit-status.svg';
 import noteIcon from '../../assets/images/note.svg';
 import alertIcon from '../../assets/images/alert.svg';
 import deadlineIcon from '../../assets/images/calendar.svg';
@@ -142,8 +142,7 @@ const RentalManagement = () => {
       return (
         <div className="d-flex" ref={statusEditRef}>
           <CustomSelect
-            classNamePrefix="status-select"
-            showIndicator
+            classNamePrefix="react-select"
             isClearable={false}
             options={paymentStatus}
             value={row.status}
@@ -164,24 +163,23 @@ const RentalManagement = () => {
     return (
       <>
         <div className="d-flex justify-content-center">
-          <span className={`status-wrap ${className}`}>{label}</span>
-          {!row.isOld && (
-            <span
-              className=" ms-2 cursor-pointer flex-shrink-0"
-              onClick={() => {
-                setChangeStatus({
-                  id: row.id,
-                  status: row.status,
-                });
-              }}
-            >
+          <span className={`status-wrap ${className}`}>
+            <span>{label}</span>{' '}
+            {!row.isOld && (
               <img
                 style={{ cursor: 'pointer' }}
                 src={penIcon}
                 alt="edit-icon"
+                className="flex-shrink-0"
+                onClick={() => {
+                  setChangeStatus({
+                    id: row.id,
+                    status: row.status,
+                  });
+                }}
               />
-            </span>
-          )}
+            )}
+          </span>
         </div>
       </>
     );
@@ -232,7 +230,12 @@ const RentalManagement = () => {
     },
     {
       name: 'Returned date and time',
-      cell: (row) => formatDateTime(row?.returnedAt),
+      cell: (row) =>
+        row?.dueDate < row?.returnedAt ? (
+          <span className="text-danger">{formatDateTime(row?.returnedAt)}</span>
+        ) : (
+          formatDateTime(row?.returnedAt)
+        ),
       titleClasses: 'tw6',
     },
     {

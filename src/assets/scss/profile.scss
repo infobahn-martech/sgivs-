@@ -96,17 +96,17 @@
                 margin: 10px 10px 0px 10px;
                 border-radius: 40px;
             }
-            &::after{
-                position: absolute;
-                content: "";
-                background-image: url('../images/profile-botm-img.png');
-                width: 235px;
-                height: 130px;
-                background-repeat: no-repeat;
-                bottom: -172px;
-                right: 24px;
+            // &::after{
+            //     position: absolute;
+            //     content: "";
+            //     background-image: url('../images/profile-botm-img.png');
+            //     width: 235px;
+            //     height: 130px;
+            //     background-repeat: no-repeat;
+            //     bottom: -172px;
+            //     right: 24px;
             
-            }
+            // }
             .img-sec{
                 width: 113px;
                 height: 113px;
@@ -480,6 +480,9 @@
                             font-size: 14px;
                             position: absolute;
                         }
+                        .light{
+                            margin-bottom: 5px;
+                        }
                     }
                 }
                 .form-control {
@@ -694,4 +697,19 @@
         }
     }
 
+}
+
+.PhoneInput{
+    .PhoneInputInput{
+        background-color: transparent !important;
+        border: none;
+        box-shadow: none;
+        outline: none;
+        color: #8897AD;
+        &:focus{
+            border: none;
+            box-shadow: none;
+            outline: none;
+        }
+    }
 }

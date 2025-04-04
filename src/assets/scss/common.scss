@@ -248,4 +248,29 @@ a{
             padding-top: 0px;
         }
     }
+    &.not-found{
+        height: 100vh;
+        .no-data-content{
+            max-width: 380px;
+            @media ($sm-479){
+                padding: 0 20px;
+            }
+        }
+        .no-data-txt{
+            text-align: center;
+            h2{
+                font-size: 26px;
+                font-weight: 600;
+                @media ($sm-1679){
+                    font-size: 24px;
+                }
+                @media ($sm-1441){
+                    font-size: 22px;
+                }
+                @media ($sm-1199){
+                    font-size: 20px;
+                }
+            }
+        }
+    }
 }

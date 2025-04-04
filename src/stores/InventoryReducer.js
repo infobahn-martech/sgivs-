@@ -8,6 +8,7 @@ import {
   submitInventoryItems,
   updateInventoryItems,
   showHideService,
+  bulkUpload,
 } from '../services/inventoryServices';
 import useAlertReducer from './AlertReducer';
 
@@ -25,6 +26,8 @@ const useInventoryStore = create((set) => ({
   inventoryItem: null,
   redirectToList: false,
   redirectId: null,
+  isUploading: false,
+  files: [],
   set: (data) => {
     set(data);
   },
@@ -183,6 +186,21 @@ const useInventoryStore = create((set) => ({
     } catch (err) {
       useAlertReducer.getState().error(err.message);
       set({ isExportLoading: false });
+    }
+  },
+  bulkUploadFiles: async (files) => {
+    try {
+      set({ isUploading: true, files: [] });
+      const { data } = await bulkUpload(files);
+      console.log(' data', data);
+      set({ isUploading: false, files: data.uploadedFiles });
+      const { success } = useAlertReducer.getState();
+      success(data.message);
+    } catch (err) {
+      console.log(' error', err);
+      const { error } = useAlertReducer.getState();
+      error(err.response?.data?.message || 'Failed to upolad');
+      set({ isUploading: false, files: [] });
     }
   },
   clearItemById: () => set({ inventoryItem: null }),
