@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -6,12 +6,14 @@ import CustomModal from '../../components/common/CustomModal';
 import useAuthReducer from '../../stores/AuthReducer';
 import { Spinner } from 'react-bootstrap';
 import PhoneInput from 'react-phone-number-input';
+import { parsePhoneNumber } from 'libphonenumber-js';
 import 'react-phone-number-input/style.css';
 
 const profileSchema = z.object({
   firstName: z.string().nonempty('First Name is required'),
   lastName: z.string().nonempty('Last Name is required'),
-  phoneNumber: z.string().nonempty('Phone number is required'),
+  countryCode: z.string().nonempty('Country code is required'),
+  phone: z.string().nonempty('Phone number is required'),
   email: z
     .string()
     .nonempty('Email is required')
@@ -33,14 +35,36 @@ const EditProfile = ({ showModal, closeModal, profileData }) => {
     defaultValues: {
       firstName: profileData?.user?.firstName || '',
       lastName: profileData?.user?.lastName || '',
-      phoneNumber: profileData?.user?.phone || '',
+      countryCode: profileData?.user?.countryCode || '',
+      phone: profileData?.user?.phone || '',
       email: profileData?.user?.email || '',
     },
   });
 
+  const [fullPhoneNumber, setFullPhoneNumber] = useState(
+    (profileData?.user?.countryCode || '') + (profileData?.user?.phone || '')
+  );
+
+  useEffect(() => {
+    try {
+      const parsed = parsePhoneNumber(fullPhoneNumber || '');
+      if (parsed) {
+        setValue('countryCode', `+${parsed.countryCallingCode}`);
+        setValue('phone', parsed.nationalNumber);
+      }
+    } catch (error) {
+      setValue('countryCode', '');
+      setValue('phone', '');
+    }
+  }, [fullPhoneNumber, setValue]);
+
   const onSubmit = (data) => {
     patchUserProfile({
-      ...data,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      countryCode: data.countryCode,
+      phone: data.phone,
+      email: data.email,
     });
   };
 
@@ -96,11 +120,15 @@ const EditProfile = ({ showModal, closeModal, profileData }) => {
                 id="phoneNumber"
                 className="form-control"
                 placeholder="Enter phone number"
-                defaultCountry="US"
-                {...register('phoneNumber')}
+                defaultCountry="IN"
+                value={fullPhoneNumber}
+                onChange={setFullPhoneNumber}
               />
-              {errors.phoneNumber && (
-                <span className="error">{errors.phoneNumber.message}</span>
+              {errors.phone && (
+                <span className="error">{errors.phone.message}</span>
+              )}
+              {errors.countryCode && (
+                <span className="error">{errors.countryCode.message}</span>
               )}
             </div>
             <div className="form-group">
