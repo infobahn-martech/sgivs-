@@ -9,6 +9,7 @@ import penIcon from '../../assets/images/pen.svg';
 import camaraIcon from '../../assets/images/camera.svg';
 import tagIcon from '../../assets/images/tag.svg';
 import image from '../../assets/images/avatar.png';
+import InitialsAvatar from '../../components/common/InitialsAvatar';
 
 const data = [
   {
@@ -122,9 +123,10 @@ const EZPassBilling = () => {
       contentClass: 'user-pic',
       cell: (row) => (
         <>
-          <figure>
+          <InitialsAvatar name={row.user} />
+          {/* <figure>
             <img src={row.image} alt="" className="img" />
-          </figure>
+          </figure> */}
           <span>{row.user || '-'}</span>
         </>
       ),
