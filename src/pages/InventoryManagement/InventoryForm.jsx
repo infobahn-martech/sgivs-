@@ -675,25 +675,30 @@ const InventoryForm = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="part-sec">
-                      <div className="form-group">
-                        <label htmlFor="partPopupTitle" className="form-label">
-                          Part Name
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Enter Part Name"
-                          value={newPart}
-                          onChange={(e) => setNewPart(e.target.value)}
-                          onBlur={handleAddPart} // Auto-add when user leaves the field
-                          onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                              e.preventDefault(); // 🔹 Prevents form submission
-                              handleAddPart();
-                            }
-                          }} // Add on Enter
-                        />
+                    <div className="part-sec row">
+                      <div className="col-md-6">
+                        <div className="form-group">
+                          <label
+                            htmlFor="partPopupTitle"
+                            className="form-label"
+                          >
+                            Part Name
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Enter Part Name"
+                            value={newPart}
+                            onChange={(e) => setNewPart(e.target.value)}
+                            onBlur={handleAddPart} // Auto-add when user leaves the field
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter') {
+                                e.preventDefault(); // 🔹 Prevents form submission
+                                handleAddPart();
+                              }
+                            }} // Add on Enter
+                          />
+                        </div>
                       </div>
                       <div className="form-group add-btn-wrp part-col-label">
                         <label className="form-label"></label>
