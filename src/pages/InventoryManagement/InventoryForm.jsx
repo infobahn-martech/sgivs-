@@ -9,6 +9,7 @@ import userIcon from '../../assets/images/inventory_management.svg';
 import barcodeIcon from '../../assets/images/barcode.svg';
 import closMarkIcon from '../../assets/images/close-mark.svg';
 import Close_LGIcon from '../../assets/images/Close_LG.svg';
+import CloseGroup from '../../assets/images/close-btn-grp.svg';
 import Upload__icon from '../../assets/images/Upload__icon.svg';
 import CustomSelect from '../../components/common/CustomSelect';
 
@@ -577,15 +578,15 @@ const InventoryForm = () => {
                 {/* EZ pass Checkbox */}
                 <div className="mb-3 form-group">
                   <div className="form-check">
+                  <label className="form-check-label" htmlFor="isEZPass">
+                      Is this an EZ Pass Device ?
+                    </label>
                     <input
                       className="form-check-input"
                       type="checkbox"
                       id="isEZPass"
                       {...register('isEZPass')}
                     />
-                    <label className="form-check-label" htmlFor="isEZPass">
-                      Is this an EZ Pass Device ?
-                    </label>
                   </div>
                 </div>
 
@@ -612,25 +613,86 @@ const InventoryForm = () => {
                 {/* Add Part Checkbox */}
                 <div className="mb-3">
                   <div className="form-check">
+                    <label className="form-check-label" htmlFor="addPart">
+                      Add Part
+                    </label>
                     <input
                       className="form-check-input"
                       type="checkbox"
                       id="addPart"
                       {...register('addPart')}
                     />
-                    <label className="form-check-label" htmlFor="addPart">
-                      Add Part
-                    </label>
                   </div>
                 </div>
 
                 {/* Dynamic Part Fields */}
                 {isAddPartChecked && (
                   <div id="partFields" className="mb-3">
-                    <label htmlFor="partPopupTitle" className="form-label">
-                      Part Pop-up Title
-                    </label>
                     <div className="part-sec">
+                      {/* <div className="form-group add-btn-wrp">
+                        <button
+                          type="button"
+                          className="btn add-btn"
+                          onClick={handleAddPart}
+                        >
+                          <span className="plus">
+                            <img src={Close_LGIcon} alt="Add Part" />
+                          </span>{' '}
+                          Add Part
+                        </button>
+                      </div> */}
+                      <div className="col-md-10 form-group">
+                      <label htmlFor="itemId" className="form-label">
+                      Button Label
+                      </label>
+                      <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Button Label"
+                            id="buttonLabel"
+                            {...register('buttonLabel', {
+                              required: isAddPartChecked
+                                ? 'Button label is required'
+                                : false,
+                            })}
+                          />
+                          {errors.buttonLabel && (
+                            <p className="error">
+                              {errors.buttonLabel.message}
+                            </p>
+                          )}
+                      </div>
+                    </div>
+                    <div className="part-sec">
+                    <div className="col-md-10 form-group">
+                      <label htmlFor="itemId" className="form-label">
+                      Part Titile
+                      </label>
+                      <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Part Pop-up Title"
+                          value={newPart}
+                          onChange={(e) => {
+                            setNewPart(e.target.value);
+                            const temp = { ...customError };
+                            delete temp.parts;
+                            setCustomError(temp);
+                          }}
+                        />
+                        {customError?.parts && (
+                          <p className="error">{customError.parts}</p>
+                        )}
+                      </div>
+                    </div>
+                    <ul className="groups">
+                      <li>Part Pop up Titile<span><img src={CloseGroup} alt="" /></span></li>
+                      <li>Part Pop up Titile<span><img src={CloseGroup} alt="" /></span></li>
+                    </ul>
+                    {/* <label htmlFor="partPopupTitle" className="form-label">
+                      Part Pop-up Title
+                    </label> */}
+                    {/* <div className="part-sec">
                       <div className="part-col-title">
                         <div className="form-group">
                           <input
@@ -670,19 +732,8 @@ const InventoryForm = () => {
                           )}
                         </div>
                       </div>
-                      <div className="form-group add-btn-wrp">
-                        <button
-                          type="button"
-                          className="btn add-btn"
-                          onClick={handleAddPart}
-                        >
-                          <span className="plus">
-                            <img src={Close_LGIcon} alt="Add Part" />
-                          </span>{' '}
-                          Add Part
-                        </button>
-                      </div>
-                    </div>
+
+                    </div> */}
 
                     {fields?.map((field, index) => (
                       <div className="part-sec part-sec1" key={field.id}>
@@ -723,7 +774,7 @@ const InventoryForm = () => {
               >
                 Clear
               </button>
-              <button
+              {/* <button
                 type="button"
                 className="btn btn-info"
                 onClick={() => {
@@ -731,7 +782,7 @@ const InventoryForm = () => {
                 }}
               >
                 Cancel
-              </button>
+              </button> */}
               <button
                 type="submit"
                 className="btn btn-submit"
