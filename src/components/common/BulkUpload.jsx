@@ -126,11 +126,13 @@ const BulkUpload = ({
 
       // If headers are valid, proceed to upload
       if (onExcelUpload) {
-        onExcelUpload(uploadedFiles);
+        onExcelUpload(uploadedFiles, () => {
+          onClose();
+        });
       }
-
+      
       setUploadedFiles([]);
-      onClose();
+      // onClose();
     } catch (error) {
       setUploadError(error.toString());
     }

@@ -200,13 +200,17 @@ const RentalManagement = () => {
         <>
           <InitialsAvatar name={row?.['user.firstName']} />
 
-          <span>{row?.['user.firstName'] || '-'}</span>
+          <span>
+            {row?.['user.firstName'] || row?.['user.lastName']
+              ? `${row?.['user.firstName']} ${row?.['user.lastName']}`
+              : '-'}
+          </span>
         </>
       ),
     },
     {
       name: 'Item Id',
-      selector: 'id',
+      selector: 'inventory.itemId',
       titleClasses: 'tw2',
     },
     {
@@ -226,7 +230,12 @@ const RentalManagement = () => {
     },
     {
       name: 'Returned date and time',
-      cell: (row) => formatDateTime(row?.returnedAt),
+      cell: (row) =>
+        row?.dueDate < row?.returnedAt ? (
+          <span className="text-danger">{formatDateTime(row?.returnedAt)}</span>
+        ) : (
+          formatDateTime(row?.returnedAt)
+        ),
       titleClasses: 'tw6',
     },
     {
