@@ -199,16 +199,16 @@ const InventoryManagement = () => {
               }
             }}
           >
-            {downloadingRowId === (row?.id || rowIndex) ? (
-              <Spinner
-                size="sm"
-                animation="border"
-                variant="primary"
-                className="ms-2"
-              />
-            ) : (
+            {/* {downloadingRowId === (row?.id || rowIndex) ? ( */}
+            <Spinner
+              size="sm"
+              animation="border"
+              variant="primary"
+              className="ms-2"
+            />
+            {/* ) : (
               <img src={downloadIcon} alt="Download" />
-            )}
+            )} */}
           </span>
         </>
       ),
