@@ -12,7 +12,7 @@ import 'react-phone-number-input/style.css';
 const profileSchema = z.object({
   firstName: z.string().nonempty('First Name is required'),
   lastName: z.string().nonempty('Last Name is required'),
-  countryCode: z.string().nonempty('Country code is required'),
+  // countryCode: z.string().nonempty('Country code is required'),
   phone: z.string().nonempty('Phone number is required'),
   email: z
     .string()
@@ -127,9 +127,9 @@ const EditProfile = ({ showModal, closeModal, profileData }) => {
               {errors.phone && (
                 <span className="error">{errors.phone.message}</span>
               )}
-              {errors.countryCode && (
+              {/* {errors.countryCode && (
                 <span className="error">{errors.countryCode.message}</span>
-              )}
+              )} */}
             </div>
             <div className="form-group">
               <label htmlFor="email" className="form-label">
