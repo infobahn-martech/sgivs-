@@ -539,9 +539,12 @@ const InventoryForm = () => {
                         }`}
                         id="itemId"
                         readOnly={!!barcodeId || params?.id || isBarcodeLoading}
+                       
                         {...register('itemId', {
                           required: 'Item ID is required',
                         })}
+                        onInput={(e) => (e.target.value = e.target.value.toUpperCase())} // Converts to uppercase as user types
+                        style={{ textTransform: 'uppercase' }} // Ensures visual uppercase input
                       />
                       {errors.itemId && (
                         <p className="error">{errors.itemId.message}</p>
