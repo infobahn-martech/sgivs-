@@ -188,7 +188,7 @@ const useInventoryStore = create((set) => ({
       set({ isExportLoading: false });
     }
   },
-  bulkUploadFiles: async (files) => {
+  bulkUploadFiles: async (files, params, onClose) => {
     try {
       set({ isUploading: true, files: [] });
       const { data } = await bulkUpload(files);
@@ -196,6 +196,8 @@ const useInventoryStore = create((set) => ({
       set({ isUploading: false, files: data.uploadedFiles });
       const { success } = useAlertReducer.getState();
       success(data.message);
+      onClose && onClose();
+      useInventoryStore.getState().getInventoryList(params);
     } catch (err) {
       console.log(' error', err);
       const { error } = useAlertReducer.getState();
