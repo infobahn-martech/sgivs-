@@ -176,7 +176,7 @@
 .part-sec{
     display: flex;
     align-items: center;
-    margin-bottom: 33px;
+    margin-bottom: 0px;
     @media (max-width:700px){
         flex-direction: column;
     }
@@ -199,7 +199,7 @@
     .part-col-label{
         max-width: 244px;
         width: 100%;
-        margin-left: 19px;
+        margin-left: 18px;
         @media (max-width:700px){
             width: 100%;
             max-width: 100%;
@@ -312,7 +312,13 @@
             max-width: 730px;
             margin-right: 18px;
         }
-       
+        .part-col-title{
+            margin-right: 18px;
+            max-width: calc(348px - 18px);
+            .form-control{
+                margin-right: 0px;
+            }
+        }
     }
 }
 

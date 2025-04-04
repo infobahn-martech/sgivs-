@@ -697,12 +697,14 @@ const InventoryForm = () => {
 
                     {fields.map((field, index) => (
                       <div className="part-sec part-sec1" key={field.id}>
+                        <div className="part-col-title">
                         <input
                           type="text"
                           className="form-control"
                           value={field.value}
                           readOnly
                         />
+                        </div>
                         <button
                           type="button"
                           className="btn close-btn"
