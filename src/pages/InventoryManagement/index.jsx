@@ -44,8 +44,8 @@ const InventoryManagement = () => {
 
   const initialParams = {
     search: '',
-    page: '1',
-    limit: '10',
+    page: 1,
+    limit: 10,
     fromDate: null,
     toDate: null,
     sortBy: 'createdAt',
@@ -199,16 +199,16 @@ const InventoryManagement = () => {
               }
             }}
           >
-            {downloadingRowId === (row?.id || rowIndex) ? (
-              <Spinner
-                size="sm"
-                animation="border"
-                variant="primary"
-                className="ms-2"
-              />
-            ) : (
+            {/* {downloadingRowId === (row?.id || rowIndex) ? ( */}
+            <Spinner
+              size="sm"
+              animation="border"
+              variant="primary"
+              className="ms-2"
+            />
+            {/* ) : (
               <img src={downloadIcon} alt="Download" />
-            )}
+            )} */}
           </span>
         </>
       ),
@@ -336,7 +336,7 @@ const InventoryManagement = () => {
         }}
       />
       <CustomTable
-        pagination={pagination}
+        pagination={{ currentPage: params.page, limit: params.limit }}
         count={pagination.totalRecords}
         columns={columns}
         data={inventoryList}
