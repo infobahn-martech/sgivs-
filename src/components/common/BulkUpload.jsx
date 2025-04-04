@@ -98,6 +98,7 @@ const BulkUpload = ({
 
               resolve({ file, headers: firstRow });
             } catch (err) {
+              console.error(err);
               reject(`Error reading ${file.name}`);
             }
           };
@@ -130,7 +131,7 @@ const BulkUpload = ({
           onClose();
         });
       }
-      
+
       setUploadedFiles([]);
       // onClose();
     } catch (error) {
