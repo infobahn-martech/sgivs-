@@ -311,6 +311,7 @@ const InventoryManagement = () => {
         exportExcel={inventoryList?.length ? exportExcel : null}
         exportLoading={isExportLoading}
         uploadExcel
+        uploadLoading={false}
         onExcelUpload={handleExcelUpload}
         uploadTitle="Bulk Upload Inventory"
         addButton={{
