@@ -254,19 +254,39 @@
                     background-size: contain;
                     &.user{
                         background: url(../images/dating_dash.svg) no-repeat right bottom #F0F9FD;
+                        @media ($sm-1679){
                         background-size: 90px;
+                        }
+                        @media ($sm-1199){
+                            background-size: 80px;
+                        }
                     }
                     &.inventory{
                         background: url(../images/inventory_ic.svg) no-repeat right bottom #F0F9FD;
+                        @media ($sm-1679){
                         background-size: 70px;
+                        }
+                        @media ($sm-1199){
+                            background-size: 60px;
+                        }
                     }
                     &.returned{
                         background: url(../images/retun_ic.svg) no-repeat right bottom #F0F9FD;
+                        @media ($sm-1679){
                         background-size: 70px;
+                        }
+                        @media ($sm-1199){
+                            background-size: 60px;
+                        }
                     }
                     &.borrowed{
                         background: url(../images/cuurently.svg) no-repeat right bottom #F0F9FD;
+                        @media ($sm-1679){
                         background-size: 60px;
+                        }
+                        @media ($sm-1199){
+                            background-size: 50px;
+                        }
                     }
                     @media ($sm-1679){
                         padding: 20px;
