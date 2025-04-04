@@ -44,8 +44,8 @@ const InventoryManagement = () => {
 
   const initialParams = {
     search: '',
-    page: '1',
-    limit: '10',
+    page: 1,
+    limit: 10,
     fromDate: null,
     toDate: null,
     sortBy: 'createdAt',
@@ -336,7 +336,7 @@ const InventoryManagement = () => {
         }}
       />
       <CustomTable
-        pagination={pagination}
+        pagination={{ currentPage: params.page, limit: params.limit }}
         count={pagination.totalRecords}
         columns={columns}
         data={inventoryList}

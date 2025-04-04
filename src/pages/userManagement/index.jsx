@@ -21,13 +21,12 @@ const UserManagement = () => {
     isUsersLoading,
     usersAction,
     userActionLoading,
-    pagination,
   } = useAuthReducer((state) => state);
 
   const initialParams = {
     search: '',
-    page: '1',
-    limit: '10',
+    page: 1,
+    limit: 10,
     fromDate: null,
     toDate: null,
     sortBy: 'firstName',
@@ -142,7 +141,7 @@ const UserManagement = () => {
       selector: 'isCreditCardAvailable',
       titleClasses: 'tw6',
       cell: (row) => <span>{formatBoolean(row?.isCreditCardAvailable)}</span>,
-      colClassName: 'text-center'
+      colClassName: 'text-center',
     },
     {
       name: 'Action',
@@ -228,7 +227,7 @@ const UserManagement = () => {
         }}
       />
       <CustomTable
-        pagination={pagination}
+        pagination={{ currentPage: params.page, limit: params.limit }}
         count={usersData?.pagination?.totalRecords}
         columns={columns}
         data={usersData?.data || []}

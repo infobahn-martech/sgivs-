@@ -24,6 +24,7 @@ export default function CustomTable({
   onView,
   wrapClasses = '',
 }) {
+  console.log(currentPage);
   const [tempCount, setTempCount] = useState(0);
   useEffect(() => {
     if (!isLoading) {
@@ -217,7 +218,7 @@ export default function CustomTable({
         </div>
       </div>
       {/* {(totalPages() > 1 && renderPagination()) || null} */}
-      { renderPagination()}
+      {renderPagination()}
     </>
   );
 }
