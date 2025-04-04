@@ -140,7 +140,7 @@ const RentalManagement = () => {
       };
 
       return (
-        <div className="d-flex" ref={statusEditRef}>
+        <div className="loan-status-wrp" ref={statusEditRef}>
           <CustomSelect
             classNamePrefix="react-select"
             isClearable={false}

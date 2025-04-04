@@ -957,17 +957,47 @@
                 }
             }
         }
+        .loan-status-wrp{
+            display: flex;
+            .react-select-container{
+                width: 160px;
+            }
+            .react-select__control.react-select__control {
+                min-height: 40px;
+                border: 1px solid #d9d9d9 !important;
+                background-color: transparent;
+                border-radius: 12px;
+                padding-right: 20px;
+                cursor: pointer;
+                &:hover {
+                  border: 1px solid #d9d9d9;
+                }
+                &--is-focused {
+                  border: 1px solid #d9d9d9;
+                  box-shadow: none;
+                }
+                @media (max-width: 1679px) {
+                  min-height: 38px;
+                }
+                @media (max-width: 1199px) {
+                    min-height: 40px;
+                }
+            }
+        }
         .status-wrap {
             display: flex;
             align-items: center;
             justify-content: center;
             height: 39px;
-            //width: 140px;
-            padding: 0 20px;
+            width: 140px;
+            padding: 0 15px;
             border-radius: 30px;
             background: #fdebeb;
             gap: 15px;
             font-size: 13px;
+            flex-grow: 1;
+            position: relative;
+            text-transform: capitalize;
             @media ($sm-1679){
                 height: 35px;
             }
@@ -995,9 +1025,14 @@
             }
             span {
                 font-size: 13px;
+                margin-right: 16px;
             }
-            .img {
+            .img, img {
                 width: 11px;
+                opacity: 0.5;
+                position: absolute;
+                right: 13px;
+            
             }
         }
         &.ezpass-table-wrap {
