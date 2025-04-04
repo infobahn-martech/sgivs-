@@ -1,6 +1,3 @@
-import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import useInventoryStore from '../../stores/InventoryReducer';
 import CommonHeader from '../../components/common/CommonHeader';
 import CustomModal from '../../components/common/CustomModal';
 import barcodeImg from '../../assets/images/barcode-img.png';
