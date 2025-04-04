@@ -140,7 +140,7 @@ const Profile = () => {
               logout: false,
             });
           }}
-          message="Do you want to Logout?"
+          message="Are you sure you want to logout?"
           onSubmit={() => doLogout()}
         />
       )}

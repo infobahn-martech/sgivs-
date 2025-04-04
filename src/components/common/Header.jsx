@@ -103,7 +103,7 @@ const Header = () => {
           closeModal={() => {
             setIsLogOut(false);
           }}
-          message="Do you want to Logout?"
+          message="Are you sure you want to logout?"
           onSubmit={() => doLogout()}
         />
       )}
