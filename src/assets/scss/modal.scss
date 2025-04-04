@@ -413,7 +413,9 @@
         box-shadow: none;
         font-weight: 400;
         font-size: 16px;
-        background-color:#F7FBFF;
+        &:not(:disabled){
+            background-color:#F7FBFF;
+        }
     
         &::placeholder{
             color: #8897AD; 
