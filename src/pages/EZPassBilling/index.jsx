@@ -1,4 +1,4 @@
-import React, { act, useEffect, useRef, useState } from 'react';
+import React, {  useEffect, useRef, useState } from 'react';
 import useRentalReducer from '../../stores/RentalReducer';
 import CustomTable from '../../components/common/CustomTable';
 import CommonHeader from '../../components/common/CommonHeader';
@@ -13,12 +13,13 @@ import { debounce } from 'lodash';
 import moment from 'moment';
 import { getPaymentStatus, paymentStatus } from './utils';
 import CustomSelect from '../../components/common/CommonSelect';
-import DeadLineModal from './DeadLineModal';
 import InitialsAvatar from '../../components/common/InitialsAvatar';
 import { Tooltip } from 'react-tooltip';
 import RentalNote from './rentalNotes';
 import useAuthReducer from '../../stores/AuthReducer';
 import { Spinner } from 'react-bootstrap';
+import ViewTransactionModal from './ViewTransactionModal';
+import BillingHistoryModal from './BillingHitoryModal';
 
 const EZPassBilling = () => {
   const {
@@ -30,8 +31,6 @@ const EZPassBilling = () => {
     changeStatus: postChangeStatus,
     successMessage,
     getRentalNotes,
-    notes,
-    updateNote,
     statusLoading,
     uploadEzPass,
     userActionLoading,
@@ -42,8 +41,6 @@ const EZPassBilling = () => {
   );
 
   const [changeStatus, setChangeStatus] = useState({});
-  const [deadlineModal, setdeadlineModal] = useState(false);
-  const [deadlineId, setdeadlineId] = useState(null);
   const [modal, setModal] = useState(null);
 
   const initialParams = {
@@ -282,17 +279,19 @@ const EZPassBilling = () => {
             src={camaraIcon}
             alt="Note"
             data-tooltip-id="note-tooltip"
-            data-tooltip-content="Add Note"
+            data-tooltip-content="View Billing History"
             onClick={() => {
-              setModal({ id: row.id, mode: 'VIEW' });
-              getRentalNotes({ loanId: row.id });
+              setModal({ id: row.id, mode: 'history' });
             }}
-          />
+            />
           <img
             src={tagIcon}
             alt="Alert"
             data-tooltip-id="alert-tooltip"
-            data-tooltip-content="Alert"
+            data-tooltip-content="View Transactions"
+            onClick={() => {
+              setModal({ id: row.id, mode: 'transaction' });
+            }}
           />
           {/* <img
             src={deadlineIcon}
@@ -303,7 +302,7 @@ const EZPassBilling = () => {
           /> */}
 
           {/* Tooltips */}
-          {/* <Tooltip
+          <Tooltip
             id="note-tooltip"
             place="top"
             effect="solid"
@@ -319,14 +318,7 @@ const EZPassBilling = () => {
               backgroundColor: '#2ca0da',
             }}
           />
-          <Tooltip
-            id="deadline-tooltip"
-            place="top"
-            effect="solid"
-            style={{
-              backgroundColor: '#2ca0da',
-            }}
-          /> */}
+         
         </>
       ),
     },
@@ -428,23 +420,18 @@ const EZPassBilling = () => {
         onSortChange={handleSortChange}
         wrapClasses="ezpass-table-wrap"
       />
-
-      {deadlineModal && (
-        <DeadLineModal
-          showModal={deadlineModal}
-          closeModal={() => setdeadlineModal(false)}
-          deadlineId={deadlineId}
-          setdeadlineModal={setdeadlineModal}
+      {modal?.mode === 'transaction' && (
+        <ViewTransactionModal
+          showModal={!!modal}
+          closeModal={() => setModal(null)}
         />
       )}
-      {/* {modal?.mode === 'VIEW' && (
-        <RentalNote
-          showModal={modal}
+      {modal?.mode === 'history' && (
+        <BillingHistoryModal
+          showModal={!!modal}
           closeModal={() => setModal(null)}
-          noteContent={notes}
-          updateNote={updateNote}
         />
-      )} */}
+      )}
     </>
   );
 };
