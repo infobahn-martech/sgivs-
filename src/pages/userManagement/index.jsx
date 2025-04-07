@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Tooltip } from 'react-tooltip';
 import CustomTable from '../../components/common/CustomTable';
-import deleteIcon from '../../assets/images/delete.svg';
-import activeIcon from '../../assets/images/close.svg';
-import blockIcon from '../../assets/images/block.svg';
-// import dummyImg from '../../assets/images/avatar.png';
 import '../../assets/scss/usermanagement.scss';
 import CommonHeader from '../../components/common/CommonHeader';
 import useAuthReducer from '../../stores/AuthReducer';
-import { formatBoolean, formatDate } from '../../config/config';
 import CustomActionModal from '../../components/common/CustomActionModal';
 import { debounce } from 'lodash';
-import InitialsAvatar from '../../components/common/InitialsAvatar';
 import moment from 'moment';
+import getUserTableColumns from './getUserTableColumns';
 
 const UserManagement = () => {
   const {
@@ -100,93 +94,11 @@ const UserManagement = () => {
     }
   };
 
-  const columns = [
-    {
-      name: 'First Name',
-      selector: 'firstName',
-      titleClasses: 'tw1',
-      contentClass: 'user-pic',
-      cell: (row) => (
-        <>
-          <InitialsAvatar name={row.firstName} />
-          <span>{row.firstName}</span>
-        </>
-      ),
-    },
-    {
-      name: 'Last Name',
-      selector: 'lastName',
-      titleClasses: 'tw2',
-    },
-    {
-      name: 'Email',
-      selector: 'email',
-      titleClasses: 'tw3',
-    },
-    {
-      name: 'Phone',
-      selector: 'phone',
-      titleClasses: 'tw4',
-      cell: (row) => `${row?.countryCode || ''} ${row?.phone || ''}`.trim(),
-    },
-    {
-      name: 'Joined Date',
-      selector: 'createdAt',
-      titleClasses: 'tw5',
-      cell: (row) => <span>{formatDate(row?.createdAt)}</span>,
-      sort: true,
-    },
-    {
-      name: 'Credit Card Available',
-      selector: 'isCreditCardAvailable',
-      titleClasses: 'tw6',
-      cell: (row) => <span>{formatBoolean(row?.isCreditCardAvailable)}</span>,
-      colClassName: 'text-center',
-    },
-    {
-      name: 'Action',
-      selector: 'action',
-      titleClasses: 'tw7',
-      contentClass: 'action-wrap',
-      cell: (row) => (
-        <>
-          <img
-            src={deleteIcon}
-            alt="Delete"
-            data-tooltip-id="delete-tooltip"
-            data-tooltip-content="Delete"
-            className="cursor-pointer"
-            onClick={() => handleDeleteClick(row)}
-          />
-          <Tooltip
-            id="delete-tooltip"
-            place="top"
-            effect="solid"
-            style={{
-              backgroundColor: '#2ca0da',
-            }}
-          />
-
-          <img
-            src={row?.status === 2 ? activeIcon : blockIcon}
-            alt={row?.status === 2 ? 'Active' : 'Blocked'}
-            data-tooltip-id={`status-tooltip-${row?.id}`}
-            data-tooltip-content={row?.status === 2 ? 'Active' : 'Block'}
-            className="cursor-pointer"
-            onClick={() => handleStatusClick(row)}
-          />
-          <Tooltip
-            id={`status-tooltip-${row?.id}`}
-            place="top"
-            effect="solid"
-            style={{
-              backgroundColor: '#2ca0da',
-            }}
-          />
-        </>
-      ),
-    },
-  ];
+  const columns = getUserTableColumns({
+    onDeleteClick: handleDeleteClick,
+    onStatusClick: handleStatusClick,
+    showActions: true,
+  });
 
   const filterOptions = [
     {
