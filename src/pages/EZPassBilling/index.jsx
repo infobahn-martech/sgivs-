@@ -9,7 +9,6 @@ import penIcon from '../../assets/images/edit-status.svg';
 import camaraIcon from '../../assets/images/camera.svg';
 import tagIcon from '../../assets/images/tag.svg';
 
-
 import { debounce } from 'lodash';
 import moment from 'moment';
 import { getPaymentStatus, paymentStatus } from './utils';
@@ -34,6 +33,8 @@ const EZPassBilling = () => {
     notes,
     updateNote,
     statusLoading,
+    uploadEzPass,
+    userActionLoading,
   } = useRentalReducer((state) => state);
 
   const { getAllUsersListByRole, usersRoleData } = useAuthReducer(
@@ -50,8 +51,7 @@ const EZPassBilling = () => {
     limit: 10,
     search: '',
     sortOrder: 'DESC',
-    // sortBy: 'joinedDate',
-    isEzPass:true
+    isEzPass: true,
   };
 
   const [params, setParams] = useState(initialParams);
@@ -198,11 +198,6 @@ const EZPassBilling = () => {
     );
   };
 
-  const handleDeadlineClick = (row) => {
-    setdeadlineId(row?.id);
-    setdeadlineModal(true);
-  };
-
   const columns = [
     {
       name: 'User',
@@ -236,16 +231,19 @@ const EZPassBilling = () => {
     },
     {
       name: 'Borrowed On',
+      selector: 'borrowedAt',
       cell: (row) => formatDateTime(row?.borrowedAt),
       titleClasses: 'tw4',
     },
     {
       name: 'Deadline',
+      selector: 'dueDate',
       cell: (row) => formatDateTime(row?.dueDate),
       titleClasses: 'tw5',
     },
     {
       name: 'Returned date and time',
+      selector: 'returnedAt',
       cell: (row) =>
         row?.dueDate < row?.returnedAt ? (
           <span className="text-danger">{formatDateTime(row?.returnedAt)}</span>
@@ -412,10 +410,12 @@ const EZPassBilling = () => {
         clearOptions={() => {
           setParams(initialParams);
         }}
-        uploadExcel={() => {}}
-        ope
-        uploadLoading={false}
-        addButton={{type:'button', name:'Add EZ Pass', action: () => {}}}
+        type="ezpass"
+        uploadExcel
+        onExcelUpload={(data) => uploadEzPass('123', data)}
+        uploadTitle="Import EZ Pass"
+        uploadLoading={userActionLoading}
+        addButton={{ type: 'button', name: 'Add EZ Pass', action: () => {} }}
       />
       <CustomTable
         pagination={{ currentPage: params.page, limit: params.limit }}
@@ -437,14 +437,14 @@ const EZPassBilling = () => {
           setdeadlineModal={setdeadlineModal}
         />
       )}
-      {modal?.mode === 'VIEW' && (
+      {/* {modal?.mode === 'VIEW' && (
         <RentalNote
           showModal={modal}
           closeModal={() => setModal(null)}
           noteContent={notes}
           updateNote={updateNote}
         />
-      )}
+      )} */}
     </>
   );
 };

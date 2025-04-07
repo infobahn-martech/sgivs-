@@ -114,6 +114,27 @@ const useRentalReducer = create((set) => ({
       });
     }
   },
+  // ez pass upload
+  uploadEzPass: async ({ id, file }) => {
+    set({ userActionLoading: true });
+
+    const { success, error } = useAlertReducer.getState();
+    try {
+      set({ successMessage: '' });
+      const { data } = await rentalService.uploadEzPass({ id, file });
+      success(data.message);
+      set({
+        successMessage: data.message,
+        userActionLoading: false,
+      });
+    } catch (err) {
+      error(err?.response?.data?.message ?? err?.message);
+      set({
+        successMessage: null,
+        userActionLoading: false,
+      });
+    }
+  },
 }));
 
 export default useRentalReducer;

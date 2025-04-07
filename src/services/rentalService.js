@@ -21,9 +21,21 @@ const editNote = (loanId, note) =>
     note, // Pass note in the request body
   });
 
+const uploadEzPass = (params) => {
+  const formData = new FormData();
+  formData.append('id', params.id);
+  formData.append('file', params.file);
+  return Gateway.post('loan/upload-ezpass', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+};
+
 export default {
   getAllRentals,
   changeStatus,
   getNotes,
   editNote,
+  uploadEzPass
 };

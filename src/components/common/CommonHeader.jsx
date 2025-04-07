@@ -30,6 +30,7 @@ const CommonHeader = ({
   submitFilter,
   clearOptions,
   uploadLoading,
+  type=''
 }) => {
   const [searchInput, setSearchInput] = useState('');
   const [openUpload, setOpenUpload] = useState(false);
@@ -231,6 +232,7 @@ const CommonHeader = ({
           onClose={() => setOpenUpload(false)}
           uploadTitle={uploadTitle}
           onExcelUpload={onExcelUpload}
+          type={type}
           uploadLoading={uploadLoading}
         />
       )}
