@@ -40,8 +40,14 @@ const DashboardSectionTable = ({
             {data?.map((row, rowIndex) => (
               <tr key={rowIndex}>
                 {columns?.map((col, colIndex) => (
-                  <td key={colIndex} className={col.contentClass || ''}>
-                    {col.cell ? col.cell(row) : row[col.selector]}
+                  <td key={colIndex} className={col.colClassName || ''}>
+                    {col.cell ? (
+                      <div className={` ${col.contentClass}`}>
+                        {col.cell(row)}
+                      </div>
+                    ) : (
+                      row[col.selector]
+                    )}
                   </td>
                 ))}
               </tr>
