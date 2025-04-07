@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import * as XLSX from 'xlsx';
 import { Spinner } from 'react-bootstrap';
@@ -32,6 +32,7 @@ const CommonHeader = ({
   uploadLoading,
   type=''
 }) => {
+  console.log(' uploadLoading', uploadLoading);
   const [searchInput, setSearchInput] = useState('');
   const [openUpload, setOpenUpload] = useState(false);
 
@@ -42,6 +43,11 @@ const CommonHeader = ({
     setSearchInput(value);
     onSearch(value); // Pass value to parent component after delay
   };
+  useEffect(() => {
+    if(!uploadLoading && openUpload){
+      setOpenUpload(false);
+    }
+  },[uploadLoading])
 
   const location = useLocation();
 
