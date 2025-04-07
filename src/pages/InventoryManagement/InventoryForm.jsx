@@ -698,6 +698,9 @@ const InventoryForm = () => {
                               }
                             }} // Add on Enter
                           />
+                          {customError?.parts && (
+                          <p className="error">{customError.parts}</p>
+                        )}
                         </div>
                       </div>
                       <div className="form-group add-btn-wrp part-col-label">
