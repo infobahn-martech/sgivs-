@@ -3,6 +3,7 @@ import useAlertReducer from './AlertReducer';
 import rentalService from '../services/rentalService';
 import { downloadFile } from '../config/config';
 import Gateway from '../config/gateway';
+import { get } from 'lodash';
 
 const useRentalReducer = create((set) => ({
   rentalData: null,
@@ -115,13 +116,13 @@ const useRentalReducer = create((set) => ({
     }
   },
   // ez pass upload
-  uploadEzPass: async (id, file) => {
+  uploadEzPass: async (file) => {
     set({ userActionLoading: true });
 
     const { success, error } = useAlertReducer.getState();
     try {
       set({ successMessage: '' });
-      const { data } = await rentalService.uploadEzPass({ id, file });
+      const { data } = await rentalService.uploadEzPass({ file });
       success(data.message);
       set({
         successMessage: data.message,
@@ -133,6 +134,20 @@ const useRentalReducer = create((set) => ({
         successMessage: null,
         userActionLoading: false,
       });
+    }
+  },
+  getTransactions: async (params) => {
+    set({ isRentalLoading: true, successMessage: '' });
+    try {
+      const { data } = await rentalService.getTransactions(params);
+      const { transactions } = data;
+      set({ transactions, isRentalLoading: false });
+    } catch (err) {
+      const { error } = useAlertReducer.getState();
+      set({
+        isRentalLoading: false,
+      });
+      error(err?.response?.data?.message ?? err.message);
     }
   },
 }));

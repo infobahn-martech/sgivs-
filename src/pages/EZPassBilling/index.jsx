@@ -281,7 +281,7 @@ const EZPassBilling = () => {
             data-tooltip-id="note-tooltip"
             data-tooltip-content="View Billing History"
             onClick={() => {
-              setModal({ id: row.id, mode: 'history' });
+              setModal({ data: row, mode: 'history' });
             }}
             />
           <img
@@ -290,7 +290,7 @@ const EZPassBilling = () => {
             data-tooltip-id="alert-tooltip"
             data-tooltip-content="View Transactions"
             onClick={() => {
-              setModal({ id: row.id, mode: 'transaction' });
+              setModal({ data: row, mode: 'transaction' });
             }}
           />
           {/* <img
@@ -404,7 +404,7 @@ const EZPassBilling = () => {
         }}
         type="ezpass"
         uploadExcel
-        onExcelUpload={(data) => uploadEzPass('123', data)}
+        onExcelUpload={(data) => uploadEzPass( data)}
         uploadTitle="Import EZ Pass"
         uploadLoading={userActionLoading}
         addButton={{ type: 'button', name: 'Add EZ Pass', action: () => {} }}
@@ -424,6 +424,7 @@ const EZPassBilling = () => {
         <ViewTransactionModal
           showModal={!!modal}
           closeModal={() => setModal(null)}
+          data={modal.data}
         />
       )}
       {modal?.mode === 'history' && (
