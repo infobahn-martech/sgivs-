@@ -1,62 +1,57 @@
-// components/messages/MessageListSidebar.js
-import React from 'react';
+import React, { useState } from 'react';
 import plusIcon from '../../assets/images/plus.svg';
-import img1 from '../../assets/images/msg-img-1.png';
-import img2 from '../../assets/images/msg-img-2.png';
+import AddNewMessageModal from './AddNewMessageModal';
 
-const MessageListSidebar = () => {
+const MessageListSidebar = ({ contacts, selectedId, onSelectContact }) => {
+  const [addNewMessageModal, setAddNewMessageModal] = useState(false);
+
   return (
-    <div className="message-left-wrap">
-      <div className="head">
-        <div className="msg-title">Messages</div>
-        <div className="icon">
-          <img src={plusIcon} alt="plus" />
-        </div>
-      </div>
-
-      <div className="msg-listing-wrap">
-        <div className="search">
-          <input type="text" className="txt" placeholder="Search messages" />
+    <>
+      <div className="message-left-wrap">
+        <div className="head">
+          <div className="msg-title">Messages</div>
+          <div className="icon" onClick={() => setAddNewMessageModal(true)}>
+            <img src={plusIcon} alt="plus" />
+          </div>
         </div>
 
-        <ul className="listing">
-          <li>
-            <figure className="img">
-              <img src={img1} alt="" />
-            </figure>
-            <div className="name-msg-wrap">
-              <div className="name">Elmer Laverty</div>
-              <div className="msg">Haha oh man 🔥</div>
-            </div>
-            <div className="time">12m</div>
-          </li>
+        <div className="msg-listing-wrap">
+          <div className="search">
+            <input type="text" className="txt" placeholder="Search messages" />
+          </div>
 
-          <li className="active">
-            <figure className="img">
-              <img src={img2} alt="" />
-            </figure>
-            <div className="name-msg-wrap">
-              <div className="name">Florencio Dorrance</div>
-              <div className="msg">woohoooo</div>
-            </div>
-            <div className="time">12m</div>
-          </li>
-
-          {[...Array(6)]?.map((_, idx) => (
-            <li key={idx}>
-              <figure className="img">
-                <img src={img1} alt="" />
-              </figure>
-              <div className="name-msg-wrap">
-                <div className="name">Elmer Laverty</div>
-                <div className="msg">Haha oh man </div>
-              </div>
-              <div className="time">12m</div>
-            </li>
-          ))}
-        </ul>
+          <ul className="listing">
+            {contacts?.map((contact) => (
+              <li
+                key={contact.id}
+                className={selectedId === contact.id ? 'active' : ''}
+                onClick={() => onSelectContact(contact.id)}
+              >
+                <figure className="img">
+                  <img src={contact.img} alt={contact.name} />
+                </figure>
+                <div className="name-msg-wrap">
+                  <div className="name">{contact.name}</div>
+                  <div className="msg">
+                    {contact.lastMsg || 'No messages yet'}
+                  </div>
+                </div>
+                <div className="time">{contact.time || ''}</div>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-    </div>
+      <AddNewMessageModal
+        showModal={addNewMessageModal}
+        closeModal={() => setAddNewMessageModal(false)}
+        contacts={contacts}
+        onAdd={() => {
+          console.log('User added');
+          setAddNewMessageModal(false);
+        }}
+      />
+    </>
   );
 };
 
