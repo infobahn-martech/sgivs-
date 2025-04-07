@@ -1,118 +1,201 @@
-import React, { useState } from 'react';
-import moment from 'moment';
+import React, { act, useEffect, useRef, useState } from 'react';
+import useRentalReducer from '../../stores/RentalReducer';
+import CustomTable from '../../components/common/CustomTable';
+import CommonHeader from '../../components/common/CommonHeader';
 
 import '../../assets/scss/usermanagement.scss';
 
-import CommonHeader from '../../components/common/CommonHeader';
-import CustomTable from '../../components/common/CustomTable';
-import penIcon from '../../assets/images/pen.svg';
+import penIcon from '../../assets/images/edit-status.svg';
 import camaraIcon from '../../assets/images/camera.svg';
 import tagIcon from '../../assets/images/tag.svg';
-import image from '../../assets/images/avatar.png';
+
+import { debounce } from 'lodash';
+import moment from 'moment';
+import { getPaymentStatus, paymentStatus } from './utils';
+import CustomSelect from '../../components/common/CommonSelect';
+import DeadLineModal from './DeadLineModal';
 import InitialsAvatar from '../../components/common/InitialsAvatar';
+import { Tooltip } from 'react-tooltip';
+import RentalNote from './rentalNotes';
+import useAuthReducer from '../../stores/AuthReducer';
+import { Spinner } from 'react-bootstrap';
 
-const data = [
-  {
-    id: 1,
-    user: 'Chris  Stephanie Nicol',
-    image: image,
-    itemId: '#5845854',
-    borrowDate: new Date(),
-    deadline: new Date(),
-    returnDate: new Date(),
-    status: 3,
-    due: 25,
-  },
-  {
-    id: 1,
-    user: 'Chris  Stephanie Nicol',
-    image: image,
-    itemId: '#5845854',
-    borrowDate: new Date(),
-    deadline: new Date(),
-    returnDate: new Date(),
-    status: 1,
-    due: 25,
-  },
-  {
-    id: 1,
-    user: 'Chris  Stephanie Nicol',
-    image: image,
-    itemId: '#5845854',
-    borrowDate: new Date(),
-    deadline: new Date(),
-    returnDate: new Date(),
-    status: 1,
-    due: 25,
-  },
-  {
-    id: 1,
-    user: 'Chris  Stephanie Nicol',
-    image: image,
-    itemId: '#5845854',
-    borrowDate: new Date(),
-    deadline: new Date(),
-    returnDate: new Date(),
-    status: 2,
-    due: 25,
-  },
-  {
-    id: 1,
-    user: 'Chris  Stephanie Nicol',
-    image: image,
-    itemId: '#5845854',
-    borrowDate: new Date(),
-    deadline: new Date(),
-    returnDate: new Date(),
-    status: 1,
-    due: 25,
-  },
-  {
-    id: 1,
-    user: 'Chris  Stephanie Nicol',
-    image: image,
-    itemId: '#5845854',
-    borrowDate: new Date(),
-    deadline: new Date(),
-    returnDate: new Date(),
-    status: 1,
-    due: 25,
-  },
-];
 const EZPassBilling = () => {
-  const [pagination, setPagination] = useState({
-    currentPage: 1,
+  const {
+    getAllRentals,
+    rentalData,
+    isRentalLoading,
+    exportRental,
+    isExportLoading,
+    changeStatus: postChangeStatus,
+    successMessage,
+    getRentalNotes,
+    notes,
+    updateNote,
+    statusLoading,
+    uploadEzPass,
+    userActionLoading,
+  } = useRentalReducer((state) => state);
+
+  const { getAllUsersListByRole, usersRoleData } = useAuthReducer(
+    (state) => state
+  );
+
+  const [changeStatus, setChangeStatus] = useState({});
+  const [deadlineModal, setdeadlineModal] = useState(false);
+  const [deadlineId, setdeadlineId] = useState(null);
+  const [modal, setModal] = useState(null);
+
+  const initialParams = {
+    page: 1,
     limit: 10,
-    totalRecords: data.length,
-  });
-  const formatDateTime = (date) =>
-    date ? moment(date).format('MMM D, YYYY : hh:mm A') : '-';
-
-  const renderStatusClass = (status) => {
-    switch (status) {
-      case 1:
-        return '';
-      case 2:
-        return 'returned';
-      case 3:
-        return 'missing';
-
-      default:
-        break;
-    }
+    search: '',
+    sortOrder: 'DESC',
+    isEzPass: true,
   };
-  const renderStatus = (status) => {
-    switch (status) {
-      case 1:
-        return 'Overdue';
-      case 2:
-        return 'Returned';
-      case 3:
-        return 'Missing';
 
-      default:
-        break;
+  const [params, setParams] = useState(initialParams);
+  // const [modalConfig, setModalConfig] = useState({ type: null, data: null });
+
+  const statusEditRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        statusEditRef.current &&
+        !statusEditRef.current.contains(event.target)
+      ) {
+        setChangeStatus({});
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (successMessage) {
+      handleGetAllRentals();
+      setChangeStatus({});
+      useRentalReducer.setState({ successMessage: '' });
     }
+  }, [successMessage]);
+
+  useEffect(() => {
+    getAllUsersListByRole({ role: 2 });
+  }, []);
+
+  const handleGetAllRentals = () => {
+    getAllRentals(params);
+  };
+
+  const handleSortChange = (selector) => {
+    setParams((prevParams) => ({
+      ...prevParams,
+      sortBy: selector,
+      sortOrder: prevParams.sortOrder === 'ASC' ? 'DESC' : 'ASC',
+    }));
+  };
+
+  const handlePageChange = (currentPage) => {
+    setParams((prevParams) => ({ ...prevParams, page: currentPage }));
+  };
+
+  const handleLimitChange = (limit) => {
+    setParams((prevParams) => ({ ...prevParams, limit }));
+  };
+  useEffect(() => {
+    handleGetAllRentals();
+  }, [params]);
+
+  const debouncedSearch = debounce((searchValue) => {
+    setParams((prevParams) => ({
+      ...prevParams,
+      search: searchValue,
+      page: 1,
+    }));
+  }, 500);
+
+  const formatDateTime = (date) =>
+    date ? moment(date).format('MMMM D, YYYY : hh:mm A') : '-';
+
+  const renderStatus = (row) => {
+    const { label, className } = getPaymentStatus(row.status);
+    if (changeStatus.id === row.id) {
+      const handleSubmit = () => {
+        if (row.status === changeStatus.status) {
+          // Prevent submit if no change
+          setChangeStatus({});
+          return;
+        }
+        postChangeStatus({
+          id: changeStatus.id,
+          status: changeStatus.status,
+        });
+      };
+
+      return (
+        <div className="loan-status-wrp" ref={statusEditRef}>
+          <CustomSelect
+            classNamePrefix="react-select"
+            isClearable={false}
+            options={paymentStatus}
+            value={row.status}
+            onChange={({ value }) =>
+              setChangeStatus((prev) => ({
+                ...prev,
+                status: value,
+              }))
+            }
+          />
+          <button
+            onClick={handleSubmit}
+            className="btn-save-trans"
+            disabled={statusLoading}
+          >
+            {statusLoading ? (
+              <Spinner
+                size="sm"
+                as="span"
+                animation="border"
+                variant="light"
+                aria-hidden="true"
+                className="custom-spinner"
+              />
+            ) : (
+              'Save'
+            )}
+          </button>
+        </div>
+      );
+    }
+
+    return (
+      <>
+        <div className="d-flex justify-content-center">
+          <span className={`status-wrap ${className}`}>
+            <span>{label}</span>{' '}
+            {!row.isOld && (
+              <img
+                style={{ cursor: 'pointer' }}
+                src={penIcon}
+                alt="edit-icon"
+                className="flex-shrink-0"
+                onClick={() => {
+                  setChangeStatus({
+                    id: row.id,
+                    status: row.status,
+                  });
+                }}
+              />
+            )}
+          </span>
+        </div>
+      </>
+    );
   };
 
   const columns = [
@@ -123,77 +206,245 @@ const EZPassBilling = () => {
       contentClass: 'user-pic',
       cell: (row) => (
         <>
-          <InitialsAvatar name={row.user} />
-          {/* <figure>
-            <img src={row.image} alt="" className="img" />
-          </figure> */}
-          <span>{row.user || '-'}</span>
+          <InitialsAvatar
+            name={`${row?.['user.firstName'] || ''} ${
+              row?.['user.lastName'] || ''
+            }`.trim()}
+          />
+          <span>
+            {row?.['user.firstName'] || row?.['user.lastName']
+              ? `${row?.['user.firstName']} ${row?.['user.lastName']}`
+              : '-'}
+          </span>
         </>
       ),
     },
     {
       name: 'EZ pass item ID',
-      selector: 'itemId',
+      selector: 'inventory.itemId',
+      titleClasses: 'tw2',
+    },
+    {
+      name: 'Item Name',
+      selector: 'inventory.itemName',
+      titleClasses: 'tw3',
     },
     {
       name: 'Borrowed On',
-      cell: (row) => formatDateTime(row?.borrowDate),
-      titleClasses: 'tw6',
+      selector: 'borrowedAt',
+      cell: (row) => formatDateTime(row?.borrowedAt),
+      titleClasses: 'tw4',
     },
     {
       name: 'Deadline',
-      cell: (row) => formatDateTime(row?.deadline),
-      titleClasses: 'tw6',
+      selector: 'dueDate',
+      cell: (row) => formatDateTime(row?.dueDate),
+      titleClasses: 'tw5',
     },
     {
       name: 'Returned date and time',
-      cell: (row) => formatDateTime(row?.returnDate),
+      selector: 'returnedAt',
+      cell: (row) =>
+        row?.dueDate < row?.returnedAt ? (
+          <span className="text-danger">{formatDateTime(row?.returnedAt)}</span>
+        ) : (
+          formatDateTime(row?.returnedAt)
+        ),
       titleClasses: 'tw6',
     },
     {
       name: 'Loan Status',
       selector: 'status',
       titleClasses: 'tw6',
-      cell: (row) => (
-        <>
-          <div class={`status-wrap ${renderStatusClass(row.status)}`}>
-            <span>{renderStatus(row.status)}</span>{' '}
-            <img src={penIcon} alt="" className="img" />
-          </div>
-        </>
-      ),
+      cell: (row) => renderStatus(row),
     },
     {
       name: 'Balance Due',
-      cell: (row) => `$ ${row.due}`,
+      selector: 'balanceDue',
+      titleClasses: 'tw6',
+      colClassName: 'balance-due',
+      cell: (row) => `$${row?.balanceDue || 0}`,
+    },
+    {
+      name: 'Total Due',
+      selector: 'status',
+      colClassName: 'balance-due',
+      cell: (row) => `$${row?.balanceDue || 0}`,
     },
     {
       name: 'Action',
       selector: 'action',
       titleClasses: 'tw7',
       contentClass: 'action-wrap',
-      cell: () => (
+      cell: (row) => (
         <>
-          <img src={camaraIcon} alt="cam" />
-          <img src={tagIcon} alt="tag" />
+          <img
+            src={camaraIcon}
+            alt="Note"
+            data-tooltip-id="note-tooltip"
+            data-tooltip-content="Add Note"
+            onClick={() => {
+              setModal({ id: row.id, mode: 'VIEW' });
+              getRentalNotes({ loanId: row.id });
+            }}
+          />
+          <img
+            src={tagIcon}
+            alt="Alert"
+            data-tooltip-id="alert-tooltip"
+            data-tooltip-content="Alert"
+          />
+          {/* <img
+            src={deadlineIcon}
+            alt="Deadline"
+            onClick={() => handleDeadlineClick(row)}
+            data-tooltip-id="deadline-tooltip"
+            data-tooltip-content="Set Deadline"
+          /> */}
+
+          {/* Tooltips */}
+          {/* <Tooltip
+            id="note-tooltip"
+            place="top"
+            effect="solid"
+            style={{
+              backgroundColor: '#2ca0da',
+            }}
+          />
+          <Tooltip
+            id="alert-tooltip"
+            place="top"
+            effect="solid"
+            style={{
+              backgroundColor: '#2ca0da',
+            }}
+          />
+          <Tooltip
+            id="deadline-tooltip"
+            place="top"
+            effect="solid"
+            style={{
+              backgroundColor: '#2ca0da',
+            }}
+          /> */}
         </>
       ),
     },
   ];
+
+  const exportExcel = async () => {
+    exportRental(params);
+  };
+  const getUserOptions = () =>
+    usersRoleData?.data
+      ?.map(({ id, firstName }) => ({
+        value: id,
+        label: firstName,
+      }))
+      ?.sort((a, b) => a.label?.localeCompare(b.label));
+
+  const filterOptions = [
+    {
+      fieldName: 'Borrowed Date',
+      BE_keyName: 'borrowedAt',
+      fieldType: 'dateRange',
+    },
+    {
+      fieldName: 'Deadline Date',
+      BE_keyName: 'deadline_date',
+      fieldType: 'dateRange',
+    },
+    {
+      fieldName: 'Returned Date',
+      BE_keyName: 'returnedAt',
+      fieldType: 'dateRange',
+    },
+    {
+      fieldName: 'Rental Status',
+      BE_keyName: 'status',
+      fieldType: 'select',
+      Options: [
+        { label: 'Borrowed', value: 1 },
+        { label: 'Returned', value: 2 },
+        { label: 'Overdue', value: 3 },
+        { label: 'Missing', value: 4 },
+      ],
+    },
+    {
+      fieldName: 'User',
+      BE_keyName: 'user',
+      fieldType: 'select',
+      isMulti: true,
+      Options: getUserOptions(),
+    },
+  ];
+
+  const handleFilterSubmit = (filters) => {
+    const formattedFilters = {};
+
+    Object.entries(filters).forEach(([key, value]) => {
+      if ((key.endsWith('_start') || key.endsWith('_end')) && value) {
+        formattedFilters[key] = moment(value).format('YYYY-MM-DD');
+      } else if (key === 'user' && Array.isArray(value)) {
+        formattedFilters[key] = value.filter(Boolean);
+      } else {
+        formattedFilters[key] = value;
+      }
+    });
+
+    setParams({
+      ...params,
+      ...formattedFilters,
+      page: '1',
+    });
+  };
+
   return (
     <>
-      <CommonHeader hideFilter />
+      <CommonHeader
+        onSearch={debouncedSearch}
+        exportExcel={rentalData?.data?.length ? exportExcel : null}
+        exportLoading={isExportLoading}
+        filterOptions={filterOptions}
+        submitFilter={handleFilterSubmit}
+        clearOptions={() => {
+          setParams(initialParams);
+        }}
+        type="ezpass"
+        uploadExcel
+        onExcelUpload={(data) => uploadEzPass('123', data)}
+        uploadTitle="Import EZ Pass"
+        uploadLoading={userActionLoading}
+        addButton={{ type: 'button', name: 'Add EZ Pass', action: () => {} }}
+      />
       <CustomTable
-        pagination={pagination}
-        count={pagination.totalRecords}
+        pagination={{ currentPage: params.page, limit: params.limit }}
+        count={rentalData?.pagination?.totalPages}
         columns={columns}
-        data={data}
-        isLoading={false}
-        onPageChange={(page) => setPagination({ ...pagination, page })}
-        setLimit={(limit) => setPagination({ ...pagination, limit })}
-        onSortChange={() => {}}
+        data={rentalData?.data || []}
+        isLoading={isRentalLoading}
+        onPageChange={handlePageChange}
+        setLimit={handleLimitChange}
+        onSortChange={handleSortChange}
         wrapClasses="ezpass-table-wrap"
       />
+
+      {deadlineModal && (
+        <DeadLineModal
+          showModal={deadlineModal}
+          closeModal={() => setdeadlineModal(false)}
+          deadlineId={deadlineId}
+          setdeadlineModal={setdeadlineModal}
+        />
+      )}
+      {/* {modal?.mode === 'VIEW' && (
+        <RentalNote
+          showModal={modal}
+          closeModal={() => setModal(null)}
+          noteContent={notes}
+          updateNote={updateNote}
+        />
+      )} */}
     </>
   );
 };

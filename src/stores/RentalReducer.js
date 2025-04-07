@@ -91,7 +91,7 @@ const useRentalReducer = create((set) => ({
       error(err?.response?.data?.message ?? err.message);
     }
   },
-  updateNote: async (id, note,cb) => {
+  updateNote: async (id, note, cb) => {
     set({ noteeditLoading: true });
 
     const { success, error } = useAlertReducer.getState();
@@ -104,13 +104,34 @@ const useRentalReducer = create((set) => ({
         noteeditLoading: false,
       });
       cb && cb();
-     
-      useRentalReducer.getState().getRentalNotes({ loanId:id });
+
+      useRentalReducer.getState().getRentalNotes({ loanId: id });
     } catch (err) {
       error(err?.response?.data?.message ?? err?.message);
       set({
         successMessage: null,
         noteeditLoading: false,
+      });
+    }
+  },
+  // ez pass upload
+  uploadEzPass: async (id, file) => {
+    set({ userActionLoading: true });
+
+    const { success, error } = useAlertReducer.getState();
+    try {
+      set({ successMessage: '' });
+      const { data } = await rentalService.uploadEzPass({ id, file });
+      success(data.message);
+      set({
+        successMessage: data.message,
+        userActionLoading: false,
+      });
+    } catch (err) {
+      error(err?.response?.data?.message ?? err?.message);
+      set({
+        successMessage: null,
+        userActionLoading: false,
       });
     }
   },

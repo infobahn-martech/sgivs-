@@ -177,13 +177,13 @@ export default function CustomTable({
                               colClassName = '',
                               contentClass = '',
                               notView,
-                            }) =>
+                            },idx) =>
                               cell ? (
                                 <td
                                   className={`${colClassName}${
                                     !notView && onView ? ' cursor-pointer' : ''
                                   }`}
-                                  key={`cell${selector}`}
+                                  key={`cell${selector+idx}`}
                                   onClick={() => {
                                     if (notView || !onView) return;
                                     onView(row);

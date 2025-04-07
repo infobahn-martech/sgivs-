@@ -14,7 +14,7 @@ import { debounce } from 'lodash';
 import moment from 'moment';
 import { getPaymentStatus, paymentStatus } from './utils';
 import CustomSelect from '../../components/common/CommonSelect';
-import DeadLineModal from './DeadLineModal';
+import DeadLineModal from '../EZPassBilling/DeadLineModal';
 import InitialsAvatar from '../../components/common/InitialsAvatar';
 import { Tooltip } from 'react-tooltip';
 import RentalNote from './rentalNotes';

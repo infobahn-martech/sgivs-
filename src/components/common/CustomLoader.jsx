@@ -7,7 +7,7 @@ export default function CustomLoader({ columns, limit = 10 }) {
       {Array.from({ length: limit })?.map((index, inx) => (
         <tr key={`${index}${inx}`}>
           {columns?.map(({ colClassName = '', selector }) => (
-            <td className={colClassName} key={`cell${selector}`}>
+            <td className={colClassName} key={`cell${selector+(index+inx)}`}>
               <CommonSkeleton height={30} />
             </td>
           ))}

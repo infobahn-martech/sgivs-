@@ -5,7 +5,7 @@ import * as XLSX from 'xlsx';
 import Upload__icon from '../../assets/images/Upload__icon.svg';
 import CustomModal from './CustomModal';
 import { Spinner } from 'react-bootstrap';
-import { handleDownloadSample } from '../../config/config';
+import { getCsvHeaders, handleDownloadSample } from '../../config/config';
 
 const BulkUpload = ({
   show,
@@ -13,6 +13,7 @@ const BulkUpload = ({
   uploadTitle = '',
   onExcelUpload,
   uploadLoading,
+  type
 }) => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [uploadError, setUploadError] = useState(null);
@@ -78,8 +79,8 @@ const BulkUpload = ({
       return;
     }
 
-    const requiredHeaders = ['itemName', 'EzPassNumber', 'parts', 'images'];
-
+    const requiredHeaders = getCsvHeaders(type)
+    console.log(' requiredHeaders', requiredHeaders);
     try {
       const readFileHeaders = (file) =>
         new Promise((resolve, reject) => {
@@ -185,7 +186,7 @@ const BulkUpload = ({
         <button
           className="download-btn"
           type="button"
-          onClick={handleDownloadSample}
+          onClick={()=>handleDownloadSample(type)}
         >
           <span className="dwnld-ico"></span>Download sample excel template
         </button>
