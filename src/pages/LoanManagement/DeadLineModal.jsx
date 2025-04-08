@@ -14,6 +14,7 @@ const DeadLineModal = ({
   closeModal,
   deadlineId,
   setdeadlineModal,
+  handleGetAllRentals,
 }) => {
   const [deadlineDate, setDeadlineDate] = useState(null);
   const [deadlineTime, setDeadlineTime] = useState(null);
@@ -45,6 +46,7 @@ const DeadLineModal = ({
         cb: () => {
           closeModal();
           setdeadlineModal(null);
+          handleGetAllRentals();
         },
       });
     }
