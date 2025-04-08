@@ -279,6 +279,9 @@ a{
     .no-data {
         .no-data-content{
             max-width: 130px;
+            .no-data-txt{
+                font-size: 14px;
+            }
         }
     }
 }
