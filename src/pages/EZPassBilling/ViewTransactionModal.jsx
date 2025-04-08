@@ -7,6 +7,7 @@ import CustomLoader from '../../components/common/CustomLoader';
 import NoTableData from '../../components/common/NoTableData';
 
 const ViewTransactionModal = ({ showModal, closeModal, data }) => {
+  console.log(' data', data);
   const { getTransactions, transactions, isRentalLoading } = useRentalReducer(
     (state) => state
   );
@@ -31,20 +32,25 @@ const ViewTransactionModal = ({ showModal, closeModal, data }) => {
     { name: 'Entry Time', selector: 'entryTime', sortable: true },
     { name: 'Amount', selector: 'amount', sortable: true },
   ];
+    const formatDateTime = (date) =>
+      date ? moment(date).format('MMMM D, YYYY : hh:mm A') : '-';
+  
   const renderUploadBody = () => (
     <div className="modal-body">
       <div class="info-round-wrp">
         <div class="info-round-blks">
           <div class="box-title">Borrowed date and time</div>
-          <div class="box-value">23 Feb 2025 : 02:00 PM</div>
+          <div class="box-value">{formatDateTime(data.borrowedAt)}</div>
         </div>
         <div class="info-round-blks">
           <div class="box-title">Returned date and time</div>
-          <div class="box-value">23 Feb 2025 : 02:00 PM</div>
+          <div class="box-value">
+            {formatDateTime(data.returnedAt)}
+          </div>
         </div>
         <div class="info-round-blks">
           <div class="box-title">Balance Due</div>
-          <div class="box-value">$5254</div>
+          <div class="box-value">${data.balanceDue}</div>
         </div>
       </div>
       <div class="table-wrap table-responsive">
