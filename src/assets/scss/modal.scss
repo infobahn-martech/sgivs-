@@ -17,6 +17,7 @@
             right: 30px;
             box-shadow: none;
             outline: none;
+            z-index: 3;
         }
     }
     .modal-body{
@@ -93,6 +94,7 @@
                     align-items: center;
                     justify-content: center;
                     border-radius: 15px;
+                    position: relative;
                     .txt{
                         color: #B3C6DD;
                         font-weight: 600;
@@ -117,6 +119,13 @@
                         color: #676767;
                 
                     }
+                    .error{
+                        bottom: -20px;
+                        margin-bottom: 0;
+                    }
+                }
+                .uploaded-files-list{
+                    padding-top: 20px;
                 }
                 .download-btn{
                     width: 236px;
@@ -235,11 +244,13 @@
         box-shadow: none;
         font-weight: 400;
         font-size: 16px;
-        background-color:#F7FBFF;
-    
+        &:not(:disabled){
+            background-color:#F7FBFF;
+        }    
         &::placeholder{
             color: #8897AD; 
         }
+        
         @media ($sm-1679) {
             height: 46px;
             font-size: 16px;
@@ -412,10 +423,22 @@
         box-shadow: none;
         font-weight: 400;
         font-size: 16px;
-        background-color:#F7FBFF;
-    
+        &:not(:disabled){
+            background-color:#F7FBFF;
+        }    
         &::placeholder{
             color: #8897AD; 
+        }
+        &.edit-profile-modal{
+            .modal-dialog{
+                .modal-content{
+                    .modal-body{
+                        .set-dealine-wrp{
+                            margin: 0;
+                        }
+                    }
+                }
+            }
         }
         @media ($sm-1679) {
             height: 46px;
@@ -1026,7 +1049,7 @@
 .prompt-modal{
     .modal-dialog{
         max-width: 640px;
-        @media($sm-1199){
+        @media($sm-1679){
             max-width: 500px;
         }
         @media($sm-579){
