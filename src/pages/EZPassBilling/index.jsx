@@ -264,9 +264,9 @@ const EZPassBilling = () => {
     },
     {
       name: 'Total Due',
-      selector: 'status',
+      selector: 'totalDue',
       colClassName: 'balance-due',
-      cell: (row) => `$${row?.balanceDue || 0}`,
+      cell: (row) => `$${row?.totalDue || 0}`,
     },
     {
       name: 'Action',
@@ -407,7 +407,7 @@ const EZPassBilling = () => {
         onExcelUpload={(data) => uploadEzPass( data)}
         uploadTitle="Import EZ Pass"
         uploadLoading={userActionLoading}
-        addButton={{ type: 'button', name: 'Add EZ Pass', action: () => {} }}
+        // addButton={{ type: 'button', name: 'Add EZ Pass', action: () => {} }}
       />
       <CustomTable
         pagination={{ currentPage: params.page, limit: params.limit }}
