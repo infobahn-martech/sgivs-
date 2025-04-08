@@ -19,6 +19,7 @@ import Profile from '../pages/Profile/Loader';
 import ResetPassword from '../pages/ResetPassword/Loader';
 import InventoryView from '../pages/InventoryManagement/InventoryView';
 import LoanManagement from '../pages/LoanManagement';
+import UnmappedTransactions from '../pages/UnmappedTransactions/Loader';
 
 const router = createBrowserRouter([
   {
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
               {
                 element: <EZPassBilling />,
                 path: '/ez-pass-billing',
+              },
+              {
+                element: <UnmappedTransactions />,
+                path: '/ez-pass-billing/unmapped-transactions',
               },
               {
                 element: <Messages />,

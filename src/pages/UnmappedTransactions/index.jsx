@@ -1,0 +1,226 @@
+import React, {  useEffect, useRef, useState } from 'react';
+import { debounce } from 'lodash';
+import moment from 'moment';
+
+import '../../assets/scss/usermanagement.scss';
+
+import useRentalReducer from '../../stores/RentalReducer';
+import CustomTable from '../../components/common/CustomTable';
+import CommonHeader from '../../components/common/CommonHeader';
+import InitialsAvatar from '../../components/common/InitialsAvatar';
+import useAuthReducer from '../../stores/AuthReducer';
+
+const UnmappedTransactions = () => {
+  const {
+    isRentalLoading,
+    exportRental,
+    isExportLoading,
+    successMessage,
+    getUnMappedTransactions,
+    unMappedtransactions
+  } = useRentalReducer((state) => state);
+    console.log(' unMappedtransactions', unMappedtransactions);
+
+  const { getAllUsersListByRole, usersRoleData } = useAuthReducer(
+    (state) => state
+  );
+
+  const initialParams = {
+    page: 1,
+    limit: 10,
+    search: '',
+    sortOrder: 'DESC',
+    isEzPass: true,
+  };
+
+  const [params, setParams] = useState(initialParams);
+  // const [modalConfig, setModalConfig] = useState({ type: null, data: null });
+
+  useEffect(() => {
+    if (successMessage) {
+      handleGetAllRentals();
+      useRentalReducer.setState({ successMessage: '' });
+    }
+  }, [successMessage]);
+
+  useEffect(() => {
+    getAllUsersListByRole({ role: 2 });
+  }, []);
+
+  const handleGetAllRentals = () => {
+    getUnMappedTransactions(params);
+  };
+
+  const handleSortChange = (selector) => {
+    setParams((prevParams) => ({
+      ...prevParams,
+      sortBy: selector,
+      sortOrder: prevParams.sortOrder === 'ASC' ? 'DESC' : 'ASC',
+    }));
+  };
+
+  const handlePageChange = (currentPage) => {
+    setParams((prevParams) => ({ ...prevParams, page: currentPage }));
+  };
+
+  const handleLimitChange = (limit) => {
+    setParams((prevParams) => ({ ...prevParams, limit }));
+  };
+  useEffect(() => {
+    handleGetAllRentals();
+  }, [params]);
+
+  const debouncedSearch = debounce((searchValue) => {
+    setParams((prevParams) => ({
+      ...prevParams,
+      search: searchValue,
+      page: 1,
+    }));
+  }, 500);
+
+  const formatDateTime = (date, format) =>
+    date ? moment(date).format(format ||'MMMM D, YYYY : hh:mm A') : '-';
+
+  const columns = [
+    {
+      name: 'Transaction Date',
+      selector: 'transactionDate',
+      cell: (row) => formatDateTime(row?.transactionDate, 'MMM D, YYYY'),
+      titleClasses: 'tw4',
+    },
+    
+    {
+      name: 'Tag/Plate Number',
+      selector: 'tagPlateNumber',
+      titleClasses: 'tw2',
+    },
+    {
+      name: 'Agency',
+      selector: 'agency',
+      titleClasses: 'tw3',
+    },
+    {
+      name: 'Plaza Id',
+      selector: 'plazaId',
+      titleClasses: 'tw5',
+    },
+    {
+      name: 'Entry Time',
+      selector: 'entryTime',
+      cell: (row) =>
+        moment(row?.entryTime, 'HH:mm:ss').format('hh:mm A'),
+      titleClasses: 'tw6',
+    },
+    
+    {
+      name: 'Amount',
+      selector: 'amount',
+      titleClasses: 'tw6',
+      colClassName: 'balance-due',
+      cell: (row) => `$${row?.amount || 0}`,
+    },
+    
+  ];
+
+  // const exportExcel = async () => {
+  //   exportRental(params);
+  // };
+  const getUserOptions = () =>
+    usersRoleData?.data
+      ?.map(({ id, firstName }) => ({
+        value: id,
+        label: firstName,
+      }))
+      ?.sort((a, b) => a.label?.localeCompare(b.label));
+
+  const filterOptions = [
+    {
+      fieldName: 'Transaction Date',
+      BE_keyName: 'transactionDate',
+      fieldType: 'dateRange',
+    },
+    // {
+    //   fieldName: 'Deadline Date',
+    //   BE_keyName: 'deadline_date',
+    //   fieldType: 'dateRange',
+    // },
+    // {
+    //   fieldName: 'Returned Date',
+    //   BE_keyName: 'returnedAt',
+    //   fieldType: 'dateRange',
+    // },
+    // {
+    //   fieldName: 'Rental Status',
+    //   BE_keyName: 'status',
+    //   fieldType: 'select',
+    //   Options: [
+    //     { label: 'Borrowed', value: 1 },
+    //     { label: 'Returned', value: 2 },
+    //     { label: 'Overdue', value: 3 },
+    //     { label: 'Missing', value: 4 },
+    //   ],
+    // },
+    // {
+    //   fieldName: 'User',
+    //   BE_keyName: 'user',
+    //   fieldType: 'select',
+    //   isMulti: true,
+    //   Options: getUserOptions(),
+    // },
+  ];
+
+  const handleFilterSubmit = (filters) => {
+    const formattedFilters = {};
+
+    Object.entries(filters).forEach(([key, value]) => {
+      if ((key.endsWith('_start') || key.endsWith('_end')) && value) {
+        formattedFilters[key] = moment(value).format('YYYY-MM-DD');
+      } else if (key === 'user' && Array.isArray(value)) {
+        formattedFilters[key] = value.filter(Boolean);
+      } else {
+        formattedFilters[key] = value;
+      }
+    });
+
+    setParams({
+      ...params,
+      ...formattedFilters,
+      page: '1',
+    });
+  };
+
+  return (
+    <>
+      <CommonHeader
+        onSearch={debouncedSearch}
+        // exportExcel={rentalData?.data?.length ? exportExcel : null}
+        exportLoading={isExportLoading}
+        filterOptions={filterOptions}
+        submitFilter={handleFilterSubmit}
+        clearOptions={() => {
+          setParams(initialParams);
+        }}
+        type="ezpass"
+        // uploadExcel
+        // onExcelUpload={(data) => uploadEzPass( data)}
+        // uploadTitle="Import EZ Pass"
+        // uploadLoading={userActionLoading}
+        // addButton={{ type: 'button', name: 'Add EZ Pass', action: () => {} }}
+      />
+      <CustomTable
+        pagination={{ currentPage: params.page, limit: params.limit }}
+        count={unMappedtransactions.length}
+        columns={columns}
+        data={unMappedtransactions}
+        isLoading={isRentalLoading}
+        onPageChange={handlePageChange}
+        setLimit={handleLimitChange}
+        onSortChange={handleSortChange}
+        wrapClasses="ezpass-table-wrap"
+      />
+      
+    </>
+  );
+};
+
+export default UnmappedTransactions;

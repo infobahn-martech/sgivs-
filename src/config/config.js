@@ -20,6 +20,11 @@ export const headerConfig = [
     icon: loanImg,
   },
   {
+    title: 'Unmapped Transactions',
+    icon: userImage,
+    path: '/ez-pass-billing/unmapped-transactions',
+  },
+  {
     title: 'EZ Pass Billing',
     icon: ezpassImage,
     path: '/ez-pass-billing',
