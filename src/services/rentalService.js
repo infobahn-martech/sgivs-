@@ -32,6 +32,7 @@ const uploadEzPass = (params) => {
 };
 
 const  getTransactions = (params) => Gateway.get('transactions', { params });
+const  getUnmappedTransactions = (params) => Gateway.get('transactions/unmapped', { params });
 
 export default {
   getAllRentals,
@@ -39,5 +40,6 @@ export default {
   getNotes,
   editNote,
   uploadEzPass,
-  getTransactions
+  getTransactions,
+  getUnmappedTransactions
 };

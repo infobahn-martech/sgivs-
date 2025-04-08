@@ -16,6 +16,8 @@ const useRentalReducer = create((set) => ({
   isExportLoading: false,
   userActionLoading: false,
   statusLoading: false,
+  unMappedtransactions: [],
+  transactions: [],
 
   getAllRentals: async (params) => {
     try {
@@ -142,6 +144,20 @@ const useRentalReducer = create((set) => ({
       const { data } = await rentalService.getTransactions(params);
       const { transactions } = data;
       set({ transactions, isRentalLoading: false });
+    } catch (err) {
+      const { error } = useAlertReducer.getState();
+      set({
+        isRentalLoading: false,
+      });
+      error(err?.response?.data?.message ?? err.message);
+    }
+  },
+  getUnMappedTransactions: async (params) => {
+    set({ isRentalLoading: true, successMessage: '' });
+    try {
+      const { data } = await rentalService.getUnmappedTransactions(params);
+      const { transactions } = data;
+      set({ unMappedtransactions: transactions, isRentalLoading: false });
     } catch (err) {
       const { error } = useAlertReducer.getState();
       set({

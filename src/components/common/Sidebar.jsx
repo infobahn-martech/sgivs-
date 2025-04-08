@@ -17,15 +17,15 @@ import collapseLogo from '../../assets/images/collapse-logo.png';
 
 const Sidebar = ({ collapsed, setCollapsed }) => {
   const location = useLocation();
+  const navigate = useNavigate();
+
   const toggleSidebar = () => {
     setCollapsed(!collapsed);
     document.body.classList.toggle('sidebar-collapsed', !collapsed);
   };
 
   const isRouteActive = (menu) => {
-    // Default to exact path match if no activeRoutes specified
     const routesToCheck = menu.activeRoutes || [menu.path];
-
     return routesToCheck.some(
       (route) =>
         route === location.pathname ||
@@ -46,16 +46,22 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         '/inventory-management/edit',
       ],
     },
+    { name: 'Loan Management', icon: RentalManageIcon, path: '/loan-management' },
     {
-      name: 'Loan Management',
-      icon: RentalManageIcon,
-      path: '/loan-management',
+      name: 'EZ pass billing',
+      icon: EZIcon,
+      path: '/ez-pass-billing',
+      activeRoutes: ['/ez-pass-billing', '/ez-pass-billing/unmapped-transactions'],
+      subMenu: [
+        {
+          name: 'Unmapped Transactions',
+          path: '/ez-pass-billing/unmapped-transactions',
+        },
+      ],
     },
-    { name: 'EZ pass billing', icon: EZIcon, path: '/ez-pass-billing' },
     { name: 'Messages', icon: MessagesIcon, path: '/messages' },
     { name: 'Settings', icon: SettingsIcon, path: '/settings' },
   ];
-  const navigate = useNavigate();
 
   return (
     <div className={`sidebar ${collapsed ? 'collapsed' : ''}`}>
@@ -68,10 +74,10 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
           <img src={MainLogo} alt="logo" />
           <img className="logo-collapse" src={collapseLogo} alt="" />
         </div>
-        <button className="toggle-nav  close-nav" onClick={toggleSidebar}>
+        <button className="toggle-nav close-nav" onClick={toggleSidebar}>
           <img src={ToggleIcon} alt="Toggle Sidebar" />
         </button>
-        <button className="toggle-nav  open-nav" onClick={toggleSidebar}>
+        <button className="toggle-nav open-nav" onClick={toggleSidebar}>
           <img src={ToggleIcon} alt="Toggle Sidebar" />
         </button>
       </div>
@@ -81,11 +87,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
             <Tooltip
               id={`tooltip-${index}`}
               place="right"
-              style={{
-                backgroundColor: '#2ca0da',
-                maxWidth: 500,
-                marginBottom: '10px',
-              }}
+              style={{ backgroundColor: '#2ca0da', maxWidth: 500, marginBottom: '10px' }}
             />
 
             <Link
@@ -94,13 +96,26 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
               data-tooltip-id={`tooltip-${index}`}
               to={menu.path}
               className={`nav-link ${isRouteActive(menu) ? 'active' : ''}`}
-              key={index}
             >
               <span className="icon">
                 <img src={menu.icon} alt="menu-icon" />
               </span>
               <span className="txt">{menu.name}</span>
             </Link>
+
+            {menu.subMenu && isRouteActive(menu) && !collapsed && (
+              <div className="sub-menu" style={{ marginLeft: '20px' }}>
+                {menu.subMenu.map((sub, subIndex) => (
+                  <Link
+                    key={subIndex}
+                    to={sub.path}
+                    className={`nav-link ml-2 ${location.pathname === sub.path ? 'active' : ''}`}
+                  >
+                    {sub.name}
+                  </Link>
+                ))}
+              </div>
+            )}
           </Fragment>
         ))}
       </nav>
