@@ -50,7 +50,7 @@ const DashboardSectionTable = ({
                     {col.isSortable ? (
                       <div className="sort-wrap">{col.name}</div>
                     ) : (
-                      col.name
+                      col.name || '-'
                     )}
                   </th>
                 ))}
@@ -63,10 +63,10 @@ const DashboardSectionTable = ({
                     <td key={colIndex} className={col.colClassName || ''}>
                       {col.cell ? (
                         <div className={` ${col.contentClass}`}>
-                          {col.cell(row)}
+                          {col.cell(row) || '-'}
                         </div>
                       ) : (
-                        row[col.selector]
+                        row[col.selector] || '-'
                       )}
                     </td>
                   ))}

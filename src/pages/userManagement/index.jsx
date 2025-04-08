@@ -15,6 +15,8 @@ const UserManagement = () => {
     isUsersLoading,
     usersAction,
     userActionLoading,
+    userNotification,
+    userNotifyLoading,
   } = useAuthReducer((state) => state);
 
   const initialParams = {
@@ -31,6 +33,7 @@ const UserManagement = () => {
 
   const [statusModalOpen, setstatusModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [notifyModal, setnotifyModal] = useState(false);
 
   const [selectedUser, setSelectedUser] = useState(null);
 
@@ -85,6 +88,11 @@ const UserManagement = () => {
     setSelectedUser(row);
     setDeleteModalOpen(true);
   };
+  const handleNotification = (row) => {
+    setSelectedUser(row);
+    setnotifyModal(true);
+  };
+
   const handleDeleUser = () => {
     if (selectedUser) {
       usersAction(selectedUser.id, 3, () => {
@@ -94,9 +102,25 @@ const UserManagement = () => {
     }
   };
 
+  const onSubmitUserNotify = () => {
+    if (selectedUser) {
+      userNotification(
+        {
+          userId: selectedUser?.id,
+          notifications: !selectedUser?.isNotificationEnabled,
+        },
+        () => {
+          setnotifyModal(false);
+          handleGetAllUsers();
+        }
+      );
+    }
+  };
+
   const columns = getUserTableColumns({
     onDeleteClick: handleDeleteClick,
     onStatusClick: handleStatusClick,
+    onUserNotify: handleNotification,
     showActions: true,
   });
 
@@ -169,6 +193,19 @@ const UserManagement = () => {
           message={`Are you sure you want to delete ${selectedUser?.firstName} ?`}
           onCancel={() => setDeleteModalOpen(false)}
           onSubmit={handleDeleUser}
+        />
+      )}
+
+      {notifyModal && selectedUser && (
+        <CustomActionModal
+          isLoading={userNotifyLoading}
+          showModal={notifyModal}
+          closeModal={() => setnotifyModal(false)}
+          message={`Are you sure you want to  ${
+            selectedUser?.isNotificationEnabled ? 'Disable' : 'Enable'
+          } notication for ${selectedUser?.firstName}? `}
+          onCancel={() => setnotifyModal(false)}
+          onSubmit={onSubmitUserNotify}
         />
       )}
     </>

@@ -3,6 +3,7 @@ import React from 'react';
 import deleteIcon from '../../assets/images/delete.svg';
 import activeIcon from '../../assets/images/close.svg';
 import blockIcon from '../../assets/images/block.svg';
+import alertIcon from '../../assets/images/alert.svg';
 import { Tooltip } from 'react-tooltip';
 import { formatBoolean, formatDate } from '../../config/config';
 import InitialsAvatar from '../../components/common/InitialsAvatar';
@@ -12,6 +13,7 @@ const getUserTableColumns = ({
   onStatusClick,
   showActions = true,
   isDashboard = false,
+  onUserNotify,
 }) => {
   const columns = [
     {
@@ -66,6 +68,23 @@ const getUserTableColumns = ({
       contentClass: 'action-wrap',
       cell: (row) => (
         <>
+          <img
+            src={alertIcon}
+            alt="Alert"
+            data-tooltip-id="alert-tooltip"
+            data-tooltip-content={
+              row?.isNotificationEnabled ? 'Disable' : 'Enable'
+            }
+            onClick={() => onUserNotify(row)}
+          />
+          <Tooltip
+            id="alert-tooltip"
+            place="top"
+            effect="solid"
+            style={{
+              backgroundColor: '#2ca0da',
+            }}
+          />
           <img
             src={deleteIcon}
             alt="Delete"

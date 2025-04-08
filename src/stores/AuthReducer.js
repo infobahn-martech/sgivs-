@@ -23,6 +23,7 @@ const useAuthReducer = create((set) => ({
   usersRoleData: null,
   isUsersListLoading: false,
   usersListpagination: {},
+  userNotifyLoading: false,
 
   login: async ({ email, password, platform }) => {
     try {
@@ -182,8 +183,6 @@ const useAuthReducer = create((set) => ({
 
   // patch user status active blocked delete
   usersAction: async (userId, action, callBack) => {
-    console.log('callBack', callBack);
-    console.log('ssss', userId, action);
     try {
       set({ userActionLoading: true });
       const response = await authService.usersActionService(userId, action);
@@ -197,6 +196,25 @@ const useAuthReducer = create((set) => ({
       const { error } = useAlertReducer.getState();
       set({
         userActionLoading: false,
+      });
+      error(err?.response?.data?.message ?? err.message);
+    }
+  },
+  // user mangmnt notification
+  userNotification: async (payload, callBack) => {
+    try {
+      set({ userNotifyLoading: true });
+      const response = await authService.userNotifyService(payload);
+      set({ userNotifyLoading: false });
+      const { success } = useAlertReducer.getState();
+      const message =
+        response?.data?.message ?? 'Notification Updated successfully';
+      success(message);
+      callBack && callBack();
+    } catch (err) {
+      const { error } = useAlertReducer.getState();
+      set({
+        userNotifyLoading: false,
       });
       error(err?.response?.data?.message ?? err.message);
     }

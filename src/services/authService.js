@@ -25,6 +25,9 @@ const getAllUsersListRole = (params) => Gateway.get('user', { params });
 const usersActionService = (userId, action) =>
   Gateway.patch(`user/${userId}/status/${action}`);
 
+const userNotifyService = (payload) =>
+  Gateway.patch(`user/user-notifications`, payload);
+
 const editUserProfile = (value) => Gateway.patch('user/profile', value);
 
 export default {
@@ -37,4 +40,5 @@ export default {
   usersActionService,
   changePassword,
   getAllUsersListRole,
+  userNotifyService,
 };
