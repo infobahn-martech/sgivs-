@@ -18,7 +18,7 @@ const useRentalReducer = create((set) => ({
   statusLoading: false,
   unMappedtransactions: [],
   transactions: [],
-
+  billingHistory: [],
   getAllRentals: async (params) => {
     try {
       set({ isRentalLoading: true, successMessage: '' });
@@ -144,6 +144,20 @@ const useRentalReducer = create((set) => ({
       const { data } = await rentalService.getTransactions(params);
       const { transactions } = data;
       set({ transactions, isRentalLoading: false });
+    } catch (err) {
+      const { error } = useAlertReducer.getState();
+      set({
+        isRentalLoading: false,
+      });
+      error(err?.response?.data?.message ?? err.message);
+    }
+  },
+  getBillingHistory: async (params) => {
+    set({ isRentalLoading: true, successMessage: '' });
+    try {
+      const { data } = await rentalService.getHistory(params);
+      const { transactions } = data;
+      set({ billingHistory :transactions, isRentalLoading: false });
     } catch (err) {
       const { error } = useAlertReducer.getState();
       set({

@@ -431,6 +431,7 @@ const EZPassBilling = () => {
         <BillingHistoryModal
           showModal={!!modal}
           closeModal={() => setModal(null)}
+          data={modal.data}
         />
       )}
     </>

@@ -122,51 +122,12 @@ const UnmappedTransactions = () => {
     
   ];
 
-  // const exportExcel = async () => {
-  //   exportRental(params);
-  // };
-  const getUserOptions = () =>
-    usersRoleData?.data
-      ?.map(({ id, firstName }) => ({
-        value: id,
-        label: firstName,
-      }))
-      ?.sort((a, b) => a.label?.localeCompare(b.label));
-
   const filterOptions = [
     {
       fieldName: 'Transaction Date',
       BE_keyName: 'transactionDate',
       fieldType: 'dateRange',
     },
-    // {
-    //   fieldName: 'Deadline Date',
-    //   BE_keyName: 'deadline_date',
-    //   fieldType: 'dateRange',
-    // },
-    // {
-    //   fieldName: 'Returned Date',
-    //   BE_keyName: 'returnedAt',
-    //   fieldType: 'dateRange',
-    // },
-    // {
-    //   fieldName: 'Rental Status',
-    //   BE_keyName: 'status',
-    //   fieldType: 'select',
-    //   Options: [
-    //     { label: 'Borrowed', value: 1 },
-    //     { label: 'Returned', value: 2 },
-    //     { label: 'Overdue', value: 3 },
-    //     { label: 'Missing', value: 4 },
-    //   ],
-    // },
-    // {
-    //   fieldName: 'User',
-    //   BE_keyName: 'user',
-    //   fieldType: 'select',
-    //   isMulti: true,
-    //   Options: getUserOptions(),
-    // },
   ];
 
   const handleFilterSubmit = (filters) => {
@@ -200,12 +161,6 @@ const UnmappedTransactions = () => {
         clearOptions={() => {
           setParams(initialParams);
         }}
-        type="ezpass"
-        // uploadExcel
-        // onExcelUpload={(data) => uploadEzPass( data)}
-        // uploadTitle="Import EZ Pass"
-        // uploadLoading={userActionLoading}
-        // addButton={{ type: 'button', name: 'Add EZ Pass', action: () => {} }}
       />
       <CustomTable
         pagination={{ currentPage: params.page, limit: params.limit }}
