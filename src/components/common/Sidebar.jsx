@@ -10,6 +10,7 @@ import UserManageIcon from '../../assets/images/dashboard-2.svg';
 import InventoryManageIcon from '../../assets/images/dashboard-3.svg';
 import RentalManageIcon from '../../assets/images/dashboard-4.svg';
 import EZIcon from '../../assets/images/dashboard-5.svg';
+import transactionICo from '../../assets/images/transaction.svg';
 import MessagesIcon from '../../assets/images/dashboard-6.svg';
 import SettingsIcon from '../../assets/images/dashboard-7.svg';
 import ToggleIcon from '../../assets/images/toggle-btn.svg';
@@ -46,16 +47,24 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         '/inventory-management/edit',
       ],
     },
-    { name: 'Loan Management', icon: RentalManageIcon, path: '/loan-management' },
+    {
+      name: 'Loan Management',
+      icon: RentalManageIcon,
+      path: '/loan-management',
+    },
     {
       name: 'EZ pass billing',
       icon: EZIcon,
       path: '/ez-pass-billing',
-      activeRoutes: ['/ez-pass-billing', '/ez-pass-billing/unmapped-transactions'],
+      activeRoutes: [
+        '/ez-pass-billing',
+        '/ez-pass-billing/unmapped-transactions',
+      ],
       subMenu: [
         {
           name: 'Unmapped Transactions',
           path: '/ez-pass-billing/unmapped-transactions',
+          icon: transactionICo,
         },
       ],
     },
@@ -87,7 +96,11 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
             <Tooltip
               id={`tooltip-${index}`}
               place="right"
-              style={{ backgroundColor: '#2ca0da', maxWidth: 500, marginBottom: '10px' }}
+              style={{
+                backgroundColor: '#2ca0da',
+                maxWidth: 500,
+                marginBottom: '10px',
+              }}
             />
 
             <Link
@@ -109,9 +122,14 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
                   <Link
                     key={subIndex}
                     to={sub.path}
-                    className={`nav-link ml-2 ${location.pathname === sub.path ? 'active' : ''}`}
+                    className={`nav-link ${
+                      location.pathname === sub.path ? 'active' : ''
+                    }`}
                   >
-                    {sub.name}
+                    <span className="icon">
+                      <img src={sub.icon} alt="menu-icon" />
+                    </span>
+                    <span className="txt">{sub.name}</span>
                   </Link>
                 ))}
               </div>
