@@ -607,6 +607,38 @@
                             span {
                             }
                         }
+                        .in-img {
+                            border-radius: 10px;
+                            overflow: hidden;
+                            margin: 0;
+                            width: 55px;
+                            height: 55px;
+                            @media ($sm-1679) {
+                                width: 40px;
+                                height: 40px;
+                            }
+                            @media ($sm-1441) {
+                                width: 38px;
+                                height: 38px;
+                            }
+                            @media ($sm-1199) {
+                                width: 36px;
+                                height: 36px;
+                            }
+                            @media ($sm-991) {
+                                width: 34px;
+                                height: 34px;
+                            }
+                            @media ($sm-579) {
+                                width: 30px;
+                                height: 30px;
+                            }
+                            img {
+                                width: 100%;
+                                height: 100%;
+                                object-fit: cover;
+                            }
+                        }
                         th{
                             color: #0878AE;
                             padding: 13px 10px;

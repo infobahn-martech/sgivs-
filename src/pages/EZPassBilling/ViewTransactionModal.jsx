@@ -75,7 +75,7 @@ const ViewTransactionModal = ({ showModal, closeModal, data }) => {
                     <td>
                       {moment(data.entryTime, 'HH:mm:ss').format('hh:mm A')}
                     </td>
-                    <td>$5246</td>
+                    <td>${data.amount}</td>
                   </tr>
                 ))}
               </tbody>

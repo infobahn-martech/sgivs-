@@ -155,6 +155,7 @@ const InventoryForm = () => {
 
       if (inventoryItem.hasParts) {
         setValue('buttonLabel', inventoryItem.label);
+        setValue('title', inventoryItem.title);
 
         // ✅ Set parts field
         const formattedParts = inventoryItem.inventory_parts.map((part) => ({
@@ -345,6 +346,7 @@ const InventoryForm = () => {
       images: imageKeys.join(','),
       eZPassNumber: isEZPass ? data.plateNumber || null : null,
       label: isAddPartChecked ? data.buttonLabel : undefined,
+      title: isAddPartChecked ? data.title : undefined,
     };
 
     if (!params?.id) {
@@ -651,6 +653,29 @@ const InventoryForm = () => {
                 {isAddPartChecked && (
                   <div id="partFields" className="mb-3">
                     <div className="row mb-3">
+                      <div className="col-md-6">
+                        <div className="form-group">
+                          <label htmlFor="itemId" className="form-label">
+                            Title
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Title"
+                            id="title"
+                            {...register('title', {
+                              required: isAddPartChecked
+                                ? 'Title is required'
+                                : false,
+                            })}
+                          />
+                          {errors.title && (
+                            <p className="error">
+                              {errors.title.message}
+                            </p>
+                          )}
+                        </div>
+                      </div>
                       <div className="col-md-6">
                         <div className="form-group">
                           <label htmlFor="itemId" className="form-label">
