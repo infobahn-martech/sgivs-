@@ -32,7 +32,7 @@ const uploadEzPass = (params) => {
 };
 
 const  getTransactions = (params) => Gateway.get('transactions', { params });
-const  getHistory = (params) => Gateway.get('transactions', { params });
+const  getHistory = (params) => Gateway.get('transactions/billing', { params });
 const  getUnmappedTransactions = (params) => Gateway.get('transactions/unmapped', { params });
 
 export default {

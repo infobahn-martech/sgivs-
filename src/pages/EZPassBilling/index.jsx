@@ -1,4 +1,4 @@
-import React, {  useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import useRentalReducer from '../../stores/RentalReducer';
 import CustomTable from '../../components/common/CustomTable';
 import CommonHeader from '../../components/common/CommonHeader';
@@ -260,13 +260,14 @@ const EZPassBilling = () => {
       selector: 'balanceDue',
       titleClasses: 'tw6',
       colClassName: 'balance-due',
-      cell: (row) => `$${row?.balanceDue || 0}`,
+      cell: (row) =>
+        `$${row?.balanceDue ? parseFloat(row.balanceDue).toFixed(2) : 0}`,
     },
     {
       name: 'Total Due',
       selector: 'totalDue',
       colClassName: 'balance-due',
-      cell: (row) => `$${row?.totalDue || 0}`,
+      cell: (row) => `$${row?.totalDue ? parseFloat(row.totalDue).toFixed(2) : 0}`,
     },
     {
       name: 'Action',
@@ -283,7 +284,7 @@ const EZPassBilling = () => {
             onClick={() => {
               setModal({ data: row, mode: 'history' });
             }}
-            />
+          />
           <img
             src={tagIcon}
             alt="Alert"
@@ -318,7 +319,6 @@ const EZPassBilling = () => {
               backgroundColor: '#2ca0da',
             }}
           />
-         
         </>
       ),
     },
@@ -404,7 +404,7 @@ const EZPassBilling = () => {
         }}
         type="ezpass"
         uploadExcel
-        onExcelUpload={(data) => uploadEzPass( data)}
+        onExcelUpload={(data) => uploadEzPass(data)}
         uploadTitle="Import EZ Pass"
         uploadLoading={userActionLoading}
         // addButton={{ type: 'button', name: 'Add EZ Pass', action: () => {} }}

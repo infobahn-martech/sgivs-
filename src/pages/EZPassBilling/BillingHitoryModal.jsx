@@ -1,31 +1,28 @@
 import React, { useEffect } from 'react';
+import moment from 'moment';
+
 import CustomModal from '../../components/common/CustomModal';
 import useRentalReducer from '../../stores/RentalReducer';
-import moment from 'moment';
 import NoTableData from '../../components/common/NoTableData';
 import CustomLoader from '../../components/common/CustomLoader';
 
 const BillingHistoryModal = ({ showModal, closeModal, data }) => {
-  console.log(' data', data);
   const { getBillingHistory, billingHistory, isRentalLoading } =
     useRentalReducer((state) => state);
-  console.log(' billingHistory', billingHistory);
 
   useEffect(() => {
     if (data) {
       getBillingHistory({
-        id: data['inventory.eZPassNumber'],
-        borrowedAt: moment(data.borrowedAt).format('YYYY-MM-DD'),
-        // borrowedAt: '2025-03-14',
-        returnedAt: moment(data.returnedAt).format('YYYY-MM-DD'),
-        // returnedAt: '2025-03-17',
+        userId: data['user.id'],
       });
     }
   }, [data]);
+
   const columns = [
     { name: 'Amount', selector: 'amount', sortable: true },
     { name: 'Charged Date', selector: 'chargedDate', sortable: true },
   ];
+
   const renderUploadBody = () => (
     <div className="modal-body">
       <div class="info-round-wrp">
@@ -37,7 +34,7 @@ const BillingHistoryModal = ({ showModal, closeModal, data }) => {
         </div>
         <div class="info-round-blks">
           <div class="box-title">Total Charged</div>
-          <div class="box-value">${data.totalDue}</div>
+          <div class="box-value">${parseFloat(data.totalDue).toFixed(2)}</div>
         </div>
       </div>
       <div class="table-wrap table-responsive">
@@ -54,16 +51,16 @@ const BillingHistoryModal = ({ showModal, closeModal, data }) => {
               </thead>
               <tbody>
                 {billingHistory?.map((item, index) => (
-                  <tr key={item.id+index}>
-                    <td>${item.amount}</td>
-                    <td>{moment(item.transactionDate).format('MMM D, YYYY')}</td>
+                  <tr key={item.id + index}>
+                    <td>${parseFloat(item.totalAmount).toFixed(2)}</td>
+                    <td>{moment(item.chargedDate).format('MMM D, YYYY')}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           )
         ) : (
-          <CustomLoader columns={columns} limit={10} />
+          <CustomLoader columns={columns} limit={5} />
         )}
       </div>
     </div>

@@ -156,8 +156,10 @@ const useRentalReducer = create((set) => ({
     set({ isRentalLoading: true, successMessage: '' });
     try {
       const { data } = await rentalService.getHistory(params);
-      const { transactions } = data;
-      set({ billingHistory :transactions, isRentalLoading: false });
+      const {
+        transactions: { data: history },
+      } = data;
+      set({ billingHistory: history, isRentalLoading: false });
     } catch (err) {
       const { error } = useAlertReducer.getState();
       set({
