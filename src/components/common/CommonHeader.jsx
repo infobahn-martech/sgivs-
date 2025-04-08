@@ -30,9 +30,8 @@ const CommonHeader = ({
   submitFilter,
   clearOptions,
   uploadLoading,
-  type=''
+  type = '',
 }) => {
-  console.log(' uploadLoading', uploadLoading);
   const [searchInput, setSearchInput] = useState('');
   const [openUpload, setOpenUpload] = useState(false);
 
@@ -44,10 +43,10 @@ const CommonHeader = ({
     onSearch(value); // Pass value to parent component after delay
   };
   useEffect(() => {
-    if(!uploadLoading && openUpload){
+    if (!uploadLoading && openUpload) {
       setOpenUpload(false);
     }
-  },[uploadLoading])
+  }, [uploadLoading]);
 
   const location = useLocation();
 
@@ -76,14 +75,9 @@ const CommonHeader = ({
         );
       case 'button':
         return (
-          <a
-            type="button"
-            className="btn add"
-            onClick={addButton?.action}
-          >
-            <img src={addIcon} alt="" className="img" /> <span>
-              {addButton?.name}
-              </span>
+          <a type="button" className="btn add" onClick={addButton?.action}>
+            <img src={addIcon} alt="" className="img" />{' '}
+            <span>{addButton?.name}</span>
           </a>
         );
       default:
@@ -172,7 +166,7 @@ const CommonHeader = ({
                     submitFilter={handleSubmitFilter}
                     savedFilters={savedFilters}
                     isFilterApplied={isFilterApplied}
-                    onCancel={() => setShowFilterModal(false)} // Close on Cancel
+                    onCancel={() => setShowFilterModal(false)}
                     show={showFilterModal}
                   />
                 )}

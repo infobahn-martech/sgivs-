@@ -24,7 +24,6 @@ export default function CustomTable({
   onView,
   wrapClasses = '',
 }) {
-  console.log(currentPage);
   const [tempCount, setTempCount] = useState(0);
   useEffect(() => {
     if (!isLoading) {
@@ -171,19 +170,22 @@ export default function CustomTable({
                     ? data?.map((row, index) => (
                         <tr key={`row${row.id}`}>
                           {columns?.map(
-                            ({
-                              selector,
-                              cell,
-                              colClassName = '',
-                              contentClass = '',
-                              notView,
-                            },idx) =>
+                            (
+                              {
+                                selector,
+                                cell,
+                                colClassName = '',
+                                contentClass = '',
+                                notView,
+                              },
+                              idx
+                            ) =>
                               cell ? (
                                 <td
                                   className={`${colClassName}${
                                     !notView && onView ? ' cursor-pointer' : ''
                                   }`}
-                                  key={`cell${selector+idx}`}
+                                  key={`cell${selector + idx}`}
                                   onClick={() => {
                                     if (notView || !onView) return;
                                     onView(row);
