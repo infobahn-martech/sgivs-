@@ -14,28 +14,28 @@ import useAuthReducer from '../../stores/AuthReducer';
 import DashboardSectionTable from './DashboardTable';
 import getUserTableColumns from '../userManagement/getUserTableColumns';
 import { useNavigate } from 'react-router-dom';
-// import { headerConfig } from '../../config/config';
+import { getInventoryColumns } from '../InventoryManagement/getInventoryColumns';
+import useInventoryStore from '../../stores/InventoryReducer';
 
 const Dashboard = () => {
   const { profileData } = useAuthReducer((state) => state);
-  // const location = useLocation();
 
-  // const currentPath = location.pathname;
-  // const headerInfo = headerConfig?.find(
-  //   (item) =>
-  //     currentPath === item.path ||
-  //     (currentPath !== '/' &&
-  //       currentPath?.startsWith(item.path) &&
-  //       item.path !== '/')
-  // ) ||
-  //   headerConfig.find((item) => currentPath?.startsWith(item.path)) || {
-  //     title: 'Page Not Found',
-  //     icon: 'img/default.svg',
-  //   };
-  const { getAllUsers, usersData } = useAuthReducer((state) => state);
+  const { getAllUsers, usersData, isUsersLoading } = useAuthReducer(
+    (state) => state
+  );
+  const {
+    getInventoryList,
+    inventoryList,
+
+    isListLoading,
+  } = useInventoryStore((state) => state);
   const usersColumns = getUserTableColumns({
     isDashboard: true,
     showActions: false,
+  });
+
+  const inventoryColumns = getInventoryColumns({
+    showAction: false,
   });
 
   useEffect(() => {
@@ -48,6 +48,16 @@ const Dashboard = () => {
       toDate: null,
       sortBy: 'firstName',
       sortOrder: 'ASC',
+    });
+
+    getInventoryList({
+      search: '',
+      page: 1,
+      limit: 10,
+      fromDate: null,
+      toDate: null,
+      sortBy: 'createdAt',
+      sortOrder: 'DESC',
     });
   }, []);
   const navigate = useNavigate();
@@ -110,7 +120,8 @@ const Dashboard = () => {
             title="User Management"
             icon={userMangIcon}
             columns={usersColumns}
-            data={usersData?.data || []}
+            data={[]}
+            isLoading={isUsersLoading}
             onViewAll={() => navigate('/user-management')}
           />
 
@@ -118,8 +129,9 @@ const Dashboard = () => {
           <DashboardSectionTable
             title="Inventory Management"
             icon={inventoryMangIcon}
-            columns={usersColumns}
-            data={usersData?.data || []}
+            columns={inventoryColumns}
+            data={inventoryList || []}
+            isLoading={isListLoading}
             onViewAll={() => navigate('/inventory-management')}
           />
         </div>

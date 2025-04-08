@@ -46,7 +46,7 @@ const Header = () => {
                     {profileData?.user?.imageThumb ? (
                       <img src={profileData?.user?.imageThumb} alt="user" />
                     ) : (
-                      <div class="user-image alphabet">
+                      <div className="user-image alphabet">
                         <span>{getFirstLetters(profileData?.name)} </span>
                       </div>
                     )}
