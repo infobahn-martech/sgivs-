@@ -418,6 +418,7 @@ const LoanManagement = () => {
           closeModal={() => setdeadlineModal(false)}
           deadlineId={deadlineId}
           setdeadlineModal={setdeadlineModal}
+          handleGetAllRentals={handleGetAllRentals}
         />
       )}
       {modal?.mode === 'VIEW' && (

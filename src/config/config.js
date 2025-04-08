@@ -2,6 +2,7 @@ import moment from 'moment';
 import Gateway from './gateway';
 import * as XLSX from 'xlsx';
 import userImage from '../assets/images/user.svg';
+import ezpassImage from '../assets/images/ezpass.svg';
 import settingsIcon from '../assets/images/Settings.svg';
 import messageIcon from '../assets/images/message-ico.svg';
 import loanImg from '../assets/images/Loan_Management.svg';
@@ -25,7 +26,7 @@ export const headerConfig = [
   },
   {
     title: 'EZ Pass Billing',
-    icon: userImage,
+    icon: ezpassImage,
     path: '/ez-pass-billing',
   },
   { title: 'Messages', icon: messageIcon, path: '/messages' },
