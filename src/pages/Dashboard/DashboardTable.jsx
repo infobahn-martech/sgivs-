@@ -28,17 +28,19 @@ const DashboardSectionTable = ({
       <div className="table-responsive">
         <table className="table table-striped">
           <tbody>
-            <tr>
-              {columns?.map((col, idx) => (
-                <th key={idx} className={col.titleClasses}>
-                  {col.isSortable ? (
-                    <div className="sort-wrap">{col.name}</div>
-                  ) : (
-                    col.name
-                  )}
-                </th>
-              ))}
-            </tr>
+            {data?.length > 0 && (
+              <tr>
+                {columns?.map((col, idx) => (
+                  <th key={idx} className={col.titleClasses}>
+                    {col.isSortable ? (
+                      <div className="sort-wrap">{col.name}</div>
+                    ) : (
+                      col.name
+                    )}
+                  </th>
+                ))}
+              </tr>
+            )}
 
             {isLoading ? (
               Array.from({ length: 10 })?.map((index, inx) => (

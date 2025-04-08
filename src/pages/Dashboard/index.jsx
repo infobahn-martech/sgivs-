@@ -16,6 +16,7 @@ import getUserTableColumns from '../userManagement/getUserTableColumns';
 import { useNavigate } from 'react-router-dom';
 import { getInventoryColumns } from '../InventoryManagement/getInventoryColumns';
 import useInventoryStore from '../../stores/InventoryReducer';
+import CountBlock from './CountBlock';
 
 const Dashboard = () => {
   const { profileData } = useAuthReducer((state) => state);
@@ -37,6 +38,33 @@ const Dashboard = () => {
   const inventoryColumns = getInventoryColumns({
     showAction: false,
   });
+
+  const counters = [
+    {
+      icon: userCountIcon,
+      label: 'Users count',
+      count: 320,
+      className: 'user',
+    },
+    {
+      icon: inventoryCountIcon,
+      label: 'Inventory item count',
+      count: 600,
+      className: 'inventory',
+    },
+    {
+      icon: returnedCountIcon,
+      label: 'Returned items',
+      count: 200,
+      className: 'returned',
+    },
+    {
+      icon: downloadCountIcon,
+      label: 'Currently Borrowed items',
+      count: 502,
+      className: 'borrowed',
+    },
+  ];
 
   useEffect(() => {
     // api for userManagement
@@ -76,42 +104,15 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="count-blks-wrp">
-            <div className="count-blk user">
-              <div className="icon-blk">
-                <img src={userCountIcon} alt="" />
-              </div>
-              <div className="dtl-blk">
-                <div className="info">Users count</div>
-                <span className="count">320</span>
-              </div>
-            </div>
-            <div className="count-blk inventory">
-              <div className="icon-blk">
-                <img src={inventoryCountIcon} alt="" />
-              </div>
-              <div className="dtl-blk">
-                <div className="info">Inventory item count</div>
-                <span className="count">600</span>
-              </div>
-            </div>
-            <div className="count-blk returned">
-              <div className="icon-blk">
-                <img src={returnedCountIcon} alt="" />
-              </div>
-              <div className="dtl-blk">
-                <div className="info">Returned items</div>
-                <span className="count">200</span>
-              </div>
-            </div>
-            <div className="count-blk borrowed">
-              <div className="icon-blk">
-                <img src={downloadCountIcon} alt="" />
-              </div>
-              <div className="dtl-blk">
-                <div className="info">Currently Borrowed items</div>
-                <span className="count">502</span>
-              </div>
-            </div>
+            {counters?.map((item, idx) => (
+              <CountBlock
+                key={idx}
+                icon={item.icon}
+                label={item.label}
+                count={item.count}
+                className={item.className}
+              />
+            ))}
           </div>
         </div>
         <div className="dash-table-wrp">
