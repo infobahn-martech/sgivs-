@@ -6,15 +6,14 @@ const dashboardReducer = create((set) => ({
   dashData: null,
   dashLoading: false,
 
-  getAllUsers: async () => {
+  getDashboard: async () => {
     try {
       set({ dashLoading: true });
       const { data } = await dashboardService.getDash();
-      const dashData = data.users;
+      const dashData = data?.items;
       set({
         dashData,
         dashLoading: false,
-        pagination: data.users.pagination,
       });
     } catch (err) {
       const { error } = useAlertReducer.getState();

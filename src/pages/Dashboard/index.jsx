@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import { getInventoryColumns } from '../InventoryManagement/getInventoryColumns';
 import useInventoryStore from '../../stores/InventoryReducer';
 import CountBlock from './CountBlock';
+import dashboardReducer from '../../stores/DashboardReducer';
 
 const Dashboard = () => {
   const { profileData } = useAuthReducer((state) => state);
@@ -24,6 +25,10 @@ const Dashboard = () => {
   const { getAllUsers, usersData, isUsersLoading } = useAuthReducer(
     (state) => state
   );
+  const { dashData, dashLoading, getDashboard } = dashboardReducer(
+    (state) => state
+  );
+
   const {
     getInventoryList,
     inventoryList,
@@ -43,30 +48,32 @@ const Dashboard = () => {
     {
       icon: userCountIcon,
       label: 'Users count',
-      count: 320,
+      count: dashData?.usersCount ?? '-',
       className: 'user',
     },
     {
       icon: inventoryCountIcon,
       label: 'Inventory item count',
-      count: 600,
+      count: dashData?.inventoryItemsCount ?? '-',
       className: 'inventory',
     },
     {
       icon: returnedCountIcon,
       label: 'Returned items',
-      count: 200,
+      count: dashData?.inventoryReturnedItemsCount ?? '-',
       className: 'returned',
     },
     {
       icon: downloadCountIcon,
       label: 'Currently Borrowed items',
-      count: 502,
+      count: dashData?.inventoryBorrowedItemsCount ?? '-',
       className: 'borrowed',
     },
   ];
 
   useEffect(() => {
+    getDashboard();
+
     // api for userManagement
     getAllUsers({
       search: '',
@@ -111,6 +118,7 @@ const Dashboard = () => {
                 label={item.label}
                 count={item.count}
                 className={item.className}
+                isLoading={dashLoading}
               />
             ))}
           </div>
@@ -121,7 +129,7 @@ const Dashboard = () => {
             title="User Management"
             icon={userMangIcon}
             columns={usersColumns}
-            data={[]}
+            data={usersData?.data || []}
             isLoading={isUsersLoading}
             onViewAll={() => navigate('/user-management')}
           />

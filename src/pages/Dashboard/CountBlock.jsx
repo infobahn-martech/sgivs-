@@ -1,4 +1,17 @@
-const CountBlock = ({ icon, label, count, className = '' }) => {
+import React from 'react';
+import CommonSkeleton from '../../components/common/CommonSkeleton';
+
+const CountBlock = ({ icon, label, count, className = '', isLoading }) => {
+  if (isLoading) {
+    return (
+      <div className={`count-blk ${className}`}>
+        <div className="dtl-blk">
+          <CommonSkeleton height={40} />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={`count-blk ${className}`}>
       <div className="icon-blk">
@@ -6,7 +19,7 @@ const CountBlock = ({ icon, label, count, className = '' }) => {
       </div>
       <div className="dtl-blk">
         <div className="info">{label || '-'}</div>
-        <span className="count">{count || '-'}</span>
+        <span className="count">{count ?? '-'}</span>
       </div>
     </div>
   );
