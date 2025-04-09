@@ -83,7 +83,7 @@ const UnmappedTransactions = () => {
     {
       name: 'Transaction Date',
       selector: 'transactionDate',
-      cell: (row) => formatDateTime(row?.transactionDate, 'MMM D, YYYY'),
+      cell: (row) => formatDateTime(row?.transactionDate, 'MMMM D, YYYY'),
       titleClasses: 'tw4',
     },
 

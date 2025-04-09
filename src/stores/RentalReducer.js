@@ -51,8 +51,7 @@ const useRentalReducer = create((set) => ({
       set({ isExportLoading: false });
     }
   },
-  changeStatus: async ({ id, status, dueDate, cb }) => {
-    console.log('daaa', id);
+  changeStatus: async ({ id, status, dueDate, cb,balanceDue }) => {
     set({ statusLoading: true });
 
     const { success, error } = useAlertReducer.getState();
@@ -62,6 +61,7 @@ const useRentalReducer = create((set) => ({
         id,
         status,
         dueDate,
+        balanceDue
       });
       success(data.message);
       set({

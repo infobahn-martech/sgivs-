@@ -21,6 +21,7 @@ import useAuthReducer from '../../stores/AuthReducer';
 import { Spinner } from 'react-bootstrap';
 import ViewTransactionModal from './ViewTransactionModal';
 import BillingHistoryModal from './BillingHitoryModal';
+import CustomActionModal from '../../components/common/CustomActionModal';
 
 const EZPassBilling = () => {
   const {
@@ -31,7 +32,6 @@ const EZPassBilling = () => {
     isExportLoading,
     changeStatus: postChangeStatus,
     successMessage,
-    getRentalNotes,
     statusLoading,
     uploadEzPass,
     userActionLoading,
@@ -175,7 +175,7 @@ const EZPassBilling = () => {
       <>
         <div className="d-flex justify-content-center">
           <span
-            className={`status-wrap ${className} cursor-pointer` }
+            className={`status-wrap ${className} cursor-pointer`}
             onClick={() => {
               setChangeStatus({
                 id: row.id,
@@ -304,13 +304,17 @@ const EZPassBilling = () => {
               setModal({ data: row, mode: 'transaction' });
             }}
           />
-          <img
-            src={bagIcon}
-            alt="shopping-bag"
-            onClick={() => {}}
-            data-tooltip-id="deadline-tooltip"
-            data-tooltip-content="Charge Balance"
-          />
+          {row.balanceDue != 0 && (
+            <img
+              src={bagIcon}
+              alt="shopping-bag"
+              onClick={() => {
+                setModal({ data: row, mode: 'warning' });
+              }}
+              data-tooltip-id="deadline-tooltip"
+              data-tooltip-content="Charge Balance"
+            />
+          )}
 
           {/* Tooltips */}
           <Tooltip
@@ -409,8 +413,27 @@ const EZPassBilling = () => {
     });
   };
 
+  const renderModal = () => (
+    <CustomActionModal
+      closeModal={() => setModal(null)}
+      isLoading={statusLoading}
+      message={`Are you sure you want to clear amount due for this item?`}
+      button={{ primary: 'Yes', secondary: 'No' }}
+      onSubmit={() => {
+        postChangeStatus({
+          id: modal?.data.id,
+          balanceDue: modal?.data.balanceDue,
+        });
+        setModal(null);
+      }}
+      showModal={modal?.mode === 'warning'}
+      isWarning
+    />
+  );
+
   return (
     <>
+      {renderModal()}
       <CommonHeader
         onSearch={debouncedSearch}
         exportExcel={rentalData?.data?.length ? exportExcel : null}
