@@ -3,8 +3,8 @@ import React from 'react';
 import deleteIcon from '../../assets/images/delete.svg';
 import activeIcon from '../../assets/images/close.svg';
 import blockIcon from '../../assets/images/block.svg';
-import alertIcon from '../../assets/images/alert.svg';
-import alertDisableIcon from '../../assets/images/notify-disable.svg';
+// import alertIcon from '../../assets/images/alert.svg';
+// import alertDisableIcon from '../../assets/images/notify-disable.svg';
 
 import { Tooltip } from 'react-tooltip';
 import { formatBoolean, formatDate } from '../../config/config';
@@ -70,7 +70,7 @@ const getUserTableColumns = ({
       contentClass: 'action-wrap',
       cell: (row) => (
         <>
-          <img
+          {/* <img
             src={row?.isNotificationEnabled ? alertDisableIcon : alertIcon}
             alt="Alert"
             data-tooltip-id="alert-tooltip"
@@ -78,7 +78,26 @@ const getUserTableColumns = ({
               row?.isNotificationEnabled ? 'Disable' : 'Enable'
             }
             onClick={() => onUserNotify(row)}
-          />
+          /> */}
+          <div
+            className="toggle-switch"
+            data-tooltip-id="alert-tooltip"
+            data-tooltip-content={
+              row?.isNotificationEnabled
+                ? 'Notification Disable'
+                : 'Notification Enable'
+            }
+          >
+            <label className="switch">
+              <input
+                type="checkbox"
+                checked={row?.isNotificationEnabled}
+                onChange={() => onUserNotify(row)}
+              />
+              <span className="slider round"></span>
+            </label>
+          </div>
+
           <Tooltip
             id="alert-tooltip"
             place="top"
