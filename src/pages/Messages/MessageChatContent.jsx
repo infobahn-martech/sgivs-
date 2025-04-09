@@ -1,4 +1,6 @@
+import React from 'react';
 import MessageFooter from './MessageFooter';
+import { format, isSameDay } from 'date-fns';
 
 const MessageChatContent = ({
   selectedContact,
@@ -20,23 +22,42 @@ const MessageChatContent = ({
       </div>
 
       <div className="body-msg-wrap">
-        {messages?.map((msg, idx) => (
-          <div
-            key={idx}
-            className={`chat-block ${
-              msg.from === 'me' ? 'chat-block-right' : ''
-            }`}
-          >
-            {msg.from === 'them' && (
-              <figure className="img">
-                <img src={selectedContact?.img} alt="" />
-              </figure>
-            )}
-            <div className="chat-content-wrap">
-              <p className="txt">{msg?.text}</p>
-            </div>
-          </div>
-        ))}
+        {messages?.length > 0 &&
+          messages?.map((msg, idx) => {
+            const msgDate = new Date(msg.time);
+            const showDate =
+              idx === 0 ||
+              !isSameDay(new Date(messages[idx - 1]?.time), msgDate);
+
+            return (
+              <React.Fragment key={idx}>
+                {showDate && (
+                  <div className="date-separator">
+                    {format(msgDate, 'eeee, MMM d, yyyy')}{' '}
+                    {/* e.g., Monday, Apr 8, 2025 */}
+                  </div>
+                )}
+
+                <div
+                  className={`chat-block ${
+                    msg.from === 'me' ? 'chat-block-right' : ''
+                  }`}
+                >
+                  {msg.from === 'them' && (
+                    <figure className="img">
+                      <img src={selectedContact?.img} alt="" />
+                    </figure>
+                  )}
+                  <div className="chat-content-wrap">
+                    <p className="txt">{msg?.text}</p>
+                    <div className="time">
+                      {format(msgDate, 'hh:mm a')} {/* e.g., 09:35 AM */}
+                    </div>
+                  </div>
+                </div>
+              </React.Fragment>
+            );
+          })}
       </div>
 
       <MessageFooter
