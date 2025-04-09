@@ -47,6 +47,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         '/inventory-management/edit',
       ],
     },
+    { name: 'Category Management', icon: MessagesIcon, path: '/category' },
     {
       name: 'Loan Management',
       icon: RentalManageIcon,
@@ -69,7 +70,6 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       ],
     },
     { name: 'Messages', icon: MessagesIcon, path: '/messages' },
-    { name: 'Category', icon: MessagesIcon, path: '/category' },
     { name: 'Settings', icon: SettingsIcon, path: '/settings' },
   ];
 

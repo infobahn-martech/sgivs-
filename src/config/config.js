@@ -15,6 +15,7 @@ export const headerConfig = [
     icon: inventoryImg,
     path: '/inventory-management',
   },
+  { title: 'Category Management', icon: messageIcon, path: '/category' },
   {
     title: 'Loan Management',
     path: '/loan-management',
@@ -31,7 +32,6 @@ export const headerConfig = [
     path: '/ez-pass-billing',
   },
   { title: 'Messages', icon: messageIcon, path: '/messages' },
-  { title: 'Category', icon: messageIcon, path: '/category' },
   { title: 'Settings', icon: settingsIcon, path: '/settings' },
   { title: 'User Management', icon: userImage, path: '/user-management' },
 ];
