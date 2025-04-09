@@ -174,7 +174,15 @@ const EZPassBilling = () => {
     return (
       <>
         <div className="d-flex justify-content-center">
-          <span className={`status-wrap ${className}`}>
+          <span
+            className={`status-wrap ${className} cursor-pointer` }
+            onClick={() => {
+              setChangeStatus({
+                id: row.id,
+                status: row.status,
+              });
+            }}
+          >
             <span>{label}</span>{' '}
             {!row.isOld && (
               <img
@@ -268,7 +276,8 @@ const EZPassBilling = () => {
       name: 'Total Due',
       selector: 'totalDue',
       colClassName: 'balance-due',
-      cell: (row) => `$${row?.totalDue ? parseFloat(row.totalDue).toFixed(2) : 0}`,
+      cell: (row) =>
+        `$${row?.totalDue ? parseFloat(row.totalDue).toFixed(2) : 0}`,
     },
     {
       name: 'Action',
@@ -295,13 +304,13 @@ const EZPassBilling = () => {
               setModal({ data: row, mode: 'transaction' });
             }}
           />
-           <img
+          <img
             src={bagIcon}
             alt="shopping-bag"
             onClick={() => {}}
             data-tooltip-id="deadline-tooltip"
             data-tooltip-content="Charge Balance"
-          /> 
+          />
 
           {/* Tooltips */}
           <Tooltip
