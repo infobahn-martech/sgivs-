@@ -8,6 +8,7 @@ import '../../assets/scss/usermanagement.scss';
 import penIcon from '../../assets/images/edit-status.svg';
 import camaraIcon from '../../assets/images/camera.svg';
 import tagIcon from '../../assets/images/tag.svg';
+import bagIcon from '../../assets/images/shopping-bag.svg';
 
 import { debounce } from 'lodash';
 import moment from 'moment';
@@ -294,18 +295,18 @@ const EZPassBilling = () => {
               setModal({ data: row, mode: 'transaction' });
             }}
           />
-          {/* <img
-            src={deadlineIcon}
-            alt="Deadline"
-            onClick={() => handleDeadlineClick(row)}
+           <img
+            src={bagIcon}
+            alt="shopping-bag"
+            onClick={() => {}}
             data-tooltip-id="deadline-tooltip"
-            data-tooltip-content="Set Deadline"
-          /> */}
+            data-tooltip-content="Charge Balance"
+          /> 
 
           {/* Tooltips */}
           <Tooltip
             id="note-tooltip"
-            place="top"
+            place="bottom"
             effect="solid"
             style={{
               backgroundColor: '#2ca0da',
@@ -313,7 +314,15 @@ const EZPassBilling = () => {
           />
           <Tooltip
             id="alert-tooltip"
-            place="top"
+            place="bottom"
+            effect="solid"
+            style={{
+              backgroundColor: '#2ca0da',
+            }}
+          />
+          <Tooltip
+            id="deadline-tooltip"
+            place="bottom"
             effect="solid"
             style={{
               backgroundColor: '#2ca0da',
