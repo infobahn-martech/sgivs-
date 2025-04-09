@@ -1,6 +1,6 @@
 import React from 'react';
 import MessageFooter from './MessageFooter';
-import { format, isSameDay } from 'date-fns';
+import { format, isSameDay, isToday, isYesterday } from 'date-fns';
 
 const MessageChatContent = ({
   selectedContact,
@@ -33,8 +33,11 @@ const MessageChatContent = ({
               <React.Fragment key={idx}>
                 {showDate && (
                   <div className="date-separator">
-                    {format(msgDate, 'eeee, MMM d, yyyy')}{' '}
-                    {/* e.g., Monday, Apr 8, 2025 */}
+                    {isToday(msgDate)
+                      ? 'Today'
+                      : isYesterday(msgDate)
+                      ? 'Yesterday'
+                      : format(msgDate, 'eeee, MMM d, yyyy')}
                   </div>
                 )}
 
