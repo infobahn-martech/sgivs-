@@ -29,11 +29,14 @@ const Messages = () => {
 
   const selectedContact = contacts?.find((c) => c?.id === selectedContactId);
   const messages = allMessages[selectedContactId] || [];
-
   const onSend = () => {
     if (!message?.trim()) return;
 
-    const newMessage = { from: 'me', text: message };
+    const newMessage = {
+      from: 'me',
+      text: message,
+      time: new Date().toISOString(),
+    };
 
     setAllMessages((prev) => ({
       ...prev,
