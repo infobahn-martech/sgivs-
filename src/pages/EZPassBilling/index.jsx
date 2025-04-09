@@ -421,7 +421,7 @@ const EZPassBilling = () => {
     <CustomActionModal
       closeModal={() => setModal(null)}
       isLoading={statusLoading}
-      message={`Are you sure you want to clear amount due for this item?`}
+      message={`Are you sure you want to charge amount of $${modal?.data.balanceDue} for this user?`}
       button={{ primary: 'Yes', secondary: 'No' }}
       onSubmit={() => {
         postChangeStatus({
