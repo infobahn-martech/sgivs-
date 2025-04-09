@@ -4,6 +4,8 @@ import deleteIcon from '../../assets/images/delete.svg';
 import activeIcon from '../../assets/images/close.svg';
 import blockIcon from '../../assets/images/block.svg';
 import alertIcon from '../../assets/images/alert.svg';
+import alertDisableIcon from '../../assets/images/notify-disable.svg';
+
 import { Tooltip } from 'react-tooltip';
 import { formatBoolean, formatDate } from '../../config/config';
 import InitialsAvatar from '../../components/common/InitialsAvatar';
@@ -69,7 +71,7 @@ const getUserTableColumns = ({
       cell: (row) => (
         <>
           <img
-            src={alertIcon}
+            src={row?.isNotificationEnabled ? alertDisableIcon : alertIcon}
             alt="Alert"
             data-tooltip-id="alert-tooltip"
             data-tooltip-content={

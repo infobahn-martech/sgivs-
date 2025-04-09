@@ -203,7 +203,7 @@ const UserManagement = () => {
           closeModal={() => setnotifyModal(false)}
           message={`Are you sure you want to  ${
             selectedUser?.isNotificationEnabled ? 'Disable' : 'Enable'
-          } notication for ${selectedUser?.firstName}? `}
+          } notications for ${selectedUser?.firstName}? `}
           onCancel={() => setnotifyModal(false)}
           onSubmit={onSubmitUserNotify}
         />
