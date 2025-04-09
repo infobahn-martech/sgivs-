@@ -286,24 +286,28 @@ const EZPassBilling = () => {
       contentClass: 'action-wrap',
       cell: (row) => (
         <>
-          <img
-            src={camaraIcon}
-            alt="Note"
-            data-tooltip-id="note-tooltip"
-            data-tooltip-content="View Billing History"
-            onClick={() => {
-              setModal({ data: row, mode: 'history' });
-            }}
-          />
-          <img
-            src={tagIcon}
-            alt="Alert"
-            data-tooltip-id="alert-tooltip"
-            data-tooltip-content="View Transactions"
-            onClick={() => {
-              setModal({ data: row, mode: 'transaction' });
-            }}
-          />
+          {row.status == 2 && (
+            <img
+              src={camaraIcon}
+              alt="Note"
+              data-tooltip-id="note-tooltip"
+              data-tooltip-content="View Billing History"
+              onClick={() => {
+                setModal({ data: row, mode: 'history' });
+              }}
+            />
+          )}
+          {row.status == 2 && (
+            <img
+              src={tagIcon}
+              alt="Alert"
+              data-tooltip-id="alert-tooltip"
+              data-tooltip-content="View Transactions"
+              onClick={() => {
+                setModal({ data: row, mode: 'transaction' });
+              }}
+            />
+          )}
           {row.balanceDue != 0 && (
             <img
               src={bagIcon}
@@ -417,7 +421,7 @@ const EZPassBilling = () => {
     <CustomActionModal
       closeModal={() => setModal(null)}
       isLoading={statusLoading}
-      message={`Are you sure you want to clear amount due for this item?`}
+      message={`Are you sure you want to charge amount of $${modal?.data.balanceDue} for this user?`}
       button={{ primary: 'Yes', secondary: 'No' }}
       onSubmit={() => {
         postChangeStatus({
