@@ -8,6 +8,7 @@ import '../../assets/scss/usermanagement.scss';
 import penIcon from '../../assets/images/edit-status.svg';
 import camaraIcon from '../../assets/images/camera.svg';
 import tagIcon from '../../assets/images/tag.svg';
+import bagIcon from '../../assets/images/shopping-bag.svg';
 
 import { debounce } from 'lodash';
 import moment from 'moment';
@@ -20,6 +21,7 @@ import useAuthReducer from '../../stores/AuthReducer';
 import { Spinner } from 'react-bootstrap';
 import ViewTransactionModal from './ViewTransactionModal';
 import BillingHistoryModal from './BillingHitoryModal';
+import CustomActionModal from '../../components/common/CustomActionModal';
 
 const EZPassBilling = () => {
   const {
@@ -30,7 +32,6 @@ const EZPassBilling = () => {
     isExportLoading,
     changeStatus: postChangeStatus,
     successMessage,
-    getRentalNotes,
     statusLoading,
     uploadEzPass,
     userActionLoading,
@@ -173,7 +174,15 @@ const EZPassBilling = () => {
     return (
       <>
         <div className="d-flex justify-content-center">
-          <span className={`status-wrap ${className}`}>
+          <span
+            className={`status-wrap ${className} cursor-pointer`}
+            onClick={() => {
+              setChangeStatus({
+                id: row.id,
+                status: row.status,
+              });
+            }}
+          >
             <span>{label}</span>{' '}
             {!row.isOld && (
               <img
@@ -267,7 +276,8 @@ const EZPassBilling = () => {
       name: 'Total Due',
       selector: 'totalDue',
       colClassName: 'balance-due',
-      cell: (row) => `$${row?.totalDue ? parseFloat(row.totalDue).toFixed(2) : 0}`,
+      cell: (row) =>
+        `$${row?.totalDue ? parseFloat(row.totalDue).toFixed(2) : 0}`,
     },
     {
       name: 'Action',
@@ -294,18 +304,22 @@ const EZPassBilling = () => {
               setModal({ data: row, mode: 'transaction' });
             }}
           />
-          {/* <img
-            src={deadlineIcon}
-            alt="Deadline"
-            onClick={() => handleDeadlineClick(row)}
-            data-tooltip-id="deadline-tooltip"
-            data-tooltip-content="Set Deadline"
-          /> */}
+          {row.balanceDue != 0 && (
+            <img
+              src={bagIcon}
+              alt="shopping-bag"
+              onClick={() => {
+                setModal({ data: row, mode: 'warning' });
+              }}
+              data-tooltip-id="deadline-tooltip"
+              data-tooltip-content="Charge Balance"
+            />
+          )}
 
           {/* Tooltips */}
           <Tooltip
             id="note-tooltip"
-            place="top"
+            place="bottom"
             effect="solid"
             style={{
               backgroundColor: '#2ca0da',
@@ -313,7 +327,15 @@ const EZPassBilling = () => {
           />
           <Tooltip
             id="alert-tooltip"
-            place="top"
+            place="bottom"
+            effect="solid"
+            style={{
+              backgroundColor: '#2ca0da',
+            }}
+          />
+          <Tooltip
+            id="deadline-tooltip"
+            place="bottom"
             effect="solid"
             style={{
               backgroundColor: '#2ca0da',
@@ -391,8 +413,27 @@ const EZPassBilling = () => {
     });
   };
 
+  const renderModal = () => (
+    <CustomActionModal
+      closeModal={() => setModal(null)}
+      isLoading={statusLoading}
+      message={`Are you sure you want to clear amount due for this item?`}
+      button={{ primary: 'Yes', secondary: 'No' }}
+      onSubmit={() => {
+        postChangeStatus({
+          id: modal?.data.id,
+          balanceDue: modal?.data.balanceDue,
+        });
+        setModal(null);
+      }}
+      showModal={modal?.mode === 'warning'}
+      isWarning
+    />
+  );
+
   return (
     <>
+      {renderModal()}
       <CommonHeader
         onSearch={debouncedSearch}
         exportExcel={rentalData?.data?.length ? exportExcel : null}

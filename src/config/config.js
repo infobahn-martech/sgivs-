@@ -15,6 +15,7 @@ export const headerConfig = [
     icon: inventoryImg,
     path: '/inventory-management',
   },
+  { title: 'Category Management', icon: messageIcon, path: '/category' },
   {
     title: 'Loan Management',
     path: '/loan-management',

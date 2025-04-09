@@ -83,7 +83,7 @@ const UnmappedTransactions = () => {
     {
       name: 'Transaction Date',
       selector: 'transactionDate',
-      cell: (row) => formatDateTime(row?.transactionDate, 'MMM D, YYYY'),
+      cell: (row) => formatDateTime(row?.transactionDate, 'MMMM D, YYYY'),
       titleClasses: 'tw4',
     },
 
@@ -160,9 +160,9 @@ const UnmappedTransactions = () => {
       />
       <CustomTable
         pagination={{ currentPage: params.page, limit: params.limit }}
-        count={unMappedtransactions.length}
+        count={unMappedtransactions.pagination.totalRecords}
         columns={columns}
-        data={unMappedtransactions}
+        data={unMappedtransactions.data}
         isLoading={isRentalLoading}
         onPageChange={handlePageChange}
         setLimit={handleLimitChange}

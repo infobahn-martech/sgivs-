@@ -175,7 +175,15 @@ const LoanManagement = () => {
     return (
       <>
         <div className="d-flex justify-content-center">
-          <span className={`status-wrap ${className}`}>
+          <span
+            className={`status-wrap ${className} cursor-pointer`}
+            onClick={() => {
+              setChangeStatus({
+                id: row.id,
+                status: row.status,
+              });
+            }}
+          >
             <span>{label}</span>{' '}
             {!row.isOld && (
               <img
