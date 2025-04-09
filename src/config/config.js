@@ -2,6 +2,7 @@ import moment from 'moment';
 import Gateway from './gateway';
 import * as XLSX from 'xlsx';
 import userImage from '../assets/images/user.svg';
+import transactions from '../assets/images/transaction-header.svg';
 import ezpassImage from '../assets/images/ezpass.svg';
 import settingsIcon from '../assets/images/Settings.svg';
 import messageIcon from '../assets/images/message-ico.svg';
@@ -21,7 +22,7 @@ export const headerConfig = [
   },
   {
     title: 'Unmapped Transactions',
-    icon: userImage,
+    icon: transactions,
     path: '/ez-pass-billing/unmapped-transactions',
   },
   {

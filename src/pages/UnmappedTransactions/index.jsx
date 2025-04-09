@@ -1,4 +1,4 @@
-import React, {  useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { debounce } from 'lodash';
 import moment from 'moment';
 
@@ -13,17 +13,15 @@ import useAuthReducer from '../../stores/AuthReducer';
 const UnmappedTransactions = () => {
   const {
     isRentalLoading,
-    exportRental,
+
     isExportLoading,
     successMessage,
     getUnMappedTransactions,
-    unMappedtransactions
+    unMappedtransactions,
   } = useRentalReducer((state) => state);
-    console.log(' unMappedtransactions', unMappedtransactions);
+  console.log(' unMappedtransactions', unMappedtransactions);
 
-  const { getAllUsersListByRole, usersRoleData } = useAuthReducer(
-    (state) => state
-  );
+  const { getAllUsersListByRole } = useAuthReducer((state) => state);
 
   const initialParams = {
     page: 1,
@@ -79,7 +77,7 @@ const UnmappedTransactions = () => {
   }, 500);
 
   const formatDateTime = (date, format) =>
-    date ? moment(date).format(format ||'MMMM D, YYYY : hh:mm A') : '-';
+    date ? moment(date).format(format || 'MMMM D, YYYY : hh:mm A') : '-';
 
   const columns = [
     {
@@ -88,7 +86,7 @@ const UnmappedTransactions = () => {
       cell: (row) => formatDateTime(row?.transactionDate, 'MMM D, YYYY'),
       titleClasses: 'tw4',
     },
-    
+
     {
       name: 'Tag/Plate Number',
       selector: 'tagPlateNumber',
@@ -107,11 +105,10 @@ const UnmappedTransactions = () => {
     {
       name: 'Entry Time',
       selector: 'entryTime',
-      cell: (row) =>
-        moment(row?.entryTime, 'HH:mm:ss').format('hh:mm A'),
+      cell: (row) => moment(row?.entryTime, 'HH:mm:ss').format('hh:mm A'),
       titleClasses: 'tw6',
     },
-    
+
     {
       name: 'Amount',
       selector: 'amount',
@@ -119,19 +116,7 @@ const UnmappedTransactions = () => {
       colClassName: 'balance-due',
       cell: (row) => `$${row?.amount || 0}`,
     },
-    
   ];
-
-  // const exportExcel = async () => {
-  //   exportRental(params);
-  // };
-  const getUserOptions = () =>
-    usersRoleData?.data
-      ?.map(({ id, firstName }) => ({
-        value: id,
-        label: firstName,
-      }))
-      ?.sort((a, b) => a.label?.localeCompare(b.label));
 
   const filterOptions = [
     {
@@ -139,34 +124,6 @@ const UnmappedTransactions = () => {
       BE_keyName: 'transactionDate',
       fieldType: 'dateRange',
     },
-    // {
-    //   fieldName: 'Deadline Date',
-    //   BE_keyName: 'deadline_date',
-    //   fieldType: 'dateRange',
-    // },
-    // {
-    //   fieldName: 'Returned Date',
-    //   BE_keyName: 'returnedAt',
-    //   fieldType: 'dateRange',
-    // },
-    // {
-    //   fieldName: 'Rental Status',
-    //   BE_keyName: 'status',
-    //   fieldType: 'select',
-    //   Options: [
-    //     { label: 'Borrowed', value: 1 },
-    //     { label: 'Returned', value: 2 },
-    //     { label: 'Overdue', value: 3 },
-    //     { label: 'Missing', value: 4 },
-    //   ],
-    // },
-    // {
-    //   fieldName: 'User',
-    //   BE_keyName: 'user',
-    //   fieldType: 'select',
-    //   isMulti: true,
-    //   Options: getUserOptions(),
-    // },
   ];
 
   const handleFilterSubmit = (filters) => {
@@ -200,12 +157,6 @@ const UnmappedTransactions = () => {
         clearOptions={() => {
           setParams(initialParams);
         }}
-        type="ezpass"
-        // uploadExcel
-        // onExcelUpload={(data) => uploadEzPass( data)}
-        // uploadTitle="Import EZ Pass"
-        // uploadLoading={userActionLoading}
-        // addButton={{ type: 'button', name: 'Add EZ Pass', action: () => {} }}
       />
       <CustomTable
         pagination={{ currentPage: params.page, limit: params.limit }}
@@ -218,7 +169,6 @@ const UnmappedTransactions = () => {
         onSortChange={handleSortChange}
         wrapClasses="ezpass-table-wrap"
       />
-      
     </>
   );
 };

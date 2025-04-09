@@ -1,50 +1,67 @@
-import React from 'react';
-import CustomModal from '../../components/common/CustomModal';
+import React, { useEffect } from 'react';
+import moment from 'moment';
 
-const BillingHistoryModal = ({ showModal, closeModal }) => {
+import CustomModal from '../../components/common/CustomModal';
+import useRentalReducer from '../../stores/RentalReducer';
+import NoTableData from '../../components/common/NoTableData';
+import CustomLoader from '../../components/common/CustomLoader';
+
+const BillingHistoryModal = ({ showModal, closeModal, data }) => {
+  const { getBillingHistory, billingHistory, isRentalLoading } =
+    useRentalReducer((state) => state);
+
+  useEffect(() => {
+    if (data) {
+      getBillingHistory({
+        userId: data['user.id'],
+      });
+    }
+  }, [data]);
+
+  const columns = [
+    { name: 'Amount', selector: 'amount', sortable: true },
+    { name: 'Charged Date', selector: 'chargedDate', sortable: true },
+  ];
+
   const renderUploadBody = () => (
     <div className="modal-body">
       <div class="info-round-wrp">
         <div class="info-round-blks">
           <div class="box-title">User Name</div>
-          <div class="box-value">John Doe</div>
+          <div class="box-value">
+            {data['user.firstName'] + ' ' + data['user.lastName']}{' '}
+          </div>
         </div>
         <div class="info-round-blks">
           <div class="box-title">Total Charged</div>
-          <div class="box-value">$525</div>
+          <div class="box-value">${parseFloat(data.totalDue).toFixed(2)}</div>
         </div>
       </div>
       <div class="table-wrap table-responsive">
-        <table class="table">
-          <thead>
-            <tr>
-              <th class="th-date">Amount</th>
-              <th class="th-tag">Charged Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>$5246</td>
-              <td>Mar 3, 2025</td>
-            </tr>
-            <tr>
-              <td>$5246</td>
-              <td>Mar 3, 2025</td>
-            </tr>
-            <tr>
-              <td>$5246</td>
-              <td>Mar 3, 2025</td>
-            </tr>
-            <tr>
-              <td>$5246</td>
-              <td>Mar 3, 2025</td>
-            </tr>
-            <tr>
-              <td>$5246</td>
-              <td>Mar 3, 2025</td>
-            </tr>
-          </tbody>
-        </table>
+        {!isRentalLoading ? (
+          !billingHistory?.length ? (
+            <NoTableData columns={columns} />
+          ) : (
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class="th-date">Amount</th>
+                  <th class="th-tag">Charged Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {billingHistory?.map((item, index) => (
+                  <tr key={item.id + index}>
+                    <td>${parseFloat(item.totalAmount).toFixed(2)}</td>
+                    <td>{moment(item.chargedDate).format('MMM D, YYYY')}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )
+        ) : (
+          <CustomLoader columns={columns} limit={5} />
+        )}
       </div>
     </div>
   );
@@ -58,7 +75,7 @@ const BillingHistoryModal = ({ showModal, closeModal }) => {
       closeModal={closeModal}
       header={
         <h5 className="modal-title" id="uploadModalLabel">
-          View Transactions
+          Billing History
         </h5>
       }
       contentClassName="modal-content"
