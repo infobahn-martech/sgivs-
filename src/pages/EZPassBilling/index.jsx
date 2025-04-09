@@ -286,24 +286,28 @@ const EZPassBilling = () => {
       contentClass: 'action-wrap',
       cell: (row) => (
         <>
-          <img
-            src={camaraIcon}
-            alt="Note"
-            data-tooltip-id="note-tooltip"
-            data-tooltip-content="View Billing History"
-            onClick={() => {
-              setModal({ data: row, mode: 'history' });
-            }}
-          />
-          <img
-            src={tagIcon}
-            alt="Alert"
-            data-tooltip-id="alert-tooltip"
-            data-tooltip-content="View Transactions"
-            onClick={() => {
-              setModal({ data: row, mode: 'transaction' });
-            }}
-          />
+          {row.status == 2 && (
+            <img
+              src={camaraIcon}
+              alt="Note"
+              data-tooltip-id="note-tooltip"
+              data-tooltip-content="View Billing History"
+              onClick={() => {
+                setModal({ data: row, mode: 'history' });
+              }}
+            />
+          )}
+          {row.status == 2 && (
+            <img
+              src={tagIcon}
+              alt="Alert"
+              data-tooltip-id="alert-tooltip"
+              data-tooltip-content="View Transactions"
+              onClick={() => {
+                setModal({ data: row, mode: 'transaction' });
+              }}
+            />
+          )}
           {row.balanceDue != 0 && (
             <img
               src={bagIcon}
