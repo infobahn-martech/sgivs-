@@ -20,6 +20,8 @@ import ResetPassword from '../pages/ResetPassword/Loader';
 import InventoryView from '../pages/InventoryManagement/InventoryView';
 import LoanManagement from '../pages/LoanManagement';
 import UnmappedTransactions from '../pages/UnmappedTransactions/Loader';
+import Category from '../pages/Category/Loader';
+import SubCategory from '../pages/SubCategory/Loader';
 
 const router = createBrowserRouter([
   {
@@ -96,6 +98,14 @@ const router = createBrowserRouter([
               {
                 path: '/profile',
                 element: <Profile />,
+              },
+              {
+                path: '/category',
+                element: <Category />,
+              },
+              {
+                path: '/subCategory',
+                element: <SubCategory />,
               },
             ],
           },
