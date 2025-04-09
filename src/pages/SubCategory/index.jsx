@@ -4,6 +4,9 @@ import moment from 'moment';
 
 import '../../assets/scss/usermanagement.scss';
 
+import deleteIcon from '../../assets/images/delete.svg';
+import editIcon from '../../assets/images/edit.svg';
+
 import CommonHeader from '../../components/common/CommonHeader';
 import CustomTable from '../../components/common/CustomTable';
 import { formatDate } from '../../config/config';
@@ -83,7 +86,7 @@ const Category = () => {
             setModal(row);
           }}
         >
-          <img src="" alt="edit" />
+          <img src={editIcon} alt="edit" />
         </a>
         <a
           data-tooltip-id="delete"
@@ -92,7 +95,7 @@ const Category = () => {
             setDeleteModalOpen(row);
           }}
         >
-          <img src="" alt="delete" />
+          <img src={deleteIcon} alt="delete" />
         </a>
       </div>
     );

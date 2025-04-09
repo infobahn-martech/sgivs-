@@ -5,9 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import { debounce } from 'lodash';
 
 import deleteIcon from '../../assets/images/delete.svg';
+import editIcon from '../../assets/images/edit.svg';
 import viewIcon from '../../assets/images/eye.svg';
 import showHideIcon from '../../assets/images/eye-close.svg';
-import editIcon from '../../assets/images/edit.svg';
 import downloadIcon from '../../assets/images/download.svg';
 
 import '../../assets/scss/usermanagement.scss';
