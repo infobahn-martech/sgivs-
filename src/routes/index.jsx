@@ -104,7 +104,7 @@ const router = createBrowserRouter([
                 element: <Category />,
               },
               {
-                path: '/subCategory',
+                path: '/sub-category',
                 element: <SubCategory />,
               },
             ],

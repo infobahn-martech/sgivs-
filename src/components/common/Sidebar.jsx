@@ -48,7 +48,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       ],
     },
     { name: 'Category Management', icon: MessagesIcon, path: '/category' },
-    { name: 'Subcategory', icon: MessagesIcon, path: '/subCategory' },
+    { name: 'Subcategory', icon: MessagesIcon, path: '/sub-category' },
     {
       name: 'Loan Management',
       icon: RentalManageIcon,

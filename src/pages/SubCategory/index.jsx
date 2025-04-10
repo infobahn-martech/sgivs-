@@ -25,7 +25,7 @@ const Category = () => {
     isLoadingDelete,
   } = useSubCategoryReducer((state) => state);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  console.log(' subCategoryData', subCategoryData);
+  console.log('successMessage', successMessage);
 
   const [modal, setModal] = useState(false);
 
@@ -49,6 +49,7 @@ const Category = () => {
       getData(params);
       setModal(false);
       setDeleteModalOpen(false);
+      // useSubCategoryReducer.setState({ successMessage: '' });
     }
   }, [successMessage]);
 
