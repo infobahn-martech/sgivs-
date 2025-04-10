@@ -86,7 +86,10 @@ const InventoryManagement = () => {
       sortOrder: prevParams.sortOrder === 'ASC' ? 'DESC' : 'ASC',
     }));
   };
-
+  const handleRowClick = (row) => {
+    setModal({ mode: 'VIEW', id: row.id });
+    getItemById(row.id);
+  };
   // const [imageLoading, setimageLoading] = useState(true);
   const [downloadingRowId, setDownloadingRowId] = useState(null);
   // const [hasError, setHasError] = useState(false);
@@ -268,6 +271,7 @@ const InventoryManagement = () => {
         setLimit={(limit) => setParams({ ...params, limit })}
         onSortChange={handleSortChange}
         wrapClasses="inventory-table-wrap"
+        onRowClick={handleRowClick}
       />
       {modal?.mode === 'VIEW' && (
         <InventoryView
