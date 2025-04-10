@@ -205,6 +205,7 @@ const InventoryManagement = () => {
         }}
         onSearch={debouncedSearch}
         filterOptions={filterOptions}
+        type='inventory'
         submitFilter={(filters) => {
           const { fromDate, toDate, ...rest } = filters;
 
