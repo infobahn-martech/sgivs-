@@ -208,6 +208,12 @@ const InventoryForm = () => {
         setValue('sub_category', null);
         setDefaultCategory(null);
       }
+      const selected = getAllCategory.find((item) => {
+        return item.id === category;
+      });
+      if (selected) {
+        setValue('isEZPass', selected.isEZPass);
+      }
     }
   }, [category]);
 
@@ -458,7 +464,7 @@ const InventoryForm = () => {
                 <div className="row mb-3">
                   <div className="col-md-6 form-group">
                     <label htmlFor="itemName" className="form-label">
-                      Item Name<small className="req">*</small>
+                      Item Name{' '}<small className="req">*</small>
                     </label>
                     <input
                       type="text"
@@ -478,13 +484,14 @@ const InventoryForm = () => {
                 <div className="row mb-3">
                   <div className="col-md-6 form-group">
                     <label htmlFor="category" className="form-label">
-                      Category<small className="req">*</small>
+                      Category{' '}<small className="req">*</small>
                     </label>
                     <CustomSelect
                       className="form-select form-control"
                       options={getAllCategory?.map((item) => ({
                         label: item.name,
                         value: item.id,
+                        isEZPass: item.isEZPass,
                       }))}
                       onChange={() => {
                         // setValue('quantity', selectedOption);
@@ -500,10 +507,10 @@ const InventoryForm = () => {
                       <p className="error">{errors.category.message}</p>
                     )}
                   </div>
-                  {category &&
+                  {category && (
                     <div className="col-md-6 form-group">
                       <label htmlFor="category" className="form-label">
-                        Sub category<small className="req">*</small>
+                        Sub category{' '}<small className="req">*</small>
                       </label>
                       <CustomSelect
                         className="form-select form-control"
@@ -525,12 +532,12 @@ const InventoryForm = () => {
                         <p className="error">{errors.sub_category.message}</p>
                       )}
                     </div>
-                  }
+                  )}
                 </div>
                 {/* Drag & Drop Upload Box */}
                 <div className="mb-3 form-group">
                   <label className="form-label">
-                    Upload Image<small className="text-danger">*</small>
+                    Upload Image{' '}<small className="text-danger">*</small>
                   </label>
                   <div
                     className="upload-box"
@@ -608,7 +615,7 @@ const InventoryForm = () => {
                   <div className="col-md-6">
                     <div className="form-group">
                       <label htmlFor="itemId" className="form-label">
-                        Item ID<small className="text-danger">*</small>
+                        Item ID{' '}<small className="text-danger">*</small>
                       </label>
                       <input
                         type="text"
@@ -655,7 +662,7 @@ const InventoryForm = () => {
                 </div>
 
                 {/* EZ pass Checkbox */}
-                <div className="mb-3 form-group">
+                {/* <div className="mb-3 form-group">
                   <div className="form-check">
                     <label className="form-check-label" htmlFor="isEZPass">
                       Is this an EZ Pass Device ?
@@ -667,16 +674,20 @@ const InventoryForm = () => {
                       {...register('isEZPass')}
                     />
                   </div>
-                </div>
+                </div> */}
 
-                {/* Dynamic Part Fields */}
                 {isEZPass && (
                   <div className="mb-3">
                     <div className="col-md-10 form-group">
+                      <label className="form-check-label" htmlFor="plateNumber">
+                        EZ Pass Tag Plate Number{' '}
+                        <small className="req">*</small>
+                      </label>
                       <input
                         type="text"
                         className="form-control"
                         placeholder="Tag Plate Number"
+                        id="plateNumber"
                         {...register('plateNumber', {
                           required: isEZPass
                             ? 'Tag Plate Number is required'
