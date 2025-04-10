@@ -32,9 +32,11 @@ const uploadEzPass = (params) => {
   });
 };
 
-const  getTransactions = (params) => Gateway.get('transactions', { params });
-const  getHistory = (params) => Gateway.get('transactions/billing', { params });
-const  getUnmappedTransactions = (params) => Gateway.get('transactions/unmapped', { params });
+const getTransactions = (params) => Gateway.get('transactions', { params });
+const getHistory = (params) => Gateway.get('transactions/billing', { params });
+const getUnmappedTransactions = (params) =>
+  Gateway.get('transactions/unmapped', { params });
+const sendReminder = (id) => Gateway.post(`/loan/send-reminder?loanId=${id}`);
 
 export default {
   getAllRentals,
@@ -44,5 +46,6 @@ export default {
   uploadEzPass,
   getTransactions,
   getUnmappedTransactions,
-  getHistory
+  getHistory,
+  sendReminder,
 };
