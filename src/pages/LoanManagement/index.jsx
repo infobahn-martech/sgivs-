@@ -20,6 +20,7 @@ import { Tooltip } from 'react-tooltip';
 import RentalNote from './rentalNotes';
 import useAuthReducer from '../../stores/AuthReducer';
 import { Spinner } from 'react-bootstrap';
+import CustomActionModal from '../../components/common/CustomActionModal';
 
 const LoanManagement = () => {
   const {
@@ -34,6 +35,8 @@ const LoanManagement = () => {
     notes,
     updateNote,
     statusLoading,
+    sendReminder,
+    isSendReminderLoading,
   } = useRentalReducer((state) => state);
 
   const { getAllUsersListByRole, usersRoleData } = useAuthReducer(
@@ -55,7 +58,8 @@ const LoanManagement = () => {
 
   const [params, setParams] = useState(initialParams);
   // const [modalConfig, setModalConfig] = useState({ type: null, data: null });
-
+  const [reminder, setreminder] = useState(null);
+  const [reminderModal, setReminderModal] = useState(null);
   const statusEditRef = useRef(null);
 
   useEffect(() => {
@@ -210,6 +214,21 @@ const LoanManagement = () => {
     setdeadlineModal(true);
   };
 
+  const handleReminderClick = (row) => {
+    setreminder(row);
+    setReminderModal(true);
+  };
+
+  const onSubmitReminder = () => {
+    if (reminder?.id) {
+      sendReminder(reminder?.id, () => {
+        setreminder(null);
+        setReminderModal(false);
+        handleGetAllRentals();
+      });
+    }
+  };
+
   const columns = [
     {
       name: 'User',
@@ -287,8 +306,9 @@ const LoanManagement = () => {
           <img
             src={alertIcon}
             alt="Alert"
+            onClick={() => handleReminderClick(row)}
             data-tooltip-id="alert-tooltip"
-            data-tooltip-content="Alert"
+            data-tooltip-content="Send Reminder"
           />
           <img
             src={deadlineIcon}
@@ -435,6 +455,17 @@ const LoanManagement = () => {
           closeModal={() => setModal(null)}
           noteContent={notes}
           updateNote={updateNote}
+        />
+      )}
+
+      {reminder && reminderModal && (
+        <CustomActionModal
+          isLoading={isSendReminderLoading}
+          showModal={reminderModal}
+          closeModal={() => setReminderModal(false)}
+          message={`Are you sure you want to send reminder for ${reminder?.['user.firstName']} ${reminder?.['user.lastName']}?`}
+          onCancel={() => setReminderModal(false)}
+          onSubmit={onSubmitReminder}
         />
       )}
     </>

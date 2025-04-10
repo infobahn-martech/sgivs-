@@ -3,7 +3,6 @@ import useAlertReducer from './AlertReducer';
 import rentalService from '../services/rentalService';
 import { downloadFile } from '../config/config';
 import Gateway from '../config/gateway';
-import { get } from 'lodash';
 
 const useRentalReducer = create((set) => ({
   rentalData: null,
@@ -19,6 +18,7 @@ const useRentalReducer = create((set) => ({
   unMappedtransactions: [],
   transactions: [],
   billingHistory: [],
+  isSendReminderLoading: false,
   getAllRentals: async (params) => {
     try {
       set({ isRentalLoading: true, successMessage: '' });
@@ -51,7 +51,7 @@ const useRentalReducer = create((set) => ({
       set({ isExportLoading: false });
     }
   },
-  changeStatus: async ({ id, status, dueDate, cb,balanceDue }) => {
+  changeStatus: async ({ id, status, dueDate, cb, balanceDue }) => {
     set({ statusLoading: true });
 
     const { success, error } = useAlertReducer.getState();
@@ -61,7 +61,7 @@ const useRentalReducer = create((set) => ({
         id,
         status,
         dueDate,
-        balanceDue
+        balanceDue,
       });
       success(data.message);
       set({
@@ -178,6 +178,24 @@ const useRentalReducer = create((set) => ({
       const { error } = useAlertReducer.getState();
       set({
         isRentalLoading: false,
+      });
+      error(err?.response?.data?.message ?? err.message);
+    }
+  },
+  sendReminder: async (params, cb) => {
+    set({ isSendReminderLoading: true, successMessage: '' });
+    try {
+      const { success } = useAlertReducer.getState();
+
+      const { data } = await rentalService.sendReminder(params);
+      success(data.message);
+
+      set({ isSendReminderLoading: false });
+      cb && cb();
+    } catch (err) {
+      const { error } = useAlertReducer.getState();
+      set({
+        isSendReminderLoading: false,
       });
       error(err?.response?.data?.message ?? err.message);
     }
