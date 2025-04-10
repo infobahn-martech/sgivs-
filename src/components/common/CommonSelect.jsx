@@ -14,7 +14,7 @@ function CustomSelect({
   isLoading,
   maxheight,
   position = 'auto',
-  noOptionsMessage='No options available',
+  noOptionsMessage = 'No options available',
   ...rest
 }) {
   const { isMulti } = { ...rest };
@@ -99,8 +99,14 @@ function CustomSelect({
       } react-select-container p-1`}
       placeholder={placeholder}
       options={options}
+      styles={{
+        menu: (base) => ({
+          ...base,
+          zIndex: 9999,
+        }),
+      }}
       isClearable
-      noOptionsMessage={()=>noOptionsMessage}
+      noOptionsMessage={() => noOptionsMessage}
       components={{
         ...(!showIndicator && {
           DropdownIndicator: () => null,
