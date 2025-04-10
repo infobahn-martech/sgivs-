@@ -14,6 +14,7 @@ function CustomSelect({
   isLoading,
   maxheight,
   position = 'auto',
+  noOptionsMessage='No options available',
   ...rest
 }) {
   const { isMulti } = { ...rest };
@@ -99,6 +100,7 @@ function CustomSelect({
       placeholder={placeholder}
       options={options}
       isClearable
+      noOptionsMessage={()=>noOptionsMessage}
       components={{
         ...(!showIndicator && {
           DropdownIndicator: () => null,

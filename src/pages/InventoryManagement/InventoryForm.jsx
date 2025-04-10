@@ -500,7 +500,7 @@ const InventoryForm = () => {
                       <p className="error">{errors.category.message}</p>
                     )}
                   </div>
-                  {
+                  {category &&
                     <div className="col-md-6 form-group">
                       <label htmlFor="category" className="form-label">
                         Sub category<small className="req">*</small>

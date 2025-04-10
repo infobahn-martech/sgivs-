@@ -22,6 +22,7 @@ import CommonSkeleton from '../../components/common/CommonSkeleton';
 import { Spinner } from 'react-bootstrap';
 import ImageCell from './ImageCell';
 import { getInventoryColumns } from './getInventoryColumns';
+import useSubCategoryReducer from '../../stores/SubCategoryReducer';
 
 const InventoryManagement = () => {
   const {
@@ -39,8 +40,16 @@ const InventoryManagement = () => {
     bulkUploadFiles,
     isUploading,
   } = useInventoryStore((state) => state);
+  const {
+    getAllCategory,
+    getCategory,
+    isLoadingCat,
+    getAllSubCategory,
+    subCategories,
+    clearSubCategoryData
+  } = useSubCategoryReducer((state) => state);
   const navigate = useNavigate();
-  console.log(' inventoryList', inventoryList);
+
   const [modalConfig, setModalConfig] = useState({
     type: null,
     action: null,
@@ -62,8 +71,13 @@ const InventoryManagement = () => {
   const [params, setParams] = useState(initialParams);
 
   useEffect(() => {
+    getCategory();
+  }, []);
+
+  useEffect(() => {
     getInventoryList(params);
   }, [params]);
+  console.log(' params', params);
 
   const handleSortChange = (selector) => {
     setParams((prevParams) => ({
@@ -93,8 +107,6 @@ const InventoryManagement = () => {
   });
 
   const handleExcelUpload = (files, onClose) => {
-    console.log('Files to upload:', files);
-
     const formData = new FormData();
     files.forEach((file) => {
       formData.append('file', file);
@@ -119,7 +131,7 @@ const InventoryManagement = () => {
         break;
     }
   };
-  console.log(modalConfig);
+
   const renderModal = () => (
     <CustomActionModal
       closeModal={closeModal}
@@ -154,7 +166,6 @@ const InventoryManagement = () => {
   );
 
   const debouncedSearch = debounce((searchValue) => {
-    console.log(' searchValue', searchValue);
     setParams((prevParams) => ({
       ...prevParams,
       search: searchValue,
@@ -171,6 +182,32 @@ const InventoryManagement = () => {
         { label: 'Shown', value: true },
         { label: 'Hidden', value: false },
       ],
+    },
+    {
+      fieldName: 'Category',
+      BE_keyName: 'category',
+      fieldType: 'select',
+      Options: getAllCategory?.map((item) => ({
+        label: item.name,
+        value: item.id,
+      })),
+      callBack: (value) => {
+        if (value) {
+          clearSubCategoryData();
+          getAllSubCategory(value);
+        }
+      },
+    },
+    {
+      fieldName: 'Sub Category',
+      isLoading: isLoadingCat,
+      BE_keyName: 'subcategory',
+      fieldType: 'select',
+      Options: subCategories?.map((item) => ({
+        label: item.name,
+        value: item.id,
+      })),
+      noOptionsMessage: 'Select a category first',
     },
     {
       fieldName: 'PartsFound',
@@ -205,7 +242,7 @@ const InventoryManagement = () => {
         }}
         onSearch={debouncedSearch}
         filterOptions={filterOptions}
-        type='inventory'
+        type="inventory"
         submitFilter={(filters) => {
           const { fromDate, toDate, ...rest } = filters;
 
