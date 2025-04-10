@@ -13,7 +13,6 @@ import {
 import useAlertReducer from './AlertReducer';
 
 import { downloadFile } from '../config/config';
-import useNotificationsReducer from './NotificationsReducer';
 
 const useInventoryStore = create((set) => ({
   inventoryList: [],
@@ -112,9 +111,6 @@ const useInventoryStore = create((set) => ({
           ? data.inventories.data
           : data.inventories,
       });
-      useNotificationsReducer
-        .getState()
-        .getPushNotification('Hello', 'Inventory Listed Successfully');
     } catch (error) {
       console.log(' error', error);
     }
