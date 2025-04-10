@@ -160,9 +160,9 @@ const UnmappedTransactions = () => {
       />
       <CustomTable
         pagination={{ currentPage: params.page, limit: params.limit }}
-        count={unMappedtransactions.pagination.totalRecords}
+        count={unMappedtransactions?.pagination?.totalRecords}
         columns={columns}
-        data={unMappedtransactions.data}
+        data={unMappedtransactions?.data}
         isLoading={isRentalLoading}
         onPageChange={handlePageChange}
         setLimit={handleLimitChange}
