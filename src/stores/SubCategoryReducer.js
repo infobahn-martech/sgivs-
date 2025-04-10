@@ -10,8 +10,9 @@ const useSubCategoryReducer = create((set) => ({
   errorMessage: '',
   successMessage: '',
   subCategoryData: null,
-  getAllCategory: null,
+  getAllCategory: [],
   isLoadingCat: false,
+  subCategories: [],
 
   postData: async (payload) => {
     try {
@@ -82,6 +83,22 @@ const useSubCategoryReducer = create((set) => ({
       const datas = data;
       set({
         getAllCategory: datas?.data?.data,
+        isLoadingCat: false,
+      });
+    } catch (err) {
+      set({
+        isLoadingCat: false,
+      });
+    }
+  },
+  getAllSubCategory: async (id) => {
+    try {
+      set({ isLoadingCat: true });
+      const {
+        data: { data },
+      } = await subCategoryService.getAllSubCategory(id);
+      set({
+        subCategories: data?.data,
         isLoadingCat: false,
       });
     } catch (err) {

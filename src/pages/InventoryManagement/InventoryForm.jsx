@@ -18,6 +18,7 @@ import useAlertReducer from '../../stores/AlertReducer';
 import CustomActionModal from '../../components/common/CustomActionModal';
 import useCommonStore from '../../stores/CommonStore';
 import { Spinner } from 'react-bootstrap';
+import useSubCategoryReducer from '../../stores/SubCategoryReducer';
 
 const InventoryForm = () => {
   const {
@@ -39,6 +40,13 @@ const InventoryForm = () => {
     (state) => state
   );
   const { error, clear } = useAlertReducer((state) => state);
+  const {
+    getAllCategory,
+    getCategory,
+    isLoadingCat,
+    getAllSubCategory,
+    subCategories,
+  } = useSubCategoryReducer((state) => state);
 
   const params = useParams();
   const navigate = useNavigate();
@@ -65,13 +73,22 @@ const InventoryForm = () => {
     control,
     name: 'parts',
   });
-
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [newPart, setNewPart] = useState('');
   const [customError, setCustomError] = useState({});
   const [modalConfig, setModalConfig] = useState({ type: null, action: null });
   const [partsList, setPartsList] = useState([]); // Store entered parts
+  const [defaultCategory, setDefaultCategory] = useState(null);
+
+  // watchers
+  const isAddPartChecked = watch('addPart', false);
+  const itemId = watch('itemId', null);
+  const category = watch('category', null);
+  const subCategory = watch('sub_category', null);
+  const isEZPass = watch('isEZPass', null);
+
   useEffect(() => {
+    getCategory();
     clear();
     set({
       isLoading: false,
@@ -139,10 +156,13 @@ const InventoryForm = () => {
   ]);
 
   useEffect(() => {
-    if (inventoryItem) {
+    if (inventoryItem && !defaultCategory) {
       setValue('itemId', inventoryItem.itemId);
       setValue('itemName', inventoryItem.itemName);
       setValue('addPart', inventoryItem.hasParts);
+      setValue('category', inventoryItem.categoryId);
+      setValue('sub_category', inventoryItem.subcategoryId);
+      setDefaultCategory(inventoryItem.categoryId);
 
       if (
         inventoryItem.eZPassNumber &&
@@ -180,11 +200,16 @@ const InventoryForm = () => {
     }
   }, [inventoryItem, setValue]);
 
-  // watchers
-  const isAddPartChecked = watch('addPart', false);
-  const itemId = watch('itemId', null);
-  // const parts = watch('parts', null);
-  const isEZPass = watch('isEZPass', null);
+  useEffect(() => {
+    if (category) {
+      getAllSubCategory(category);
+      clearErrors('sub_category');
+      if (defaultCategory !== category) {
+        setValue('sub_category', null);
+        setDefaultCategory(null);
+      }
+    }
+  }, [category]);
 
   useEffect(() => {
     if (!isAddPartChecked) {
@@ -328,7 +353,6 @@ const InventoryForm = () => {
       });
       return;
     }
-    console.log('first', barcodeId, itemId, params.id);
     if (!barcodeId && itemId && !params?.id) {
       error('Please generate barcode before submitting!');
       return;
@@ -347,6 +371,8 @@ const InventoryForm = () => {
       eZPassNumber: isEZPass ? data.plateNumber || null : null,
       label: isAddPartChecked ? data.buttonLabel : undefined,
       title: isAddPartChecked ? data.title : undefined,
+      categoryId: data.category,
+      subcategoryId: data.sub_category,
     };
 
     if (!params?.id) {
@@ -411,7 +437,6 @@ const InventoryForm = () => {
   const handleGetFormValues = () => {
     return getValues();
   };
-  console.log('errors', errors);
   return (
     <>
       {renderModal()}
@@ -448,30 +473,60 @@ const InventoryForm = () => {
                       <p className="error">{errors.itemName.message}</p>
                     )}
                   </div>
-
-                  {/* <div className="col-md-6">
-                <label htmlFor="quantity" className="form-label">
-                  Quantity
-                </label>
-                <CustomSelect
-                  className="form-select form-control"
-                  options={quantityOptions}
-                  value={quantity}
-                  onChange={() => {
-                    // setValue('quantity', selectedOption);
-                    clearErrors('quantity');
-                  }}
-                  name="quantity"
-                  {...register('quantity', {
-                    required: 'Quantity is required',
-                  })}
-                />
-                {errors.quantity && (
-                  <p className="error">{errors.quantity.message}</p>
-                )}
-              </div> */}
                 </div>
-
+                {/* category and sub category */}
+                <div className="row mb-3">
+                  <div className="col-md-6 form-group">
+                    <label htmlFor="category" className="form-label">
+                      Category<small className="req">*</small>
+                    </label>
+                    <CustomSelect
+                      className="form-select form-control"
+                      options={getAllCategory?.map((item) => ({
+                        label: item.name,
+                        value: item.id,
+                      }))}
+                      onChange={() => {
+                        // setValue('quantity', selectedOption);
+                        clearErrors('category');
+                      }}
+                      value={category}
+                      name="category"
+                      {...register('category', {
+                        required: 'Category is required',
+                      })}
+                    />
+                    {errors.category && (
+                      <p className="error">{errors.category.message}</p>
+                    )}
+                  </div>
+                  {
+                    <div className="col-md-6 form-group">
+                      <label htmlFor="category" className="form-label">
+                        Sub category<small className="req">*</small>
+                      </label>
+                      <CustomSelect
+                        className="form-select form-control"
+                        options={subCategories?.map((item) => ({
+                          label: item.name,
+                          value: item.id,
+                        }))}
+                        // onChange={() => {
+                        //   // setValue('quantity', selectedOption);
+                        //   clearErrors('sub_category');
+                        // }}
+                        value={subCategory}
+                        name="sub_category"
+                        {...register('sub_category', {
+                          required: 'Sub Category is required',
+                        })}
+                      />
+                      {errors.sub_category && (
+                        <p className="error">{errors.sub_category.message}</p>
+                      )}
+                    </div>
+                  }
+                </div>
                 {/* Drag & Drop Upload Box */}
                 <div className="mb-3 form-group">
                   <label className="form-label">
@@ -670,9 +725,7 @@ const InventoryForm = () => {
                             })}
                           />
                           {errors.title && (
-                            <p className="error">
-                              {errors.title.message}
-                            </p>
+                            <p className="error">{errors.title.message}</p>
                           )}
                         </div>
                       </div>
@@ -724,8 +777,8 @@ const InventoryForm = () => {
                             }} // Add on Enter
                           />
                           {customError?.parts && (
-                          <p className="error">{customError.parts}</p>
-                        )}
+                            <p className="error">{customError.parts}</p>
+                          )}
                         </div>
                       </div>
                       <div className="form-group add-btn-wrp part-col-label">
@@ -871,7 +924,7 @@ const InventoryForm = () => {
               <button
                 type="submit"
                 className="btn btn-submit"
-                disabled={isLoading || isBarcodeLoading}
+                disabled={isLoading || isBarcodeLoading || isLoadingCat}
               >
                 {isLoading ? (
                   <Spinner

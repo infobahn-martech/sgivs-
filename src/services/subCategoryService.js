@@ -5,6 +5,8 @@ const patchData = (id, payload) => Gateway.put(`/sub-category/${id}`, payload);
 const getData = (params) => Gateway.get('/sub-category', { params });
 const getAllCategory = () => Gateway.get('/sub-category/all-categories');
 const deleteData = (id) => Gateway.delete(`/sub-category/${id}`);
+const getAllSubCategory = (id) =>
+  Gateway.get(`/sub-category/all-subcategories/${id}`);
 
 export default {
   postData,
@@ -12,4 +14,5 @@ export default {
   getData,
   deleteData,
   getAllCategory,
+  getAllSubCategory,
 };

@@ -48,6 +48,19 @@ export const getInventoryColumns = ({
           : '-',
     },
     {
+      name: 'Category',
+      selector: 'category.name',
+      titleClasses: 'tw1',
+      contentClass: 'user-pic',
+     
+    },
+    {
+      name: 'Sub Category',
+      selector: 'subcategory.name',
+      titleClasses: 'tw1',
+      contentClass: 'user-pic',
+    },
+    {
       name: 'Item Created date',
       selector: 'createdAt',
       titleClasses: 'tw1',
