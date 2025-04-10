@@ -5,11 +5,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import CustomModal from '../../components/common/CustomModal';
 import useCategoryReducer from '../../stores/CategoryReducer';
 
+// Updated schema with isEZPass as a boolean
 const nameSchema = z.object({
   name: z
     .string()
     .nonempty('Name is required')
     .max(10, 'Name must be 10 characters or less'),
+  isEZPass: z.boolean().optional(),
 });
 
 export function AddEditModal({ showModal, closeModal }) {
@@ -23,6 +25,7 @@ export function AddEditModal({ showModal, closeModal }) {
     resolver: zodResolver(nameSchema),
     defaultValues: {
       name: '',
+      isEZPass: false,
     },
   });
 
@@ -34,8 +37,9 @@ export function AddEditModal({ showModal, closeModal }) {
   useEffect(() => {
     if (showModal?.id) {
       setValue('name', showModal?.name || '');
+      setValue('isEZPass', showModal?.isEZPass || false);
     } else {
-      reset(); // clear form when adding
+      reset();
     }
   }, [showModal?.id]);
 
@@ -45,7 +49,7 @@ export function AddEditModal({ showModal, closeModal }) {
     } else {
       postData(data);
     }
-    closeModal(); // close modal after submission
+    closeModal();
   };
 
   const renderHeader = () => (
@@ -73,6 +77,23 @@ export function AddEditModal({ showModal, closeModal }) {
               />
               {errors.name && (
                 <span className="error">{errors.name.message}</span>
+              )}
+            </div>
+          </div>
+
+          <div className="col-lg-6">
+            <div className="form-group forms-custom">
+              <label htmlFor="isEZPass" className="label">
+                EZ Pass
+              </label>
+              <input
+                type="checkbox"
+                id="isEZPass"
+                className="form-check-input"
+                {...register('isEZPass')}
+              />
+              {errors.isEZPass && (
+                <span className="error">{errors.isEZPass.message}</span>
               )}
             </div>
           </div>
