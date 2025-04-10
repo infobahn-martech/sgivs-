@@ -47,19 +47,19 @@ const RentalNote = ({ showModal, closeModal, noteContent, updateNote }) => {
 
   const renderBody = () => (
     <div className="modal-body">
-      <div className="notes-wrp">
+      {/* <div className="notes-wrp"> */}
         {isEditing ? (
           <textarea
-            className="form-control"
+            className="form-control notes-wrp"
             value={editedNote}
             onChange={(e) => setEditedNote(e.target.value)}
-            rows={4}
+           
           />
         ) : (
-          <p>{noteContent?.note || 'No note available.'}</p>
+          <p className="form-control notes-wrp">{noteContent?.note || 'No note available.'}</p>
         )}
       </div>
-    </div>
+    // </div>
   );
 
   console.log('isEditing', typeof isEditing);
