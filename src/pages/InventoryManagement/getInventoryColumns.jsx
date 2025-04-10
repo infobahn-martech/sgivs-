@@ -94,7 +94,7 @@ export const getInventoryColumns = ({
         </span>
         <span
           data-tooltip-id={`tooltip-${row.id || rowIndex}`}
-          data-tooltip-content={row.isVisible ? 'Show' : 'Hide'}
+          data-tooltip-content={!row.isVisible ? 'Show' : 'Hide'}
           onClick={() =>
             setModalConfig({
               id: row.id,
@@ -104,8 +104,8 @@ export const getInventoryColumns = ({
           }
         >
           <img
-            src={row.isVisible ? viewIcon : showHideIcon}
-            alt={row.isVisible ? 'Hide' : 'Show'}
+            src={!row.isVisible ? viewIcon : showHideIcon}
+            alt={!row.isVisible ? 'Hide' : 'Show'}
           />
         </span>
         <span
