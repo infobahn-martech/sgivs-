@@ -53,10 +53,10 @@ const useCategoryReducer = create((set) => ({
     }
   },
 
-  getData: async () => {
+  getData: async (params) => {
     try {
       set({ isLoadingGet: true });
-      const { data } = await categoryService.getData();
+      const { data } = await categoryService.getData(params);
       const datas = data;
       set({
         categoryData: datas?.data,

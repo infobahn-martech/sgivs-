@@ -56,10 +56,10 @@ const useSubCategoryReducer = create((set) => ({
     }
   },
 
-  getData: async () => {
+  getData: async (params) => {
     try {
       set({ isLoadingGet: true });
-      const { data } = await subCategoryService.getData();
+      const { data } = await subCategoryService.getData(params);
       const datas = data;
       set({
         subCategoryData: datas?.data,
