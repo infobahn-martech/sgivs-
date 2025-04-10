@@ -193,7 +193,7 @@ const Category = () => {
           isLoading={isLoadingDelete}
           showModal={deleteModalOpen}
           closeModal={() => setDeleteModalOpen(false)}
-          message="Are you sure you want to delete this?"
+          message={`Are you sure you want to delete this ${deleteModalOpen?.name}?`}
           onCancel={() => setDeleteModalOpen(false)}
           onSubmit={handleDelete}
         />
