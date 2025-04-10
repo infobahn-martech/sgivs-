@@ -60,7 +60,7 @@ const useCategoryReducer = create((set) => ({
       const datas = data;
       set({
         categoryData: datas?.data,
-        successMessage: data?.response?.data?.message ?? data?.message,
+        // successMessage: data?.response?.data?.message ?? data?.message,
         isLoadingGet: false,
       });
     } catch (err) {
