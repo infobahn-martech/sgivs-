@@ -3,13 +3,15 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import CustomModal from '../../components/common/CustomModal';
-import useCategoryReducer from '../../stores/CategoryReducer';
+import CustomSelect from '../../components/common/CommonSelect';
+import useSubCategoryReducer from '../../stores/SubCategoryReducer';
 
 const nameSchema = z.object({
   name: z
     .string()
     .nonempty('Name is required')
     .max(10, 'Name must be 10 characters or less'),
+  categoryId: z.string().nonempty('Category is required'),
 });
 
 export function AddEditModal({ showModal, closeModal }) {
@@ -19,25 +21,40 @@ export function AddEditModal({ showModal, closeModal }) {
     formState: { errors },
     setValue,
     reset,
+    watch,
   } = useForm({
     resolver: zodResolver(nameSchema),
     defaultValues: {
       name: '',
+      categoryId: '',
     },
   });
 
-  const { postData, patchData, isLoading } = useCategoryReducer(
-    (state) => state
-  );
+  console.log('watch', watch());
 
-  // Prefill form when editing
+  const { postData, patchData, isLoading, getCategory, getAllCategory } =
+    useSubCategoryReducer((state) => state);
+
+  const selectedCategoryId = watch('categoryId');
+
   useEffect(() => {
-    if (showModal?.id) {
+    getCategory();
+  }, []);
+
+  useEffect(() => {
+    if (showModal?.id && getAllCategory?.length > 0) {
       setValue('name', showModal?.name || '');
-    } else {
-      reset(); // clear form when adding
+      setValue('categoryId', showModal?.categoryId || '');
+    } else if (!showModal?.id) {
+      reset();
     }
-  }, [showModal?.id]);
+  }, [showModal?.id, getAllCategory]);
+
+  const categoryOptions =
+    getAllCategory?.map((item) => ({
+      label: item.name,
+      value: item.id,
+    })) || [];
 
   const onSubmit = (data) => {
     if (showModal?.id) {
@@ -45,7 +62,7 @@ export function AddEditModal({ showModal, closeModal }) {
     } else {
       postData(data);
     }
-    closeModal(); // close modal after submission
+    closeModal();
   };
 
   const renderHeader = () => (
@@ -73,6 +90,33 @@ export function AddEditModal({ showModal, closeModal }) {
               />
               {errors.name && (
                 <span className="error">{errors.name.message}</span>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-lg-6">
+            <div className="form-group forms-custom">
+              <label htmlFor="categoryId" className="label">
+                Category<span className="text-danger">*</span>
+              </label>
+              <CustomSelect
+                options={categoryOptions}
+                value={
+                  categoryOptions.find(
+                    (option) => option.value === selectedCategoryId
+                  ) || null
+                }
+                onChange={(selected) => {
+                  setValue('categoryId', selected?.value || '');
+                }}
+                placeholder="Select Category"
+                showIndicator={false}
+              />
+
+              {errors.categoryId && (
+                <span className="error">{errors.categoryId.message}</span>
               )}
             </div>
           </div>

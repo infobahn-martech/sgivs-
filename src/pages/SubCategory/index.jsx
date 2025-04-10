@@ -109,6 +109,13 @@ const Category = () => {
       contentClass: 'user-pic',
     },
     {
+      name: 'Category',
+      selector: 'category',
+      // titleClasses: isDashboard ? 'th-name' : 'tw1',
+      contentClass: 'user-pic',
+      cell: (row) => <span>{row?.category?.name}</span>,
+    },
+    {
       name: 'Created Date',
       selector: 'createdAt',
       // titleClasses: isDashboard ? 'th-date' : 'tw5',

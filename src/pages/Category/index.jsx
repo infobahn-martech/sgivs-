@@ -103,17 +103,31 @@ const Category = () => {
 
   const columns = [
     {
-      name: 'Name',
+      name: 'Category Name',
       selector: 'name',
       // titleClasses: isDashboard ? 'th-name' : 'tw1',
       contentClass: 'user-pic',
     },
     {
-      name: 'Created Date',
+      name: 'Total Items',
+      // selector: 'name',
+      contentClass: 'user-pic',
+    },
+    {
+      name: 'Loaned Items',
+      // selector: 'name',
+      contentClass: 'user-pic',
+    },
+    {
+      name: 'Available Items',
+      // selector: 'name',
+      contentClass: 'user-pic',
+    },
+    {
+      name: 'Category Created Date',
       selector: 'createdAt',
       // titleClasses: isDashboard ? 'th-date' : 'tw5',
       cell: (row) => <span>{formatDate(row?.createdAt)}</span>,
-      sort: true,
     },
 
     ...showActions,

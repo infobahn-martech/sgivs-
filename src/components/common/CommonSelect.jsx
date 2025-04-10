@@ -17,49 +17,20 @@ function CustomSelect({
   ...rest
 }) {
   const { isMulti } = { ...rest };
-  const [selectedValue, setSelectedValue] = useState(value);
 
-  // Sync the initial value prop with the internal selected value
-  useEffect(() => {
-    if (value && isMulti) setSelectedValue(value);
-    else if (!value) setSelectedValue(null);
-    else if (!value.value)
-      setSelectedValue(
-        options.find((option) => option.value === value) || null
-      );
-  }, [value, isMulti]);
-
+  // Handle change and pass correct value to parent
   const handleChange = (selectedOption) => {
-    // If clear button clicked, selectedOption is null
-    if (!selectedOption) {
-      setSelectedValue(isMulti ? [] : null);
-      onChange({ value: null }); // Notify parent of cleared selection
-    } else {
-      // Update selected value and notify parent
-      setSelectedValue(selectedOption);
-      onChange(isMulti ? selectedOption.map((opt) => opt) : selectedOption);
-    }
+    onChange(isMulti ? selectedOption?.map((opt) => opt) : selectedOption);
   };
 
-  const fetchValue = () => {
-    if (isMulti) {
-      return options.filter((option) => selectedValue?.includes(option.value));
-    }
-    return (
-      options.find((option) => option.value === selectedValue?.value) || null
-    );
-  };
-
-  // Custom Option component with tooltip
+  // Custom Option component with tooltip for truncated labels
   const CustomOption = (props) => {
     const { data } = props;
     const labelRef = useRef(null);
     const [isTruncated, setIsTruncated] = useState(false);
 
-    // Check if the label is truncated (i.e., if text overflowed)
     useEffect(() => {
       if (labelRef.current) {
-        // Compare the offsetWidth (visible width) with scrollWidth (full content width)
         setIsTruncated(
           labelRef.current.offsetWidth < labelRef.current.scrollWidth
         );
@@ -91,7 +62,7 @@ function CustomSelect({
       maxMenuHeight={maxheight}
       isLoading={isLoading}
       classNamePrefix={classNamePrefix}
-      value={fetchValue()}
+      value={value}
       onChange={handleChange}
       className={`${className} ${
         isMulti ? 'multiple-select' : ''
@@ -104,7 +75,7 @@ function CustomSelect({
           DropdownIndicator: () => null,
           IndicatorSeparator: () => null,
         }),
-        Option: CustomOption, // Use custom option with tooltip
+        Option: CustomOption,
       }}
       {...rest}
     />

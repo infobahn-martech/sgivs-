@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { create } from 'zustand';
 import useAlertReducer from './AlertReducer';
 import subCategoryService from '../services/subCategoryService';
@@ -9,6 +10,8 @@ const useSubCategoryReducer = create((set) => ({
   errorMessage: '',
   successMessage: '',
   subCategoryData: null,
+  getAllCategory: null,
+  isLoadingCat: false,
 
   postData: async (payload) => {
     try {
@@ -70,6 +73,21 @@ const useSubCategoryReducer = create((set) => ({
         isLoadingGet: false,
       });
       error(err?.response?.data?.message ?? err.message);
+    }
+  },
+  getCategory: async () => {
+    try {
+      set({ isLoadingCat: true });
+      const { data } = await subCategoryService.getAllCategory();
+      const datas = data;
+      set({
+        getAllCategory: datas?.data?.data,
+        isLoadingCat: false,
+      });
+    } catch (err) {
+      set({
+        isLoadingCat: false,
+      });
     }
   },
   deleteData: async (id) => {
