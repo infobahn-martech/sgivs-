@@ -17,7 +17,6 @@ function CustomSelect({
   name,
   ...rest
 }) {
-  console.log(' options', options);
   const { isMulti } = { ...rest };
   const [selectedValue, setSelectedValue] = useState(value);
 
@@ -28,10 +27,9 @@ function CustomSelect({
       setSelectedValue(
         options.find((option) => option.value === value) || null
       );
-  }, [value, isMulti]);
+  }, [value, isMulti, options]);
 
   const handleChange = (selectedOption) => {
-    console.log(' selectedOption', selectedOption);
     if (!selectedOption) {
       setSelectedValue(isMulti ? [] : null);
 

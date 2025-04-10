@@ -77,7 +77,7 @@ const UnmappedTransactions = () => {
   }, 500);
 
   const formatDateTime = (date, format) =>
-    date ? moment(date).format(format || 'MMMM D, YYYY : hh:mm A') : '-';
+    date ? moment(date).format(format || 'MMM D, YYYY : hh:mm A') : '-';
 
   const columns = [
     {
@@ -160,9 +160,9 @@ const UnmappedTransactions = () => {
       />
       <CustomTable
         pagination={{ currentPage: params.page, limit: params.limit }}
-        count={unMappedtransactions.pagination.totalRecords}
+        count={unMappedtransactions?.pagination?.totalRecords}
         columns={columns}
-        data={unMappedtransactions.data}
+        data={unMappedtransactions?.data}
         isLoading={isRentalLoading}
         onPageChange={handlePageChange}
         setLimit={handleLimitChange}

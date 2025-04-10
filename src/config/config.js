@@ -82,7 +82,7 @@ export const handleDownloadSample = (type = 'inventory') => {
     const blob = new Blob([csvContent], { type: 'text/csv' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.setAttribute('download', 'sample_template.csv');
+    link.setAttribute('download', 'inventory_sample_template.csv');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -114,24 +114,100 @@ export const handleDownloadSample = (type = 'inventory') => {
     const blob = new Blob([csvContent], { type: 'text/csv' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.setAttribute('download', 'sample_template.csv');
+    link.setAttribute('download', 'loan_sample_template.csv');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
   const handleDownloadEzPassSample = () => {
     const sampleData = [
-      ['licensePlate', 'tollAmount', 'tollDate'], // headers
-      ['ABC-1234', 25.32, '2024-03-10T12:30:00Z'],
-      ['XYZ-5678', 15.75, '2024-03-11T14:45:00Z'],
-      ['LMN-9012', 10.5, '2024-03-12T09:15:00Z'],
+      [
+        'POSTING DATE',
+        'TRANSACTION DATE',
+        'TAG/PLATE NUMBER',
+        'AGENCY',
+        'ACTIVITY',
+        'PLAZA ID',
+        'ENTRY TIME',
+        'ENTRY PLAZA',
+        'ENTRY LANE',
+        'EXIT TIME',
+        'EXIT PLAZA',
+        'EXIT LANE',
+        'VEHICLE TYPE CODE',
+        'AMOUNT',
+        'PREPAID',
+        'PLAN/RATE',
+        'FARE TYPE',
+        'BALANCE',
+      ], // headers
+      [
+        '3/18/2025',
+        '3/17/2025',
+        '505000605',
+        'GSP',
+        'TOLL',
+        '49',
+        '-',
+        '-',
+        '-',
+        '22:00:31',
+        'BRS',
+        '01S',
+        '1',
+        '$0.76 ',
+        'Y',
+        'STANDARD',
+        'N',
+        '$227.93',
+      ],
+      [
+        '3/17/2025',
+        '3/16/2025',
+        '504725633',
+        'MTAB&T',
+        'TOLL',
+        '30',
+        '-',
+        '-',
+        '-',
+        '22:49:41',
+        'VNB',
+        '9',
+        '31',
+        '$6.94 ',
+        'Y',
+        'STANDARD',
+        'N',
+        '$230.86',
+      ],
+      [
+        '3/17/2025',
+        '3/16/2025',
+        '505000605',
+        'GSP',
+        'TOLL',
+        '15',
+        '-',
+        '-',
+        '-',
+        '22:04:32',
+        'ESS',
+        '09S',
+        '1',
+        '$2.17',
+        'Y',
+        'STANDARD',
+        'N',
+        '$228.69',
+      ],
     ];
 
     const csvContent = sampleData.map((row) => row.join(',')).join('\n');
     const blob = new Blob([csvContent], { type: 'text/csv' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.setAttribute('download', 'sample_template.csv');
+    link.setAttribute('download', 'ez_pass_sample_template.csv');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

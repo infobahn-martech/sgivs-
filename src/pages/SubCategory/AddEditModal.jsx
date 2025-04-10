@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import CustomModal from '../../components/common/CustomModal';
-import CustomSelect from '../../components/common/CommonSelect';
 import useSubCategoryReducer from '../../stores/SubCategoryReducer';
+import CustomSelect from './Select';
 
 const nameSchema = z.object({
   name: z

@@ -48,11 +48,24 @@ export const getInventoryColumns = ({
           : '-',
     },
     {
+      name: 'Category',
+      selector: 'category.name',
+      titleClasses: 'tw1',
+      contentClass: 'user-pic',
+     
+    },
+    {
+      name: 'Sub Category',
+      selector: 'subcategory.name',
+      titleClasses: 'tw1',
+      contentClass: 'user-pic',
+    },
+    {
       name: 'Item Created date',
       selector: 'createdAt',
       titleClasses: 'tw1',
       contentClass: 'user-pic',
-      cell: (row) => moment(row.createdAt).format('DD MMM, YYYY'),
+      cell: (row) => moment(row.createdAt).format('MMM D, YYYY'),
     },
     {
       name: 'Have Parts',
@@ -94,7 +107,7 @@ export const getInventoryColumns = ({
         </span>
         <span
           data-tooltip-id={`tooltip-${row.id || rowIndex}`}
-          data-tooltip-content={row.isVisible ? 'Show' : 'Hide'}
+          data-tooltip-content={!row.isVisible ? 'Show' : 'Hide'}
           onClick={() =>
             setModalConfig({
               id: row.id,
@@ -104,8 +117,8 @@ export const getInventoryColumns = ({
           }
         >
           <img
-            src={row.isVisible ? viewIcon : showHideIcon}
-            alt={row.isVisible ? 'Hide' : 'Show'}
+            src={!row.isVisible ? viewIcon : showHideIcon}
+            alt={!row.isVisible ? 'Hide' : 'Show'}
           />
         </span>
         <span
