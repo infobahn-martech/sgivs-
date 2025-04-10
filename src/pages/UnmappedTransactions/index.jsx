@@ -77,7 +77,7 @@ const UnmappedTransactions = () => {
   }, 500);
 
   const formatDateTime = (date, format) =>
-    date ? moment(date).format(format || 'MMMM D, YYYY : hh:mm A') : '-';
+    date ? moment(date).format(format || 'MMM D, YYYY : hh:mm A') : '-';
 
   const columns = [
     {

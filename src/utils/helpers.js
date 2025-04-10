@@ -1,3 +1,3 @@
 import moment from 'moment';
 
-export const dateFormat = (value) => moment(value).format('DD MMMM YYYY');
+export const dateFormat = (value) => moment(value).format('MMM D, YYYY');

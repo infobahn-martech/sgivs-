@@ -52,7 +52,7 @@ export const getInventoryColumns = ({
       selector: 'createdAt',
       titleClasses: 'tw1',
       contentClass: 'user-pic',
-      cell: (row) => moment(row.createdAt).format('DD MMM, YYYY'),
+      cell: (row) => moment(row.createdAt).format('MMM D, YYYY'),
     },
     {
       name: 'Have Parts',
