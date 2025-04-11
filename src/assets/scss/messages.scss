@@ -21,7 +21,7 @@
     height: calc(100vh - 163px);
     display: flex;
     overflow: hidden;
-    @media (max-width:600px){
+    @media (max-width: 600px) {
         flex-direction: column;
         overflow-y: auto;
         height: calc(100vh - 120px);
@@ -30,10 +30,10 @@
         width: 323px;
         height: 100%;
         border-right: 1px solid #f3f3f3;
-        @media ($sm-767){
+        @media ($sm-767) {
             width: 280px;
         }
-        @media (max-width:600px){
+        @media (max-width: 600px) {
             width: 100%;
             height: auto;
         }
@@ -44,44 +44,44 @@
             border-bottom: 1px solid #f3f3f3;
             padding: 10px 25px;
             height: 75px;
-            @media ($sm-1679){
+            @media ($sm-1679) {
                 height: 70px;
             }
-            @media ($sm-1441){
+            @media ($sm-1441) {
                 height: 60px;
             }
             .msg-title {
                 font-size: 20px;
                 font-weight: 600;
                 color: #000000;
-                @media ($sm-1679){
+                @media ($sm-1679) {
                     font-size: 18px;
                 }
-                @media ($sm-1441){
+                @media ($sm-1441) {
                     font-size: 17px;
                 }
-                @media ($sm-1199){
+                @media ($sm-1199) {
                     font-size: 16px;
                 }
-                @media ($sm-991){
+                @media ($sm-991) {
                     font-size: 15px;
                 }
             }
-            .icon{
+            .icon {
                 width: 33px;
-                @media ($sm-1679){
+                @media ($sm-1679) {
                     width: 30px;
                 }
-                @media ($sm-1441){
+                @media ($sm-1441) {
                     width: 28px;
                 }
-                @media ($sm-1199){
+                @media ($sm-1199) {
                     width: 26px;
                 }
-                @media ($sm-991){
+                @media ($sm-991) {
                     width: 24px;
                 }
-                img{
+                img {
                     width: 100%;
                     height: 100%;
                     object-fit: contain;
@@ -105,10 +105,10 @@
                     color: rgba(0, 0, 0, 0.4);
                     font-weight: 400;
                     padding: 5px 20px;
-                    @media ($sm-1679){
+                    @media ($sm-1679) {
                         height: 44px;
                     }
-                    @media ($sm-1199){
+                    @media ($sm-1199) {
                         height: 40px;
                     }
                     &::placeholder {
@@ -133,27 +133,27 @@
                         width: 48px;
                         height: 48px;
                         flex: 0 0 48px;
-                        @media ($sm-1679){
+                        @media ($sm-1679) {
                             width: 44px;
                             height: 44px;
                             flex: 0 0 44px;
                         }
-                        @media ($sm-1441){
+                        @media ($sm-1441) {
                             width: 40px;
                             height: 40px;
                             flex: 0 0 40px;
                         }
-                        @media ($sm-1199){
+                        @media ($sm-1199) {
                             width: 38px;
                             height: 38px;
                             flex: 0 0 38px;
                         }
-                        @media ($sm-991){
+                        @media ($sm-991) {
                             width: 36px;
                             height: 36px;
                             flex: 0 0 36px;
                         }
-                        @media ($sm-767){
+                        @media ($sm-767) {
                             width: 32px;
                             height: 32px;
                             flex: 0 0 32px;
@@ -163,13 +163,13 @@
                             object-fit: cover;
                             width: 100%;
                             height: 100%;
-                            @media ($sm-1199){
+                            @media ($sm-1199) {
                                 border-radius: 10px;
                             }
-                            @media ($sm-991){
+                            @media ($sm-991) {
                                 border-radius: 8px;
                             }
-                            @media ($sm-767){
+                            @media ($sm-767) {
                                 border-radius: 5px;
                             }
                         }
@@ -188,7 +188,7 @@
                             white-space: nowrap;
                             overflow: hidden;
                             text-overflow: ellipsis;
-                            @media ($sm-1199){
+                            @media ($sm-1199) {
                                 font-size: 13px;
                             }
                         }
@@ -205,10 +205,10 @@
                     .time {
                         font-size: 14px;
                         color: rgba(0, 0, 0, 0.3);
-                        @media ($sm-1679){
+                        @media ($sm-1679) {
                             font-size: 13px;
                         }
-                        @media ($sm-1199){
+                        @media ($sm-1199) {
                             font-size: 12px;
                         }
                     }
@@ -226,9 +226,9 @@
         flex: 1;
         height: 100%;
         position: relative;
-        @media (max-width:600px){
+        @media (max-width: 600px) {
             height: auto;
-            overflow-y: visible;;
+            overflow-y: visible;
         }
         .head-wrap {
             display: flex;
@@ -237,7 +237,7 @@
             padding: 15px 24px 15px 24px;
             border-bottom: 1px solid #f3f3f3;
             height: 75px;
-            @media ($sm-1199){
+            @media ($sm-1199) {
                 gap: 10px;
             }
             .img {
@@ -246,12 +246,12 @@
                 width: 40px;
                 height: 40px;
                 flex: 0 0 40px;
-                @media ($sm-1679){
+                @media ($sm-1679) {
                     width: 35px;
                     height: 35px;
                     flex: 0 0 35px;
                 }
-                @media ($sm-1199){
+                @media ($sm-1199) {
                     width: 30px;
                     height: 30px;
                     flex: 0 0 30px;
@@ -273,16 +273,16 @@
                     font-size: 20px;
                     font-weight: 500;
                     line-height: 1.2;
-                    @media ($sm-1679){
+                    @media ($sm-1679) {
                         font-size: 18px;
                     }
-                    @media ($sm-1441){
+                    @media ($sm-1441) {
                         font-size: 16px;
                     }
-                    @media ($sm-1199){
+                    @media ($sm-1199) {
                         font-size: 15px;
                     }
-                    @media ($sm-991){
+                    @media ($sm-991) {
                         font-size: 14px;
                     }
                 }
@@ -319,12 +319,12 @@
                     width: 40px;
                     height: 40px;
                     flex: 0 0 40px;
-                    @media ($sm-1679){
+                    @media ($sm-1679) {
                         width: 35px;
                         height: 35px;
                         flex: 0 0 35px;
                     }
-                    @media ($sm-1199){
+                    @media ($sm-1199) {
                         width: 30px;
                         height: 30px;
                         flex: 0 0 30px;
@@ -350,10 +350,14 @@
                         font-size: 14px;
                         color: #000000;
                         margin: 0;
-                        @media ($sm-579){
+                        @media ($sm-579) {
                             font-size: 13px;
                             padding: 8px 10px;
                         }
+                    }
+                    .time {
+                        font-size: 12px;
+                        color: #000000;
                     }
                 }
                 &.chat-block-right {
@@ -372,6 +376,30 @@
                 }
                 & + .chat-block {
                     padding-top: 15px;
+                }
+            }
+            .date-wrap {
+                text-align: center;
+                position: relative;
+                &:after {
+                    position: absolute;
+                    inset: 0;
+                    height: 1px;
+                    width: 100%;
+                    background: #e2e8f0;
+                    content: "";
+                    margin: auto;
+                }
+                span {
+                    background: #fff;
+                    line-height: 1;
+                    position: relative;
+                    z-index: 9;
+                    padding: 2px 10px;
+                    border-radius: 5px;
+                    font-size: 12px;
+                    color: #000000;
+                    top: -1px;
                 }
             }
         }
