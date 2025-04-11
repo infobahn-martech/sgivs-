@@ -270,14 +270,21 @@
                         font-size: 16px;
                     }
                     @media ($sm-1441) {
-                        padding: 20px 30px 20px;
+                        padding: 10px 30px 20px;
+                        font-size: 15px;
+                    }
+                    @media ($sm-1199) {
+                        padding: 10px 30px 15px;
                         font-size: 15px;
                     }
                 }
                 .drp-cont {
                     padding: 36px 30px 30px;
+                    overflow-y: auto;
+                    max-height: 300px;
                     @media ($sm-1679) {
                         padding: 25px;
+                        max-height: 210px;
                     }
                     @media ($sm-1199) {
                         padding: 20px;
