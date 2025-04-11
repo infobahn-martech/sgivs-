@@ -1,34 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../assets/scss/messages.scss';
 
 import MessageListSidebar from './MessageListSidebar';
 import MessageChatContent from './MessageChatContent';
 
-import user1 from '../../assets/images/msg-img-1.png';
-import user2 from '../../assets/images/msg-img-2.png';
+import messagesReducer from '../../stores/MessagesReducer';
 
 const Messages = () => {
-  const [contacts] = useState([
-    {
-      id: 1,
-      name: 'Elmer Laverty',
-      img: user1,
-      status: 'Haha oh man 🔥',
-    },
-    {
-      id: 2,
-      name: 'Florencio Dorrance',
-      img: user2,
-      status: 'Haha oh man 🔥',
-    },
-  ]);
+  const {
+    getSelectedUsers,
+    selectedUsers,
+    getAllContacts,
+    contacts,
+    isLoadingContact,
+  } = messagesReducer((state) => state);
 
-  const [selectedContactId, setSelectedContactId] = useState(1);
+  useEffect(() => {
+    getAllContacts();
+    getSelectedUsers({ search: '' });
+  }, []);
+
+  const [selectedContactId, setSelectedContactId] = useState(null);
   const [allMessages, setAllMessages] = useState({});
   const [message, setMessage] = useState('');
 
-  const selectedContact = contacts?.find((c) => c?.id === selectedContactId);
+  const selectedContact = selectedUsers?.find(
+    (c) => c?.id === selectedContactId
+  );
+
   const messages = allMessages[selectedContactId] || [];
+
   const onSend = () => {
     if (!message?.trim()) return;
 
@@ -49,9 +50,12 @@ const Messages = () => {
   return (
     <div className="message-body-wrap">
       <MessageListSidebar
-        contacts={contacts}
+        isLoading={isLoadingContact}
+        contacts={selectedUsers}
+        allUsers={contacts}
         selectedId={selectedContactId}
         onSelectContact={(id) => setSelectedContactId(id)}
+        refreshContacts={() => getSelectedUsers({ search: '' })}
       />
       <MessageChatContent
         selectedContact={selectedContact}

@@ -53,14 +53,12 @@ function CustomSelect({
 
   // Custom Option component with tooltip
   const CustomOption = (props) => {
-    const { data } = props;
+    const { data, isSelected } = props;
     const labelRef = useRef(null);
     const [isTruncated, setIsTruncated] = useState(false);
 
-    // Check if the label is truncated (i.e., if text overflowed)
     useEffect(() => {
       if (labelRef.current) {
-        // Compare the offsetWidth (visible width) with scrollWidth (full content width)
         setIsTruncated(
           labelRef.current.offsetWidth < labelRef.current.scrollWidth
         );
@@ -69,19 +67,25 @@ function CustomSelect({
 
     return (
       <components.Option {...props}>
-        <div
-          ref={labelRef}
-          data-tooltip-id={`tooltip-${data.value}`}
-          data-tooltip-content={isTruncated ? data.label : ''}
-          style={{
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-          }}
-        >
-          {data.label}
+        <div className="d-flex items-center gap-2">
+          {isMulti && (
+            <input className='form-check-input' type="checkbox" checked={isSelected} readOnly />
+          )}
+          <div
+            ref={labelRef}
+            data-tooltip-id={`tooltip-${data.value}`}
+            data-tooltip-content={isTruncated ? data.label : ''}
+            style={{
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              flex: 1,
+            }}
+          >
+            {data.label}
+          </div>
+          {isTruncated && <Tooltip id={`tooltip-${data.value}`} place="top" />}
         </div>
-        {isTruncated && <Tooltip id={`tooltip-${data.value}`} place="top" />}
       </components.Option>
     );
   };
@@ -100,6 +104,8 @@ function CustomSelect({
       } react-select-container p-1`}
       placeholder={placeholder}
       options={options}
+      closeMenuOnSelect={!isMulti ? true : false} 
+      hideSelectedOptions={false}
       styles={{
         menu: (base) => ({
           ...base,
