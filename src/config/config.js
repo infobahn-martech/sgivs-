@@ -5,7 +5,7 @@ import userImage from '../assets/images/user.svg';
 import transactions from '../assets/images/transaction-header.svg';
 import ezpassImage from '../assets/images/ezpass.svg';
 import settingsIcon from '../assets/images/Settings.svg';
-import messageIcon from '../assets/images/message-ico.svg';
+import messageIcon from '../assets/images/message-icon.svg';
 import loanImg from '../assets/images/Loan_Management.svg';
 import inventoryImg from '../assets/images/inventory_management.svg';
 
