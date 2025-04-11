@@ -145,12 +145,11 @@ const CommonHeader = ({
               </button>
             </div>
             {!hideFilter && (
-              <div className="filter-wrap dropdown">
-                <a
-                  className="dropdown-toggle "
-                  role="button"
-                  onClick={() => setShowFilterModal((prev) => !prev)}
-                >
+              <div
+                className="filter-wrap dropdown cursor-pointer"
+                onClick={() => setShowFilterModal((prev) => !prev)}
+              >
+                <a className="dropdown-toggle " role="button">
                   <span>
                     Filter{' '}
                     {isFilterApplied && (
