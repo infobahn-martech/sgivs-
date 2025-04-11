@@ -614,11 +614,13 @@ const InventoryForm = () => {
                 </div>
 
                 <div className="row mb-3">
-                  <div className="col-md-10">
-                    <div className="form-group">
-                      <label htmlFor="itemId" className="form-label">
+                  <div className="col-12">
+                  <label htmlFor="itemId" className="form-label">
                         Item ID <small className="text-danger">*</small>
-                      </label>
+                  </label>
+                  </div>
+                  <div className="col d-flex item-outer-wrp">
+                    <div className="item-wrp">
                       <input
                         type="text"
                         className={`${
@@ -639,10 +641,8 @@ const InventoryForm = () => {
                         <p className="error">{errors.itemId.message}</p>
                       )}
                     </div>
-                  </div>
-                  {(!barcodeId && !params?.id && (
-                    <div className="col-md-2 d-flex align-items-end">
-                      <div className="form-group">
+                    {(!barcodeId && !params?.id && (
+                      <div className="btn-wrp">
                         <button
                           type="button"
                           className="btn generate-btn"
@@ -658,9 +658,9 @@ const InventoryForm = () => {
                             : 'Generate Barcode'}
                         </button>
                       </div>
-                    </div>
                   )) ||
                     null}
+                  </div>
                 </div>
 
                 {/* EZ pass Checkbox */}
@@ -812,7 +812,7 @@ const InventoryForm = () => {
                     {/* List of Entered Parts */}
 
                     <div className="part-sec">
-                      <div className="col-md-10 form-group">
+                      <div className="col-12 col-md-10 form-group">
                         <label htmlFor="itemId" className="form-label">
                           Part Title
                         </label>

@@ -88,8 +88,25 @@
                 font-size: 14px;
             }
         }
+        .item-outer-wrp{
+            @media ($sm-767){
+                flex-direction: column;
+            }
+            .item-wrp{
+                width: calc(100% - 218px);
+                margin-right: 18px;
+                @media ($sm-767){
+                    width: 100%;
+                    margin-right: 0px;
+                    margin-bottom: 20px;
+                }
+            }
+            .btn-wrp{
+                align-items: flex-end;
+            }
+        }
         .inner-sec{
-            padding: 20px 166px;
+            padding: 20px 113px;
             @media($sm-1679){
                 padding: 20px 100px;
             }
