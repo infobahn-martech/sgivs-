@@ -34,7 +34,7 @@ const MessageChatContent = ({
 
       <div className="body-msg-wrap">
         {messages?.length > 0 ? (
-          messages.map((msg, idx) => {
+          messages?.map((msg, idx) => {
             const msgDate = new Date(msg.time);
             const showDate =
               idx === 0 ||
