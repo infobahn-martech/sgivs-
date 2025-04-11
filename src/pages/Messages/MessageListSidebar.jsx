@@ -10,7 +10,10 @@ const MessageListSidebar = ({ contacts, selectedId, onSelectContact }) => {
       <div className="message-left-wrap">
         <div className="head">
           <div className="msg-title">Messages</div>
-          <div className="icon" onClick={() => setAddNewMessageModal(true)}>
+          <div
+            className="icon cursor-pointer"
+            onClick={() => setAddNewMessageModal(true)}
+          >
             <img src={plusIcon} alt="plus" />
           </div>
         </div>
