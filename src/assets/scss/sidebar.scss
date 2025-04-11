@@ -108,6 +108,7 @@
             font-size: 15px;
             display: flex;
             padding:15px;
+            padding-right: 0;
             border-radius: 25px;
             margin-bottom: 20px;
             transition: padding 0.3s ease-in-out;
@@ -202,6 +203,10 @@
                 width: 14px;
                 height: 14px;
                 margin-right: 0px;
+            }
+            &.is-sub-menu{
+                width: 9px;
+                height: 9px;
             }
         }
     }
