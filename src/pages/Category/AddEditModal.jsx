@@ -93,7 +93,7 @@ export function AddEditModal({ showModal, closeModal }) {
 
             <div className="col-12">
               <div className="form-group">
-                <label htmlFor="isEZPass" className="form-label">
+                <label htmlFor="isEZPass" className="form-label me-2">
                   EZ Pass
                 </label>
                 <input
