@@ -14,6 +14,7 @@ function CustomSelect({
   isLoading,
   maxheight,
   position = 'auto',
+  noOptionsMessage = 'No options available',
   name,
   ...rest
 }) {
@@ -116,6 +117,8 @@ function CustomSelect({
         isMulti ? 'multiple-select' : ''
       } react-select-container p-1`}
       placeholder={placeholder}
+      noOptionsMessage={() => noOptionsMessage}
+      menuPortalTarget={document.body}
       // options={[
       //   { value: 'shown', label: 'shown' },
       //   { value: 'hidden', label: 'hidden' },
