@@ -74,7 +74,7 @@ const MessageChatContent = ({
           })
         ) : !selectedContact ? (
           <div className="no-messages text-center mt-5">
-            No messages yet. Start the conversation!
+            No messages yet. Pick a user to start chatting!
           </div>
         ) : null}
       </div>
