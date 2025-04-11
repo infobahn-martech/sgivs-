@@ -92,6 +92,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
           <img src={ToggleIcon} alt="Toggle Sidebar" />
         </button>
       </div>
+      <div className="menu-wrp-outer">
       <nav className="nav">
         {sideMenu.map((menu, index) => (
           <Fragment key={index}>
@@ -110,7 +111,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
               data-tooltip-hidden={!collapsed}
               data-tooltip-id={`tooltip-${index}`}
               to={menu.path}
-              className={`nav-link ${isRouteActive(menu) ? 'active' : ''}`}
+              className={`nav-link is-sub-menu ${isRouteActive(menu) ? 'active' : ''}`}
             >
               <span className="icon">
                 <img src={menu.icon} alt="menu-icon" />
@@ -119,7 +120,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
             </Link>
 
             {menu.subMenu && isRouteActive(menu) && !collapsed && (
-              <div className="sub-menu" style={{ marginLeft: '20px' }}>
+              <div className="sub-menu">
                 {menu.subMenu.map((sub, subIndex) => (
                   <Link
                     key={subIndex}
@@ -139,6 +140,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
           </Fragment>
         ))}
       </nav>
+      </div>
     </div>
   );
 };
