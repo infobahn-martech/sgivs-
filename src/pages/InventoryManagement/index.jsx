@@ -190,6 +190,7 @@ const InventoryManagement = () => {
       fieldName: 'Category',
       BE_keyName: 'category',
       fieldType: 'select',
+      isMulti: true,
       Options: getAllCategory?.map((item) => ({
         label: item.name,
         value: item.id,
@@ -206,6 +207,7 @@ const InventoryManagement = () => {
       isLoading: isLoadingCat,
       BE_keyName: 'subcategory',
       fieldType: 'select',
+      isMulti: true,
       Options: subCategories?.map((item) => ({
         label: item.name,
         value: item.id,
