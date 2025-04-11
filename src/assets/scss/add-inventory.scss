@@ -539,6 +539,7 @@
         display: flex;
         align-items: center;
         margin-bottom: 10px;
+        min-width: 200px;
         @media ($sm-1679){
             margin-right: 20px;
             font-size: 15px;
@@ -553,27 +554,22 @@
         @media ($sm-579){
             margin-left: 10px;
         }
+        .close-btn{
+            padding: 0px;
+        }
         span{
-            margin-left: 35px;
+            margin-right: 10px;
+            margin-left: 0;
             width: 27px;
+            word-wrap: break-word;
+            word-break: break-word;
             cursor: pointer;
+            white-space: nowrap;
+            overflow:hidden;
+            text-overflow: ellipsis;
+            flex-grow: 1;
             img{
                 max-width: 100%;
-            }
-            @media ($sm-1679){
-                margin-left: 30px;
-            }
-            @media ($sm-1441){
-                margin-left: 25px;
-            }
-            @media ($sm-1199){
-                margin-left: 20px;
-            }
-            @media ($sm-991){
-                margin-left: 15px;
-            }
-            @media ($sm-579){
-                margin-left: 10px;
             }
         }
     }
