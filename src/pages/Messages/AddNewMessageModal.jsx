@@ -93,7 +93,7 @@ const AddNewMessageModal = ({
                   }}
                 >
                   <div className="prof-img">
-                    <InitialsAvatar name={user?.name} />
+                    <InitialsAvatar name={user?.name} uniqueKey={user?.id} />
                   </div>
                   <div className="prof-dtl">
                     <div className="info">

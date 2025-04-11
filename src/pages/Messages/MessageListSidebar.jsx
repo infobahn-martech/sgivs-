@@ -88,7 +88,10 @@ const MessageListSidebar = ({
                   className={selectedId === contact?.id ? 'active' : ''}
                   onClick={() => onSelectContact(contact.id)}
                 >
-                  <InitialsAvatar name={contact?.name} />
+                  <InitialsAvatar
+                    name={contact?.name}
+                    uniqueKey={contact?.id}
+                  />
                   <div className="name-msg-wrap">
                     <div className="name">{contact?.name}</div>
                     <div className="msg">
