@@ -26,12 +26,28 @@ const Filter = ({
   };
 
   const [filters, setFilters] = useState(getInitialFilters());
+  const [hasValidFilter, setHasValidFilter] = useState(false);
+
+  const checkValidFilter = (filtersObj) => {
+    return Object?.values(filtersObj)?.some(
+      (val) =>
+        (Array.isArray(val) && val.length > 0) ||
+        (typeof val === 'string' && val.trim() !== '') ||
+        typeof val === 'boolean' ||
+        val instanceof Date ||
+        val
+    );
+  };
 
   useEffect(() => {
     if (show) {
       setFilters(getInitialFilters());
     }
   }, [show]);
+
+  useEffect(() => {
+    setHasValidFilter(checkValidFilter(filters));
+  }, [filters]);
 
   const handleInputChange = (fieldName, value, isDate = false) => {
     if (isDate) {
@@ -244,7 +260,12 @@ const Filter = ({
           </button>
           <button
             className="btn btn-primary"
-            onClick={() => submitFilter(filters)}
+            disabled={!hasValidFilter}
+            onClick={() => {
+              if (hasValidFilter) {
+                submitFilter(filters);
+              }
+            }}
           >
             Apply
           </button>
