@@ -51,7 +51,6 @@ const CommonHeader = ({
         !filterRef.current.contains(event.target) &&
         !filterContainerRef.current.contains(event.target)
       ) {
-        console.log(' filterRef', filterRef);
         setShowFilterModal(false);
       }
     };
