@@ -35,7 +35,6 @@ const CommonHeader = ({
   const [searchInput, setSearchInput] = useState('');
   const [openUpload, setOpenUpload] = useState(false);
   const [showFilterModal, setShowFilterModal] = useState(false);
-  console.log(' showFilterModal', showFilterModal);
   const [savedFilters, setSavedFilters] = useState({});
   const [isFilterApplied, setIsFilterApplied] = useState(false);
 

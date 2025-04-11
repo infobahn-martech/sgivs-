@@ -464,7 +464,7 @@ const InventoryForm = () => {
                 <div className="row mb-3">
                   <div className="col-md-6 form-group">
                     <label htmlFor="itemName" className="form-label">
-                      Item Name{' '}<small className="req">*</small>
+                      Item Name <small className="req">*</small>
                     </label>
                     <input
                       type="text"
@@ -480,64 +480,11 @@ const InventoryForm = () => {
                     )}
                   </div>
                 </div>
-                {/* category and sub category */}
-                <div className="row mb-3">
-                  <div className="col-md-6 form-group">
-                    <label htmlFor="category" className="form-label">
-                      Category{' '}<small className="req">*</small>
-                    </label>
-                    <CustomSelect
-                      className="form-select form-control"
-                      options={getAllCategory?.map((item) => ({
-                        label: item.name,
-                        value: item.id,
-                        isEZPass: item.isEZPass,
-                      }))}
-                      onChange={() => {
-                        // setValue('quantity', selectedOption);
-                        clearErrors('category');
-                      }}
-                      value={category}
-                      name="category"
-                      {...register('category', {
-                        required: 'Category is required',
-                      })}
-                    />
-                    {errors.category && (
-                      <p className="error">{errors.category.message}</p>
-                    )}
-                  </div>
-                  {category && (
-                    <div className="col-md-6 form-group">
-                      <label htmlFor="category" className="form-label">
-                        Sub category{' '}<small className="req">*</small>
-                      </label>
-                      <CustomSelect
-                        className="form-select form-control"
-                        options={subCategories?.map((item) => ({
-                          label: item.name,
-                          value: item.id,
-                        }))}
-                        // onChange={() => {
-                        //   // setValue('quantity', selectedOption);
-                        //   clearErrors('sub_category');
-                        // }}
-                        value={subCategory}
-                        name="sub_category"
-                        {...register('sub_category', {
-                          required: 'Sub Category is required',
-                        })}
-                      />
-                      {errors.sub_category && (
-                        <p className="error">{errors.sub_category.message}</p>
-                      )}
-                    </div>
-                  )}
-                </div>
+
                 {/* Drag & Drop Upload Box */}
                 <div className="mb-3 form-group">
                   <label className="form-label">
-                    Upload Image{' '}<small className="text-danger">*</small>
+                    Upload Image <small className="text-danger">*</small>
                   </label>
                   <div
                     className="upload-box"
@@ -611,11 +558,66 @@ const InventoryForm = () => {
                   )}
                 </div>
 
+                {/* category and sub category */}
+                <div className="row">
+                  <div className="col-md-6 form-group">
+                    <label htmlFor="category" className="form-label">
+                      Category <small className="req">*</small>
+                    </label>
+                    <CustomSelect
+                      className="form-select form-control"
+                      options={getAllCategory?.map((item) => ({
+                        label: item.name,
+                        value: item.id,
+                        isEZPass: item.isEZPass,
+                      }))}
+                      onChange={() => {
+                        // setValue('quantity', selectedOption);
+                        clearErrors('category');
+                      }}
+                      value={category}
+                      name="category"
+                      {...register('category', {
+                        required: 'Category is required',
+                      })}
+                    />
+                    {errors.category && (
+                      <p className="error">{errors.category.message}</p>
+                    )}
+                  </div>
+                  {category && (
+                    <div className="col-md-6 form-group">
+                      <label htmlFor="category" className="form-label">
+                        Sub category <small className="req">*</small>
+                      </label>
+                      <CustomSelect
+                        className="form-select form-control"
+                        options={subCategories?.map((item) => ({
+                          label: item.name,
+                          value: item.id,
+                        }))}
+                        // onChange={() => {
+                        //   // setValue('quantity', selectedOption);
+                        //   clearErrors('sub_category');
+                        // }}
+                        value={subCategory}
+                        name="sub_category"
+                        {...register('sub_category', {
+                          required: 'Sub Category is required',
+                        })}
+                      />
+                      {errors.sub_category && (
+                        <p className="error">{errors.sub_category.message}</p>
+                      )}
+                    </div>
+                  )}
+                </div>
+
                 <div className="row mb-3">
-                  <div className="col-md-6">
+                  <div className="col-md-10">
                     <div className="form-group">
                       <label htmlFor="itemId" className="form-label">
-                        Item ID{' '}<small className="text-danger">*</small>
+                        Item ID <small className="text-danger">*</small>
                       </label>
                       <input
                         type="text"
@@ -639,7 +641,7 @@ const InventoryForm = () => {
                     </div>
                   </div>
                   {(!barcodeId && !params?.id && (
-                    <div className="col-md-4 d-flex align-items-end">
+                    <div className="col-md-2 d-flex align-items-end">
                       <div className="form-group">
                         <button
                           type="button"
@@ -719,7 +721,7 @@ const InventoryForm = () => {
                 {isAddPartChecked && (
                   <div id="partFields" className="mb-3">
                     <div className="row mb-3">
-                      <div className="col-md-6">
+                      <div className="col-md-10">
                         <div className="form-group">
                           <label htmlFor="itemId" className="form-label">
                             Title
@@ -740,7 +742,7 @@ const InventoryForm = () => {
                           )}
                         </div>
                       </div>
-                      <div className="col-md-6">
+                      <div className="col-md-10">
                         <div className="form-group">
                           <label htmlFor="itemId" className="form-label">
                             Label
@@ -764,7 +766,7 @@ const InventoryForm = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="part-sec row">
+                    {/* <div className="part-sec row">
                       <div className="col-md-6">
                         <div className="form-group">
                           <label
@@ -805,25 +807,27 @@ const InventoryForm = () => {
                           Add Part
                         </button>
                       </div>
-                    </div>
+                    </div> */}
 
                     {/* List of Entered Parts */}
 
-                    {/* <div className="part-sec">
-                    <div className="col-md-10 form-group">
-                      <label htmlFor="itemId" className="form-label">
-                      Part Titile
-                      </label>
-                      <input
+                    <div className="part-sec">
+                      <div className="col-md-10 form-group">
+                        <label htmlFor="itemId" className="form-label">
+                          Part Title
+                        </label>
+                        <input
                           type="text"
                           className="form-control"
                           placeholder="Part Pop-up Title"
                           value={newPart}
-                          onChange={(e) => {
-                            setNewPart(e.target.value);
-                            const temp = { ...customError };
-                            delete temp.parts;
-                            setCustomError(temp);
+                          onChange={(e) => setNewPart(e.target.value)}
+                          onBlur={handleAddPart} // Auto-add when user leaves the field
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                              e.preventDefault(); // 🔹 Prevents form submission
+                              handleAddPart();
+                            }
                           }}
                         />
                         {customError?.parts && (
@@ -831,10 +835,22 @@ const InventoryForm = () => {
                         )}
                       </div>
                     </div>
-                    <ul className="groups">
-                      <li>Part Pop up Titile<span><img src={CloseGroup} alt="" /></span></li>
-                      <li>Part Pop up Titile<span><img src={CloseGroup} alt="" /></span></li>
-                    </ul> */}
+                    {partsList.length > 0 && (
+                      <ul className="groups">
+                        {partsList.map((part, index) => (
+                          <li key={index}>
+                            <span>{part.value}</span>
+                            <button
+                              type="button"
+                              className="btn close-btn"
+                              onClick={() => handleRemovePart(index)}
+                            >
+                              <img src={CloseGroup} alt="Remove Part" />
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
 
                     {/* <label htmlFor="partPopupTitle" className="form-label">
                       Part Pop-up Title
@@ -883,7 +899,7 @@ const InventoryForm = () => {
                     </div> */}
 
                     {/* List of Entered Parts */}
-                    {partsList.length > 0 && (
+                    {/* {partsList.length > 0 && (
                       <div className="mt-3">
                         {partsList.map((part, index) => (
                           <div className="part-sec part-sec1" key={index}>
@@ -907,7 +923,7 @@ const InventoryForm = () => {
                           </div>
                         ))}
                       </div>
-                    )}
+                    )} */}
                   </div>
                 )}
               </div>
