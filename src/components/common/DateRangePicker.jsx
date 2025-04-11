@@ -17,6 +17,7 @@ const DateRangePicker = ({ className, onChange, value }) => {
       showYearDropdown
       showMonthDropdown
       showTwoColumnMonthYearPicker
+      portalId='root-portal'
       className={className}
       placeholderText="Select date range"
     />

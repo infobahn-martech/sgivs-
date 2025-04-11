@@ -129,7 +129,7 @@ export default function CustomTable({
     <>
       <div className={`table-body-wrap ${mainclasses}`} ref={reffer}>
         <div className={`table-wrap ${wrapClasses}`}>
-          <table className={`${tableClasses} table`}>
+          <table className={`${tableClasses} table ${!data?.length && 'h-100' ||''}`}>
             {data?.length > 0 && (
               <thead>
                 <tr>

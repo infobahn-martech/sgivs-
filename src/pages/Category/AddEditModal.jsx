@@ -53,80 +53,93 @@ export function AddEditModal({ showModal, closeModal }) {
   };
 
   const renderHeader = () => (
-    <h4 className="modal-title">
-      {showModal?.id ? 'Edit Category' : 'Add Category'}
-    </h4>
+    <>
+      <h4 className="modal-title">
+        {showModal?.id ? 'Edit Category' : 'Add Category'}
+      </h4>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+        onClick={closeModal}
+      />
+    </>
   );
 
   const renderBody = () => (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <>
       <div className="modal-body custom-scroll">
-        <div className="row">
-          <div className="col-lg-6">
-            <div className="form-group forms-custom">
-              <label htmlFor="name" className="label">
-                Name<span className="text-danger">*</span>
-              </label>
-              <input
-                type="text"
-                id="name"
-                className="form-control"
-                autoComplete="off"
-                maxLength={10}
-                {...register('name')}
-              />
-              {errors.name && (
-                <span className="error">{errors.name.message}</span>
-              )}
+        <div className="set-dealine-wrp">
+          <div className="row">
+            <div className="col-12">
+              <div className="form-group">
+                <label htmlFor="name" className="form-label">
+                  Name<span className="text-danger">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  className="form-control"
+                  autoComplete="off"
+                  maxLength={10}
+                  {...register('name')}
+                />
+                {errors.name && (
+                  <span className="error">{errors.name.message}</span>
+                )}
+              </div>
             </div>
-          </div>
 
-          <div className="col-lg-6">
-            <div className="form-group forms-custom">
-              <label htmlFor="isEZPass" className="label">
-                EZ Pass
-              </label>
-              <input
-                type="checkbox"
-                id="isEZPass"
-                className="form-check-input"
-                {...register('isEZPass')}
-              />
-              {errors.isEZPass && (
-                <span className="error">{errors.isEZPass.message}</span>
-              )}
+            <div className="col-12">
+              <div className="form-group">
+                <label htmlFor="isEZPass" className="form-label me-2">
+                  EZ Pass
+                </label>
+                <input
+                  type="checkbox"
+                  id="isEZPass"
+                  className="form-check-input"
+                  {...register('isEZPass')}
+                />
+                {errors.isEZPass && (
+                  <span className="error">{errors.isEZPass.message}</span>
+                )}
+              </div>
             </div>
           </div>
         </div>
       </div>
+    </>
+  );
 
-      <div className="modal-footer">
-        <button
-          type="button"
-          className="btn btn-secondary btn-modalSubmit"
-          onClick={closeModal}
-        >
+  const renderFooter = () => (
+    <>
+      <div className="modal-footer bottom-btn-sec">
+        <button type="button" className="btn btn-cancel" onClick={closeModal}>
           Cancel
         </button>
         <button
           type="submit"
-          className="btn btn-primary btn-rounded btn-modalSubmit justify-content-center"
+          className="btn btn-submit"
           disabled={isLoading}
+          onClick={handleSubmit(onSubmit)}
         >
           {isLoading ? 'Loading...' : 'Save'}
         </button>
       </div>
-    </form>
+    </>
   );
 
   return (
     <CustomModal
-      className="modal fade show"
-      dialgName="modal-dialog modal-lg modal-dialog-centered add-employee-modal"
+      className="modal fade category-mgmt-modal show"
+      dialgName="modal-dialog-scrollable"
       show={!!showModal}
       closeModal={closeModal}
       body={renderBody()}
       header={renderHeader()}
+      footer={renderFooter()}
       isLoading={false}
     />
   );

@@ -92,53 +92,57 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
           <img src={ToggleIcon} alt="Toggle Sidebar" />
         </button>
       </div>
-      <nav className="nav">
-        {sideMenu.map((menu, index) => (
-          <Fragment key={index}>
-            <Tooltip
-              id={`tooltip-${index}`}
-              place="right"
-              style={{
-                backgroundColor: '#2ca0da',
-                maxWidth: 500,
-                marginBottom: '10px',
-              }}
-            />
+      <div className="menu-wrp-outer">
+        <nav className="nav">
+          {sideMenu.map((menu, index) => (
+            <Fragment key={index}>
+              <Tooltip
+                id={`tooltip-${index}`}
+                place="right"
+                style={{
+                  backgroundColor: '#2ca0da',
+                  maxWidth: 500,
+                  marginBottom: '10px',
+                }}
+              />
 
-            <Link
-              data-tooltip-content={menu.name}
-              data-tooltip-hidden={!collapsed}
-              data-tooltip-id={`tooltip-${index}`}
-              to={menu.path}
-              className={`nav-link ${isRouteActive(menu) ? 'active' : ''}`}
-            >
-              <span className="icon">
-                <img src={menu.icon} alt="menu-icon" />
-              </span>
-              <span className="txt">{menu.name}</span>
-            </Link>
+              <Link
+                data-tooltip-content={menu.name}
+                data-tooltip-hidden={!collapsed}
+                data-tooltip-id={`tooltip-${index}`}
+                to={menu.path}
+                className={`nav-link ${menu.subMenu && 'is-sub-menu'} ${
+                  isRouteActive(menu) ? 'active open ' : ''
+                }`}
+              >
+                <span className="icon">
+                  <img src={menu.icon} alt="menu-icon" />
+                </span>
+                <span className="txt">{menu.name}</span>
+              </Link>
 
-            {menu.subMenu && isRouteActive(menu) && !collapsed && (
-              <div className="sub-menu" style={{ marginLeft: '20px' }}>
-                {menu.subMenu.map((sub, subIndex) => (
-                  <Link
-                    key={subIndex}
-                    to={sub.path}
-                    className={`nav-link ${
-                      location.pathname === sub.path ? 'active' : ''
-                    }`}
-                  >
-                    <span className="icon">
-                      <img src={sub.icon} alt="menu-icon" />
-                    </span>
-                    <span className="txt">{sub.name}</span>
-                  </Link>
-                ))}
-              </div>
-            )}
-          </Fragment>
-        ))}
-      </nav>
+              {menu.subMenu && isRouteActive(menu) && !collapsed && (
+                <div className="sub-menu">
+                  {menu.subMenu.map((sub, subIndex) => (
+                    <Link
+                      key={subIndex}
+                      to={sub.path}
+                      className={`nav-link ${
+                        location.pathname === sub.path ? 'active' : ''
+                      }`}
+                    >
+                      <span className="icon">
+                        <img src={sub.icon} alt="menu-icon" />
+                      </span>
+                      <span className="txt">{sub.name}</span>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </Fragment>
+          ))}
+        </nav>
+      </div>
     </div>
   );
 };
