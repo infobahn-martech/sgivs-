@@ -75,12 +75,13 @@ const MessageChatContent = ({
           </div>
         )}
       </div>
-
-      <MessageFooter
-        message={message}
-        setMessage={setMessage}
-        onSend={onSend}
-      />
+      {selectedContact?.name && selectedContact?.name !== 'Unknown' && (
+        <MessageFooter
+          message={message}
+          setMessage={setMessage}
+          onSend={onSend}
+        />
+      )}
     </div>
   );
 };
