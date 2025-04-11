@@ -50,7 +50,7 @@ const Messages = () => {
   return (
     <div className="message-body-wrap">
       <MessageListSidebar
-        isLoading={isLoadingContact}
+        isLoadingContact={isLoadingContact}
         contacts={selectedUsers}
         allUsers={contacts}
         selectedId={selectedContactId}
@@ -61,6 +61,7 @@ const Messages = () => {
         selectedContact={selectedContact}
         messages={messages}
         message={message}
+        selectedId={selectedContactId}
         setMessage={setMessage}
         onSend={onSend}
       />
