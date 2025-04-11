@@ -88,7 +88,8 @@ function CustomSelect({
 
   return (
     <Select
-      menuPlacement={position}
+      menuPortalTarget={document.body}
+      menuPosition="fixed"
       maxMenuHeight={maxheight}
       isLoading={isLoading}
       classNamePrefix={classNamePrefix}
