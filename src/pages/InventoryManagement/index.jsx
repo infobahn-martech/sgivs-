@@ -72,6 +72,7 @@ const InventoryManagement = () => {
 
   useEffect(() => {
     getCategory();
+    getAllSubCategory()
   }, []);
 
   useEffect(() => {
@@ -195,12 +196,7 @@ const InventoryManagement = () => {
         label: item.name,
         value: item.id,
       })),
-      callBack: (value) => {
-        if (value) {
-          clearSubCategoryData();
-          getAllSubCategory(value);
-        }
-      },
+      
     },
     {
       fieldName: 'Sub Category',
@@ -250,7 +246,7 @@ const InventoryManagement = () => {
         type="inventory"
         submitFilter={(filters) => {
           const { fromDate, toDate, ...rest } = filters;
-
+console.log(filters)
           setParams({
             ...params,
             ...rest,
