@@ -46,7 +46,7 @@ const InventoryManagement = () => {
     isLoadingCat,
     getAllSubCategory,
     subCategories,
-    clearSubCategoryData
+    
   } = useSubCategoryReducer((state) => state);
   const navigate = useNavigate();
 
