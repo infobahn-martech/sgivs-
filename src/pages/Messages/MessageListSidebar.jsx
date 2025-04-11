@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import plusIcon from '../../assets/images/plus.svg';
 import AddNewMessageModal from './AddNewMessageModal';
+import CommonHeader from '../../components/common/CommonHeader';
 
 const MessageListSidebar = ({ contacts, selectedId, onSelectContact }) => {
   const [addNewMessageModal, setAddNewMessageModal] = useState(false);
@@ -9,8 +10,12 @@ const MessageListSidebar = ({ contacts, selectedId, onSelectContact }) => {
     <>
       <div className="message-left-wrap">
         <div className="head">
-          <div className="msg-title">Messages</div>
-          <div className="icon" onClick={() => setAddNewMessageModal(true)}>
+          <CommonHeader hideFilter hideRightSide />
+          {/* <div className="msg-title">Messages</div> */}
+          <div
+            className="icon cursor-pointer"
+            onClick={() => setAddNewMessageModal(true)}
+          >
             <img src={plusIcon} alt="plus" />
           </div>
         </div>

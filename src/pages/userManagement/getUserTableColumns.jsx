@@ -70,6 +70,25 @@ const getUserTableColumns = ({
       contentClass: 'action-wrap',
       cell: (row) => (
         <>
+          <div
+            className="form-check form-switch"
+            data-tooltip-id="alert-tooltip"
+            data-tooltip-content={
+              row?.isNotificationEnabled
+                ? 'Notification Disable'
+                : 'Notification Enable'
+            }
+          >
+            <input
+              className="form-check-input"
+              type="checkbox"
+              role="switch"
+              id="flexSwitchCheckChecked"
+              checked={row?.isNotificationEnabled}
+              onChange={() => onUserNotify(row)}
+            />
+          </div>
+
           {/* <img
             src={row?.isNotificationEnabled ? alertDisableIcon : alertIcon}
             alt="Alert"
@@ -79,24 +98,6 @@ const getUserTableColumns = ({
             }
             onClick={() => onUserNotify(row)}
           /> */}
-          <div
-            className="toggle-switch"
-            data-tooltip-id="alert-tooltip"
-            data-tooltip-content={
-              row?.isNotificationEnabled
-                ? 'Notification Disable'
-                : 'Notification Enable'
-            }
-          >
-            <label className="switch">
-              <input
-                type="checkbox"
-                checked={row?.isNotificationEnabled}
-                onChange={() => onUserNotify(row)}
-              />
-              <span className="slider round"></span>
-            </label>
-          </div>
 
           <Tooltip
             id="alert-tooltip"

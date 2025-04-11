@@ -88,7 +88,7 @@ export const getInventoryColumns = ({
           place="bottom"
           style={{ backgroundColor: '#2ca0da' }}
         />
-        <span
+        {/* <span
           data-tooltip-id={`tooltip-${row.id || rowIndex}`}
           data-tooltip-content={'View'}
           onClick={() => {
@@ -97,23 +97,29 @@ export const getInventoryColumns = ({
           }}
         >
           <img src={viewIcon} alt="view" />
-        </span>
+        </span> */}
         <span
           data-tooltip-id={`tooltip-${row.id || rowIndex}`}
           data-tooltip-content={'Edit'}
-          onClick={() => navigate(`/inventory-management/edit/${row.id}`)}
+          onClick={(e) => {
+            e.stopPropagation();
+            navigate(`/inventory-management/edit/${row.id}`);
+          }}
         >
           <img src={editIcon} alt="Edit" />
         </span>
         <span
           data-tooltip-id={`tooltip-${row.id || rowIndex}`}
           data-tooltip-content={!row.isVisible ? 'Show' : 'Hide'}
-          onClick={() =>
+          onClick={(e) =>
+          {
+            e.stopPropagation();
             setModalConfig({
               id: row.id,
               type: row.isVisible ? 'show' : 'hide',
               name: row?.itemName,
             })
+          } 
           }
         >
           <img
@@ -124,12 +130,15 @@ export const getInventoryColumns = ({
         <span
           data-tooltip-id={`tooltip-${row.id || rowIndex}`}
           data-tooltip-content={'Delete'}
-          onClick={() =>
+          onClick={(e) =>
+          {
+            e.stopPropagation();
             setModalConfig({
               id: row.id,
               type: 'delete',
               name: row?.itemName,
             })
+          }
           }
         >
           <img src={deleteIcon} alt="Delete" />
@@ -140,7 +149,8 @@ export const getInventoryColumns = ({
           }
           data-tooltip-id={`tooltip-${row.id || rowIndex}`}
           data-tooltip-content={'Download Barcode'}
-          onClick={async () => {
+          onClick={async (e) => {
+            e.stopPropagation();
             const rowId = row.id || rowIndex;
             setDownloadingRowId(rowId);
             try {

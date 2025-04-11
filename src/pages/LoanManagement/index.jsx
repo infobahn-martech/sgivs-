@@ -430,7 +430,7 @@ const LoanManagement = () => {
       />
       <CustomTable
         pagination={{ currentPage: params.page, limit: params.limit }}
-        count={rentalData?.pagination?.totalPages}
+        count={rentalData?.pagination?.totalRecords}
         columns={columns}
         data={rentalData?.data || []}
         isLoading={isRentalLoading}

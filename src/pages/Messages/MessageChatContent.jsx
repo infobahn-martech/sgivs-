@@ -32,15 +32,16 @@ const MessageChatContent = ({
             return (
               <React.Fragment key={idx}>
                 {showDate && (
-                  <div className="date-separator">
-                    {isToday(msgDate)
-                      ? 'Today'
-                      : isYesterday(msgDate)
-                      ? 'Yesterday'
-                      : format(msgDate, 'eeee, MMM d, yyyy')}
+                  <div className="date-wrap">
+                    <span>
+                      {isToday(msgDate)
+                        ? 'Today'
+                        : isYesterday(msgDate)
+                        ? 'Yesterday'
+                        : format(msgDate, 'eeee, MMM d, yyyy')}
+                    </span>
                   </div>
                 )}
-
                 <div
                   className={`chat-block ${
                     msg.from === 'me' ? 'chat-block-right' : ''

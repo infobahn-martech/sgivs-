@@ -5,7 +5,7 @@ import userImage from '../assets/images/user.svg';
 import transactions from '../assets/images/transaction-header.svg';
 import ezpassImage from '../assets/images/ezpass.svg';
 import settingsIcon from '../assets/images/Settings.svg';
-import messageIcon from '../assets/images/message-ico.svg';
+import messageIcon from '../assets/images/message-icon.svg';
 import loanImg from '../assets/images/Loan_Management.svg';
 import inventoryImg from '../assets/images/inventory_management.svg';
 
@@ -231,7 +231,26 @@ export const getCsvHeaders = (type) => {
     case 'loan':
       return ['itemName', 'EzPassNumber', 'parts', 'images'];
     case 'ezpass':
-      return ['licensePlate', 'tollAmount', 'tollDate'];
+      return [
+        'POSTING DATE',
+        'TRANSACTION DATE',
+        'TAG/PLATE NUMBER',
+        'AGENCY',
+        'ACTIVITY',
+        'PLAZA ID',
+        'ENTRY TIME',
+        'ENTRY PLAZA',
+        'ENTRY LANE',
+        'EXIT TIME',
+        'EXIT PLAZA',
+        'EXIT LANE',
+        'VEHICLE TYPE CODE',
+        'AMOUNT',
+        'PREPAID',
+        'PLAN/RATE',
+        'FARE TYPE',
+        'BALANCE',
+      ];
     default:
       return [];
   }
