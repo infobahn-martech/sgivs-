@@ -1,81 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import CustomModal from '../../components/common/CustomModal';
+import InitialsAvatar from '../../components/common/InitialsAvatar';
+import messagesReducer from '../../stores/MessagesReducer';
+import { Spinner } from 'react-bootstrap';
+import CommonSkeleton from '../../components/common/CommonSkeleton';
 
 const AddNewMessageModal = ({
   showModal,
   closeModal,
   contacts = [],
-  onAdd,
+  selectedUsers = [],
+  onAdded,
 }) => {
   const [selectedContacts, setSelectedContacts] = useState([]);
   const [error, setError] = useState('');
+  const { addUsers, isLoadingAddUser, isLoadingContact } = messagesReducer(
+    (state) => state
+  );
+
+  const selectedUserIds = useMemo(
+    () => selectedUsers?.map((u) => u?.userId),
+    [selectedUsers]
+  );
+
+  const filteredContacts = useMemo(
+    () => contacts?.filter((user) => !selectedUserIds?.includes(user.id)),
+    [contacts, selectedUserIds]
+  );
 
   const toggleSelection = (contactId) => {
-    setError(''); // clear error on selection
+    setError('');
     setSelectedContacts((prev) =>
-      prev.includes(contactId)
-        ? prev.filter((id) => id !== contactId)
+      prev?.includes(contactId)
+        ? prev?.filter((id) => id !== contactId)
         : [...prev, contactId]
     );
   };
 
   const handleAdd = () => {
     if (selectedContacts.length > 0) {
-      onAdd(selectedContacts);
-      setSelectedContacts([]);
-      setError('');
+      const payload = {
+        userId: selectedContacts,
+      };
+
+      addUsers(payload, () => {
+        onAdded?.();
+        setSelectedContacts([]);
+        setError('');
+        closeModal();
+      });
     } else {
       setError('Please select at least one contact.');
     }
   };
-
-  const renderHeader = () => (
-    <h5 className="modal-title" id="uploadModalLabel">
-      Add New
-    </h5>
-  );
-
-  const renderBody = () => (
-    <div className="modal-body">
-      <ul className="msg-list-wrp">
-        {contacts?.map((user) => (
-          <li
-            className={`msg-list ${
-              selectedContacts.includes(user.id) ? 'selected' : ''
-            }`}
-            key={user.id}
-            onClick={() => toggleSelection(user.id)}
-            style={{
-              cursor: 'pointer',
-              backgroundColor: selectedContacts.includes(user.id)
-                ? '#e6f7ff'
-                : 'transparent',
-            }}
-          >
-            <div className="prof-img">
-              <img src={user.img} alt={user.name} />
-            </div>
-            <div className="prof-dtl">
-              <div className="info">
-                <div className="name">{user.name}</div>
-                {/* <div className="status">{user.status}</div> */}
-              </div>
-              <div className="time">{user.time}</div>
-            </div>
-          </li>
-        ))}
-      </ul>
-      {error && <span className="error">{error}</span>}
-    </div>
-  );
-
-  const renderFooter = () => (
-    <div className="modal-footer">
-      <button className="btn btn-primary" onClick={handleAdd}>
-        <span className="icon">Add</span>
-      </button>
-    </div>
-  );
 
   return (
     <CustomModal
@@ -88,9 +65,73 @@ const AddNewMessageModal = ({
         setError('');
         closeModal();
       }}
-      header={renderHeader()}
-      body={renderBody()}
-      footer={renderFooter()}
+      header={<h5 className="modal-title">Create Message</h5>}
+      body={
+        <div className="modal-body">
+          {isLoadingContact ? (
+            <>
+              {Array.from({ length: 10 }).map((_, idx) => (
+                <CommonSkeleton key={idx} />
+              ))}
+            </>
+          ) : filteredContacts?.length === 0 ? (
+            <div className="no-results">No users found.</div>
+          ) : (
+            <ul className="msg-list-wrp">
+              {filteredContacts?.map((user) => (
+                <li
+                  className={`msg-list ${
+                    selectedContacts?.includes(user?.id) ? 'selected' : ''
+                  }`}
+                  key={user?.id}
+                  onClick={() => toggleSelection(user?.id)}
+                  style={{
+                    cursor: 'pointer',
+                    backgroundColor: selectedContacts.includes(user?.id)
+                      ? '#e6f7ff'
+                      : 'transparent',
+                  }}
+                >
+                  <div className="prof-img">
+                    <InitialsAvatar name={user?.name} />
+                  </div>
+                  <div className="prof-dtl">
+                    <div className="info">
+                      <div className="name">{user?.name}</div>
+                    </div>
+                    <div className="time">{user?.time}</div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+          {error && <span className="error">{error}</span>}
+        </div>
+      }
+      footer={
+        <div className="modal-footer">
+          <button
+            className="btn btn-primary"
+            onClick={handleAdd}
+            disabled={isLoadingAddUser}
+          >
+            <span className="icon">
+              {isLoadingAddUser ? (
+                <Spinner
+                  size="sm"
+                  as="span"
+                  animation="border"
+                  variant="light"
+                  aria-hidden="true"
+                  className="custom-spinner"
+                />
+              ) : (
+                'Add'
+              )}
+            </span>
+          </button>
+        </div>
+      }
     />
   );
 };
