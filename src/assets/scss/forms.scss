@@ -244,6 +244,10 @@
             color: #fff;
         }
     }
+    .react-datepicker-popper[data-placement^=bottom] .react-datepicker__triangle {
+        fill: #d7eaf3;
+        color: #d7eaf3;
+    }
 }
 
 
