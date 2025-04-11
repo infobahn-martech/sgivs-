@@ -22,6 +22,7 @@ export default function CustomTable({
   setLimit,
   showLoader,
   onView,
+  onRowClick,
   wrapClasses = '',
 }) {
   const [tempCount, setTempCount] = useState(0);
@@ -168,7 +169,11 @@ export default function CustomTable({
                 <tbody>
                   {data.length || dashboard
                     ? data?.map((row, index) => (
-                        <tr key={`row${row.id}`}>
+                      <tr
+                      key={row.id}
+                      onClick={() => onRowClick?.(row)}
+                      className="cursor-pointer"
+                    >
                           {columns?.map(
                             (
                               {

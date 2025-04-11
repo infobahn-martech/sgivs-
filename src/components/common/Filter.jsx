@@ -3,6 +3,7 @@ import calIcon from '../../assets/images/calend-icon.svg';
 import CustomDateRange from './DateRangePicker';
 import moment from 'moment';
 import CommonSelect from './CommonSelect';
+import useSubCategoryReducer from '../../stores/SubCategoryReducer';
 
 const Filter = ({
   filterOptions,
@@ -52,9 +53,11 @@ const Filter = ({
     setFilters((prev) => ({ ...prev, [fieldName]: updatedValue }));
   };
 
+  const { clearSubCategoryData } = useSubCategoryReducer((state) => state);
+
   const clearFilters = () => {
     const cleared = {};
-
+    clearSubCategoryData();
     filterOptions.forEach((option) => {
       if (!option) return;
 
@@ -75,6 +78,7 @@ const Filter = ({
 
   const cancelFilter = () => {
     onCancel();
+    clearSubCategoryData();
     isFilterApplied && clearFilters();
   };
 
@@ -119,9 +123,13 @@ const Filter = ({
                     value={
                       filters[option?.BE_keyName] || (option.isMulti ? [] : '')
                     }
+                    noOptionsMessage={option.noOptionsMessage}
                     isMulti={option.isMulti}
                     isLoading={option.isLoading}
                     onChange={(selected) => {
+                      if (option.callBack) {
+                        option.callBack(selected?.value);
+                      }
                       const value = option.isMulti
                         ? selected?.map((item) => item.value)
                         : selected?.value;

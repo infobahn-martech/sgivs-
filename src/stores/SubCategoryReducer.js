@@ -107,6 +107,13 @@ const useSubCategoryReducer = create((set) => ({
       });
     }
   },
+  clearSubCategoryData: () => {
+    set({
+      subCategories: [],
+      errorMessage: '',
+      successMessage: '',
+    });
+  },
   deleteData: async (id) => {
     try {
       set({ isLoadingDelete: true });

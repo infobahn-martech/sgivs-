@@ -231,7 +231,26 @@ export const getCsvHeaders = (type) => {
     case 'loan':
       return ['itemName', 'EzPassNumber', 'parts', 'images'];
     case 'ezpass':
-      return ['licensePlate', 'tollAmount', 'tollDate'];
+      return [
+        'POSTING DATE',
+        'TRANSACTION DATE',
+        'TAG/PLATE NUMBER',
+        'AGENCY',
+        'ACTIVITY',
+        'PLAZA ID',
+        'ENTRY TIME',
+        'ENTRY PLAZA',
+        'ENTRY LANE',
+        'EXIT TIME',
+        'EXIT PLAZA',
+        'EXIT LANE',
+        'VEHICLE TYPE CODE',
+        'AMOUNT',
+        'PREPAID',
+        'PLAN/RATE',
+        'FARE TYPE',
+        'BALANCE',
+      ];
     default:
       return [];
   }
