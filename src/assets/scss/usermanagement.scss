@@ -855,6 +855,19 @@
                             }
                         }
                     }
+                    .loan-status-wrp{
+                        display: flex;
+                        .react-select-container{
+                            border-radius: 35px;
+                            background-color: #f7fbff;
+                            border: 1px solid #f1f1f1;
+                            color: #8897ad;
+                            min-width: 130px;
+                            .react-select__control.react-select__control{
+                                min-height: 35px;
+                            }
+                        }
+                    }
                 }
                 &:last-child {
                     td {
@@ -957,6 +970,7 @@
             justify-content: center;
             height: 39px;
             //width: 140px;
+            width: 180px;
             padding: 0 20px;
             border-radius: 30px;
             background: #fdebeb;
