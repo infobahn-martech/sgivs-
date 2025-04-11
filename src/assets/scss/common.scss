@@ -231,12 +231,16 @@ a{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    height: 100%;
     .no-data-content{
         display: flex;
         align-items: center;
         justify-content: center;
         max-width: 300px;
         flex-direction: column;
+        @media ($sm-991){
+            max-width: 190px;
+        }
         .no-data-img{
             padding: 20px;
             img{

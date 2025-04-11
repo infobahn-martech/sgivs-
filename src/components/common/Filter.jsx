@@ -13,6 +13,7 @@ const Filter = ({
   onCancel,
   savedFilters = {},
   isFilterApplied,
+  ref
 }) => {
   const getInitialFilters = () => {
     if (Object.keys(savedFilters).length) return savedFilters;
@@ -103,6 +104,7 @@ const Filter = ({
       className={`dropdown-menu dropdown-menu-end filter-dropdown ${
         show ? 'show' : ''
       }`}
+      ref={ref}
     >
       <div className="drop-title">Filter By</div>
       <div className="drp-cont">

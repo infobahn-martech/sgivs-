@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import * as XLSX from 'xlsx';
 import { Spinner } from 'react-bootstrap';
@@ -34,8 +34,34 @@ const CommonHeader = ({
 }) => {
   const [searchInput, setSearchInput] = useState('');
   const [openUpload, setOpenUpload] = useState(false);
+  const [showFilterModal, setShowFilterModal] = useState(false);
+  const [savedFilters, setSavedFilters] = useState({});
+  const [isFilterApplied, setIsFilterApplied] = useState(false);
 
   // const [showFilterModal, setShowFilterModal] = useState(false);
+
+  const filterRef = useRef(null);
+  const filterContainerRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        filterRef.current &&
+        !filterRef.current.contains(event.target) &&
+        !filterContainerRef.current.contains(event.target)
+      ) {
+        setShowFilterModal(false);
+      }
+    };
+
+    if (showFilterModal) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showFilterModal]);
 
   const handleSearchChange = (event) => {
     const value = event.target.value;
@@ -93,14 +119,11 @@ const CommonHeader = ({
     }
   };
 
-  const [showFilterModal, setShowFilterModal] = useState(false);
-  const [savedFilters, setSavedFilters] = useState({});
-  const [isFilterApplied, setIsFilterApplied] = useState(false);
-
   const handleSubmitFilter = (filters) => {
     setSavedFilters(filters); // Persist applied filters
     setIsFilterApplied(true);
     setShowFilterModal(false); // Close modal
+    console.log('first2222');
     submitFilter(filters); // existing logic
   };
 
@@ -145,9 +168,9 @@ const CommonHeader = ({
               </button>
             </div>
             {!hideFilter && (
-              <div className="filter-wrap dropdown">
+              <div className="filter-wrap dropdown" ref={filterContainerRef}>
                 <a
-                  className="dropdown-toggle "
+                  className="dropdown-toggle h-100 align-items-center "
                   role="button"
                   onClick={() => setShowFilterModal((prev) => !prev)}
                 >
@@ -168,6 +191,7 @@ const CommonHeader = ({
                     isFilterApplied={isFilterApplied}
                     onCancel={() => setShowFilterModal(false)}
                     show={showFilterModal}
+                    ref={filterRef}
                   />
                 )}
               </div>
