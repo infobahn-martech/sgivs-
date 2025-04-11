@@ -58,7 +58,7 @@ const AddNewMessageModal = ({
             <div className="prof-dtl">
               <div className="info">
                 <div className="name">{user.name}</div>
-                <div className="status">{user.status}</div>
+                {/* <div className="status">{user.status}</div> */}
               </div>
               <div className="time">{user.time}</div>
             </div>
