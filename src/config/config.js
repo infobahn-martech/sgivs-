@@ -300,3 +300,23 @@ export const downloadFile = async ({
     throw new Error(err?.message ?? 'File download failed.');
   }
 };
+
+export const getColorClass = (input = '') => {
+  const colorClasses = [
+    'blue',
+    'green',
+    'pink',
+    'purple',
+    'orange',
+    'yellow',
+    'teal',
+    'coral',
+  ];
+
+  let hash = 0;
+  for (let i = 0; i < input.length; i++) {
+    hash = input.charCodeAt(i) + ((hash << 5) - hash);
+  }
+
+  return colorClasses[Math.abs(hash) % colorClasses.length];
+};

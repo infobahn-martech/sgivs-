@@ -48,6 +48,8 @@ const CommonHeader = ({
       if (
         filterRef.current &&
         !filterRef.current.contains(event.target) &&
+        !event.target.closest('.react-select__menu') &&
+        !event.target.closest('.react-select__clear-indicator') &&
         !filterContainerRef.current.contains(event.target)
       ) {
         setShowFilterModal(false);

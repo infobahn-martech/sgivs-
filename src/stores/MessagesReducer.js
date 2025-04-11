@@ -50,6 +50,26 @@ const messagesReducer = create((set) => ({
       error(err?.response?.data?.message ?? err.message);
     }
   },
+  deleteUser: async ({ id }, cb) => {
+    try {
+      set({ isLoadingDelete: true });
+      const { data } = await MessagesService.deleteUser(id);
+      const { success } = useAlertReducer.getState();
+      success(data?.response?.data?.message ?? data?.message);
+      set({
+        successMessage: data?.response?.data?.message ?? data?.message,
+        isLoadingDelete: false,
+      });
+      cb && cb();
+    } catch (err) {
+      const { error } = useAlertReducer.getState();
+      set({
+        errorMessage: err?.response?.data?.message ?? err?.message,
+        isLoadingDelete: false,
+      });
+      error(err?.response?.data?.message ?? err.message);
+    }
+  },
 
   getSelectedUsers: async (params) => {
     try {

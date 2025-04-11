@@ -46,6 +46,7 @@ const InventoryForm = () => {
     isLoadingCat,
     getAllSubCategory,
     subCategories,
+    clearSubCategoryData,
   } = useSubCategoryReducer((state) => state);
 
   const params = useParams();
@@ -90,6 +91,7 @@ const InventoryForm = () => {
   useEffect(() => {
     getCategory();
     clear();
+    clearSubCategoryData();
     set({
       isLoading: false,
       barcodeId: null,
@@ -585,39 +587,43 @@ const InventoryForm = () => {
                       <p className="error">{errors.category.message}</p>
                     )}
                   </div>
-                  {category && (
-                    <div className="col-md-6 form-group">
-                      <label htmlFor="category" className="form-label">
-                        Sub category <small className="req">*</small>
-                      </label>
-                      <CustomSelect
-                        className="form-select form-control"
-                        options={subCategories?.map((item) => ({
-                          label: item.name,
-                          value: item.id,
-                        }))}
-                        // onChange={() => {
-                        //   // setValue('quantity', selectedOption);
-                        //   clearErrors('sub_category');
-                        // }}
-                        value={subCategory}
-                        name="sub_category"
-                        {...register('sub_category', {
-                          required: 'Sub Category is required',
-                        })}
-                      />
-                      {errors.sub_category && (
-                        <p className="error">{errors.sub_category.message}</p>
-                      )}
-                    </div>
-                  )}
+
+                  <div className="col-md-6 form-group">
+                    <label htmlFor="category" className="form-label">
+                      Sub category <small className="req">*</small>
+                    </label>
+                    <CustomSelect
+                      className="form-select form-control"
+                      options={subCategories?.map((item) => ({
+                        label: item.name,
+                        value: item.id,
+                      }))}
+                      noOptionsMessage={
+                        category
+                          ? 'No sub category available'
+                          : 'Select a category first'
+                      }
+                      // onChange={() => {
+                      //   // setValue('quantity', selectedOption);
+                      //   clearErrors('sub_category');
+                      // }}
+                      value={subCategory}
+                      name="sub_category"
+                      {...register('sub_category', {
+                        required: 'Sub Category is required',
+                      })}
+                    />
+                    {errors.sub_category && (
+                      <p className="error">{errors.sub_category.message}</p>
+                    )}
+                  </div>
                 </div>
 
                 <div className="row mb-3">
                   <div className="col-12">
-                  <label htmlFor="itemId" className="form-label">
-                        Item ID <small className="text-danger">*</small>
-                  </label>
+                    <label htmlFor="itemId" className="form-label">
+                      Item ID <small className="text-danger">*</small>
+                    </label>
                   </div>
                   <div className="col d-flex item-outer-wrp">
                     <div className="item-wrp">
@@ -658,8 +664,8 @@ const InventoryForm = () => {
                             : 'Generate Barcode'}
                         </button>
                       </div>
-                  )) ||
-                    null}
+                    )) ||
+                      null}
                   </div>
                 </div>
 
@@ -681,7 +687,7 @@ const InventoryForm = () => {
                 {isEZPass && (
                   <div className="mb-3">
                     <div className="col-md-10 form-group">
-                      <label className="form-check-label" htmlFor="plateNumber">
+                      <label className="form-label" htmlFor="plateNumber">
                         EZ Pass Tag Plate Number{' '}
                         <small className="req">*</small>
                       </label>

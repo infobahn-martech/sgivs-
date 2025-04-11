@@ -13,7 +13,12 @@ const MessageChatContent = ({
   const renderAvatar = () => {
     // Render fallback avatar using name initials
     if (!selectedContact?.img) {
-      return <InitialsAvatar name={selectedContact?.name || 'User'} />;
+      return (
+        <InitialsAvatar
+          name={selectedContact?.name || 'User'}
+          uniqueKey={selectedContact?.id}
+        />
+      );
     }
     return <img src={selectedContact?.img} alt={selectedContact?.name} />;
   };
@@ -34,7 +39,7 @@ const MessageChatContent = ({
 
       <div className="body-msg-wrap">
         {messages?.length > 0 ? (
-          messages.map((msg, idx) => {
+          messages?.map((msg, idx) => {
             const msgDate = new Date(msg.time);
             const showDate =
               idx === 0 ||
@@ -58,9 +63,7 @@ const MessageChatContent = ({
                     msg.from === 'me' ? 'chat-block-right' : ''
                   }`}
                 >
-                  {msg.from === 'them' && (
-                    <figure className="img">{renderAvatar()}</figure>
-                  )}
+                  {msg.from === 'them' && renderAvatar()}
                   <div className="chat-content-wrap">
                     <p className="txt">{msg?.text}</p>
                     <div className="time">{format(msgDate, 'hh:mm a')}</div>
@@ -69,12 +72,13 @@ const MessageChatContent = ({
               </React.Fragment>
             );
           })
-        ) : (
+        ) : !selectedContact ? (
           <div className="no-messages text-center mt-5">
-            No messages yet. Start the conversation!
+            No messages yet. Pick a user to start chatting!
           </div>
-        )}
+        ) : null}
       </div>
+
       {selectedContact?.name && selectedContact?.name !== 'Unknown' && (
         <MessageFooter
           message={message}
