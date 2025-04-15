@@ -9,6 +9,7 @@ const MessageChatContent = ({
   message,
   setMessage,
   onSend,
+  colorMap,
 }) => {
   const renderAvatar = () => {
     // Render fallback avatar using name initials
@@ -28,7 +29,10 @@ const MessageChatContent = ({
       {selectedContact?.name && selectedContact?.name !== 'Unknown' && (
         <div className="head-wrap">
           <figure className="img">
-            <InitialsAvatar name={selectedContact?.name} />
+            <InitialsAvatar
+              name={selectedContact?.name}
+              colorClass={colorMap?.[selectedContact?.id]}
+            />
           </figure>
           <div className="name-status-wrap">
             <div className="name">{selectedContact?.name}</div>

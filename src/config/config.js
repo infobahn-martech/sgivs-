@@ -320,3 +320,19 @@ export const getColorClass = (input = '') => {
 
   return colorClasses[Math.abs(hash) % colorClasses.length];
 };
+
+export const getRelativeTime = (timestamp) => {
+  if (!timestamp) return '';
+
+  const now = new Date();
+  const messageTime = new Date(timestamp);
+  const diffMs = now - messageTime;
+
+  const diffMins = Math.floor(diffMs / 1000 / 60);
+  const diffHours = Math.floor(diffMins / 60);
+  const diffDays = Math.floor(diffHours / 24);
+
+  if (diffMins < 60) return `${diffMins}m`;
+  if (diffHours < 24) return `${diffHours}h`;
+  return `${diffDays}d`;
+};

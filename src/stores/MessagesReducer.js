@@ -76,7 +76,7 @@ const messagesReducer = create((set) => ({
       set({ loadingSelectedUsers: true });
       const { data } = await MessagesService.getUsers(params);
       set({
-        selectedUsers: data.data,
+        selectedUsers: data.data?.data,
         successMessage: data?.response?.data?.message ?? data?.message,
         loadingSelectedUsers: false,
       });

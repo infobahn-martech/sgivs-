@@ -8,6 +8,7 @@ import CommonSkeleton from '../../components/common/CommonSkeleton';
 import deleteIcon from '../../assets/images/delete.svg';
 import { Tooltip } from 'react-tooltip';
 import CustomActionModal from '../../components/common/CustomActionModal';
+import { getRelativeTime } from '../../config/config';
 
 const MessageListSidebar = ({
   contacts,
@@ -16,6 +17,7 @@ const MessageListSidebar = ({
   onSelectContact,
   refreshContacts,
   isLoadingContact,
+  colorMap,
 }) => {
   const [addNewMessageModal, setAddNewMessageModal] = useState(false);
   const [search, setSearch] = useState('');
@@ -82,62 +84,68 @@ const MessageListSidebar = ({
             ) : contacts?.length === 0 ? (
               <li className="no-results">No users found.</li>
             ) : (
-              contacts?.map((contact) => (
-                <li
-                  key={contact?.id}
-                  className={selectedId === contact?.id ? 'active' : ''}
-                  onClick={() => onSelectContact(contact.id)}
-                >
-                  <InitialsAvatar
-                    name={contact?.name}
-                    uniqueKey={contact?.id}
-                  />
-                  <div className="name-msg-wrap">
-                    <div className="name">{contact?.name}</div>
-                    <div className="msg">
-                      {contact?.lastMessage || 'No messages yet'}
-                    </div>
-                  </div>
-                  <div className="time">
-                    {contact?.lastMessageAt
-                      ? new Date(contact?.lastMessageAt)?.toLocaleTimeString()
-                      : ''}
-                  </div>
+              contacts?.map((contact) => {
+                const lastMsg =
+                  contact?.messages?.[contact.messages.length - 1];
 
-                  {selectedId === contact?.id && (
-                    <img
-                      src={deleteIcon}
-                      alt="Delete"
-                      data-tooltip-id={`delete-tooltip-${contact?.id}`}
-                      data-tooltip-content="Delete"
-                      className="cursor-pointer"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDelete(contact);
-                      }}
+                return (
+                  <li
+                    key={contact?.id}
+                    className={selectedId === contact?.id ? 'active' : ''}
+                    onClick={() => onSelectContact(contact.id)}
+                  >
+                    <InitialsAvatar
+                      name={contact?.name}
+                      uniqueKey={contact?.id}
+                      colorClass={colorMap?.[contact?.id]}
                     />
+                    <div className="name-msg-wrap">
+                      <div className="name">{contact?.name}</div>
+                      <div className="msg">
+                        {lastMsg?.message || 'No messages yet'}
+                      </div>
+                    </div>
+                    <div className="time">
+                      {lastMsg?.createdAt
+                        ? getRelativeTime(lastMsg.createdAt)
+                        : ''}
+                    </div>
 
-                    // <div
-                    //   data-tooltip-id={`delete-tooltip-${contact?.id}`}
-                    //   data-tooltip-content="Delete"
-                    //   className="delete-icon"
-                    //   onClick={(e) => {
-                    //     e.stopPropagation();
-                    //     handleDelete(contact?.id);
-                    //   }}
-                    //   title="Delete chat"
-                    // >
-                    //   🗑
-                    // </div>
-                  )}
-                  <Tooltip
-                    id={`delete-tooltip-${contact?.id}`}
-                    place="top"
-                    effect="solid"
-                    style={{ backgroundColor: '#2ca0da' }}
-                  />
-                </li>
-              ))
+                    {selectedId === contact?.id && (
+                      <img
+                        src={deleteIcon}
+                        alt="Delete"
+                        data-tooltip-id={`delete-tooltip-${contact?.id}`}
+                        data-tooltip-content="Delete"
+                        className="cursor-pointer"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDelete(contact);
+                        }}
+                      />
+
+                      // <div
+                      //   data-tooltip-id={`delete-tooltip-${contact?.id}`}
+                      //   data-tooltip-content="Delete"
+                      //   className="delete-icon"
+                      //   onClick={(e) => {
+                      //     e.stopPropagation();
+                      //     handleDelete(contact?.id);
+                      //   }}
+                      //   title="Delete chat"
+                      // >
+                      //   🗑
+                      // </div>
+                    )}
+                    <Tooltip
+                      id={`delete-tooltip-${contact?.id}`}
+                      place="top"
+                      effect="solid"
+                      style={{ backgroundColor: '#2ca0da' }}
+                    />
+                  </li>
+                );
+              })
             )}
           </ul>
         </div>

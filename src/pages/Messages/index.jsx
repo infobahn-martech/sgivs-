@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import '../../assets/scss/messages.scss';
 
 import MessageListSidebar from './MessageListSidebar';
 import MessageChatContent from './MessageChatContent';
 
 import messagesReducer from '../../stores/MessagesReducer';
+import { getColorClass } from '../../config/config';
 
 const Messages = () => {
   const {
@@ -24,11 +25,42 @@ const Messages = () => {
   const [allMessages, setAllMessages] = useState({});
   const [message, setMessage] = useState('');
 
-  const selectedContact = selectedUsers?.find(
+  // Ensure selectedUsers is always an array
+  const safeSelectedUsers = Array.isArray(selectedUsers) ? selectedUsers : [];
+
+  const selectedContact = safeSelectedUsers.find(
     (c) => c?.id === selectedContactId
   );
 
-  const messages = allMessages[selectedContactId] || [];
+  // Combine initial messages from API + messages sent in session
+  const messages = useMemo(() => {
+    const initialMessages =
+      selectedContact?.messages?.map((msg) => ({
+        from: msg.senderType === 1 ? 'them' : 'me',
+        text: msg.message,
+        time: msg.createdAt,
+      })) || [];
+
+    const localMessages = allMessages[selectedContactId] || [];
+
+    // Merge and optionally sort
+    const combined = [...initialMessages, ...localMessages];
+
+    // Sort by timestamp (ISO format)
+    return combined.sort((a, b) => new Date(a.time) - new Date(b.time));
+  }, [selectedContact, allMessages, selectedContactId]);
+
+  const colorMap = useMemo(() => {
+    const map = {};
+
+    safeSelectedUsers.forEach((contact) => {
+      if (contact?.id) {
+        map[contact.id] = getColorClass(contact.id);
+      }
+    });
+
+    return map;
+  }, [safeSelectedUsers]);
 
   const onSend = () => {
     if (!message?.trim()) return;
@@ -47,16 +79,21 @@ const Messages = () => {
     setMessage('');
   };
 
+  // Ensure safe defaults for props passed to sidebar
+  const safeAllContacts = Array.isArray(contacts) ? contacts : [];
+
   return (
     <div className="message-body-wrap">
       <MessageListSidebar
         isLoadingContact={isLoadingContact}
-        contacts={selectedUsers}
-        allUsers={contacts}
+        contacts={safeSelectedUsers}
+        allUsers={safeAllContacts}
         selectedId={selectedContactId}
         onSelectContact={(id) => setSelectedContactId(id)}
         refreshContacts={() => getSelectedUsers({ search: '' })}
+        colorMap={colorMap}
       />
+
       <MessageChatContent
         selectedContact={selectedContact}
         messages={messages}
@@ -64,6 +101,7 @@ const Messages = () => {
         selectedId={selectedContactId}
         setMessage={setMessage}
         onSend={onSend}
+        colorMap={colorMap}
       />
     </div>
   );
