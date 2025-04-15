@@ -10,7 +10,6 @@ import { getColorClass } from '../../config/config';
 const Messages = () => {
   const {
     getSelectedUsers,
-    selectedUsers,
     getAllContacts,
     contacts,
     isLoadingContact,
@@ -18,56 +17,39 @@ const Messages = () => {
   } = messagesReducer((state) => state);
 
   const [selectedContactId, setSelectedContactId] = useState(null);
-  const [allMessages, setAllMessages] = useState({});
   const [message, setMessage] = useState('');
+  const [allContacts, setAllContacts] = useState([]);
 
-  // Get current user's ID from localStorage or auth context
-  const currentUserId = localStorage.getItem('userId'); // Adjust this as per your auth setup
+  const handleRefreshSidebar = () => {
+    getSelectedUsers({ search: '', page: 1, limit: 10 });
+  };
 
-  // Fetch contacts & selected users on mount
-  useEffect(() => {
-    getAllContacts();
-    getSelectedUsers({ search: '' });
-  }, []);
-
-  // Defensive checks
-  const safeSelectedUsers = Array.isArray(selectedUsers) ? selectedUsers : [];
   const safeAllContacts = Array.isArray(contacts) ? contacts : [];
 
-  const selectedContact = safeSelectedUsers.find(
-    (c) => c?.id === selectedContactId
-  );
+  const selectedContact = allContacts?.find((c) => c?.id === selectedContactId);
 
-  // Combine backend + local messages
   const messages = useMemo(() => {
-    const initialMessages =
-      selectedContact?.messages?.map((msg) => ({
-        from: msg.senderType === 1 ? 'me' : 'them', // ✅ FIXED!
-        text: msg.message,
-        time: msg.createdAt,
-      })) || [];
+    return (
+      selectedContact?.messages
+        ?.map((msg) => ({
+          from: msg.senderType === 1 ? 'me' : 'them',
+          text: msg.message,
+          time: msg.createdAt,
+        }))
+        ?.sort((a, b) => new Date(a.time) - new Date(b.time)) || []
+    );
+  }, [selectedContact]);
 
-    const localMessages = allMessages[selectedContactId] || [];
-
-    const combined = [...initialMessages, ...localMessages];
-
-    return combined.sort((a, b) => new Date(a.time) - new Date(b.time));
-  }, [selectedContact, allMessages, selectedContactId]);
-
-  // Color map for consistent avatars
   const colorMap = useMemo(() => {
     const map = {};
-
-    safeSelectedUsers.forEach((contact) => {
+    allContacts?.forEach((contact) => {
       if (contact?.id) {
         map[contact.id] = getColorClass(contact.id);
       }
     });
-
     return map;
-  }, [safeSelectedUsers]);
+  }, [allContacts]);
 
-  // Send a new message via API
   const onSend = () => {
     if (!message?.trim() || !selectedContactId || !selectedContact?.id) return;
 
@@ -79,42 +61,36 @@ const Messages = () => {
         conversationId: selectedContact?.id,
         message: trimmedMessage,
       },
-      (response) => {
-        // ❌ REMOVE this to prevent duplicate
-        // const newMessage = {
-        //   from: 'me',
-        //   text: trimmedMessage,
-        //   time: new Date().toISOString(),
-        // };
-
-        // setAllMessages((prev) => ({
-        //   ...prev,
-        //   [selectedContactId]: [...(prev[selectedContactId] || []), newMessage],
-        // }));
-
-        // ✅ Instead, just refresh from server
-        getSelectedUsers({ search: '' });
+      () => {
+        handleRefreshSidebar();
       },
       (error) => {
         console.error('Failed to send message:', error);
-        setMessage(trimmedMessage); // restore input
+        setMessage(trimmedMessage);
       }
     );
   };
+
+  useEffect(() => {
+    getAllContacts();
+    handleRefreshSidebar();
+  }, []);
 
   return (
     <div className="message-body-wrap">
       <MessageListSidebar
         isLoadingContact={isLoadingContact}
-        contacts={safeSelectedUsers}
-        allUsers={safeAllContacts}
         selectedId={selectedContactId}
-        onSelectContact={(id) => setSelectedContactId(id)}
-        refreshContacts={() => getSelectedUsers({ search: '' })}
+        onSelectContact={setSelectedContactId}
+        refreshContacts={handleRefreshSidebar}
         colorMap={colorMap}
+        allUsers={safeAllContacts}
+        allContacts={allContacts}
+        setAllContacts={setAllContacts}
       />
 
       <MessageChatContent
+        isLoadingContact={isLoadingContact}
         selectedContact={selectedContact}
         messages={messages}
         message={message}

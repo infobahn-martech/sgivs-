@@ -11,6 +11,7 @@ const messagesReducer = create((set) => ({
   contacts: null,
   selectedUsers: null,
   isLoadingPostMessage: false,
+  usersTotalCount: null,
 
   getAllContacts: async () => {
     try {
@@ -80,6 +81,7 @@ const messagesReducer = create((set) => ({
         selectedUsers: data.data?.data,
         successMessage: data?.response?.data?.message ?? data?.message,
         loadingSelectedUsers: false,
+        usersTotalCount: data?.data?.total,
       });
     } catch (err) {
       const { error } = useAlertReducer.getState();

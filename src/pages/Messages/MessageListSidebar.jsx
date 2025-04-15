@@ -2,48 +2,99 @@ import React, { useEffect, useState } from 'react';
 import plusIcon from '../../assets/images/plus.svg';
 import AddNewMessageModal from './AddNewMessageModal';
 import CommonHeader from '../../components/common/CommonHeader';
-import InitialsAvatar from '../../components/common/InitialsAvatar';
-import messagesReducer from '../../stores/MessagesReducer';
 import CommonSkeleton from '../../components/common/CommonSkeleton';
-import { Tooltip } from 'react-tooltip';
 import CustomActionModal from '../../components/common/CustomActionModal';
 import ContactItem from './ContactItem';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import messagesReducer from '../../stores/MessagesReducer';
 
 const MessageListSidebar = ({
-  contacts,
-  allUsers,
   selectedId,
   onSelectContact,
-  refreshContacts,
   isLoadingContact,
   colorMap,
+  allUsers,
+  allContacts,
+  setAllContacts,
 }) => {
   const [addNewMessageModal, setAddNewMessageModal] = useState(false);
-  const [search, setSearch] = useState('');
-  const { getSelectedUsers, isLoadingDelete, deleteUser } = messagesReducer(
-    (state) => state
-  );
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [deleteDetails, setDeleteDetails] = useState(null);
+
+  const {
+    getSelectedUsers,
+    selectedUsers,
+    isLoadingDelete,
+    deleteUser,
+    usersTotalCount = 0,
+  } = messagesReducer((state) => state);
+
+  const [params, setParams] = useState({
+    search: '',
+    page: 1,
+    limit: 10,
+    hasMore: true,
+  });
+
+  useEffect(() => {
+    fetchUsers(1);
+  }, [params.search]);
+
+  useEffect(() => {
+    if (!selectedUsers) return;
+
+    setAllContacts((prev) => {
+      return params.page === 1 ? selectedUsers : [...prev, ...selectedUsers];
+    });
+  }, [selectedUsers]);
+
+  useEffect(() => {
+    setParams((prev) => ({
+      ...prev,
+      hasMore: allContacts?.length < usersTotalCount,
+    }));
+  }, [allContacts, usersTotalCount]);
+
+  const fetchUsers = (pageToFetch = 1) => {
+    getSelectedUsers({
+      search: params.search,
+      page: pageToFetch,
+      limit: params.limit,
+    });
+
+    setParams((prev) => ({
+      ...prev,
+      page: pageToFetch,
+    }));
+  };
+
+  const loadMoreContacts = () => {
+    if (!params.hasMore || isLoadingContact) return;
+    fetchUsers(params.page + 1);
+  };
 
   const handleSearchChange = (e) => {
     const value = e.target.value;
-    setSearch(value);
-    getSelectedUsers({ search: value });
+    setAllContacts([]);
+    setParams({
+      search: value,
+      page: 1,
+      limit: 10,
+      hasMore: true,
+    });
   };
-
-  const [deleteModal, setdeleteModal] = useState(false);
-  const [deleteDetails, setdeleteDetails] = useState(null);
 
   const handleDelete = (contact) => {
-    setdeleteModal(true);
-    setdeleteDetails(contact);
+    setDeleteModal(true);
+    setDeleteDetails(contact);
   };
 
-  const handleDeleUser = () => {
+  const handleDeleteUser = () => {
     if (deleteDetails?.id) {
       deleteUser({ id: deleteDetails.id }, () => {
-        setdeleteModal(false);
-        setdeleteDetails(null);
-        refreshContacts();
+        setDeleteModal(false);
+        setDeleteDetails(null);
+        fetchUsers(1);
       });
     }
   };
@@ -61,40 +112,51 @@ const MessageListSidebar = ({
           </div>
         </div>
 
-        <div className="msg-listing-wrap">
+        <div
+          className="msg-listing-wrap"
+          id="scrollableDiv"
+          // style={{ overflowY: 'auto', maxHeight: 'calc(100vh - 160px)' }}
+        >
           <div className="search">
             <input
               type="text"
               className="txt"
               placeholder="Search messages"
-              value={search}
+              value={params.search}
               onChange={handleSearchChange}
             />
           </div>
 
-          <ul className="listing">
-            {isLoadingContact ? (
-              // eslint-disable-next-line no-unused-vars
-              Array.from({ length: 7 }).map((_, idx) => (
-                <>
-                  <CommonSkeleton height={50} />
-                </>
-              ))
-            ) : contacts?.length === 0 ? (
-              <li className="no-results">No users found.</li>
-            ) : (
-              contacts?.map((contact) => (
-                <ContactItem
-                  key={contact.id}
-                  contact={contact}
-                  selectedId={selectedId}
-                  onSelectContact={onSelectContact}
-                  colorMap={colorMap}
-                  onDelete={handleDelete}
-                />
-              ))
-            )}
-          </ul>
+          {isLoadingContact && params.page === 1 ? (
+            Array.from({ length: 7 }).map((_, idx) => (
+              <CommonSkeleton key={idx} height={50} />
+            ))
+          ) : allContacts?.length === 0 ? (
+            <li className="no-results">No users found.</li>
+          ) : (
+            <InfiniteScroll
+              dataLength={allContacts.length}
+              next={loadMoreContacts}
+              hasMore={params.hasMore}
+              loader={Array.from({ length: 7 }).map((_, idx) => (
+                <CommonSkeleton key={idx} height={50} />
+              ))}
+              scrollableTarget="scrollableDiv"
+            >
+              <ul className="listing">
+                {allContacts.map((contact) => (
+                  <ContactItem
+                    key={contact.id}
+                    contact={contact}
+                    selectedId={selectedId}
+                    onSelectContact={onSelectContact}
+                    colorMap={colorMap}
+                    onDelete={handleDelete}
+                  />
+                ))}
+              </ul>
+            </InfiniteScroll>
+          )}
         </div>
       </div>
 
@@ -102,8 +164,8 @@ const MessageListSidebar = ({
         showModal={addNewMessageModal}
         closeModal={() => setAddNewMessageModal(false)}
         contacts={allUsers}
-        selectedUsers={contacts}
-        onAdded={refreshContacts}
+        selectedUsers={allContacts}
+        onAdded={() => fetchUsers(1)}
         colorMap={colorMap}
       />
 
@@ -112,10 +174,10 @@ const MessageListSidebar = ({
           isDelete
           isLoading={isLoadingDelete}
           showModal={deleteModal}
-          closeModal={() => setdeleteModal(false)}
-          message={`Are you sure you want to delete the conversation with ${deleteDetails?.name}  ?`}
-          onCancel={() => setdeleteModal(false)}
-          onSubmit={handleDeleUser}
+          closeModal={() => setDeleteModal(false)}
+          message={`Are you sure you want to delete the conversation with ${deleteDetails?.name}?`}
+          onCancel={() => setDeleteModal(false)}
+          onSubmit={handleDeleteUser}
         />
       )}
     </>
