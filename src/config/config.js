@@ -301,24 +301,47 @@ export const downloadFile = async ({
   }
 };
 
-export const getColorClass = (input = '') => {
-  const colorClasses = [
-    'blue',
-    'green',
-    'pink',
-    'purple',
-    'orange',
-    'yellow',
-    'teal',
-    'coral',
-  ];
+const colorClasses = [
+  'blue',
+  'green',
+  'pink',
+  'purple',
+  'orange',
+  'yellow',
+  'teal',
+  'coral',
+];
 
-  let hash = 0;
-  for (let i = 0; i < input.length; i++) {
-    hash = input.charCodeAt(i) + ((hash << 5) - hash);
+const assignedColors = new Map(); // key => color
+let colorQueue = [...colorClasses]; // current round
+let fallbackQueue = [...colorClasses]; // resettable fallback for overflow
+
+export const getColorClass = (key = '') => {
+  if (!key) return 'blue';
+
+  // Already assigned
+  if (assignedColors.has(key)) {
+    return assignedColors.get(key);
   }
 
-  return colorClasses[Math.abs(hash) % colorClasses.length];
+  // Still colors available in current round
+  if (colorQueue.length > 0) {
+    const nextColor = colorQueue.shift();
+    assignedColors.set(key, nextColor);
+    return nextColor;
+  }
+
+  // All used once — reset queue and assign from fallback (to continue fair cycling)
+  colorQueue = [...fallbackQueue];
+  const nextColor = colorQueue.shift();
+  assignedColors.set(key, nextColor);
+  return nextColor;
+};
+
+// Optional: for logout / reset
+export const resetColorAssignment = () => {
+  assignedColors.clear();
+  colorQueue = [...colorClasses];
 };
 
 export const getRelativeTime = (timestamp) => {
