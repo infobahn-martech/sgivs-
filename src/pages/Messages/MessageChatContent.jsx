@@ -49,6 +49,7 @@ const MessageChatContent = ({
             <figure className="img">
               <InitialsAvatar
                 name={selectedContact?.name}
+                uniqueKey={selectedContact?.id}
                 colorClass={colorMap?.[selectedContact?.id]}
               />
             </figure>
