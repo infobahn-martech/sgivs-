@@ -144,7 +144,7 @@ const MessageListSidebar = ({
               scrollableTarget="scrollableDiv"
             >
               <ul className="listing">
-                {allContacts.map((contact) => (
+                {allContacts?.map((contact) => (
                   <ContactItem
                     key={contact.id}
                     contact={contact}
