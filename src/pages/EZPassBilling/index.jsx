@@ -351,7 +351,7 @@ const EZPassBilling = () => {
   ];
 
   const exportExcel = async () => {
-    exportRental(params);
+    exportRental({...params,fileName:"EZpass_data"});
   };
   const getUserOptions = () =>
     usersRoleData?.data
