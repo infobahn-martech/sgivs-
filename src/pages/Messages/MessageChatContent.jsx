@@ -2,6 +2,7 @@ import React from 'react';
 import MessageFooter from './MessageFooter';
 import { format, isSameDay, isToday, isYesterday } from 'date-fns';
 import InitialsAvatar from '../../components/common/InitialsAvatar'; // fallback avatar
+import messagesReducer from '../../stores/MessagesReducer';
 
 const MessageChatContent = ({
   selectedContact,
@@ -11,6 +12,9 @@ const MessageChatContent = ({
   onSend,
   colorMap,
 }) => {
+  const { isLoadingPostMessage, postMessage } = messagesReducer(
+    (state) => state
+  );
   const renderAvatar = () => {
     // Render fallback avatar using name initials
     if (!selectedContact?.img) {
@@ -64,7 +68,7 @@ const MessageChatContent = ({
                 )}
                 <div
                   className={`chat-block ${
-                    msg.from === 'me' ? 'chat-block-right' : ''
+                    msg.from?.toLowerCase() === 'me' ? 'chat-block-right' : ''
                   }`}
                 >
                   {msg.from === 'them' && renderAvatar()}
@@ -88,6 +92,7 @@ const MessageChatContent = ({
           message={message}
           setMessage={setMessage}
           onSend={onSend}
+          isLoadingPostMessage={isLoadingPostMessage}
         />
       )}
     </div>

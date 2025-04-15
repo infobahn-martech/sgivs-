@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import plusIcon from '../../assets/images/plus.svg';
 import AddNewMessageModal from './AddNewMessageModal';
 import CommonHeader from '../../components/common/CommonHeader';
 import InitialsAvatar from '../../components/common/InitialsAvatar';
 import messagesReducer from '../../stores/MessagesReducer';
 import CommonSkeleton from '../../components/common/CommonSkeleton';
-import deleteIcon from '../../assets/images/delete.svg';
 import { Tooltip } from 'react-tooltip';
 import CustomActionModal from '../../components/common/CustomActionModal';
-import { getRelativeTime } from '../../config/config';
+import ContactItem from './ContactItem';
 
 const MessageListSidebar = ({
   contacts,
@@ -84,68 +83,16 @@ const MessageListSidebar = ({
             ) : contacts?.length === 0 ? (
               <li className="no-results">No users found.</li>
             ) : (
-              contacts?.map((contact) => {
-                const lastMsg =
-                  contact?.messages?.[contact.messages.length - 1];
-
-                return (
-                  <li
-                    key={contact?.id}
-                    className={selectedId === contact?.id ? 'active' : ''}
-                    onClick={() => onSelectContact(contact.id)}
-                  >
-                    <InitialsAvatar
-                      name={contact?.name}
-                      uniqueKey={contact?.id}
-                      colorClass={colorMap?.[contact?.id]}
-                    />
-                    <div className="name-msg-wrap">
-                      <div className="name">{contact?.name}</div>
-                      <div className="msg">
-                        {lastMsg?.message || 'No messages yet'}
-                      </div>
-                    </div>
-                    <div className="time">
-                      {lastMsg?.createdAt
-                        ? getRelativeTime(lastMsg.createdAt)
-                        : ''}
-                    </div>
-
-                    {selectedId === contact?.id && (
-                      <img
-                        src={deleteIcon}
-                        alt="Delete"
-                        data-tooltip-id={`delete-tooltip-${contact?.id}`}
-                        data-tooltip-content="Delete"
-                        className="cursor-pointer"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleDelete(contact);
-                        }}
-                      />
-
-                      // <div
-                      //   data-tooltip-id={`delete-tooltip-${contact?.id}`}
-                      //   data-tooltip-content="Delete"
-                      //   className="delete-icon"
-                      //   onClick={(e) => {
-                      //     e.stopPropagation();
-                      //     handleDelete(contact?.id);
-                      //   }}
-                      //   title="Delete chat"
-                      // >
-                      //   🗑
-                      // </div>
-                    )}
-                    <Tooltip
-                      id={`delete-tooltip-${contact?.id}`}
-                      place="top"
-                      effect="solid"
-                      style={{ backgroundColor: '#2ca0da' }}
-                    />
-                  </li>
-                );
-              })
+              contacts?.map((contact) => (
+                <ContactItem
+                  key={contact.id}
+                  contact={contact}
+                  selectedId={selectedId}
+                  onSelectContact={onSelectContact}
+                  colorMap={colorMap}
+                  onDelete={handleDelete}
+                />
+              ))
             )}
           </ul>
         </div>
@@ -157,6 +104,7 @@ const MessageListSidebar = ({
         contacts={allUsers}
         selectedUsers={contacts}
         onAdded={refreshContacts}
+        colorMap={colorMap}
       />
 
       {deleteModal && (

@@ -11,6 +11,7 @@ const AddNewMessageModal = ({
   contacts = [],
   selectedUsers = [],
   onAdded,
+  colorMap,
 }) => {
   const [selectedContacts, setSelectedContacts] = useState([]);
   const [error, setError] = useState('');
@@ -93,7 +94,11 @@ const AddNewMessageModal = ({
                   }}
                 >
                   <div className="prof-img">
-                    <InitialsAvatar name={user?.name} uniqueKey={user?.id} />
+                    <InitialsAvatar
+                      name={user?.name}
+                      uniqueKey={user?.id}
+                      colorClass={colorMap?.[user?.id]}
+                    />
                   </div>
                   <div className="prof-dtl">
                     <div className="info">

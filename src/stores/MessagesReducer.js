@@ -10,6 +10,7 @@ const messagesReducer = create((set) => ({
   successMessage: '',
   contacts: null,
   selectedUsers: null,
+  isLoadingPostMessage: false,
 
   getAllContacts: async () => {
     try {
@@ -85,6 +86,27 @@ const messagesReducer = create((set) => ({
       set({
         errorMessage: err?.response?.data?.message ?? err?.message,
         loadingSelectedUsers: false,
+      });
+      error(err?.response?.data?.message ?? err.message);
+    }
+  },
+
+  postMessage: async (payload, cb) => {
+    try {
+      set({ isLoadingPostMessage: true });
+      const { data } = await MessagesService.postMessage(payload);
+      // const { success } = useAlertReducer.getState();
+      // success(data?.response?.data?.message ?? data?.message);
+      set({
+        successMessage: data?.response?.data?.message ?? data?.message,
+        isLoadingPostMessage: false,
+      });
+      cb && cb();
+    } catch (err) {
+      const { error } = useAlertReducer.getState();
+      set({
+        errorMessage: err?.response?.data?.message ?? err?.message,
+        isLoadingPostMessage: false,
       });
       error(err?.response?.data?.message ?? err.message);
     }
