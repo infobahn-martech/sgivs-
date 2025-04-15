@@ -1,5 +1,6 @@
 import React from 'react';
 import messageIcon from '../../assets/images/message.svg';
+import { Spinner } from 'react-bootstrap';
 
 const MessageFooter = ({
   message,
@@ -18,12 +19,25 @@ const MessageFooter = ({
         onKeyDown={(e) => e.key === 'Enter' && onSend()}
         disabled={isLoadingPostMessage}
       />
-      <img
-        src={messageIcon}
-        alt=""
-        className={`img ${isLoadingPostMessage ? 'disabled' : ''}`}
-        onClick={!isLoadingPostMessage ? onSend : undefined}
-      />
+
+      {!isLoadingPostMessage ? (
+        <Spinner
+          size="sm"
+          as="span"
+          animation="border"
+          variant="light"
+          aria-hidden="true"
+          className="custom-spinner"
+        />
+      ) : (
+        <img
+          src={messageIcon}
+          alt=""
+          className={`img ${isLoadingPostMessage ? 'disabled' : ''}`}
+          onClick={onSend}
+          disabled={isLoadingPostMessage}
+        />
+      )}
     </div>
   );
 };

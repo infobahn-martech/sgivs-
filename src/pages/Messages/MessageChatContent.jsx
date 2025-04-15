@@ -3,6 +3,7 @@ import MessageFooter from './MessageFooter';
 import { format, isSameDay, isToday, isYesterday } from 'date-fns';
 import InitialsAvatar from '../../components/common/InitialsAvatar'; // fallback avatar
 import messagesReducer from '../../stores/MessagesReducer';
+import CommonSkeleton from '../../components/common/CommonSkeleton';
 
 const MessageChatContent = ({
   selectedContact,
@@ -11,17 +12,16 @@ const MessageChatContent = ({
   setMessage,
   onSend,
   colorMap,
+  isLoadingContact,
 }) => {
-  const { isLoadingPostMessage, postMessage } = messagesReducer(
-    (state) => state
-  );
+  const { isLoadingPostMessage } = messagesReducer((state) => state);
   const renderAvatar = () => {
-    // Render fallback avatar using name initials
     if (!selectedContact?.img) {
       return (
         <InitialsAvatar
           name={selectedContact?.name || 'User'}
           uniqueKey={selectedContact?.id}
+          colorClass={colorMap?.[selectedContact?.id]}
         />
       );
     }
@@ -30,61 +30,82 @@ const MessageChatContent = ({
 
   return (
     <div className="message-content-wrap">
-      {selectedContact?.name && selectedContact?.name !== 'Unknown' && (
+      {isLoadingContact ? (
         <div className="head-wrap">
           <figure className="img">
-            <InitialsAvatar
-              name={selectedContact?.name}
-              colorClass={colorMap?.[selectedContact?.id]}
-            />
+            <CommonSkeleton />
           </figure>
           <div className="name-status-wrap">
-            <div className="name">{selectedContact?.name}</div>
-            <div className="status online">Online</div>
+            <div className="name">
+              {' '}
+              <CommonSkeleton />
+            </div>
           </div>
         </div>
+      ) : (
+        selectedContact?.name &&
+        selectedContact?.name !== 'Unknown' && (
+          <div className="head-wrap">
+            <figure className="img">
+              <InitialsAvatar
+                name={selectedContact?.name}
+                colorClass={colorMap?.[selectedContact?.id]}
+              />
+            </figure>
+            <div className="name-status-wrap">
+              <div className="name">{selectedContact?.name}</div>
+              <div className="status online">Online</div>
+            </div>
+          </div>
+        )
       )}
 
       <div className="body-msg-wrap">
-        {messages?.length > 0 ? (
-          messages?.map((msg, idx) => {
-            const msgDate = new Date(msg.time);
-            const showDate =
-              idx === 0 ||
-              !isSameDay(new Date(messages[idx - 1]?.time), msgDate);
+        {isLoadingContact ? (
+          <CommonSkeleton />
+        ) : selectedContact ? (
+          messages?.length > 0 ? (
+            messages?.map((msg, idx) => {
+              const msgDate = new Date(msg.time);
+              const showDate =
+                idx === 0 ||
+                !isSameDay(new Date(messages[idx - 1]?.time), msgDate);
 
-            return (
-              <React.Fragment key={idx}>
-                {showDate && (
-                  <div className="date-wrap">
-                    <span>
-                      {isToday(msgDate)
-                        ? 'Today'
-                        : isYesterday(msgDate)
-                        ? 'Yesterday'
-                        : format(msgDate, 'eeee, MMM d, yyyy')}
-                    </span>
+              return (
+                <React.Fragment key={idx}>
+                  {showDate && (
+                    <div className="date-wrap">
+                      <span>
+                        {isToday(msgDate)
+                          ? 'Today'
+                          : isYesterday(msgDate)
+                          ? 'Yesterday'
+                          : format(msgDate, 'eeee, MMM d, yyyy')}
+                      </span>
+                    </div>
+                  )}
+                  <div
+                    className={`chat-block ${
+                      msg.from?.toLowerCase() === 'me' ? 'chat-block-right' : ''
+                    }`}
+                  >
+                    {msg.from === 'them' && renderAvatar()}
+                    <div className="chat-content-wrap">
+                      <p className="txt">{msg?.text}</p>
+                      <div className="time">{format(msgDate, 'hh:mm a')}</div>
+                    </div>
                   </div>
-                )}
-                <div
-                  className={`chat-block ${
-                    msg.from?.toLowerCase() === 'me' ? 'chat-block-right' : ''
-                  }`}
-                >
-                  {msg.from === 'them' && renderAvatar()}
-                  <div className="chat-content-wrap">
-                    <p className="txt">{msg?.text}</p>
-                    <div className="time">{format(msgDate, 'hh:mm a')}</div>
-                  </div>
-                </div>
-              </React.Fragment>
-            );
-          })
-        ) : !selectedContact ? (
+                </React.Fragment>
+              );
+            })
+          ) : (
+            <div className="no-messages text-center mt-5">No messages yet.</div>
+          )
+        ) : (
           <div className="no-messages text-center mt-5">
             No messages yet. Pick a user to start chatting!
           </div>
-        ) : null}
+        )}
       </div>
 
       {selectedContact?.name && selectedContact?.name !== 'Unknown' && (
