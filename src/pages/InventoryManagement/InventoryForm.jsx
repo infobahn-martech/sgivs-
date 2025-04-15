@@ -792,7 +792,7 @@ const InventoryForm = () => {
                       <div className="col-md-10">
                         <div className="form-group">
                           <label htmlFor="itemId" className="form-label">
-                            Label
+                            Button Label
                           </label>
                           <input
                             type="text"
