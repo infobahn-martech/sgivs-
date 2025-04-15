@@ -19,6 +19,7 @@ import CustomActionModal from '../../components/common/CustomActionModal';
 import useCommonStore from '../../stores/CommonStore';
 import { Spinner } from 'react-bootstrap';
 import useSubCategoryReducer from '../../stores/SubCategoryReducer';
+import CommonSkeleton from '../../components/common/CommonSkeleton';
 
 const InventoryForm = () => {
   const {
@@ -34,6 +35,7 @@ const InventoryForm = () => {
     isBarcodeLoading,
     redirectToList,
     set,
+    isItemLoading,
     redirectId,
   } = useInventoryStore((state) => state);
   const { uploadFiles, files, isUploading, deleteFile } = useCommonStore(
@@ -468,15 +470,19 @@ const InventoryForm = () => {
                     <label htmlFor="itemName" className="form-label">
                       Item Name <small className="req">*</small>
                     </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="itemName"
-                      placeholder="Enter Item Name Here"
-                      {...register('itemName', {
-                        required: 'Item Name is required',
-                      })}
-                    />
+                    {!isItemLoading ? (
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="itemName"
+                        placeholder="Enter Item Name Here"
+                        {...register('itemName', {
+                          required: 'Item Name is required',
+                        })}
+                      />
+                    ) : (
+                      <CommonSkeleton height={40} borderRadius={12} />
+                    )}
                     {errors.itemName && (
                       <p className="error">{errors.itemName.message}</p>
                     )}
@@ -488,48 +494,52 @@ const InventoryForm = () => {
                   <label className="form-label">
                     Upload Image <small className="text-danger">*</small>
                   </label>
-                  <div
-                    className="upload-box"
-                    onDrop={handleDrop}
-                    onDragOver={(e) => !isUploading && e.preventDefault()}
-                  >
-                    {isUploading ? (
-                      <Spinner
-                        size="lg"
-                        as="span"
-                        animation="border"
-                        variant="dark"
-                        aria-hidden="true"
-                        className="custom-spinner"
+                  {!isItemLoading ? (
+                    <div
+                      className="upload-box"
+                      onDrop={handleDrop}
+                      onDragOver={(e) => !isUploading && e.preventDefault()}
+                    >
+                      {isUploading ? (
+                        <Spinner
+                          size="lg"
+                          as="span"
+                          animation="border"
+                          variant="dark"
+                          aria-hidden="true"
+                          className="custom-spinner"
+                        />
+                      ) : (
+                        <div className="upload-ico">
+                          <img src={Upload__icon} alt="upload-ico" />
+                        </div>
+                      )}
+                      <p className="txt">
+                        Drag & drop files or{' '}
+                        <label
+                          htmlFor="fileUpload"
+                          className="browse-link cursor-pointer"
+                          style={{ cursor: 'pointer' }}
+                        >
+                          Browse
+                        </label>
+                      </p>
+                      <input
+                        type="file"
+                        id="fileUpload"
+                        style={{ display: 'none' }}
+                        accept="image/jpeg, image/png"
+                        multiple
+                        onChange={handleFileSelect}
+                        disabled={isUploading}
                       />
-                    ) : (
-                      <div className="upload-ico">
-                        <img src={Upload__icon} alt="upload-ico" />
-                      </div>
-                    )}
-                    <p className="txt">
-                      Drag & drop files or{' '}
-                      <label
-                        htmlFor="fileUpload"
-                        className="browse-link cursor-pointer"
-                        style={{ cursor: 'pointer' }}
-                      >
-                        Browse
-                      </label>
-                    </p>
-                    <input
-                      type="file"
-                      id="fileUpload"
-                      style={{ display: 'none' }}
-                      accept="image/jpeg, image/png"
-                      multiple
-                      onChange={handleFileSelect}
-                      disabled={isUploading}
-                    />
-                    <span className="btm-txt">
-                      Supported formats: JPEG, PNG (Max: 10 images)
-                    </span>
-                  </div>
+                      <span className="btm-txt">
+                        Supported formats: JPEG, PNG (Max: 10 images)
+                      </span>
+                    </div>
+                  ) : (
+                    <CommonSkeleton height={170} borderRadius={12} />
+                  )}
                   {errors.fileUpload && (
                     <>
                       <p className="error">{errors.fileUpload.message}</p>
@@ -558,6 +568,19 @@ const InventoryForm = () => {
                       ))}
                     </div>
                   )}
+                  {isItemLoading ? (
+                    <div className="uploaded-files">
+                      {Array.from({length:5}).map((_, idx) => (
+                        <div key={idx} className="file-preview">
+                          <CommonSkeleton
+                            height={50}
+                            borderRadius={5}
+                            width={75}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  ) : null}
                 </div>
 
                 {/* category and sub category */}
@@ -566,23 +589,27 @@ const InventoryForm = () => {
                     <label htmlFor="category" className="form-label">
                       Category <small className="req">*</small>
                     </label>
-                    <CustomSelect
-                      className="form-select form-control"
-                      options={getAllCategory?.map((item) => ({
-                        label: item.name,
-                        value: item.id,
-                        isEZPass: item.isEZPass,
-                      }))}
-                      onChange={() => {
-                        // setValue('quantity', selectedOption);
-                        clearErrors('category');
-                      }}
-                      value={category}
-                      name="category"
-                      {...register('category', {
-                        required: 'Category is required',
-                      })}
-                    />
+                    {!isItemLoading ? (
+                      <CustomSelect
+                        className="form-select form-control"
+                        options={getAllCategory?.map((item) => ({
+                          label: item.name,
+                          value: item.id,
+                          isEZPass: item.isEZPass,
+                        }))}
+                        onChange={() => {
+                          // setValue('quantity', selectedOption);
+                          clearErrors('category');
+                        }}
+                        value={category}
+                        name="category"
+                        {...register('category', {
+                          required: 'Category is required',
+                        })}
+                      />
+                    ) : (
+                      <CommonSkeleton height={40} borderRadius={12} />
+                    )}
                     {errors.category && (
                       <p className="error">{errors.category.message}</p>
                     )}
@@ -592,27 +619,31 @@ const InventoryForm = () => {
                     <label htmlFor="category" className="form-label">
                       Sub category <small className="req">*</small>
                     </label>
-                    <CustomSelect
-                      className="form-select form-control"
-                      options={subCategories?.map((item) => ({
-                        label: item.name,
-                        value: item.id,
-                      }))}
-                      noOptionsMessage={
-                        category
-                          ? 'No sub category available'
-                          : 'Select a category first'
-                      }
-                      // onChange={() => {
-                      //   // setValue('quantity', selectedOption);
-                      //   clearErrors('sub_category');
-                      // }}
-                      value={subCategory}
-                      name="sub_category"
-                      {...register('sub_category', {
-                        required: 'Sub Category is required',
-                      })}
-                    />
+                    {!isItemLoading ? (
+                      <CustomSelect
+                        className="form-select form-control"
+                        options={subCategories?.map((item) => ({
+                          label: item.name,
+                          value: item.id,
+                        }))}
+                        noOptionsMessage={
+                          category
+                            ? 'No sub category available'
+                            : 'Select a category first'
+                        }
+                        // onChange={() => {
+                        //   // setValue('quantity', selectedOption);
+                        //   clearErrors('sub_category');
+                        // }}
+                        value={subCategory}
+                        name="sub_category"
+                        {...register('sub_category', {
+                          required: 'Sub Category is required',
+                        })}
+                      />
+                    ) : (
+                      <CommonSkeleton height={40} borderRadius={12} />
+                    )}
                     {errors.sub_category && (
                       <p className="error">{errors.sub_category.message}</p>
                     )}
@@ -627,22 +658,28 @@ const InventoryForm = () => {
                   </div>
                   <div className="col d-flex item-outer-wrp">
                     <div className="item-wrp">
-                      <input
-                        type="text"
-                        className={`${
-                          (barcodeId || params.id ? 'cursor-not' : '') +
-                          ' form-control'
-                        }`}
-                        id="itemId"
-                        readOnly={!!barcodeId || params?.id || isBarcodeLoading}
-                        {...register('itemId', {
-                          required: 'Item ID is required',
-                        })}
-                        onInput={(e) =>
-                          (e.target.value = e.target.value.toUpperCase())
-                        } // Converts to uppercase as user types
-                        style={{ textTransform: 'uppercase' }} // Ensures visual uppercase input
-                      />
+                      {!isItemLoading ? (
+                        <input
+                          type="text"
+                          className={`${
+                            (barcodeId || params.id ? 'cursor-not' : '') +
+                            ' form-control'
+                          }`}
+                          id="itemId"
+                          readOnly={
+                            !!barcodeId || params?.id || isBarcodeLoading
+                          }
+                          {...register('itemId', {
+                            required: 'Item ID is required',
+                          })}
+                          onInput={(e) =>
+                            (e.target.value = e.target.value.toUpperCase())
+                          } // Converts to uppercase as user types
+                          style={{ textTransform: 'uppercase' }} // Ensures visual uppercase input
+                        />
+                      ) : (
+                        <CommonSkeleton height={40} borderRadius={12} />
+                      )}
                       {errors.itemId && (
                         <p className="error">{errors.itemId.message}</p>
                       )}
@@ -714,12 +751,16 @@ const InventoryForm = () => {
                     <label className="form-check-label" htmlFor="addPart">
                       Add Part
                     </label>
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      id="addPart"
-                      {...register('addPart')}
-                    />
+                    {!isItemLoading ? (
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id="addPart"
+                        {...register('addPart')}
+                      />
+                    ) : (
+                      <CommonSkeleton height={16} borderRadius={5} width={16} />
+                    )}
                   </div>
                 </div>
 
