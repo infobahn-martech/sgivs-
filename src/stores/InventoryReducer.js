@@ -21,6 +21,7 @@ const useInventoryStore = create((set) => ({
   isBarcodeLoading: false,
   pagination: {},
   isLoading: false,
+  isItemLoading: false,
   barcodeId: null,
   barcodeKey: null,
   inventoryItem: null,
@@ -116,20 +117,22 @@ const useInventoryStore = create((set) => ({
     }
   },
   getItemById: async (itemId) => {
-    set({ inventoryItem: null, isLoading: true });
+    set({ inventoryItem: null, isItemLoading: true });
     try {
       const { data } = await getItemByIdService(itemId);
       set({
-        isLoading: false,
+        isItemLoading: false,
         inventoryItem: data.inventory,
       });
       console.log(' response', data);
-    } catch (error) {
+    } catch (err) {
+      const {error} = useAlertReducer.getState()
       set({
-        isLoading: false,
+        isItemLoading: false,
         inventoryItem: null,
       });
-      console.log(' error', error);
+      error(err.response?.data?.message || 'Somthing went wrong!!')
+      console.log(' error', err);
     }
   },
   deleteItemById: async (itemId, params) => {
