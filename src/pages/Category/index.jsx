@@ -110,17 +110,17 @@ const Category = () => {
     },
     {
       name: 'Total Items',
-      // selector: 'name',
+      selector: 'totalItems',
       contentClass: 'user-pic',
     },
     {
       name: 'Loaned Items',
-      // selector: 'name',
+      selector: 'loanedItems',
       contentClass: 'user-pic',
     },
     {
       name: 'Available Items',
-      // selector: 'name',
+      selector: 'availableItems',
       contentClass: 'user-pic',
     },
     {
