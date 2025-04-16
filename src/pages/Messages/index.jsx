@@ -19,7 +19,7 @@ const Messages = () => {
   const [selectedContactId, setSelectedContactId] = useState(null);
   const [message, setMessage] = useState('');
   const [allContacts, setAllContacts] = useState([]);
-  const [newMessageForChat, setNewMessageForChat] = useState(null); // 👈
+  const [newMessageForChat, setNewMessageForChat] = useState(null);
 
   const handleRefreshSidebar = () => {
     getSelectedUsers({ search: '', page: 1, limit: 10 });
@@ -62,7 +62,6 @@ const Messages = () => {
       createdAt: new Date().toISOString(),
     };
 
-    // Optimistically update contact
     setAllContacts((prev) =>
       prev.map((contact) =>
         contact.id === selectedContactId
@@ -119,7 +118,7 @@ const Messages = () => {
         setMessage={setMessage}
         onSend={onSend}
         colorMap={colorMap}
-        newMessage={newMessageForChat} // 👈
+        newMessage={newMessageForChat}
       />
     </div>
   );

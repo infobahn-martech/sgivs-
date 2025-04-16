@@ -20,7 +20,7 @@ const MessageFooter = ({
         disabled={isLoadingPostMessage}
       />
 
-      {!isLoadingPostMessage ? (
+      {isLoadingPostMessage ? (
         <Spinner
           size="sm"
           as="span"

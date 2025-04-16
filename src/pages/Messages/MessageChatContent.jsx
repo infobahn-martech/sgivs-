@@ -15,7 +15,7 @@ const MessageChatContent = ({
   onSend,
   colorMap,
   isLoadingContact,
-  newMessage, // 👈
+  newMessage,
 }) => {
   const {
     isLoadingPostMessage,
@@ -84,25 +84,23 @@ const MessageChatContent = ({
     setPage((prev) => prev + 1);
   };
 
+  // scroll
   useEffect(() => {
-    if (selectedContact?.messages?.length > 0) {
-      const sortedInitial = [...selectedContact.messages].sort(
-        (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
-      );
-      setLocalMessages(sortedInitial);
-      setPage(1);
-      setHasMore(true);
+    if (!newMessage || !newMessage.id) return;
 
-      // ✅ Scroll to bottom after messages are rendered
-      setTimeout(() => {
-        if (scrollRef.current) {
-          scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-        }
-      }, 100); // a slight delay ensures DOM is updated
-    } else {
-      setLocalMessages([]);
-    }
-  }, [selectedContact?.id]);
+    setLocalMessages((prev) => {
+      const exists = prev.some((msg) => msg.id === newMessage.id);
+      if (exists) return prev;
+      return [...prev, newMessage];
+    });
+
+    //  Scroll to bottom after message is added
+    setTimeout(() => {
+      if (scrollRef.current) {
+        scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+      }
+    }, 100);
+  }, [newMessage]);
 
   const renderAvatar = () => {
     if (!selectedContact?.img) {
@@ -116,6 +114,15 @@ const MessageChatContent = ({
     }
     return <img src={selectedContact?.img} alt={selectedContact?.name} />;
   };
+
+  const scrollStyle =
+    localMessages.length > 8
+      ? {
+          overflow: 'auto',
+          display: 'flex',
+          flexDirection: 'column-reverse',
+        }
+      : {};
 
   return (
     <div className="message-content-wrap">
@@ -152,12 +159,7 @@ const MessageChatContent = ({
         id="scrollableDivMessage"
         ref={scrollRef}
         className="body-msg-wrap"
-        style={{
-          // height: '400px',
-          // overflow: 'auto',
-          // display: 'flex',
-          flexDirection: 'column-reverse',
-        }}
+        style={scrollStyle}
       >
         {isLoadingContact ? (
           <CommonSkeleton />
@@ -182,7 +184,7 @@ const MessageChatContent = ({
               }
               scrollableTarget="scrollableDivMessage"
             >
-              {localMessages.map((msg, idx) => {
+              {localMessages?.map((msg, idx) => {
                 const msgDate = new Date(msg.createdAt);
                 const showDate =
                   idx === 0 ||
