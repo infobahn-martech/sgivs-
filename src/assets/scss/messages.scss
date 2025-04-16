@@ -130,6 +130,8 @@
                     gap: 15px;
                     border-radius: 12px;
                     padding: 12px;
+                    position: relative;
+                    cursor: pointer;
                     .img {
                         margin: 0;
                         padding: 0;
@@ -179,7 +181,7 @@
                     }
 
 
-
+                    .cursor-pointer{position: absolute; top: 0; bottom: 0; right:5px; margin: auto; z-index: 1; }
 
                     .alphabet{
                         background-color: #d8e1ed;
@@ -289,6 +291,7 @@
                     }
                     &.active {
                         background: rgba(97, 94, 240, 0.06);
+                        .time{display: none;}
                     }
                     & + li {
                         margin-top: 8px;
@@ -569,6 +572,9 @@
                 margin: auto;
                 cursor: pointer;
             }
+            .custom-spinner{position: absolute;
+                right: 50px;
+                top: 50px;}
         }
     }
 }
