@@ -26,7 +26,7 @@ const UserManagement = () => {
     fromDate: null,
     toDate: null,
     sortBy: 'createdAt',
-    sortOrder: 'ASC',
+    sortOrder: 'DESC',
   };
 
   const [params, setParams] = useState(initialParams);

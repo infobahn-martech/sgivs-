@@ -82,7 +82,7 @@ const Dashboard = () => {
       fromDate: null,
       toDate: null,
       sortBy: 'createdAt',
-      sortOrder: 'ASC',
+      sortOrder: 'DESC',
     });
 
     getInventoryList({
