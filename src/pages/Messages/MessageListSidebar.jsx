@@ -128,7 +128,9 @@ const MessageListSidebar = ({
               <CommonSkeleton key={idx} height={50} />
             ))
           ) : allContacts?.length === 0 ? (
-            <li className="no-results">No users found.</li>
+            <li style={{ listStyleType: 'none' }} className="text-center">
+              No users found.
+            </li>
           ) : (
             <InfiniteScroll
               dataLength={allContacts.length}
