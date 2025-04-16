@@ -116,7 +116,7 @@ const MessageChatContent = ({
   };
 
   const scrollStyle =
-    localMessages.length > 8
+    localMessages?.length > 8
       ? {
           overflow: 'auto',
           display: 'flex',
@@ -128,15 +128,15 @@ const MessageChatContent = ({
     <div className="message-content-wrap">
       {/* Header */}
       {isLoadingContact ? (
-        <div className="head-wrap">
-          <figure className="img">
-            <CommonSkeleton />
-          </figure>
-          <div className="name-status-wrap">
-            <div className="name">
-              <CommonSkeleton />
-            </div>
-          </div>
+        <div className="d-flex justify-content-center align-items-center h-100">
+          <Spinner
+            // size="sm"
+            as="span"
+            animation="border"
+            variant="info"
+            aria-hidden="true"
+            className="custom-spinner"
+          />
         </div>
       ) : selectedContact?.name && selectedContact?.name !== 'Unknown' ? (
         <div className="head-wrap">
@@ -164,9 +164,9 @@ const MessageChatContent = ({
         {isLoadingContact ? (
           <CommonSkeleton />
         ) : selectedContact ? (
-          localMessages.length > 0 ? (
+          localMessages?.length > 0 ? (
             <InfiniteScroll
-              dataLength={localMessages.length}
+              dataLength={localMessages?.length}
               next={fetchMoreMessages}
               hasMore={hasMore}
               inverse={true}
@@ -192,12 +192,6 @@ const MessageChatContent = ({
                     new Date(localMessages[idx - 1]?.createdAt),
                     msgDate
                   );
-                console.log(
-                  'Original UTC:',
-                  msg.createdAt,
-                  '| Local time:',
-                  new Date(msg.createdAt).toLocaleString()
-                );
 
                 return (
                   <React.Fragment key={msg.id || idx}>
