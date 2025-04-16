@@ -103,7 +103,9 @@ const InventoryForm = () => {
       redirectId: null,
       redirectToList: false,
     });
+    setDefaultCategory(null)
   }, []);
+  console.log(' inventoryItem', inventoryItem,defaultCategory);
 
   useEffect(() => {
     if (files.length) {
@@ -160,7 +162,7 @@ const InventoryForm = () => {
   ]);
 
   useEffect(() => {
-    if (inventoryItem && !defaultCategory) {
+    if (inventoryItem) {
       setValue('itemId', inventoryItem.itemId);
       setValue('itemName', inventoryItem.itemName);
       setValue('addPart', inventoryItem.hasParts);
