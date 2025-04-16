@@ -8,7 +8,6 @@ const InitialsAvatar = ({ name, className = '', uniqueKey }) => {
   const finalColorClass = getColorClass(key);
 
   if (!logged.has(key)) {
-    console.log('Assigned Color:', finalColorClass);
     logged.add(key);
   }
 

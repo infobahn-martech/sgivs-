@@ -1,20 +1,74 @@
-import React from 'react';
-import MessageFooter from './MessageFooter';
+import React, { useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { format, isSameDay, isToday, isYesterday } from 'date-fns';
-import InitialsAvatar from '../../components/common/InitialsAvatar'; // fallback avatar
-import messagesReducer from '../../stores/MessagesReducer';
+
+import MessageFooter from './MessageFooter';
+import InitialsAvatar from '../../components/common/InitialsAvatar';
 import CommonSkeleton from '../../components/common/CommonSkeleton';
+import messagesReducer from '../../stores/MessagesReducer';
+import { Spinner } from 'react-bootstrap';
 
 const MessageChatContent = ({
   selectedContact,
-  messages,
   message,
   setMessage,
   onSend,
   colorMap,
   isLoadingContact,
 }) => {
-  const { isLoadingPostMessage } = messagesReducer((state) => state);
+  const {
+    isLoadingPostMessage,
+    GetMessageById,
+    messageIdData,
+    loadingMessageById,
+  } = messagesReducer((state) => state);
+
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [localMessages, setLocalMessages] = useState([]);
+
+  // Set initial messages from selectedContact
+  useEffect(() => {
+    if (selectedContact?.messages?.length > 0) {
+      const sortedInitial = [...selectedContact.messages].sort(
+        (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+      );
+      setLocalMessages(sortedInitial);
+      setPage(1);
+      setHasMore(true);
+    } else {
+      setLocalMessages([]);
+    }
+  }, [selectedContact?.id]);
+
+  // Merge newly fetched messageIdData
+  useEffect(() => {
+    if (Array.isArray(messageIdData) && messageIdData.length > 0) {
+      const merged = [...localMessages];
+
+      messageIdData.forEach((msg) => {
+        const exists = merged?.some((m) => m.id === msg.id);
+        if (!exists) merged.push(msg);
+      });
+
+      merged.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+      setLocalMessages(merged);
+    }
+  }, [messageIdData]);
+
+  const fetchMoreMessages = async () => {
+    const lastMessage = localMessages?.[localMessages.length - 1];
+    if (!selectedContact?.id || !lastMessage?.id) return;
+
+    await GetMessageById(selectedContact.id, {
+      page: page + 1,
+      limit: 10,
+      beforeMessageId: lastMessage.id,
+    });
+
+    setPage((prev) => prev + 1);
+  };
+
   const renderAvatar = () => {
     if (!selectedContact?.img) {
       return (
@@ -30,6 +84,7 @@ const MessageChatContent = ({
 
   return (
     <div className="message-content-wrap">
+      {/* Header */}
       {isLoadingContact ? (
         <div className="head-wrap">
           <figure className="img">
@@ -37,68 +92,100 @@ const MessageChatContent = ({
           </figure>
           <div className="name-status-wrap">
             <div className="name">
-              {' '}
               <CommonSkeleton />
             </div>
           </div>
         </div>
-      ) : (
-        selectedContact?.name &&
-        selectedContact?.name !== 'Unknown' && (
-          <div className="head-wrap">
-            <figure className="img">
-              <InitialsAvatar
-                name={selectedContact?.name}
-                uniqueKey={selectedContact?.id}
-                colorClass={colorMap?.[selectedContact?.id]}
-              />
-            </figure>
-            <div className="name-status-wrap">
-              <div className="name">{selectedContact?.name}</div>
-              <div className="status online">Online</div>
-            </div>
+      ) : selectedContact?.name && selectedContact?.name !== 'Unknown' ? (
+        <div className="head-wrap">
+          <figure className="img">
+            <InitialsAvatar
+              name={selectedContact?.name}
+              uniqueKey={selectedContact?.id}
+              colorClass={colorMap?.[selectedContact?.id]}
+            />
+          </figure>
+          <div className="name-status-wrap">
+            <div className="name">{selectedContact?.name}</div>
+            <div className="status online">Online</div>
           </div>
-        )
-      )}
+        </div>
+      ) : null}
 
-      <div className="body-msg-wrap">
+      {/* Scrollable message container */}
+      <div
+        id="scrollableDivMessage"
+        className="body-msg-wrap"
+        // style={{
+        //   height: '400px',
+        //   overflow: 'auto',
+        //   display: 'flex',
+        //   flexDirection: 'column',
+        // }}
+      >
         {isLoadingContact ? (
           <CommonSkeleton />
         ) : selectedContact ? (
-          messages?.length > 0 ? (
-            messages?.map((msg, idx) => {
-              const msgDate = new Date(msg.time);
-              const showDate =
-                idx === 0 ||
-                !isSameDay(new Date(messages[idx - 1]?.time), msgDate);
-
-              return (
-                <React.Fragment key={idx}>
-                  {showDate && (
-                    <div className="date-wrap">
-                      <span>
-                        {isToday(msgDate)
-                          ? 'Today'
-                          : isYesterday(msgDate)
-                          ? 'Yesterday'
-                          : format(msgDate, 'eeee, MMM d, yyyy')}
-                      </span>
-                    </div>
-                  )}
-                  <div
-                    className={`chat-block ${
-                      msg.from?.toLowerCase() === 'me' ? 'chat-block-right' : ''
-                    }`}
-                  >
-                    {msg.from === 'them' && renderAvatar()}
-                    <div className="chat-content-wrap">
-                      <p className="txt">{msg?.text}</p>
-                      <div className="time">{format(msgDate, 'hh:mm a')}</div>
-                    </div>
+          localMessages.length > 0 ? (
+            <InfiniteScroll
+              dataLength={localMessages.length}
+              next={fetchMoreMessages}
+              hasMore={hasMore}
+              loader={
+                loadingMessageById ? (
+                  <div className="d-flex justify-content-center py-3">
+                    <Spinner
+                      // size="sm"
+                      as="span"
+                      animation="border"
+                      variant="info"
+                      aria-hidden="true"
+                      className="custom-spinner"
+                    />
                   </div>
-                </React.Fragment>
-              );
-            })
+                ) : (
+                  <div className="text-center py-2">No more messages</div>
+                )
+              }
+              scrollableTarget="scrollableDivMessage"
+            >
+              {localMessages?.map((msg, idx) => {
+                const msgDate = new Date(msg.createdAt);
+                const showDate =
+                  idx === 0 ||
+                  !isSameDay(
+                    new Date(localMessages[idx - 1]?.createdAt),
+                    msgDate
+                  );
+
+                return (
+                  <React.Fragment key={msg.id || idx}>
+                    {showDate && (
+                      <div className="date-wrap">
+                        <span>
+                          {isToday(msgDate)
+                            ? 'Today'
+                            : isYesterday(msgDate)
+                            ? 'Yesterday'
+                            : format(msgDate, 'eeee, MMM d, yyyy')}
+                        </span>
+                      </div>
+                    )}
+                    <div
+                      className={`chat-block ${
+                        msg.senderType === 1 ? 'chat-block-right' : ''
+                      }`}
+                    >
+                      {msg.senderType !== 1 && renderAvatar()}
+                      <div className="chat-content-wrap">
+                        <p className="txt">{msg.message}</p>
+                        <div className="time">{format(msgDate, 'hh:mm a')}</div>
+                      </div>
+                    </div>
+                  </React.Fragment>
+                );
+              })}
+            </InfiniteScroll>
           ) : (
             <div className="no-messages text-center mt-5">No messages yet.</div>
           )
@@ -109,6 +196,7 @@ const MessageChatContent = ({
         )}
       </div>
 
+      {/* Footer */}
       {selectedContact?.name && selectedContact?.name !== 'Unknown' && (
         <MessageFooter
           message={message}

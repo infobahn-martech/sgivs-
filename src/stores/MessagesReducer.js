@@ -12,6 +12,7 @@ const messagesReducer = create((set) => ({
   selectedUsers: null,
   isLoadingPostMessage: false,
   usersTotalCount: null,
+  messageIdData: null,
 
   getAllContacts: async () => {
     try {
@@ -88,6 +89,25 @@ const messagesReducer = create((set) => ({
       set({
         errorMessage: err?.response?.data?.message ?? err?.message,
         loadingSelectedUsers: false,
+      });
+      error(err?.response?.data?.message ?? err.message);
+    }
+  },
+
+  GetMessageById: async (id, params) => {
+    try {
+      set({ loadingMessageById: true });
+      const { data } = await MessagesService.GetMessageById(id, params);
+      set({
+        messageIdData: data.data,
+        successMessage: data?.response?.data?.message ?? data?.message,
+        loadingMessageById: false,
+      });
+    } catch (err) {
+      const { error } = useAlertReducer.getState();
+      set({
+        errorMessage: err?.response?.data?.message ?? err?.message,
+        loadingMessageById: false,
       });
       error(err?.response?.data?.message ?? err.message);
     }

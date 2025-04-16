@@ -25,7 +25,7 @@ const MessageFooter = ({
           size="sm"
           as="span"
           animation="border"
-          variant="dark"
+          variant="info"
           aria-hidden="true"
           className="custom-spinner"
         />
