@@ -7,8 +7,8 @@ const deleteUser = (id) => Gateway.delete(`/conversation/${id}`);
 const getUsers = (params) => Gateway.get('/conversation', { params });
 const postMessage = (payload) => Gateway.post('/message', payload);
 
-const GetMessageById = (id, payload) =>
-  Gateway.get(`/conversation/${id}`, payload);
+const GetMessageById = (id, params) =>
+  Gateway.get(`/conversation/${id}`, { params });
 
 export default {
   getAllContacts,

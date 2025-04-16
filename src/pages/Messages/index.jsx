@@ -19,6 +19,7 @@ const Messages = () => {
   const [selectedContactId, setSelectedContactId] = useState(null);
   const [message, setMessage] = useState('');
   const [allContacts, setAllContacts] = useState([]);
+  const [newMessageForChat, setNewMessageForChat] = useState(null); // 👈
 
   const handleRefreshSidebar = () => {
     getSelectedUsers({ search: '', page: 1, limit: 10 });
@@ -54,6 +55,27 @@ const Messages = () => {
     if (!message?.trim() || !selectedContactId || !selectedContact?.id) return;
 
     const trimmedMessage = message.trim();
+    const newMessage = {
+      id: crypto.randomUUID(),
+      senderType: 1,
+      message: trimmedMessage,
+      createdAt: new Date().toISOString(),
+    };
+
+    // Optimistically update contact
+    setAllContacts((prev) =>
+      prev.map((contact) =>
+        contact.id === selectedContactId
+          ? {
+              ...contact,
+              messages: [...(contact.messages || []), newMessage],
+            }
+          : contact
+      )
+    );
+
+    // Update chat content
+    setNewMessageForChat(newMessage);
     setMessage('');
 
     postMessage(
@@ -65,7 +87,7 @@ const Messages = () => {
         handleRefreshSidebar();
       },
       (error) => {
-        console.error('Failed to send message:', error);
+        console.error('Failed to send:', error);
         setMessage(trimmedMessage);
       }
     );
@@ -94,10 +116,10 @@ const Messages = () => {
         selectedContact={selectedContact}
         messages={messages}
         message={message}
-        selectedId={selectedContactId}
         setMessage={setMessage}
         onSend={onSend}
         colorMap={colorMap}
+        newMessage={newMessageForChat} // 👈
       />
     </div>
   );

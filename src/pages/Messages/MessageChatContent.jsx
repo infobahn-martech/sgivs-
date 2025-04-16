@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { format, isSameDay, isToday, isYesterday } from 'date-fns';
 
@@ -15,6 +15,7 @@ const MessageChatContent = ({
   onSend,
   colorMap,
   isLoadingContact,
+  newMessage, // 👈
 }) => {
   const {
     isLoadingPostMessage,
@@ -26,8 +27,8 @@ const MessageChatContent = ({
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [localMessages, setLocalMessages] = useState([]);
+  const scrollRef = useRef(null);
 
-  // Set initial messages from selectedContact
   useEffect(() => {
     if (selectedContact?.messages?.length > 0) {
       const sortedInitial = [...selectedContact.messages].sort(
@@ -41,14 +42,24 @@ const MessageChatContent = ({
     }
   }, [selectedContact?.id]);
 
-  // Merge newly fetched messageIdData
+  // Watch for newly sent message from parent
+  useEffect(() => {
+    if (!newMessage || !newMessage.id) return;
+
+    setLocalMessages((prev) => {
+      const exists = prev.some((msg) => msg.id === newMessage.id);
+      if (exists) return prev;
+      return [...prev, newMessage];
+    });
+  }, [newMessage]);
+
+  // Merge fetched older messages
   useEffect(() => {
     if (Array.isArray(messageIdData) && messageIdData.length > 0) {
       const merged = [...localMessages];
-
       messageIdData.forEach((msg) => {
         const exists = merged?.some((m) => m.id === msg.id);
-        if (!exists) merged.push(msg);
+        if (!exists) merged.unshift(msg);
       });
 
       merged.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
@@ -57,17 +68,41 @@ const MessageChatContent = ({
   }, [messageIdData]);
 
   const fetchMoreMessages = async () => {
-    const lastMessage = localMessages?.[localMessages.length - 1];
-    if (!selectedContact?.id || !lastMessage?.id) return;
+    const firstMessage = localMessages?.[0];
+    if (!selectedContact?.id || !firstMessage?.id) return;
 
-    await GetMessageById(selectedContact.id, {
+    const response = await GetMessageById(selectedContact.id, {
       page: page + 1,
       limit: 10,
-      beforeMessageId: lastMessage.id,
+      beforeMessageId: firstMessage.id,
     });
 
+    if (!Array.isArray(response)) return;
+    if (response.length < 10) setHasMore(false);
+
+    setLocalMessages((prev) => [...response, ...prev]);
     setPage((prev) => prev + 1);
   };
+
+  useEffect(() => {
+    if (selectedContact?.messages?.length > 0) {
+      const sortedInitial = [...selectedContact.messages].sort(
+        (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+      );
+      setLocalMessages(sortedInitial);
+      setPage(1);
+      setHasMore(true);
+
+      // ✅ Scroll to bottom after messages are rendered
+      setTimeout(() => {
+        if (scrollRef.current) {
+          scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+        }
+      }, 100); // a slight delay ensures DOM is updated
+    } else {
+      setLocalMessages([]);
+    }
+  }, [selectedContact?.id]);
 
   const renderAvatar = () => {
     if (!selectedContact?.img) {
@@ -112,16 +147,17 @@ const MessageChatContent = ({
         </div>
       ) : null}
 
-      {/* Scrollable message container */}
+      {/* Chat Messages */}
       <div
         id="scrollableDivMessage"
+        ref={scrollRef}
         className="body-msg-wrap"
-        // style={{
-        //   height: '400px',
-        //   overflow: 'auto',
-        //   display: 'flex',
-        //   flexDirection: 'column',
-        // }}
+        style={{
+          // height: '400px',
+          // overflow: 'auto',
+          // display: 'flex',
+          flexDirection: 'column-reverse',
+        }}
       >
         {isLoadingContact ? (
           <CommonSkeleton />
@@ -131,25 +167,22 @@ const MessageChatContent = ({
               dataLength={localMessages.length}
               next={fetchMoreMessages}
               hasMore={hasMore}
+              inverse={true}
               loader={
                 loadingMessageById ? (
                   <div className="d-flex justify-content-center py-3">
                     <Spinner
-                      // size="sm"
                       as="span"
                       animation="border"
                       variant="info"
-                      aria-hidden="true"
                       className="custom-spinner"
                     />
                   </div>
-                ) : (
-                  <div className="text-center py-2">No more messages</div>
-                )
+                ) : null
               }
               scrollableTarget="scrollableDivMessage"
             >
-              {localMessages?.map((msg, idx) => {
+              {localMessages.map((msg, idx) => {
                 const msgDate = new Date(msg.createdAt);
                 const showDate =
                   idx === 0 ||
@@ -157,6 +190,12 @@ const MessageChatContent = ({
                     new Date(localMessages[idx - 1]?.createdAt),
                     msgDate
                   );
+                console.log(
+                  'Original UTC:',
+                  msg.createdAt,
+                  '| Local time:',
+                  new Date(msg.createdAt).toLocaleString()
+                );
 
                 return (
                   <React.Fragment key={msg.id || idx}>
