@@ -112,11 +112,7 @@ const MessageListSidebar = ({
           </div>
         </div>
 
-        <div
-          className="msg-listing-wrap"
-          id="scrollableDiv"
-          // style={{ overflowY: 'auto', maxHeight: 'calc(100vh - 160px)' }}
-        >
+        <div className="msg-listing-wrap" id="scrollableDiv">
           <div className="search">
             <input
               type="text"
@@ -138,7 +134,7 @@ const MessageListSidebar = ({
               dataLength={allContacts.length}
               next={loadMoreContacts}
               hasMore={params.hasMore}
-              loader={Array.from({ length: 7 }).map((_, idx) => (
+              loader={Array.from({ length: 5 }).map((_, idx) => (
                 <CommonSkeleton key={idx} height={50} />
               ))}
               scrollableTarget="scrollableDiv"
