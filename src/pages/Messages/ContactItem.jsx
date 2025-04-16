@@ -2,7 +2,7 @@ import React from 'react';
 import InitialsAvatar from '../../components/common/InitialsAvatar';
 import deleteIcon from '../../assets/images/delete.svg';
 import { Tooltip } from 'react-tooltip';
-import useRelativeTime from './UseRelativetIME.JSX';
+import useRelativeTime from './RelativeTime';
 
 const ContactItem = ({
   contact,
