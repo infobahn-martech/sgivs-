@@ -171,7 +171,7 @@ const MessageChatContent = ({
               hasMore={hasMore}
               inverse={true}
               loader={
-                loadingMessageById ? (
+                loadingMessageById && (
                   <div className="d-flex justify-content-center py-3">
                     <Spinner
                       as="span"
@@ -180,7 +180,7 @@ const MessageChatContent = ({
                       className="custom-spinner"
                     />
                   </div>
-                ) : null
+                )
               }
               scrollableTarget="scrollableDivMessage"
             >
