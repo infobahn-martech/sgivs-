@@ -14,7 +14,7 @@ const nameSchema = z.object({
   categoryId: z.string().nonempty('Category is required'),
 });
 
-export function AddEditModal({ showModal, closeModal }) {
+export function AddEditModal({ showModal, closeModal, onRefreshSubCategory }) {
   const {
     register,
     handleSubmit,
@@ -29,8 +29,6 @@ export function AddEditModal({ showModal, closeModal }) {
       categoryId: '',
     },
   });
-
-  console.log('watch', watch());
 
   const { postData, patchData, isLoading, getCategory, getAllCategory } =
     useSubCategoryReducer((state) => state);
@@ -58,9 +56,13 @@ export function AddEditModal({ showModal, closeModal }) {
 
   const onSubmit = (data) => {
     if (showModal?.id) {
-      patchData({ id: showModal.id, ...data });
+      patchData({ id: showModal.id, ...data }, () => {
+        onRefreshSubCategory();
+      });
     } else {
-      postData(data);
+      postData(data, () => {
+        onRefreshSubCategory();
+      });
     }
     closeModal();
   };

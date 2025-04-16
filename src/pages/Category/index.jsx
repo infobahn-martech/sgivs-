@@ -65,6 +65,7 @@ const Category = () => {
   {
     showActions.push({
       name: 'Action',
+      contentClass: 'action-wrap',
       disableViewClick: true,
       thclass: 'actions-edit employee-actn-edit',
       cell: (row) => renderAction(row),
@@ -73,28 +74,28 @@ const Category = () => {
 
   const renderAction = (row) => {
     return (
-      <div className="d-flex">
+      <>
         <Tooltip id="edit" place="bottom" content="Edit" />
         <Tooltip id="delete" place="bottom" content="Delete" />
-        <a
+
+        <img
+          src={editIcon}
+          alt="edit"
           data-tooltip-id="edit"
-          className="edit"
           onClick={() => {
             setModal(row);
           }}
-        >
-          <img src={editIcon} alt="edit" />
-        </a>
-        <a
+        />
+
+        <img
+          src={deleteIcon}
+          alt="delete"
           data-tooltip-id="delete"
-          className="delete-icn"
           onClick={() => {
             setDeleteModalOpen(row);
           }}
-        >
-          <img src={deleteIcon} alt="delete" />
-        </a>
-      </div>
+        />
+      </>
     );
   };
 

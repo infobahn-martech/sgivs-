@@ -20,16 +20,12 @@ const Category = () => {
     getData,
     subCategoryData,
     isLoadingGet,
-    successMessage,
     deleteData,
     isLoadingDelete,
   } = useSubCategoryReducer((state) => state);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  console.log('deleteModalOpen', deleteModalOpen);
 
   const [modal, setModal] = useState(false);
-
-  console.log('modal', modal);
 
   const initialParams = {
     search: '',
@@ -44,14 +40,11 @@ const Category = () => {
 
   const [params, setParams] = useState(initialParams);
 
-  useEffect(() => {
-    if (successMessage) {
-      getData(params);
-      setModal(false);
-      setDeleteModalOpen(false);
-      // useSubCategoryReducer.setState({ successMessage: '' });
-    }
-  }, [successMessage]);
+  const onRefreshSubCategory = () => {
+    getData(params);
+    setModal(false);
+    setDeleteModalOpen(false);
+  };
 
   useEffect(() => {
     getData(params);
@@ -70,6 +63,7 @@ const Category = () => {
     showActions.push({
       name: 'Action',
       disableViewClick: true,
+      contentClass: 'action-wrap',
       thclass: 'actions-edit employee-actn-edit',
       cell: (row) => renderAction(row),
     });
@@ -77,28 +71,27 @@ const Category = () => {
 
   const renderAction = (row) => {
     return (
-      <div className="d-flex">
+      <>
         <Tooltip id="edit" place="bottom" content="Edit" />
         <Tooltip id="delete" place="bottom" content="Delete" />
-        <a
+
+        <img
+          src={editIcon}
+          alt="edit"
           data-tooltip-id="edit"
-          className="edit"
           onClick={() => {
             setModal(row);
           }}
-        >
-          <img src={editIcon} alt="edit" />
-        </a>
-        <a
+        />
+        <img
+          src={deleteIcon}
+          alt="delete"
           data-tooltip-id="delete"
-          className="delete-icn"
           onClick={() => {
             setDeleteModalOpen(row);
           }}
-        >
-          <img src={deleteIcon} alt="delete" />
-        </a>
-      </div>
+        />
+      </>
     );
   };
 
@@ -138,7 +131,9 @@ const Category = () => {
 
   const handleDelete = () => {
     if (deleteModalOpen?.id) {
-      deleteData(deleteModalOpen?.id);
+      deleteData(deleteModalOpen?.id, () => {
+        onRefreshSubCategory();
+      });
     }
   };
 
@@ -179,7 +174,11 @@ const Category = () => {
         wrapClasses="inventory-table-wrap"
       />
       {modal && (
-        <AddEditModal showModal={modal} closeModal={() => setModal(false)} />
+        <AddEditModal
+          showModal={modal}
+          closeModal={() => setModal(false)}
+          onRefreshSubCategory={onRefreshSubCategory}
+        />
       )}
       {deleteModalOpen && (
         <CustomActionModal
