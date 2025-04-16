@@ -81,7 +81,7 @@ const Dashboard = () => {
       limit: 10,
       fromDate: null,
       toDate: null,
-      sortBy: 'firstName',
+      sortBy: 'createdAt',
       sortOrder: 'ASC',
     });
 
