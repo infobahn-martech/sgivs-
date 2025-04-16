@@ -122,7 +122,7 @@ export function AddEditModal({ showModal, closeModal, onRefreshSubCategory }) {
                   id="name"
                   className="form-control"
                   autoComplete="off"
-                  maxLength={10}
+                  maxLength={40}
                   {...register('name')}
                 />
                 {errors.name && (
