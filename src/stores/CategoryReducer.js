@@ -10,7 +10,7 @@ const useCategoryReducer = create((set) => ({
   successMessage: '',
   categoryData: null,
 
-  postData: async (payload) => {
+  postData: async (payload, cb) => {
     try {
       set({ isLoading: true });
       const { data } = await categoryService.postData(payload);
@@ -20,6 +20,7 @@ const useCategoryReducer = create((set) => ({
         successMessage: data?.response?.data?.message ?? data?.message,
         isLoading: false,
       });
+      cb && cb();
     } catch (err) {
       const { error } = useAlertReducer.getState();
       set({
@@ -29,7 +30,7 @@ const useCategoryReducer = create((set) => ({
       error(err?.response?.data?.message ?? err.message);
     }
   },
-  patchData: async (payload) => {
+  patchData: async (payload, cb) => {
     try {
       set({ isLoading: true });
 
@@ -38,7 +39,7 @@ const useCategoryReducer = create((set) => ({
 
       const { success } = useAlertReducer.getState();
       success(data?.response?.data?.message ?? data?.message);
-
+      cb && cb();
       set({
         successMessage: data?.response?.data?.message ?? data?.message,
         isLoading: false,
@@ -72,7 +73,7 @@ const useCategoryReducer = create((set) => ({
       error(err?.response?.data?.message ?? err.message);
     }
   },
-  deleteData: async (id) => {
+  deleteData: async (id, cb) => {
     try {
       set({ isLoadingDelete: true });
       const { data } = await categoryService.deleteData(id);
@@ -82,6 +83,7 @@ const useCategoryReducer = create((set) => ({
         successMessage: data?.response?.data?.message ?? data?.message,
         isLoadingDelete: false,
       });
+      cb && cb();
     } catch (err) {
       const { error } = useAlertReducer.getState();
       set({

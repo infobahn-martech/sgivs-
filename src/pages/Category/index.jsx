@@ -16,20 +16,11 @@ import { debounce } from 'lodash';
 import CustomActionModal from '../../components/common/CustomActionModal';
 
 const Category = () => {
-  const {
-    getData,
-    categoryData,
-    isLoadingGet,
-    successMessage,
-    deleteData,
-    isLoadingDelete,
-  } = useCategoryReducer((state) => state);
+  const { getData, categoryData, isLoadingGet, deleteData, isLoadingDelete } =
+    useCategoryReducer((state) => state);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  console.log(' categoryData', categoryData);
 
   const [modal, setModal] = useState(false);
-
-  console.log('modal', modal);
 
   const initialParams = {
     search: '',
@@ -44,13 +35,19 @@ const Category = () => {
 
   const [params, setParams] = useState(initialParams);
 
-  useEffect(() => {
-    if (successMessage) {
-      getData(params);
-      setModal(false);
-      setDeleteModalOpen(false);
-    }
-  }, [successMessage]);
+  const onRefreshCategory = () => {
+    getData(params);
+    setModal(false);
+    setDeleteModalOpen(false);
+  };
+
+  // useEffect(() => {
+  //   if (successMessage) {
+  //     getData(params);
+  //     setModal(false);
+  //     setDeleteModalOpen(false);
+  //   }
+  // }, [successMessage]);
 
   useEffect(() => {
     getData(params);
@@ -144,7 +141,9 @@ const Category = () => {
 
   const handleDelete = () => {
     if (deleteModalOpen?.id) {
-      deleteData(deleteModalOpen?.id);
+      deleteData(deleteModalOpen?.id, () => {
+        onRefreshCategory();
+      });
     }
   };
 
@@ -185,7 +184,11 @@ const Category = () => {
         wrapClasses="inventory-table-wrap"
       />
       {modal && (
-        <AddEditModal showModal={modal} closeModal={() => setModal(false)} />
+        <AddEditModal
+          showModal={modal}
+          closeModal={() => setModal(false)}
+          onRefreshCategory={onRefreshCategory}
+        />
       )}
       {deleteModalOpen && (
         <CustomActionModal

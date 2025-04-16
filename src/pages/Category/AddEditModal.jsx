@@ -14,7 +14,7 @@ const nameSchema = z.object({
   isEZPass: z.boolean().optional(),
 });
 
-export function AddEditModal({ showModal, closeModal }) {
+export function AddEditModal({ showModal, closeModal, onRefreshCategory }) {
   const {
     register,
     handleSubmit,
@@ -45,9 +45,13 @@ export function AddEditModal({ showModal, closeModal }) {
 
   const onSubmit = (data) => {
     if (showModal?.id) {
-      patchData({ id: showModal.id, ...data });
+      patchData({ id: showModal.id, ...data }, () => {
+        onRefreshCategory();
+      });
     } else {
-      postData(data);
+      postData(data, () => {
+        onRefreshCategory();
+      });
     }
     closeModal();
   };
