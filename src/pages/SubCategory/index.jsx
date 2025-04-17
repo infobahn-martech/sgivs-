@@ -72,8 +72,18 @@ const Category = () => {
   const renderAction = (row) => {
     return (
       <>
-        <Tooltip id="edit" place="bottom" content="Edit" />
-        <Tooltip id="delete" place="bottom" content="Delete" />
+        <Tooltip
+          id="edit"
+          place="bottom"
+          content="Edit"
+          style={{ backgroundColor: '#2ca0da' }}
+        />
+        <Tooltip
+          id="delete"
+          place="bottom"
+          content="Delete"
+          style={{ backgroundColor: '#2ca0da' }}
+        />
 
         <img
           src={editIcon}
