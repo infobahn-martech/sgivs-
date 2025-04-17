@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import moment from 'moment';
+import { Spinner } from 'react-bootstrap';
 
 import '../../assets/scss/header.scss';
 import '../../assets/scss/common.scss';
@@ -15,12 +17,30 @@ import { useNavigate } from 'react-router-dom';
 import CustomActionModal from './CustomActionModal';
 import InitialsAvatar from './InitialsAvatar';
 import { getFirstLetters } from '../../config/config';
+import useNotificationsReducer from '../../stores/NotificationsReducer';
+import Notifications from '../../pages/Notification';
 
 const Header = () => {
+  const {
+    getNotifications,
+    notificationTemp: notifications,
+    isLoading,
+  } = useNotificationsReducer((state) => state);
+
+  const [showNotification, setShowNotification] = useState(false);
+  const [showNotificationModal, setShowNotificationModal] = useState(false);
   const navigate = useNavigate();
   const [isLogOut, setIsLogOut] = useState(false);
   const { doLogout } = useAuthReducer((state) => state);
   const { profileData } = useAuthReducer((state) => state);
+
+  useEffect(() => {
+    getNotifications({ page: 1, limit: 3 });
+  }, []);
+
+  useEffect(() => {
+    if (showNotification) getNotifications({ page: 1, limit: 3 });
+  }, [showNotification]);
 
   return (
     <>
@@ -28,10 +48,77 @@ const Header = () => {
         <div className="header-inner">
           <div className="user-details">
             <div className="notification">
-              <span className="notification-icon">
+              <span
+                className="notification-icon cursor-pointer"
+                onClick={() => {
+                  setShowNotification(!showNotification);
+                }}
+              >
                 <img src={NotificationIcon} alt="notification" />
               </span>
-              <span className="no-of-notification">0</span>
+              <span className="no-of-notification">
+                {notifications.total || 0}
+              </span>
+              {showNotification && (
+                <div className="notification-drp-dwn">
+                  {isLoading ? (
+                    <div
+                      className="d-flex justify-content-center py-3"
+                      key="loader"
+                    >
+                      <Spinner
+                        animation="border"
+                        variant="info"
+                        className="custom-spinner"
+                      />
+                    </div>
+                  ) : (
+                    <>
+                      <div className="info-blk">
+                        <div className="info-title">Notifications</div>
+                        <div className="info-count">
+                          <span className="count">{notifications.total}</span>
+                          Items
+                        </div>
+                      </div>
+                      <div className="content">
+                        <ul className="notification-list">
+                          {notifications.data?.map((data) => (
+                            <li className={`${data.isUnread ? 'unread' : ''}`}>
+                              <InitialsAvatar
+                                name={data.user}
+                                className="user-image"
+                                hideColor
+                              />
+
+                              <div className="profile-cont">
+                                <div className="usr-title">{data.user}</div>
+                                <div className="usr-desc">{data.activity}</div>
+                              </div>
+                              <div className="day-info">
+                                {moment(data.createdAt).toNow()}
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div className="btn-blk">
+                        <button
+                          className="view-btn"
+                          data-bs-toggle="modal"
+                          data-bs-target="#notifyModal"
+                          onClick={() => {
+                            setShowNotificationModal(true);
+                            setShowNotification(false);
+                          }}
+                        >
+                          View All
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
+              )}
             </div>
             <div className="dropdown user-drop">
               <a
@@ -105,6 +192,14 @@ const Header = () => {
           }}
           message="Are you sure you want to logout?"
           onSubmit={() => doLogout()}
+        />
+      )}
+      {showNotificationModal && (
+        <Notifications
+          isOpen={showNotificationModal}
+          onClose={() => {
+            setShowNotificationModal(false);
+          }}
         />
       )}
     </>

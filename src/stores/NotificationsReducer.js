@@ -9,7 +9,34 @@ const useNotificationsReducer = create((set) => ({
   errorMessage: '',
   successMessage: '',
   userData: null,
+  notifications: {},
+  notificationTemp: {},
+  getNotifications: async (params) => {
+    try {
+      if (params.limit === 3) {
+        set({ notificationTemp: {}, isLoading: true });
+        const { data } = await notificationsService.getNotifications(params);
 
+        set({ notificationTemp: data?.data, isLoading: false });
+      } else {
+        set({ notifications: {}, isLoading: true });
+        const { data } = await notificationsService.getNotifications(params);
+
+        set({ notifications: data?.data, isLoading: false });
+      }
+    } catch (error) {
+      set({ notifications: {}, isLoading: false });
+      console.log(' error', error);
+    }
+  },
+  markAsRead: async () => {
+    try {
+      set({ isLoading: true });
+    } catch (error) {
+      set({ isLoading: false });
+      console.log(' error', error);
+    }
+  },
   postData: async (payload) => {
     try {
       set({ isLoading: true });

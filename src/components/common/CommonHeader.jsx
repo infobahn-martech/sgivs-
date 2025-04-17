@@ -165,7 +165,7 @@ const CommonHeader = ({
                 value={searchInput}
                 onChange={handleSearchChange}
               />
-              <button class="btn">
+              <button className="btn">
                 <img src={searchIcon} alt="" />
               </button>
             </div>

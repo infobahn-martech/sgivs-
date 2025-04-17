@@ -222,6 +222,245 @@
                         max-width: 100%;
                     }
                 }
+                .notification-drp-dwn{
+                    width: 578px;
+                    position: absolute;
+                    top: 67px;
+                    right: -20px;
+                    background-color: #fff;
+                    box-shadow: 7px 8px 8.8px -21px #0000001A;
+                    border-radius: 21px;
+                    border: 1px solid #0096DF0F;
+                    @media ($sm-1679){
+                        width: 490px;
+                    }
+                    @media ($sm-1441){
+                        width: 420px;
+                    }
+                    @media ($sm-1199){
+                        width: 400px;
+                        border-radius: 15px;
+                    }
+                    @media ($sm-767){
+                        width: 380px;
+                        right: -40px;
+                        border-radius: 10px;
+                    }
+                    @media ($sm-579){
+                        width: 300px;
+                        right: -30px;
+                    }
+                    &::before{
+                        content: "";
+                        width: 0; 
+                        height: 0; 
+                        border-left: 20px solid transparent;
+                        border-right: 20px solid transparent;
+                        border-bottom: 15px solid #0096DF0F;
+                        position: absolute;
+                        right: 30px;
+                        top: -15px;
+                        
+                    }
+                    &::after{
+                        content: "";
+                        width: 0; 
+                        height: 0; 
+                        border-left: 20px solid transparent;
+                        border-right: 20px solid transparent;
+                        border-bottom: 15px solid #fff;
+                        position: absolute;
+                        right: 30px;
+                        top: -13px;
+                    }
+                    .info-blk{
+                        display: flex;
+                        font-size: 18px;
+                        font-weight: 500;
+                        color: #092837;
+                        padding: 38px 30px 22px;
+                        border-bottom: 1px solid #B3C6DD69;
+                        @media ($sm-1679){
+                            padding: 30px 30px 22px;
+                            font-size: 16px;
+                        }
+                        @media ($sm-1199){
+                            padding: 25px 25px 22px;
+                            font-size: 15px;
+                        }
+                        @media ($sm-991){
+                            padding: 20px;
+                            font-size: 14px;
+                        }
+                        @media ($sm-767){
+                            padding: 15px;
+                            font-size: 14px;
+                        }
+                        .info-title{
+                            margin-right: auto;
+                        }
+                        .info-count{
+                            display: flex;
+                            align-items: center;
+                            .count{
+                                display: inline-block;
+                                margin-right: 5px;
+                            }
+                        }
+                    }
+                    .content{
+                        padding: 4px 21px 23px;
+                        display: flex;
+                        border-bottom: 1px solid #B3C6DD69;
+                        @media ($sm-1679){
+                            padding: 4px 20px 20px;
+                        }
+                        @media ($sm-1199){
+                            padding: 4px 15px 15px;
+                        }
+                        @media ($sm-991){
+                            padding: 10px;
+                        }
+                        .notification-list{
+                            padding: 0;
+                            width: 100%;
+                            margin: 0;
+                            li{
+                                list-style: none;
+                                cursor: pointer;
+                                border-radius: 10px;
+                                padding: 22px 26px;
+                                display: flex;
+                                align-items: center;
+                                margin-top: 13px;
+                                &.unread{
+                                    background-color: #EFF6FF;
+                                }
+                                @media ($sm-1679){
+                                    padding: 20px 25px;
+                                }
+                                @media ($sm-1441){
+                                    padding: 20px;
+                                }
+                                @media ($sm-1199){
+                                    padding: 15px;
+                                }
+                                .prof-pic{
+                                    width: 46px;
+                                    height: 46px;
+                                    border-radius: 46px;
+                                    margin-right: 15px;
+                                    flex-shrink: 0;
+                                    @media ($sm-1679){
+                                        width: 40px;
+                                        height: 40px;
+                                    }
+                                    @media ($sm-1199){
+                                        width: 38px;
+                                        height: 38px;
+                                        border-radius: 38px;
+                                        margin-right: 10px;
+                                    }
+                                    @media ($sm-991){
+                                        width: 34px;
+                                        height: 34px;
+                                        border-radius: 34px;
+                                        margin-right: 10px;
+                                    }
+                                    img{
+                                        width: 100%;
+                                        height: 100%;
+                                        object-fit: cover;
+                                        object-position: center;
+                                    }
+                                }
+                                .profile-cont{
+                                    display: flex;
+                                    flex-direction: column;
+                                    flex-grow: 1;
+                                    word-wrap: break-word;
+                                    word-break: break-word;
+                                    overflow: hidden;
+                                    .usr-title{
+                                        font-size: 16px;
+                                        font-weight: 500;
+                                        color: #000000;
+                                        flex-wrap: wrap;
+                                        overflow: hidden;
+                                        text-overflow: ellipsis;
+                                        white-space: nowrap;
+                                        @media ($sm-1679){
+                                            font-size: 15px;
+                                        }
+                                        @media ($sm-1199){
+                                            font-size: 14px;
+                                        }
+                                    }
+                                    .usr-desc{
+                                        color: #7F7F7F;
+                                        font-size: 14px;
+                                        overflow: hidden;
+                                        text-overflow: ellipsis;
+                                        white-space: nowrap;
+                                        @media ($sm-1679){
+                                            font-size: 13px;
+                                        }
+                                        @media ($sm-1199){
+                                            font-size: 12px;
+                                        }
+                                    }
+                                }
+                                .day-info{
+                                    color: #7F7F7F;
+                                    font-size: 14px;
+                                    padding-left: 20px;
+                                    flex-shrink: 0;
+                                    @media ($sm-1679){
+                                        font-size: 13px;
+                                    }
+                                    @media ($sm-1199){
+                                        font-size: 12px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .btn-blk{
+                        padding: 20px 32px;
+                        @media ($sm-1679){
+                            padding: 20px 20px;
+                        }
+                        @media ($sm-1199){
+                            padding: 15px;
+                        }
+                        @media ($sm-991){
+                            padding: 10px;
+                        }
+                        .view-btn{
+                            background-color: #F3F7FF;
+                            border-radius: 15px;
+                            color: #24BEFE;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-weight: 600;
+                            font-size: 16px;
+                            height: 60px;
+                            width: 100%;
+                            border: none;
+                            box-shadow: none;
+                            outline: none;
+                            @media ($sm-1679){
+                                height: 50px;
+                                font-size: 15px;
+                            }
+                            @media ($sm-1441){
+                                height: 45px;
+                                font-size: 14px;
+                            }
+                        }
+                    }
+                }
             }
         }
         .search-control {

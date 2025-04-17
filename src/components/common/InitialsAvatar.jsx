@@ -2,7 +2,12 @@ import { getColorClass, getFirstLetters } from '../../config/config';
 
 const logged = new Set(); // to prevent duplicate logs
 
-const InitialsAvatar = ({ name, className = '', uniqueKey }) => {
+const InitialsAvatar = ({
+  name,
+  className = '',
+  uniqueKey,
+  hideColor = false,
+}) => {
   const initials = getFirstLetters(name);
   const key = `${uniqueKey ?? ''}-${name ?? ''}`;
   const finalColorClass = getColorClass(key);
@@ -12,7 +17,9 @@ const InitialsAvatar = ({ name, className = '', uniqueKey }) => {
   }
 
   return (
-    <figure className={`alphabet ${finalColorClass} ${className}`}>
+    <figure
+      className={`alphabet ${hideColor ? '' : finalColorClass} ${className}`}
+    >
       <span className="txt">{initials}</span>
     </figure>
   );
