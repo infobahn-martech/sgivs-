@@ -252,6 +252,18 @@
     }
 }
 
+.react-time-picker{
+    .react-time-picker__inputGroup__input.react-time-picker__inputGroup__amPm{
+        min-width: 48px !important;
+    }
+    .react-time-picker__inputGroup__input.react-time-picker__inputGroup__minute{
+        width: 22px !important;
+    }
+    .react-time-picker__inputGroup__leadingZero{
+        padding-left: 3px !important;
+    }
+}
+
 
 .btn-save-trans{
     background-color: $primaryColor;
