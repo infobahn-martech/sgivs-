@@ -70,6 +70,10 @@ function CustomSelect({
       placeholder={placeholder}
       options={options}
       isClearable
+      styles={{
+        menuPortal: (base) => ({ ...base, zIndex: 9999 })
+      }}
+      menuPortalTarget={document.body}
       components={{
         ...(!showIndicator && {
           DropdownIndicator: () => null,
