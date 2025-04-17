@@ -33,7 +33,7 @@ const ViewTransactionModal = ({ showModal, closeModal, data }) => {
     { name: 'Amount', selector: 'amount', sortable: true },
   ];
     const formatDateTime = (date) =>
-      date ? moment(date).format('MMM D, YYYY : hh:mm A') : '-';
+      date ? moment.utc(date).format('MMM D, YYYY : hh:mm A') : '-';
   
   const renderUploadBody = () => (
     <div className="modal-body">

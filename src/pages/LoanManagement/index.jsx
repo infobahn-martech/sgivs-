@@ -123,7 +123,7 @@ const LoanManagement = () => {
   }, 500);
 
   const formatDateTime = (date) =>
-    date ? moment(date).format('MMM D, YYYY : hh:mm A') : '-';
+    date ? moment.utc(date).format('MMM D, YYYY : hh:mm A') : '-';
 
   const renderStatus = (row) => {
     const { label, className } = getPaymentStatus(row.status);
