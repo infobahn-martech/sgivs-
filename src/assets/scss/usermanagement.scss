@@ -692,12 +692,13 @@
             }
             .sort-wrap {
                 display: flex;
-                justify-content: space-between;
+                justify-content: flex-start;
                 align-items: center;
                 .sort {
                     display: flex;
                     flex-direction: column;
                     gap: 3px;
+                    margin-left: 5px;
                 }
             }
             tr {
