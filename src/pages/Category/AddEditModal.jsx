@@ -86,7 +86,7 @@ export function AddEditModal({ showModal, closeModal, onRefreshCategory }) {
                   id="name"
                   className="form-control"
                   autoComplete="off"
-                  maxLength={40}
+                  maxLength={20}
                   {...register('name')}
                 />
                 {errors.name && (
