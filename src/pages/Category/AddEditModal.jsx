@@ -10,7 +10,7 @@ const nameSchema = z.object({
   name: z
     .string()
     .nonempty('Name is required')
-    .max(10, 'Name must be 10 characters or less'),
+    .max(20, 'Name must be 10 characters or less'),
   isEZPass: z.boolean().optional(),
 });
 
