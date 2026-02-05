@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createHashRouter } from 'react-router-dom';
 
 import App from '../App';
 import PublicRoutes from './PublicRoutes';
@@ -23,7 +23,7 @@ import UnmappedTransactions from '../pages/UnmappedTransactions/Loader';
 import Category from '../pages/Category/Loader';
 import SubCategory from '../pages/SubCategory/Loader';
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     element: <App />,
     errorElement: <Page404 />,
@@ -31,18 +31,9 @@ const router = createBrowserRouter([
       {
         element: <PublicRoutes />,
         children: [
-          {
-            path: '/login',
-            element: <Login />,
-          },
-          {
-            path: '/forgot-password',
-            element: <ForgotPassword />,
-          },
-          {
-            path: '/reset-password/:id',
-            element: <ResetPassword />,
-          },
+          { path: '/login', element: <Login /> },
+          { path: '/forgot-password', element: <ForgotPassword /> },
+          { path: '/reset-password/:id', element: <ResetPassword /> },
         ],
       },
       {
@@ -51,62 +42,37 @@ const router = createBrowserRouter([
           {
             element: <Layout />,
             children: [
+              { path: '/', element: <Dashboard /> },
+
               {
-                path: '/',
-                element: <Dashboard />,
-              },
-              {
-                element: <InventoryManagement />,
                 path: '/inventory-management',
+                element: <InventoryManagement />,
               },
+              { path: '/inventory-management/add', element: <InventoryForm /> },
               {
-                element: <InventoryForm />,
-                path: '/inventory-management/add',
-              },
-              {
-                element: <InventoryForm />,
                 path: '/inventory-management/edit/:id',
+                element: <InventoryForm />,
               },
               {
-                element: <InventoryView />,
                 path: '/inventory-management/view/:id',
+                element: <InventoryView />,
               },
+
+              { path: '/loan-management', element: <LoanManagement /> },
+              { path: '/ez-pass-billing', element: <EZPassBilling /> },
               {
-                element: <LoanManagement />,
-                path: '/loan-management',
-              },
-              {
-                element: <EZPassBilling />,
-                path: '/ez-pass-billing',
-              },
-              {
-                element: <UnmappedTransactions />,
                 path: '/ez-pass-billing/unmapped-transactions',
+                element: <UnmappedTransactions />,
               },
-              {
-                element: <Messages />,
-                path: '/messages',
-              },
-              {
-                element: <Settings />,
-                path: '/settings',
-              },
-              {
-                path: '/user-management',
-                element: <UserManagement />,
-              },
-              {
-                path: '/profile',
-                element: <Profile />,
-              },
-              {
-                path: '/category',
-                element: <Category />,
-              },
-              {
-                path: '/sub-category',
-                element: <SubCategory />,
-              },
+
+              { path: '/messages', element: <Messages /> },
+              { path: '/settings', element: <Settings /> },
+
+              { path: '/user-management', element: <UserManagement /> },
+              { path: '/profile', element: <Profile /> },
+
+              { path: '/category', element: <Category /> },
+              { path: '/sub-category', element: <SubCategory /> },
             ],
           },
         ],
