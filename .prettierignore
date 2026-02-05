@@ -1,0 +1,28 @@
+# Ignore artifacts:
+dist
+node_modules
+
+# Ignore lock files:
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Ignore Vite config and other build config files:
+vite.config.js
+
+# Ignore environment files:
+.env
+.env.*.local
+
+# Ignore public folder:
+public
+
+# Ignore assets:
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.ico
+*.woff
+*.woff2
