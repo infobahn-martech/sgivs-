@@ -8,15 +8,11 @@ import InitialsAvatar from '../../components/common/InitialsAvatar';
 import CustomModal from '../../components/common/CustomModal';
 
 const Notifications = ({ isOpen = true, onClose }) => {
-  const {
-    getNotifications,
-    notifications,
-    isLoading,
-  } = useNotificationsReducer((state) => state);
+  const { getNotifications, notifications, isLoading } =
+    useNotificationsReducer((state) => state);
   const [params, setParams] = useState({ page: 1, limit: 10 });
   const [notificationList, setNotificationList] = useState([]);
   const [hasMore, setHasMore] = useState(true);
-
 
   useEffect(() => {
     getNotifications(params);
@@ -31,7 +27,9 @@ const Notifications = ({ isOpen = true, onClose }) => {
         );
         const updatedList = [...prev, ...newNotifications];
         // Sort by createdAt in descending order (newest first)
-        return updatedList.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        return updatedList.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
       });
       // If less data received than limit, we've reached the end
       if (notifications.data.length < params.limit) {
@@ -98,7 +96,6 @@ const Notifications = ({ isOpen = true, onClose }) => {
             </InfiniteScroll>
           </ul>
         )}
-      
       </div>
     </div>
   );

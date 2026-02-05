@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import moment from 'moment';
 import { Spinner } from 'react-bootstrap';
 
@@ -11,36 +11,70 @@ import '../../assets/scss/footer.scss';
 import '../../assets/scss/header.scss';
 
 import NotificationIcon from '../../assets/images/notifications.svg';
-// import UserIcon from '../../assets/images/avatar.png';
-import useAuthReducer from '../../stores/AuthReducer';
+
 import { useNavigate } from 'react-router-dom';
 import CustomActionModal from './CustomActionModal';
 import InitialsAvatar from './InitialsAvatar';
 import { getFirstLetters } from '../../config/config';
-import useNotificationsReducer from '../../stores/NotificationsReducer';
 import Notifications from '../../pages/Notification';
 
 const Header = () => {
-  const {
-    getNotifications,
-    notificationTemp: notifications,
-    isLoading,
-  } = useNotificationsReducer((state) => state);
+  const navigate = useNavigate();
+
+  // ✅ Static profile data (edit as you like)
+  const profileData = useMemo(
+    () => ({
+      name: 'Admin User',
+      user: {
+        imageThumb: '', // put image url if you want
+      },
+    }),
+    []
+  );
+
+  // ✅ Static notifications data (same shape as your API)
+  const notifications = useMemo(
+    () => ({
+      total: 3,
+      data: [
+        {
+          id: 1,
+          user: 'John Mathew',
+          activity: 'Created a new student record',
+          createdAt: new Date(Date.now() - 2 * 60 * 1000), // 2 min ago
+          isUnread: true,
+        },
+        {
+          id: 2,
+          user: 'Anju',
+          activity: 'Updated payment status',
+          createdAt: new Date(Date.now() - 45 * 60 * 1000), // 45 min ago
+          isUnread: true,
+        },
+        {
+          id: 3,
+          user: 'Dennis',
+          activity: 'Added new course schedule',
+          createdAt: new Date(Date.now() - 3 * 60 * 60 * 1000), // 3 hrs ago
+          isUnread: false,
+        },
+      ],
+    }),
+    []
+  );
+
+  // ✅ if you want loader testing
+  const isLoading = false;
 
   const [showNotification, setShowNotification] = useState(false);
   const [showNotificationModal, setShowNotificationModal] = useState(false);
-  const navigate = useNavigate();
   const [isLogOut, setIsLogOut] = useState(false);
-  const { doLogout } = useAuthReducer((state) => state);
-  const { profileData } = useAuthReducer((state) => state);
 
-  useEffect(() => {
-    getNotifications({ page: 1, limit: 3 });
-  }, []);
-
-  useEffect(() => {
-    if (showNotification) getNotifications({ page: 1, limit: 3 });
-  }, [showNotification]);
+  // ✅ Fake logout (you can change)
+  const doLogout = () => {
+    // localStorage.clear();
+    navigate('/login');
+  };
 
   return (
     <>
@@ -50,15 +84,15 @@ const Header = () => {
             <div className="notification">
               <span
                 className="notification-icon cursor-pointer"
-                onClick={() => {
-                  setShowNotification(!showNotification);
-                }}
+                onClick={() => setShowNotification(!showNotification)}
               >
                 <img src={NotificationIcon} alt="notification" />
               </span>
+
               <span className="no-of-notification">
                 {notifications.total || 0}
               </span>
+
               {showNotification && (
                 <div className="notification-drp-dwn">
                   {isLoading ? (
@@ -77,14 +111,18 @@ const Header = () => {
                       <div className="info-blk">
                         <div className="info-title">Notifications</div>
                         <div className="info-count">
-                          <span className="count">{notifications.total}</span>
+                          <span className="count">{notifications.total}</span>{' '}
                           Items
                         </div>
                       </div>
+
                       <div className="content">
                         <ul className="notification-list">
                           {notifications.data?.map((data) => (
-                            <li className={`${data.isUnread ? 'unread' : ''}`}>
+                            <li
+                              key={data.id}
+                              className={`${data.isUnread ? 'unread' : ''}`}
+                            >
                               <InitialsAvatar
                                 name={data.user}
                                 className="user-image"
@@ -95,6 +133,7 @@ const Header = () => {
                                 <div className="usr-title">{data.user}</div>
                                 <div className="usr-desc">{data.activity}</div>
                               </div>
+
                               <div className="day-info">
                                 {moment(data.createdAt).toNow()}
                               </div>
@@ -102,6 +141,7 @@ const Header = () => {
                           ))}
                         </ul>
                       </div>
+
                       <div className="btn-blk">
                         <button
                           className="view-btn"
@@ -120,6 +160,7 @@ const Header = () => {
                 </div>
               )}
             </div>
+
             <div className="dropdown user-drop">
               <a
                 className="dropdown-toggle user-name"
@@ -127,6 +168,7 @@ const Header = () => {
                 role="button"
                 id="userDropdown"
                 data-bs-toggle="dropdown"
+                onClick={(e) => e.preventDefault()}
               >
                 <div className="usr-dtl">
                   <div className="user-image">
@@ -134,16 +176,18 @@ const Header = () => {
                       <img src={profileData?.user?.imageThumb} alt="user" />
                     ) : (
                       <div className="user-image alphabet">
-                        <span>{getFirstLetters(profileData?.name)} </span>
+                        <span>{getFirstLetters(profileData?.name)}</span>
                       </div>
                     )}
                   </div>
+
                   <div className="usr-info">
                     <span className="name">{profileData?.name}</span>
                     <span className="role">Administrator</span>
                   </div>
                 </div>
               </a>
+
               <ul
                 className="dropdown-menu dropdown-menu-end"
                 aria-labelledby="userDropdown"
@@ -152,24 +196,22 @@ const Header = () => {
                   <button
                     type="button"
                     className="dropdown-item"
-                    onClick={() => {
-                      navigate('/profile');
-                    }}
+                    onClick={() => navigate('/profile')}
                   >
                     Profile
                   </button>
                 </li>
+
                 <li>
                   <button
                     type="button"
                     className="dropdown-item"
-                    onClick={() => {
-                      navigate('/settings');
-                    }}
+                    onClick={() => navigate('/settings')}
                   >
                     Settings
                   </button>
                 </li>
+
                 <li>
                   <button
                     className="dropdown-item"
@@ -183,23 +225,21 @@ const Header = () => {
           </div>
         </div>
       </div>
+
       {isLogOut && (
         <CustomActionModal
           isLogout
           showModal={isLogOut}
-          closeModal={() => {
-            setIsLogOut(false);
-          }}
+          closeModal={() => setIsLogOut(false)}
           message="Are you sure you want to logout?"
-          onSubmit={() => doLogout()}
+          onSubmit={doLogout}
         />
       )}
+
       {showNotificationModal && (
         <Notifications
           isOpen={showNotificationModal}
-          onClose={() => {
-            setShowNotificationModal(false);
-          }}
+          onClose={() => setShowNotificationModal(false)}
         />
       )}
     </>

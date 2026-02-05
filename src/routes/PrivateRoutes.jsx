@@ -10,7 +10,10 @@ function PrivateRoutes() {
     if (getItem('accessToken')) getUserProfile({ details: 'all' });
   }, []);
 
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
+  // ✅ FORCE TRUE FOR TESTING
+  const forceAuth = true;
+
+  return forceAuth || isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
 }
 
 export default PrivateRoutes;

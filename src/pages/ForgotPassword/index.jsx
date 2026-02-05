@@ -35,12 +35,14 @@ const ForgotPassword = () => {
     <div class="user-log-wrp">
       <div class="inner-wrp">
         <div class="panel-left">
-          <div class="logo-wrp">
+          {/* <div class="logo-wrp">
             <img src={logo} alt="" />
-          </div>
+          </div> */}
           <div class="quotes-wrp">
-            Today is a new day. It's your day. You shape it.
-            <br /> Sign in to start managing your projects.
+            The access to Indian Consular Application CRM system is restricted
+            to authorized personnel only. You are informed that its use must be
+            limited only to the authorized users as mentioned in the security
+            policy and all the access will be registered and logged.
           </div>
         </div>
         <div class="panel-right">

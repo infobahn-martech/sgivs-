@@ -37,40 +37,40 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
   const sideMenu = [
     { name: 'Dashboard', icon: DashboardIcon, path: '/' },
     { name: 'User Management', icon: UserManageIcon, path: '/user-management' },
-    {
-      name: 'Inventory Management',
-      icon: InventoryManageIcon,
-      path: '/inventory-management',
-      activeRoutes: [
-        '/inventory-management',
-        '/inventory-management/add',
-        '/inventory-management/edit',
-      ],
-    },
-    { name: 'Category Management', icon: MessagesIcon, path: '/category' },
-    { name: 'Subcategory', icon: MessagesIcon, path: '/sub-category' },
-    {
-      name: 'Loan Management',
-      icon: RentalManageIcon,
-      path: '/loan-management',
-    },
-    {
-      name: 'EZ pass billing',
-      icon: EZIcon,
-      path: '/ez-pass-billing',
-      activeRoutes: [
-        '/ez-pass-billing',
-        '/ez-pass-billing/unmapped-transactions',
-      ],
-      subMenu: [
-        {
-          name: 'Unmapped Transactions',
-          path: '/ez-pass-billing/unmapped-transactions',
-          icon: transactionICo,
-        },
-      ],
-    },
-    { name: 'Messages', icon: MessagesIcon, path: '/messages' },
+    // {
+    //   name: 'Inventory Management',
+    //   icon: InventoryManageIcon,
+    //   path: '/inventory-management',
+    //   activeRoutes: [
+    //     '/inventory-management',
+    //     '/inventory-management/add',
+    //     '/inventory-management/edit',
+    //   ],
+    // },
+    // { name: 'Category Management', icon: MessagesIcon, path: '/category' },
+    // { name: 'Subcategory', icon: MessagesIcon, path: '/sub-category' },
+    // {
+    //   name: 'Loan Management',
+    //   icon: RentalManageIcon,
+    //   path: '/loan-management',
+    // },
+    // {
+    //   name: 'EZ pass billing',
+    //   icon: EZIcon,
+    //   path: '/ez-pass-billing',
+    //   activeRoutes: [
+    //     '/ez-pass-billing',
+    //     '/ez-pass-billing/unmapped-transactions',
+    //   ],
+    //   subMenu: [
+    //     {
+    //       name: 'Unmapped Transactions',
+    //       path: '/ez-pass-billing/unmapped-transactions',
+    //       icon: transactionICo,
+    //     },
+    //   ],
+    // },
+    // { name: 'Messages', icon: MessagesIcon, path: '/messages' },
     { name: 'Settings', icon: SettingsIcon, path: '/settings' },
   ];
 

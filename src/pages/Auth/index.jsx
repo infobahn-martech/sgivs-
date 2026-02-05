@@ -6,7 +6,6 @@ import '../../assets/scss/common.scss';
 import '../../assets/scss/forms.scss';
 import '../../assets/scss/footer.scss';
 import '../../assets/scss/signin.scss';
-import logo from '../../assets/images/logo.svg';
 import useAuthReducer from '../../stores/AuthReducer';
 import { Link, useNavigate } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
@@ -29,21 +28,24 @@ const Login = () => {
   });
 
   const onSubmit = (data) => {
-    login({ ...data, platform: 'web' });
+    // login({ ...data, platform: "web" });
+    navigate('/');
   };
 
   return (
     <div className="user-log-wrp">
       <div className="inner-wrp">
-        <div className="panel-left">
-          <div className="logo-wrp">
-            <img src={logo} alt="Logo" />
-          </div>
+        {/* ✅ LEFT PANEL (UPDATED) */}
+        <div className="panel-left no-bg">
           <div className="quotes-wrp">
-            Today is a new day. It's your day. You shape it.<br /> Sign in to
-            start managing your projects.
+            The access to Indian Consular Application CRM system is restricted
+            to authorized personnel only. You are informed that its use must be
+            limited only to the authorized users as mentioned in the security
+            policy and all the access will be registered and logged.
           </div>
         </div>
+
+        {/* RIGHT PANEL */}
         <div className="panel-right">
           <div className="form-wrp-center login">
             <div className="top-blk">
@@ -51,11 +53,11 @@ const Login = () => {
                 Welcome Back <span className="icon">👋</span>
               </div>
               <div className="desc">
-                Today is a new day. It's your day. You shape it.<br /> Sign in to
-                start managing your projects.
+                Today is a new day. It's your day. You shape it.
+                <br /> Sign in to start managing your projects.
               </div>
             </div>
-            {/* Wrap the form fields inside a form element */}
+
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="form-sec-wrp">
                 <div className="form-group">
@@ -73,6 +75,7 @@ const Login = () => {
                     <span className="error">{errors.email.message}</span>
                   )}
                 </div>
+
                 <div className="form-group">
                   <label className="form-label" htmlFor="password">
                     Password
@@ -88,6 +91,7 @@ const Login = () => {
                     <span className="error">{errors.password.message}</span>
                   )}
                 </div>
+
                 <Link
                   className="link"
                   onClick={() => {
@@ -96,7 +100,7 @@ const Login = () => {
                 >
                   Forgot Password?
                 </Link>
-                {/* Change button type to submit to enable Enter key functionality */}
+
                 <button className="btn btn-rounded" type="submit">
                   {isLoginLoading ? (
                     <Spinner
@@ -114,6 +118,7 @@ const Login = () => {
               </div>
             </form>
           </div>
+
           <footer className="ftr">
             <p className="copy">© 2025 ALL RIGHTS RESERVED</p>
           </footer>
