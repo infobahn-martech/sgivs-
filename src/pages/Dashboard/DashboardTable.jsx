@@ -1,26 +1,75 @@
 import React from 'react';
 import NoTableData from '../../components/common/NoTableData';
-import CommonSkeleton from '../../components/common/CommonSkeleton';
 
-const DashboardSectionTable = ({
-  title,
-  icon,
-  data = [],
-  columns = [],
-  onViewAll,
-  isLoading,
-}) => {
+// ✅ Put any local icon here if you want
+// import SampleIcon from "../../assets/images/sample-icon.svg";
+
+const DashboardSectionTable = () => {
+  // ✅ STATIC values
+  const title = 'Recent Activities';
+  const icon = ''; // SampleIcon or keep empty
+  const isLoading = false;
+
+  // ✅ STATIC columns
+  const columns = [
+    { name: 'User', selector: 'user', titleClasses: '', colClassName: '' },
+    {
+      name: 'Activity',
+      selector: 'activity',
+      titleClasses: '',
+      colClassName: '',
+    },
+    { name: 'Status', selector: 'status', titleClasses: '', colClassName: '' },
+    { name: 'Date', selector: 'date', titleClasses: '', colClassName: '' },
+  ];
+
+  // ✅ STATIC table data
+  const data = [
+    {
+      user: 'John Mathew',
+      activity: 'Created new application',
+      status: 'Pending',
+      date: '05 Feb 2026',
+    },
+    {
+      user: 'Anju',
+      activity: 'Updated document details',
+      status: 'Approved',
+      date: '04 Feb 2026',
+    },
+    {
+      user: 'Dennis',
+      activity: 'Assigned case to agent',
+      status: 'In Progress',
+      date: '03 Feb 2026',
+    },
+    {
+      user: 'Admin',
+      activity: 'Changed user permissions',
+      status: 'Completed',
+      date: '02 Feb 2026',
+    },
+  ];
+
   const hasData = data.length > 0;
+
+  const onViewAll = () => {
+    // ✅ Static action
+    console.log('View All clicked');
+    // You can navigate here if needed
+    // navigate("/activities");
+  };
 
   return (
     <div className="table-wrp">
       <div className="top-blk">
         <div className="left-wrap">
           <div className="icon-title">
-            <img src={icon} alt="" className="img" />
+            {icon ? <img src={icon} alt="" className="img" /> : null}
             <span>{title}</span>
           </div>
         </div>
+
         <button className="btn btn-view" onClick={onViewAll}>
           View All
         </button>
@@ -28,46 +77,25 @@ const DashboardSectionTable = ({
 
       <div className="table-responsive">
         {isLoading ? (
-          <table className="table table-striped">
-            <tbody>
-              {Array.from({ length: 10 }).map((_, inx) => (
-                <tr key={inx}>
-                  {columns.map(({ colClassName = '' }, colIndex) => (
-                    <td key={colIndex} className={colClassName}>
-                      <CommonSkeleton height={30} />
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <div style={{ padding: 20 }}>Loading...</div>
         ) : hasData ? (
           <table className="table table-striped">
             <thead>
               <tr>
                 {columns.map((col, idx) => (
                   <th key={idx} className={col.titleClasses}>
-                    {col.isSortable ? (
-                      <div className="sort-wrap">{col.name}</div>
-                    ) : (
-                      col.name || '-'
-                    )}
+                    {col.name || '-'}
                   </th>
                 ))}
               </tr>
             </thead>
+
             <tbody>
               {data.map((row, rowIndex) => (
                 <tr key={rowIndex}>
                   {columns.map((col, colIndex) => (
                     <td key={colIndex} className={col.colClassName || ''}>
-                      {col.cell ? (
-                        <div className={` ${col.contentClass}`}>
-                          {col.cell(row) || '-'}
-                        </div>
-                      ) : (
-                        row[col.selector] || '-'
-                      )}
+                      {row[col.selector] || '-'}
                     </td>
                   ))}
                 </tr>

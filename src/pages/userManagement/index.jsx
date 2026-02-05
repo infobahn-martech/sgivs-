@@ -41,9 +41,9 @@ const UserManagement = () => {
     getAllUsers(params);
   };
 
-  useEffect(() => {
-    handleGetAllUsers();
-  }, [params]);
+  // useEffect(() => {
+  //   handleGetAllUsers();
+  // }, [params]);
 
   const debouncedSearch = debounce((searchValue) => {
     setParams((prevParams) => ({

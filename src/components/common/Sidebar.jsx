@@ -82,7 +82,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
           style={{ cursor: 'pointer' }}
           onClick={() => navigate('/')}
         >
-          <img src={MainLogo} alt="logo" />
+          <img src="" alt="logo" />
           <img className="logo-collapse" src={collapseLogo} alt="" />
         </div>
         <button className="toggle-nav close-nav" onClick={toggleSidebar}>
