@@ -71,7 +71,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
     //   ],
     // },
     // { name: 'Messages', icon: MessagesIcon, path: '/messages' },
-    { name: 'Settings', icon: SettingsIcon, path: '/settings' },
+    { name: 'Settings', icon: SettingsIcon, path: '/' },
   ];
 
   return (
