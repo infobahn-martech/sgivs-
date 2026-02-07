@@ -18,7 +18,7 @@ import useAlertReducer from '../../stores/AlertReducer';
 import CustomActionModal from '../../components/common/CustomActionModal';
 import useCommonStore from '../../stores/CommonStore';
 import { Spinner } from 'react-bootstrap';
-import useSubCategoryReducer from '../../stores/SubCategoryReducer';
+import useCounterReducer from '../../stores/CounterReducer';
 import CommonSkeleton from '../../components/common/CommonSkeleton';
 
 const InventoryForm = () => {
@@ -43,13 +43,13 @@ const InventoryForm = () => {
   );
   const { error, clear } = useAlertReducer((state) => state);
   const {
-    getAllCategory,
+    getAllCenter,
     getCategory,
     isLoadingCat,
-    getAllSubCategory,
-    subCategories,
-    clearSubCategoryData,
-  } = useSubCategoryReducer((state) => state);
+    getAllCounter,
+    counters,
+    clearCounterData,
+  } = useCounterReducer((state) => state);
 
   const params = useParams();
   const navigate = useNavigate();
@@ -105,7 +105,7 @@ const InventoryForm = () => {
     });
     setDefaultCategory(null)
   }, []);
-  console.log(' inventoryItem', inventoryItem,defaultCategory);
+  console.log(' inventoryItem', inventoryItem, defaultCategory);
 
   useEffect(() => {
     if (files.length) {
@@ -572,7 +572,7 @@ const InventoryForm = () => {
                   )}
                   {isItemLoading ? (
                     <div className="uploaded-files">
-                      {Array.from({length:5}).map((_, idx) => (
+                      {Array.from({ length: 5 }).map((_, idx) => (
                         <div key={idx} className="file-preview">
                           <CommonSkeleton
                             height={50}
@@ -663,10 +663,9 @@ const InventoryForm = () => {
                       {!isItemLoading ? (
                         <input
                           type="text"
-                          className={`${
-                            (barcodeId || params.id ? 'cursor-not' : '') +
+                          className={`${(barcodeId || params.id ? 'cursor-not' : '') +
                             ' form-control'
-                          }`}
+                            }`}
                           id="itemId"
                           readOnly={
                             !!barcodeId || params?.id || isBarcodeLoading

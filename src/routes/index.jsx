@@ -20,8 +20,8 @@ import ResetPassword from '../pages/ResetPassword/Loader';
 import InventoryView from '../pages/InventoryManagement/InventoryView';
 import LoanManagement from '../pages/LoanManagement';
 import UnmappedTransactions from '../pages/UnmappedTransactions/Loader';
-import SubCategory from '../pages/SubCategory/Loader';
 import Center from '../pages/Center/Loader';
+import CounterManagement from '../pages/Counter/Loader';
 
 const router = createHashRouter([
   {
@@ -71,8 +71,8 @@ const router = createHashRouter([
               { path: '/user-management', element: <UserManagement /> },
               { path: '/profile', element: <Profile /> },
 
-              { path: '/sub-category', element: <SubCategory /> },
               { path: '/center', element: <Center /> },
+              { path: '/counter-management', element: <CounterManagement /> },
             ],
           },
         ],

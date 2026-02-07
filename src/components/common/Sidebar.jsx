@@ -48,12 +48,12 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
     //   ],
     // },
     { name: 'Center Management', icon: MessagesIcon, path: '/center' },
-    // { name: 'Subcategory', icon: MessagesIcon, path: '/sub-category' },
-    // {
-    //   name: 'Loan Management',
-    //   icon: RentalManageIcon,
-    //   path: '/loan-management',
-    // },
+    { name: 'Counter Management', icon: MessagesIcon, path: '/counter-management' },
+    {
+      name: 'Loan Management',
+      icon: RentalManageIcon,
+      path: '/loan-management',
+    },
     // {
     //   name: 'EZ pass billing',
     //   icon: EZIcon,

@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import CustomModal from '../../components/common/CustomModal';
-import useSubCategoryReducer from '../../stores/SubCategoryReducer';
+import useCounterReducer from '../../stores/CounterReducer';
 import CustomSelect from './Select';
 
 const nameSchema = z.object({
@@ -11,10 +11,10 @@ const nameSchema = z.object({
     .string()
     .nonempty('Name is required')
     .max(20, 'Name must be 10 characters or less'),
-  categoryId: z.string().nonempty('Category is required'),
+  centerId: z.string().nonempty('Center is required'),
 });
 
-export function AddEditModal({ showModal, closeModal, onRefreshSubCategory }) {
+export function AddEditModal({ showModal, closeModal, onRefreshCounter }) {
   const {
     register,
     handleSubmit,
@@ -26,14 +26,14 @@ export function AddEditModal({ showModal, closeModal, onRefreshSubCategory }) {
     resolver: zodResolver(nameSchema),
     defaultValues: {
       name: '',
-      categoryId: '',
+      centerId: '',
     },
   });
 
   const { postData, patchData, isLoading, getCategory, getAllCategory } =
-    useSubCategoryReducer((state) => state);
+    useCounterReducer((state) => state);
 
-  const selectedCategoryId = watch('categoryId');
+  const selectedCenterId = watch('centerId');
 
   useEffect(() => {
     getCategory();
@@ -42,13 +42,13 @@ export function AddEditModal({ showModal, closeModal, onRefreshSubCategory }) {
   useEffect(() => {
     if (showModal?.id && getAllCategory?.length > 0) {
       setValue('name', showModal?.name || '');
-      setValue('categoryId', showModal?.categoryId || '');
+      setValue('centerId', showModal?.centerId || '');
     } else if (!showModal?.id) {
       reset();
     }
   }, [showModal?.id, getAllCategory]);
 
-  const categoryOptions =
+  const centerOptions =
     getAllCategory?.map((item) => ({
       label: item.name,
       value: item.id,
@@ -57,11 +57,11 @@ export function AddEditModal({ showModal, closeModal, onRefreshSubCategory }) {
   const onSubmit = (data) => {
     if (showModal?.id) {
       patchData({ id: showModal.id, ...data }, () => {
-        onRefreshSubCategory();
+        onRefreshCounter();
       });
     } else {
       postData(data, () => {
-        onRefreshSubCategory();
+        onRefreshCounter();
       });
     }
     closeModal();
@@ -70,7 +70,7 @@ export function AddEditModal({ showModal, closeModal, onRefreshSubCategory }) {
   const renderHeader = () => (
     <>
       <h4 className="modal-title">
-        {showModal?.id ? 'Edit Sub Category' : 'Add Sub Category'}
+        {showModal?.id ? 'Edit Counter' : 'Add Counter'}
       </h4>
       <button
         type="button"
@@ -90,25 +90,25 @@ export function AddEditModal({ showModal, closeModal, onRefreshSubCategory }) {
             <div className="col-sm-6">
               <div className="form-group forms-custom">
                 <label htmlFor="categoryId" className="label">
-                  Select Category<span className="text-danger">*</span>
+                  Select Center<span className="text-danger">*</span>
                 </label>
                 <CustomSelect
-                  options={categoryOptions}
+                  options={centerOptions}
                   value={
-                    categoryOptions.find(
-                      (option) => option.value === selectedCategoryId
+                    centerOptions.find(
+                      (option) => option.value === selectedCenterId
                     ) || null
                   }
                   onChange={(selected) => {
-                    setValue('categoryId', selected?.value || '');
+                    setValue('centerId', selected?.value || '');
                   }}
-                  placeholder="Select Category"
+                  placeholder="Select Center"
                   showIndicator={false}
                   className="form-select form-control"
                 />
 
-                {errors.categoryId && (
-                  <span className="error">{errors.categoryId.message}</span>
+                {errors.centerId && (
+                  <span className="error">{errors.centerId.message}</span>
                 )}
               </div>
             </div>

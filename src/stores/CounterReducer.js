@@ -1,23 +1,22 @@
 /* eslint-disable no-unused-vars */
 import { create } from 'zustand';
 import useAlertReducer from './AlertReducer';
-import subCategoryService from '../services/subCategoryService';
+import counterService from '../services/counterService';
 
-const useSubCategoryReducer = create((set) => ({
+const useCounterReducer = create((set) => ({
   isLoading: false,
   isLoadingGet: false,
   isLoadingDelete: false,
   errorMessage: '',
   successMessage: '',
-  subCategoryData: null,
-  getAllCategory: [],
-  isLoadingCat: false,
-  subCategories: [],
+  counterData: null,
+  centers: [],
+  counters: [],
 
   postData: async (payload, cb) => {
     try {
       set({ isLoading: true });
-      const { data } = await subCategoryService.postData(payload);
+      const { data } = await counterService.postData(payload);
       const { success } = useAlertReducer.getState();
       success(data?.response?.data?.message ?? data?.message);
       set({
@@ -39,7 +38,7 @@ const useSubCategoryReducer = create((set) => ({
       set({ isLoading: true });
 
       const { id, ...rest } = payload;
-      const { data } = await subCategoryService.patchData(id, rest); // Updated call
+      const { data } = await counterService.patchData(id, rest); // Updated call
 
       const { success } = useAlertReducer.getState();
       success(data?.response?.data?.message ?? data?.message);
@@ -62,10 +61,10 @@ const useSubCategoryReducer = create((set) => ({
   getData: async (params) => {
     try {
       set({ isLoadingGet: true, successMessage: '' });
-      const { data } = await subCategoryService.getData(params);
+      const { data } = await counterService.getData(params);
       const datas = data;
       set({
-        subCategoryData: datas?.data,
+        counterData: datas?.data,
         // successMessage: data?.response?.data?.message ?? data?.message,
         isLoadingGet: false,
       });
@@ -78,40 +77,40 @@ const useSubCategoryReducer = create((set) => ({
       error(err?.response?.data?.message ?? err.message);
     }
   },
-  getCategory: async () => {
+  getAllCenter: async () => {
     try {
-      set({ isLoadingCat: true });
-      const { data } = await subCategoryService.getAllCategory();
+      set({ isLoadingGet: true });
+      const { data } = await counterService.getAllCenter();
       const datas = data;
       set({
-        getAllCategory: datas?.data?.data,
-        isLoadingCat: false,
+        centers: datas?.data?.data,
+        isLoadingGet: false,
       });
     } catch (err) {
       set({
-        isLoadingCat: false,
+        isLoadingGet: false,
       });
     }
   },
-  getAllSubCategory: async (id) => {
+  getAllCounter: async (id) => {
     try {
-      set({ isLoadingCat: true });
+      set({ isLoadingGet: true });
       const {
         data: { data },
-      } = await subCategoryService.getAllSubCategory(id);
+      } = await counterService.getAllCounter(id);
       set({
-        subCategories: data?.data,
-        isLoadingCat: false,
+        counters: data?.data,
+        isLoadingGet: false,
       });
     } catch (err) {
       set({
-        isLoadingCat: false,
+        isLoadingGet: false,
       });
     }
   },
-  clearSubCategoryData: () => {
+  clearCounterData: () => {
     set({
-      subCategories: [],
+      counters: [],
       errorMessage: '',
       successMessage: '',
     });
@@ -119,10 +118,10 @@ const useSubCategoryReducer = create((set) => ({
   deleteData: async (id, cb) => {
     try {
       set({ isLoadingDelete: true });
-      const { data } = await subCategoryService.deleteData(id);
+      const { data } = await counterService.deleteData(id);
       const datas = data;
       set({
-        subCategoryData: datas?.data,
+        counterData: datas?.data,
         successMessage: data?.response?.data?.message ?? data?.message,
         isLoadingDelete: false,
       });
@@ -138,4 +137,4 @@ const useSubCategoryReducer = create((set) => ({
   },
 }));
 
-export default useSubCategoryReducer;
+export default useCounterReducer;

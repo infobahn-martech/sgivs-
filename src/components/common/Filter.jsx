@@ -3,7 +3,7 @@ import calIcon from '../../assets/images/calend-icon.svg';
 import CustomDateRange from './DateRangePicker';
 import moment from 'moment';
 import CommonSelect from './CommonSelect';
-import useSubCategoryReducer from '../../stores/SubCategoryReducer';
+import useCounterReducer from '../../stores/CounterReducer';
 
 const Filter = ({
   filterOptions,
@@ -70,11 +70,11 @@ const Filter = ({
     setFilters((prev) => ({ ...prev, [fieldName]: updatedValue }));
   };
 
-  const { clearSubCategoryData } = useSubCategoryReducer((state) => state);
+  const { clearSubCategoryData } = useCounterReducer((state) => state);
 
   const clearFilters = () => {
     const cleared = {};
-    clearSubCategoryData();
+    clearCounterData();
     filterOptions.forEach((option) => {
       if (!option) return;
 
@@ -101,9 +101,8 @@ const Filter = ({
 
   return (
     <div
-      className={`dropdown-menu dropdown-menu-end filter-dropdown ${
-        show ? 'show' : ''
-      }`}
+      className={`dropdown-menu dropdown-menu-end filter-dropdown ${show ? 'show' : ''
+        }`}
       ref={ref}
     >
       <div className="drop-title">Filter By</div>

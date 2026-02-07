@@ -22,7 +22,7 @@ import CommonSkeleton from '../../components/common/CommonSkeleton';
 import { Spinner } from 'react-bootstrap';
 import ImageCell from './ImageCell';
 import { getInventoryColumns } from './getInventoryColumns';
-import useSubCategoryReducer from '../../stores/SubCategoryReducer';
+import useCounterReducer from '../../stores/CounterReducer';
 
 const InventoryManagement = () => {
   const {
@@ -41,13 +41,12 @@ const InventoryManagement = () => {
     isUploading,
   } = useInventoryStore((state) => state);
   const {
-    getAllCategory,
-    getCategory,
-    isLoadingCat,
-    getAllSubCategory,
-    subCategories,
-    
-  } = useSubCategoryReducer((state) => state);
+    getAllCenter,
+    getCenter,
+    isLoadingCenter,
+    getAllCounter,
+    counters,
+  } = useCounterReducer((state) => state);
   const navigate = useNavigate();
 
   const [modalConfig, setModalConfig] = useState({
@@ -71,8 +70,8 @@ const InventoryManagement = () => {
   const [params, setParams] = useState(initialParams);
 
   useEffect(() => {
-    getCategory();
-    getAllSubCategory()
+    getAllCenter();
+    getAllCounter()
   }, []);
 
   useEffect(() => {
@@ -192,19 +191,19 @@ const InventoryManagement = () => {
       BE_keyName: 'category',
       fieldType: 'select',
       isMulti: true,
-      Options: getAllCategory?.map((item) => ({
+      Options: centers?.map((item) => ({
         label: item.name,
         value: item.id,
       })),
-      
+
     },
     {
       fieldName: 'Sub Category',
-      isLoading: isLoadingCat,
+      isLoading: isLoadingCenter,
       BE_keyName: 'subcategory',
       fieldType: 'select',
       isMulti: true,
-      Options: subCategories?.map((item) => ({
+      Options: counters?.map((item) => ({
         label: item.name,
         value: item.id,
       })),
@@ -246,7 +245,7 @@ const InventoryManagement = () => {
         type="inventory"
         submitFilter={(filters) => {
           const { fromDate, toDate, ...rest } = filters;
-console.log(filters)
+          console.log(filters)
           setParams({
             ...params,
             ...rest,
