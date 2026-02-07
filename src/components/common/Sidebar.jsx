@@ -50,6 +50,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
     { name: 'Center Management', icon: MessagesIcon, path: '/center' },
     { name: 'Counter Management', icon: MessagesIcon, path: '/counter-management' },
     { name: 'Role Management', icon: MessagesIcon, path: '/role-management' },
+    { name: 'Designation Management', icon: MessagesIcon, path: '/designation-management' },
     {
       name: 'Loan Management',
       icon: RentalManageIcon,

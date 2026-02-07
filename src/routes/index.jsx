@@ -23,6 +23,7 @@ import UnmappedTransactions from '../pages/UnmappedTransactions/Loader';
 import Center from '../pages/Center/Loader';
 import CounterManagement from '../pages/Counter/Loader';
 import RoleManagement from '../pages/Role/Loader';
+import DesignationManagement from '../pages/Designation/Loader';
 
 const router = createHashRouter([
   {
@@ -75,6 +76,7 @@ const router = createHashRouter([
               { path: '/center', element: <Center /> },
               { path: '/counter-management', element: <CounterManagement /> },
               { path: '/role-management', element: <RoleManagement /> },
+              { path: '/designation-management', element: <DesignationManagement /> },
             ],
           },
         ],
