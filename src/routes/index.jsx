@@ -24,7 +24,7 @@ import Center from '../pages/Center/Loader';
 import CounterManagement from '../pages/Counter/Loader';
 import RoleManagement from '../pages/Role/Loader';
 import DesignationManagement from '../pages/Designation/Loader';
-
+import AppointmentTypeManagement from '../pages/AppointmentType/Loader';
 const router = createHashRouter([
   {
     element: <App />,
@@ -77,6 +77,7 @@ const router = createHashRouter([
               { path: '/counter-management', element: <CounterManagement /> },
               { path: '/role-management', element: <RoleManagement /> },
               { path: '/designation-management', element: <DesignationManagement /> },
+              { path: '/appointment-type-management', element: <AppointmentTypeManagement /> },
             ],
           },
         ],

@@ -14,13 +14,14 @@ import { formatDate } from '../../config/config';
 import { AddEditModal } from './AddEditModal';
 import { debounce } from 'lodash';
 import CustomActionModal from '../../components/common/CustomActionModal';
+import useAppointmentTypeReducer from '../../stores/AppointmentTypeReducer';
 
-const Center = () => {
+const AppointmentType = () => {
   // ✅ Toggle this (VERY useful for large admin projects)
   const USE_MOCK = true;
 
-  const { getData, centerData, isLoadingGet, deleteData, isLoadingDelete } =
-    useCenterReducer((state) => state);
+  const { getData, appointmentTypeData, isLoadingGet, deleteData, isLoadingDelete } =
+    useAppointmentTypeReducer((state) => state);
 
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [modal, setModal] = useState(false);
@@ -39,38 +40,38 @@ const Center = () => {
   const [params, setParams] = useState(initialParams);
 
   // ✅ Dummy Data
-  const mockCenterData = {
+  const mockAppointmentTypeData = {
     total: 5,
     data: [
       {
         id: 1,
-        name: 'Center 1',
+        name: 'Appointment Type 1',
         createdAt: '2025-01-10T09:30:00Z',
       },
       {
         id: 2,
-        name: 'Monitors',
+        name: 'Appointment Type 2',
         createdAt: '2025-02-14T12:15:00Z',
       },
       {
         id: 3,
-        name: 'Center 3',
+        name: 'Appointment Type 3',
         createdAt: '2025-03-05T08:45:00Z',
       },
       {
         id: 4,
-        name: 'Center 4',
+        name: 'Appointment Type 4',
         createdAt: '2025-03-20T10:00:00Z',
       },
       {
         id: 5,
-        name: 'Center 5',
+        name: 'Appointment Type 5',
         createdAt: '2025-04-02T11:20:00Z',
       },
     ],
   };
 
-  const onRefreshCenter = () => {
+  const onRefreshAppointmentType = () => {
     if (!USE_MOCK) {
       getData(params);
     }
@@ -118,12 +119,12 @@ const Center = () => {
 
   const columns = [
     {
-      name: 'Center Name',
+      name: 'Name',
       selector: 'name',
       contentClass: 'user-pic',
     },
     {
-      name: 'Center Created Date',
+      name: 'Created Date',
       selector: 'createdAt',
       cell: (row) => <span>{formatDate(row?.createdAt)}</span>,
     },
@@ -157,20 +158,20 @@ const Center = () => {
 
     if (deleteModalOpen?.id) {
       deleteData(deleteModalOpen?.id, () => {
-        onRefreshCenter();
+        onRefreshAppointmentType();
       });
     }
   };
 
   // ✅ Decide dataset
-  const tableData = USE_MOCK ? mockCenterData : centerData;
+  const tableData = USE_MOCK ? mockAppointmentTypeData : appointmentTypeData;
   const loading = USE_MOCK ? false : isLoadingGet;
 
   return (
     <>
       <CommonHeader
         addButton={{
-          name: 'Add Item',
+          name: 'Add Type',
           type: 'button',
           action: () => setModal(true),
         }}
@@ -208,7 +209,7 @@ const Center = () => {
         <AddEditModal
           showModal={modal}
           closeModal={() => setModal(false)}
-          onRefreshCenter={onRefreshCenter}
+          onRefreshAppointmentType={onRefreshAppointmentType}
         />
       )}
 
@@ -227,4 +228,4 @@ const Center = () => {
   );
 };
 
-export default Center;
+export default AppointmentType;
