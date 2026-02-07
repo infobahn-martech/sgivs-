@@ -56,11 +56,12 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
     { name: 'Application Mode Management', icon: MessagesIcon, path: '/application-mode-management' },
     { name: 'Application Type Management', icon: MessagesIcon, path: '/application-type-management' },
     { name: 'Courier Type Management', icon: MessagesIcon, path: '/courier-type-management' },
-    {
-      name: 'Loan Management',
-      icon: RentalManageIcon,
-      path: '/loan-management',
-    },
+    { name: 'Service Management', icon: MessagesIcon, path: '/service-management' },
+    // {
+    //   name: 'Loan Management',
+    //   icon: RentalManageIcon,
+    //   path: '/loan-management',
+    // },
     // {
     //   name: 'EZ pass billing',
     //   icon: EZIcon,

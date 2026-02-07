@@ -23,7 +23,8 @@ export const headerConfig = [
   { title: 'Collection Type Management', icon: messageIcon, path: '/collection-type-management' },
   { title: 'Application Mode Management', icon: messageIcon, path: '/application-mode-management' },
   { title: 'Application Type Management', icon: messageIcon, path: '/application-type-management' },
-  { title: 'Courier Type Management', icon: messageIcon, path: '/courier-type-management' },
+  { title: 'Courier Type Management', icon: loanImg, path: '/courier-type-management' },
+  { title: 'Service Management', icon: loanImg, path: '/service-management' },
   {
     title: 'Loan Management',
     path: '/loan-management',

@@ -29,6 +29,8 @@ import CollectionTypeManagement from '../pages/CollectionType/Loader';
 import ApplicationModeManagement from '../pages/ApplicationMode/Loader';
 import ApplicationTypeManagement from '../pages/ApplicationType/Loader';
 import CourierTypeManagement from '../pages/CourierType/Loader';
+import ServiceManagement from '../pages/Service/Loader';
+
 const router = createHashRouter([
   {
     element: <App />,
@@ -86,6 +88,7 @@ const router = createHashRouter([
               { path: '/application-mode-management', element: <ApplicationModeManagement /> },
               { path: '/application-type-management', element: <ApplicationTypeManagement /> },
               { path: '/courier-type-management', element: <CourierTypeManagement /> },
+              { path: '/service-management', element: <ServiceManagement /> },
             ],
           },
         ],
