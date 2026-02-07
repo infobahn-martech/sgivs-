@@ -4,7 +4,7 @@ import { Tooltip } from 'react-tooltip';
 
 import '../../assets/scss/sidebar.scss';
 
-import MainLogo from '../../assets/images/sidenav-logo.svg';
+import MainLogo from '../../assets/images/MLO.png';
 import DashboardIcon from '../../assets/images/dashboard-1.svg';
 import UserManageIcon from '../../assets/images/dashboard-2.svg';
 import InventoryManageIcon from '../../assets/images/dashboard-3.svg';
@@ -82,7 +82,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
           style={{ cursor: 'pointer' }}
           onClick={() => navigate('/')}
         >
-          <img src="" alt="logo" />
+          <img src={MainLogo} alt="logo" />
           <img className="logo-collapse" src={collapseLogo} alt="" />
         </div>
         <button className="toggle-nav close-nav" onClick={toggleSidebar}>
@@ -111,9 +111,8 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
                 data-tooltip-hidden={!collapsed}
                 data-tooltip-id={`tooltip-${index}`}
                 to={menu.path}
-                className={`nav-link ${menu.subMenu && 'is-sub-menu'} ${
-                  isRouteActive(menu) ? 'active open ' : ''
-                }`}
+                className={`nav-link ${menu.subMenu && 'is-sub-menu'} ${isRouteActive(menu) ? 'active open ' : ''
+                  }`}
               >
                 <span className="icon">
                   <img src={menu.icon} alt="menu-icon" />
@@ -127,9 +126,8 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
                     <Link
                       key={subIndex}
                       to={sub.path}
-                      className={`nav-link ${
-                        location.pathname === sub.path ? 'active' : ''
-                      }`}
+                      className={`nav-link ${location.pathname === sub.path ? 'active' : ''
+                        }`}
                     >
                       <span className="icon">
                         <img src={sub.icon} alt="menu-icon" />

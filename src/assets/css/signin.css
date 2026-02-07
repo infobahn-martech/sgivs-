@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+
 /*** all Mobile Screen (iphone 6,7,8) ***/
 /*** mobile Landscape Size ***/
 /*** medium devices (tablets, less than 992px) ***/
@@ -24,38 +25,44 @@
   background: url(../img/login-bottom-img.png) #fff no-repeat bottom right;
   background-size: 320px;
 }
+
 @media (max-width: 1679px) {
   .user-log-wrp {
     padding: 30px;
     background-size: 160px;
   }
 }
+
 @media (max-width: 1441px) {
   .user-log-wrp {
     padding: 25px;
     background-size: 140px;
   }
 }
+
 @media (max-width: 1199px) {
   .user-log-wrp {
     padding: 20px;
     background-size: 100px;
   }
 }
+
 .user-log-wrp .inner-wrp {
   display: flex;
   align-items: stretch;
   flex: 1;
   flex-wrap: wrap;
 }
+
 @media (max-width: 650px) {
   .user-log-wrp .inner-wrp {
     flex-direction: column;
     justify-content: center;
   }
 }
+
 .user-log-wrp .inner-wrp .panel-left {
-  background: url("../img/login-left-bg.png") no-repeat top 90px right #0096DF;
+  background: url("../img/login-left-bg.png") no-repeat top 90px right #051a53;
   background-size: contain;
   border-radius: 31px;
   padding: 56px;
@@ -65,33 +72,39 @@
   position: relative;
   overflow: hidden;
 }
+
 @media (max-width: 1679px) {
   .user-log-wrp .inner-wrp .panel-left {
     padding: 40px;
   }
 }
+
 @media (max-width: 1441px) {
   .user-log-wrp .inner-wrp .panel-left {
     padding: 35px;
   }
 }
+
 @media (max-width: 1199px) {
   .user-log-wrp .inner-wrp .panel-left {
     padding: 30px;
   }
 }
+
 @media (max-width: 991px) {
   .user-log-wrp .inner-wrp .panel-left {
     padding: 25px;
     max-width: 45%;
   }
 }
+
 @media (max-width: 767px) {
   .user-log-wrp .inner-wrp .panel-left {
     padding: 20px;
     max-width: 50%;
   }
 }
+
 @media (max-width: 650px) {
   .user-log-wrp .inner-wrp .panel-left {
     max-width: 100%;
@@ -99,36 +112,43 @@
     display: none;
   }
 }
+
 .user-log-wrp .inner-wrp .panel-left .logo-wrp {
   display: flex;
   position: relative;
   z-index: 1;
 }
+
 @media (max-width: 650px) {
   .user-log-wrp .inner-wrp .panel-left .logo-wrp {
     margin: 0 auto;
     justify-content: center;
   }
 }
+
 .user-log-wrp .inner-wrp .panel-left .logo-wrp img {
   max-width: 100%;
   height: 87px;
 }
+
 @media (max-width: 1679px) {
   .user-log-wrp .inner-wrp .panel-left .logo-wrp img {
     height: 77px;
   }
 }
+
 @media (max-width: 1566px) {
   .user-log-wrp .inner-wrp .panel-left .logo-wrp img {
     height: 67px;
   }
 }
+
 @media (max-width: 1481px) {
   .user-log-wrp .inner-wrp .panel-left .logo-wrp img {
     height: 57px;
   }
 }
+
 .user-log-wrp .inner-wrp .panel-left .quotes-wrp {
   font-size: 18px;
   color: #fff;
@@ -136,39 +156,46 @@
   position: relative;
   z-index: 1;
 }
+
 @media (max-width: 1679px) {
   .user-log-wrp .inner-wrp .panel-left .quotes-wrp {
     font-size: 16px;
     padding: 20px 0 0;
   }
 }
+
 @media (max-width: 1441px) {
   .user-log-wrp .inner-wrp .panel-left .quotes-wrp {
     font-size: 15px;
     padding: 15px 0 0;
   }
 }
+
 @media (max-width: 1199px) {
   .user-log-wrp .inner-wrp .panel-left .quotes-wrp {
     font-size: 14px;
     padding: 10px 0 0;
   }
 }
+
 @media (max-width: 767px) {
   .user-log-wrp .inner-wrp .panel-left .quotes-wrp {
     font-size: 13px;
   }
 }
+
 @media (max-width: 650px) {
   .user-log-wrp .inner-wrp .panel-left .quotes-wrp {
     text-align: center;
   }
 }
+
 @media (max-width: 650px) {
   .user-log-wrp .inner-wrp .panel-left .quotes-wrp br {
     display: none;
   }
 }
+
 .user-log-wrp .inner-wrp .panel-right {
   display: flex;
   align-items: center;
@@ -176,22 +203,26 @@
   flex: 1;
   flex-direction: column;
 }
+
 @media (max-width: 1199px) {
   .user-log-wrp .inner-wrp .panel-right {
     padding-left: 50px;
   }
 }
+
 @media (max-width: 991px) {
   .user-log-wrp .inner-wrp .panel-right {
     padding-left: 40px;
   }
 }
+
 @media (max-width: 767px) {
   .user-log-wrp .inner-wrp .panel-right {
     padding-left: 30px;
     max-width: 50%;
   }
 }
+
 @media (max-width: 650px) {
   .user-log-wrp .inner-wrp .panel-right {
     max-width: 100%;
@@ -199,147 +230,178 @@
     padding: 0 30px;
   }
 }
+
 @media (max-width: 579px) {
   .user-log-wrp .inner-wrp .panel-right {
     padding: 0 20px;
   }
 }
+
 @media (max-width: 479px) {
   .user-log-wrp .inner-wrp .panel-right {
     padding: 0 10px;
   }
 }
+
 .user-log-wrp .inner-wrp .panel-right .form-wrp-center {
   max-width: 414px;
   width: 100%;
   margin: auto;
 }
+
 .user-log-wrp .inner-wrp .panel-right .form-wrp-center .top-blk {
   margin-bottom: 48px;
   display: flex;
   flex-direction: column;
 }
+
 .user-log-wrp .inner-wrp .panel-right .form-wrp-center .top-blk .title {
   margin-bottom: 28px;
   line-height: 1;
 }
+
 @media (max-width: 1679px) {
   .user-log-wrp .inner-wrp .panel-right .form-wrp-center .top-blk .title {
     margin-bottom: 20px;
   }
 }
+
 @media (max-width: 1441px) {
   .user-log-wrp .inner-wrp .panel-right .form-wrp-center .top-blk .title {
     margin-bottom: 15px;
   }
 }
+
 @media (max-width: 1199px) {
   .user-log-wrp .inner-wrp .panel-right .form-wrp-center .top-blk .title {
     margin-bottom: 10px;
   }
 }
+
 .user-log-wrp .inner-wrp .panel-right .form-wrp-center .top-blk .desc {
   font-size: 20px;
   color: #313957;
 }
+
 @media (max-width: 1679px) {
   .user-log-wrp .inner-wrp .panel-right .form-wrp-center .top-blk .desc {
     font-size: 18px;
   }
 }
+
 @media (max-width: 1441px) {
   .user-log-wrp .inner-wrp .panel-right .form-wrp-center .top-blk .desc {
     font-size: 16px;
   }
 }
+
 @media (max-width: 1199px) {
   .user-log-wrp .inner-wrp .panel-right .form-wrp-center .top-blk .desc {
     font-size: 15px;
   }
 }
+
 @media (max-width: 991px) {
   .user-log-wrp .inner-wrp .panel-right .form-wrp-center .top-blk .desc {
     font-size: 14px;
   }
 }
+
 @media (max-width: 650px) {
   .user-log-wrp .inner-wrp .panel-right .form-wrp-center .top-blk .desc {
     font-size: 13px;
   }
 }
+
 @media (max-width: 1679px) {
   .user-log-wrp .inner-wrp .panel-right .form-wrp-center .top-blk {
     margin-bottom: 40px;
   }
 }
+
 @media (max-width: 1441px) {
   .user-log-wrp .inner-wrp .panel-right .form-wrp-center .top-blk {
     margin-bottom: 35px;
   }
 }
+
 @media (max-width: 1199px) {
   .user-log-wrp .inner-wrp .panel-right .form-wrp-center .top-blk {
     margin-bottom: 30px;
   }
 }
+
 @media (max-width: 991px) {
   .user-log-wrp .inner-wrp .panel-right .form-wrp-center .top-blk {
     margin-bottom: 25px;
   }
 }
+
 @media (max-width: 767px) {
   .user-log-wrp .inner-wrp .panel-right .form-wrp-center .top-blk {
     margin-bottom: 20px;
   }
 }
+
 .user-log-wrp .inner-wrp .panel-right .form-wrp-center .form-sec-wrp .form-group .error {
   bottom: -20px;
   left: 15px;
 }
+
 .user-log-wrp .inner-wrp .panel-right .form-wrp-center .form-sec-wrp .form-control {
   border-radius: 28px;
 }
+
 .user-log-wrp .inner-wrp .panel-right .form-wrp-center .form-sec-wrp .link {
-  color: #0096DF;
+  color: #051a53;
   font-size: 16px;
   margin-bottom: 24px;
   display: block;
   text-align: right;
 }
+
 @media (max-width: 1679px) {
   .user-log-wrp .inner-wrp .panel-right .form-wrp-center .form-sec-wrp .link {
     font-size: 15px;
   }
 }
+
 @media (max-width: 1441px) {
   .user-log-wrp .inner-wrp .panel-right .form-wrp-center .form-sec-wrp .link {
     font-size: 14px;
   }
 }
+
 @media (max-width: 767px) {
   .user-log-wrp .inner-wrp .panel-right .form-wrp-center .form-sec-wrp .link {
     font-size: 13px;
   }
 }
+
 .user-log-wrp .inner-wrp .panel-right .form-wrp-center .form-sec-wrp .btn-rounded {
   width: 388px;
   border: none;
 }
+
 @media (max-width: 991px) {
   .user-log-wrp .inner-wrp .panel-right .form-wrp-center .form-sec-wrp .btn-rounded {
     width: 100%;
   }
 }
+
 .user-log-wrp .inner-wrp .panel-right .form-wrp-center.login {
   max-width: 388px;
 }
+
 .user-log-wrp .inner-wrp .panel-right .form-wrp-center:not(.login) .form-sec-wrp .form-control {
   border-radius: 12px;
 }
+
 .user-log-wrp .inner-wrp .panel-right .form-wrp-center:not(.login) .btn-rounded {
   width: 100%;
   border: none;
 }
+
 @media (max-width: 991px) {
   .user-log-wrp .inner-wrp .panel-right .form-wrp-center:not(.login) .btn-rounded {
     width: 100%;

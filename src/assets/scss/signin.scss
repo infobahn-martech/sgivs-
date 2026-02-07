@@ -1,5 +1,6 @@
 @import "partials";
-.user-log-wrp{
+
+.user-log-wrp {
     width: 100%;
     height: 100vh;
     display: flex;
@@ -7,224 +8,299 @@
     padding: 43px 44px;
     background: url(../../assets//images/login-bottom-img.png) #fff no-repeat bottom right;
     background-size: 320px;
-    @media ($sm-1679){
+
+    @media ($sm-1679) {
         padding: 30px;
         background-size: 160px;
     }
-    @media ($sm-1441){
+
+    @media ($sm-1441) {
         padding: 25px;
         background-size: 140px;
     }
-    @media ($sm-1199){
+
+    @media ($sm-1199) {
         padding: 20px;
         background-size: 100px;
     }
-    .inner-wrp{
+
+    .inner-wrp {
         display: flex;
         align-items: stretch;
         flex: 1;
         flex-wrap: wrap;
-        @media (max-width:650px){
+
+        @media (max-width:650px) {
             flex-direction: column;
             justify-content: center;
         }
-.panel-left {
-  background:
-    linear-gradient(rgba(0, 150, 223, 0.88), rgba(0, 150, 223, 0.88)),
-    url('../images/tech-bgg.png') no-repeat center center;
-  background-size: cover;
 
-  border-radius: 31px;
-  padding: 56px 56px 90px; // ✅ more bottom space
-  flex: 1;
-  max-width: 45%;
-  width: 100%;
-  position: relative;
-  overflow: hidden;
+        .panel-left {
+            background:
+                linear-gradient(rgba(0, 150, 223, 0.88), rgba(0, 150, 223, 0.88)),
+                url('../images/tech-bgg.png') no-repeat center center;
+            background-size: cover;
 
-  // ✅ Make layout balanced
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+            border-radius: 31px;
+            padding: 56px 56px 90px; // ✅ more bottom space
+            flex: 1;
+            max-width: 45%;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
 
-  @media ($sm-1679) { padding: 40px 40px 70px; }
-  @media ($sm-1441) { padding: 35px 35px 60px; }
-  @media ($sm-1199) { padding: 30px 30px 50px; }
-  @media ($sm-991)  { padding: 25px 25px 45px; max-width: 45%; }
-  @media ($sm-767)  { padding: 20px 20px 40px; max-width: 50%; }
-  @media (max-width:650px) {
-    max-width: 100%;
-    flex: none;
-    display: none;
-  }
+            // ✅ Make layout balanced
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
 
-  // ✅ Push text down a little (top spacing)
-  .quotes-wrp {
-    margin-top: 66px;         // ✅ moves content down
-    max-width: 520px;         // ✅ readable line length
-    font-size: 18px;
-    color: $white;
-    line-height: 1.8;
-    position: relative;
-    z-index: 2;
+            @media ($sm-1679) {
+                padding: 40px 40px 70px;
+            }
 
-    // ✅ Premium glass box (optional but looks great)
-    background: rgba(255, 255, 255, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    backdrop-filter: blur(4px);
-    border-radius: 16px;
-    padding: 84px 24px;
+            @media ($sm-1441) {
+                padding: 35px 35px 60px;
+            }
 
-    @media ($sm-1679) { font-size: 16px; margin-top: 66px; }
-    @media ($sm-1441) { font-size: 15px; margin-top: 45px; }
-    @media ($sm-1199) { font-size: 14px; margin-top: 35px; }
-    @media ($sm-767)  { font-size: 13px; margin-top: 25px; }
-  }
-}
+            @media ($sm-1199) {
+                padding: 30px 30px 50px;
+            }
+
+            @media ($sm-991) {
+                padding: 25px 25px 45px;
+                max-width: 45%;
+            }
+
+            @media ($sm-767) {
+                padding: 20px 20px 40px;
+                max-width: 50%;
+            }
+
+            @media (max-width:650px) {
+                max-width: 100%;
+                flex: none;
+                display: none;
+            }
+
+            // ✅ Push text down a little (top spacing)
+            .quotes-wrp {
+                margin-top: 66px; // ✅ moves content down
+                max-width: 520px; // ✅ readable line length
+                font-size: 18px;
+                color: $white;
+                line-height: 1.8;
+                position: relative;
+                z-index: 2;
+
+                // ✅ Premium glass box (optional but looks great)
+                background: rgba(255, 255, 255, 0.12);
+                border: 1px solid rgba(255, 255, 255, 0.18);
+                backdrop-filter: blur(4px);
+                border-radius: 16px;
+                padding: 84px 24px;
+
+                @media ($sm-1679) {
+                    font-size: 16px;
+                    margin-top: 66px;
+                }
+
+                @media ($sm-1441) {
+                    font-size: 15px;
+                    margin-top: 45px;
+                }
+
+                @media ($sm-1199) {
+                    font-size: 14px;
+                    margin-top: 35px;
+                }
+
+                @media ($sm-767) {
+                    font-size: 13px;
+                    margin-top: 25px;
+                }
+            }
+        }
 
 
-        .panel-right{
+        .panel-right {
             display: flex;
             align-items: center;
             justify-content: center;
             flex: 1;
             flex-direction: column;
-            @media ($sm-1199){
+
+            @media ($sm-1199) {
                 padding-left: 50px;
             }
-            @media ($sm-991){
+
+            @media ($sm-991) {
                 padding-left: 40px;
             }
-            @media ($sm-767){
+
+            @media ($sm-767) {
                 padding-left: 30px;
                 max-width: 50%;
             }
-            @media (max-width:650px){
+
+            @media (max-width:650px) {
                 max-width: 100%;
                 flex: unset;
                 padding: 0 30px;
             }
-            @media ($sm-579){
+
+            @media ($sm-579) {
                 padding: 0 20px;
             }
-            @media ($sm-479){
+
+            @media ($sm-479) {
                 padding: 0 10px;
             }
-            .form-wrp-center{
+
+            .form-wrp-center {
                 max-width: 414px;
                 width: 100%;
                 margin: auto;
-                .top-blk{
+
+                .top-blk {
                     margin-bottom: 48px;
                     display: flex;
                     flex-direction: column;
-                    .title{
+
+                    .title {
                         margin-bottom: 28px;
                         line-height: 1;
-                        @media ($sm-1679){
+
+                        @media ($sm-1679) {
                             margin-bottom: 20px;
                         }
-                        @media ($sm-1441){
+
+                        @media ($sm-1441) {
                             margin-bottom: 15px;
                         }
-                        @media ($sm-1199){
+
+                        @media ($sm-1199) {
                             margin-bottom: 10px;
                         }
                     }
-                    .desc{
+
+                    .desc {
                         font-size: 20px;
                         // color: #313957;
                         color: #8B8B8D;
                         font-weight: 400;
-                        @media ($sm-1679){
+
+                        @media ($sm-1679) {
                             font-size: 18px;
                         }
-                        @media ($sm-1441){
+
+                        @media ($sm-1441) {
                             font-size: 16px;
                         }
-                        @media ($sm-1199){
+
+                        @media ($sm-1199) {
                             font-size: 15px;
                         }
-                        @media ($sm-991){
+
+                        @media ($sm-991) {
                             font-size: 14px;
                         }
-                        @media (max-width:650px){
+
+                        @media (max-width:650px) {
                             font-size: 13px;
                         }
                     }
-                    @media ($sm-1679){
+
+                    @media ($sm-1679) {
                         margin-bottom: 40px;
                     }
-                    @media ($sm-1441){
+
+                    @media ($sm-1441) {
                         margin-bottom: 35px;
                     }
-                    @media ($sm-1199){
+
+                    @media ($sm-1199) {
                         margin-bottom: 30px;
                     }
-                    @media ($sm-991){
+
+                    @media ($sm-991) {
                         margin-bottom: 25px;
                     }
-                    @media ($sm-767){
+
+                    @media ($sm-767) {
                         margin-bottom: 20px;
                     }
-                    &.reset{
-                        .desc{
+
+                    &.reset {
+                        .desc {
                             color: #313957;
                             font-weight: 400;
                         }
                     }
                 }
-                .form-sec-wrp{
-                    .form-group{
-                        .error{
+
+                .form-sec-wrp {
+                    .form-group {
+                        .error {
                             bottom: -20px;
                             left: 15px;
                         }
                     }
-                    .form-control{
+
+                    .form-control {
                         border-radius: 28px;
                     }
-                    .link{
-                        color: #0096DF;
+
+                    .link {
+                        color: #051a53;
                         font-size: 16px;
                         margin-bottom: 24px;
                         display: block;
                         text-align: right;
-                        @media ($sm-1679){
-                        
+
+                        @media ($sm-1679) {
+
                             font-size: 15px;
                         }
-                        @media ($sm-1441){
+
+                        @media ($sm-1441) {
                             font-size: 14px;
                         }
-                        @media ($sm-767){
+
+                        @media ($sm-767) {
                             font-size: 13px;
                         }
                     }
-                    .btn-rounded{
+
+                    .btn-rounded {
                         width: 388px;
                         border: none;
-                        @media ($sm-991){
+
+                        @media ($sm-991) {
                             width: 100%;
                         }
                     }
                 }
-                &.login{
+
+                &.login {
                     max-width: 402px;
-                    @media ($sm-1679){
+
+                    @media ($sm-1679) {
                         max-width: 388px;
                     }
                 }
-                &:not(.login){
-                    .form-sec-wrp{
-                        .form-control{
+
+                &:not(.login) {
+                    .form-sec-wrp {
+                        .form-control {
                             border-radius: 12px;
                         }
                     }
-                    .btn-rounded{
+
+                    .btn-rounded {
                         width: 100%;
                         border: none;
-                        @media ($sm-991){
+
+                        @media ($sm-991) {
                             width: 100%;
                         }
                     }

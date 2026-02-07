@@ -61,7 +61,7 @@
             }
             span {
                 font-size: 18px;
-                color: #0096df;
+                color: #051a53;
                 font-weight: 500;
                 @media ($sm-1679) {
                     font-size: 16px;
@@ -380,12 +380,12 @@
                         height: 39px;
                         width: calc(50% - 16px);
                         font-size: 16px;
-                        color: #0096df;
+                        color: #051a53;
                         display: flex;
                         align-items: center;
                         justify-content: center;
                         background: transparent;
-                        border: 1px solid #0096df;
+                        border: 1px solid #051a53;
                         &.btn-primary {
                             background: linear-gradient(90deg, #2ca0da 0%, #3982a7 100%);
                             color: #fff;
@@ -429,7 +429,7 @@
                             height: auto;
                             &:hover {
                                 background-color: transparent;
-                                color: #0096df;
+                                color: #051a53;
                             }
                         }
                     }
@@ -500,17 +500,17 @@
                     }
                 }
                 &.export {
-                    background: #0096df;
+                    background: #051a53;
                     color: #ffffff;
                 }
                 &.upload {
                     background: #ecf9ff;
-                    border: 1px solid #0096df;
-                    color: #0096df;
+                    border: 1px solid #051a53;
+                    color: #051a53;
                 }
                 &.add {
                     background: linear-gradient(90deg, #2ca0da 0%, #3982a7 100%);
-                    border: 1px solid #0096df;
+                    border: 1px solid #051a53;
                     font-weight: 600;
                     color: #fff;
                     width: 126px;
@@ -1110,7 +1110,7 @@
             padding-left: 0;
             li {
                 font-size: 16px;
-                color: #0096df;
+                color: #051a53;
                 font-weight: 400;
                 list-style: none;
                 @media ($sm-1679) {
@@ -1120,7 +1120,7 @@
                     font-size: 14px;
                 }
                 a {
-                    color: #0096df;
+                    color: #051a53;
                     text-decoration: none;
                     display: flex;
                     align-items: center;
@@ -1136,7 +1136,7 @@
                         height: 26px;
                     }
                     &.active {
-                        background: #0096df;
+                        background: #051a53;
                         border-radius: 50%;
                         color: #fff;
                         font-weight: 500;

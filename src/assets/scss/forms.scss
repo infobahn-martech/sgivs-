@@ -82,7 +82,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(90deg, #2CA0DA 0%, #3982A7 100%);
+    background: linear-gradient(90deg, #051a53 0%, #3982A7 100%);
     color: #fff;
     font-size: 20px;
     transition: all 0.5s linear;
@@ -107,7 +107,7 @@
         font-size: 14px;
     }
     &:hover{
-        background: linear-gradient(90deg, #3982A7 0%, #2CA0DA 100%);
+        background: linear-gradient(90deg, #3982A7 0%, #051a53 100%);
         color: #fff;
     }
 }
@@ -240,7 +240,7 @@
         background-color: #dceef7;
     }
     .react-datepicker__year-option:hover, .react-datepicker__month-option:hover, .react-datepicker__month-year-option:hover {
-        background-color: #0096df;
+        background-color: #051a53;
         color: #fff;
         .react-datepicker__month-option--selected{
             color: #fff;
