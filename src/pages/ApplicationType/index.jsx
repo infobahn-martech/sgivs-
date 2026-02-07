@@ -9,18 +9,18 @@ import editIcon from '../../assets/images/edit.svg';
 
 import CommonHeader from '../../components/common/CommonHeader';
 import CustomTable from '../../components/common/CustomTable';
-import useCenterReducer from '../../stores/CenterReducer';
 import { formatDate } from '../../config/config';
 import { AddEditModal } from './AddEditModal';
 import { debounce } from 'lodash';
 import CustomActionModal from '../../components/common/CustomActionModal';
+import useApplicationTypeReducer from '../../stores/ApplicationTypeReducer';
 
-const Center = () => {
+const ApplicationType = () => {
   // ✅ Toggle this (VERY useful for large admin projects)
   const USE_MOCK = true;
 
-  const { getData, centerData, isLoadingGet, deleteData, isLoadingDelete } =
-    useCenterReducer((state) => state);
+  const { getData, applicationTypeList, isLoadingGet, deleteData, isLoadingDelete } =
+    useApplicationTypeReducer((state) => state);
 
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [modal, setModal] = useState(false);
@@ -39,38 +39,38 @@ const Center = () => {
   const [params, setParams] = useState(initialParams);
 
   // ✅ Dummy Data
-  const mockCenterData = {
+  const mockApplicationTypeList = {
     total: 5,
     data: [
       {
         id: 1,
-        name: 'Center 1',
+        name: 'Application Type 1',
         createdAt: '2025-01-10T09:30:00Z',
       },
       {
         id: 2,
-        name: 'Monitors',
+        name: 'Application Type 2',
         createdAt: '2025-02-14T12:15:00Z',
       },
       {
         id: 3,
-        name: 'Center 3',
+        name: 'Application Type 3',
         createdAt: '2025-03-05T08:45:00Z',
       },
       {
         id: 4,
-        name: 'Center 4',
+        name: 'Application Type 4',
         createdAt: '2025-03-20T10:00:00Z',
       },
       {
         id: 5,
-        name: 'Center 5',
+        name: 'Application Type 5',
         createdAt: '2025-04-02T11:20:00Z',
       },
     ],
   };
 
-  const onRefreshCenter = () => {
+  const onRefreshApplicationType = () => {
     if (!USE_MOCK) {
       getData(params);
     }
@@ -118,12 +118,12 @@ const Center = () => {
 
   const columns = [
     {
-      name: 'Center Name',
+      name: 'Name',
       selector: 'name',
       contentClass: 'user-pic',
     },
     {
-      name: 'Center Created Date',
+      name: 'Created Date',
       selector: 'createdAt',
       cell: (row) => <span>{formatDate(row?.createdAt)}</span>,
     },
@@ -157,20 +157,20 @@ const Center = () => {
 
     if (deleteModalOpen?.id) {
       deleteData(deleteModalOpen?.id, () => {
-        onRefreshCenter();
+        onRefreshApplicationType();
       });
     }
   };
 
   // ✅ Decide dataset
-  const tableData = USE_MOCK ? mockCenterData : centerData;
+  const tableData = USE_MOCK ? mockApplicationTypeList : applicationTypeList;
   const loading = USE_MOCK ? false : isLoadingGet;
 
   return (
     <>
       <CommonHeader
         addButton={{
-          name: 'Add Item',
+          name: 'Add Type',
           type: 'button',
           action: () => setModal(true),
         }}
@@ -208,7 +208,7 @@ const Center = () => {
         <AddEditModal
           showModal={modal}
           closeModal={() => setModal(false)}
-          onRefreshCenter={onRefreshCenter}
+          onRefreshApplicationType={onRefreshApplicationType}
         />
       )}
 
@@ -227,4 +227,4 @@ const Center = () => {
   );
 };
 
-export default Center;
+export default ApplicationType;

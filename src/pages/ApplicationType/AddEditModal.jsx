@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import CustomModal from '../../components/common/CustomModal';
-import useCenterReducer from '../../stores/CenterReducer';
+import useApplicationTypeReducer from '../../stores/ApplicationTypeReducer';
 
 // Updated schema with isEZPass as a boolean
 const nameSchema = z.object({
@@ -14,7 +14,7 @@ const nameSchema = z.object({
   isEZPass: z.boolean().optional(),
 });
 
-export function AddEditModal({ showModal, closeModal, onRefreshCenter }) {
+export function AddEditModal({ showModal, closeModal, onRefreshApplicationType }) {
   const {
     register,
     handleSubmit,
@@ -29,7 +29,7 @@ export function AddEditModal({ showModal, closeModal, onRefreshCenter }) {
     },
   });
 
-  const { postData, patchData, isLoading } = useCenterReducer(
+  const { postData, patchData, isLoading } = useApplicationTypeReducer(
     (state) => state
   );
 
@@ -46,11 +46,11 @@ export function AddEditModal({ showModal, closeModal, onRefreshCenter }) {
   const onSubmit = (data) => {
     if (showModal?.id) {
       patchData({ id: showModal.id, ...data }, () => {
-        onRefreshCenter();
+        onRefreshApplicationType();
       });
     } else {
       postData(data, () => {
-        onRefreshCenter();
+        onRefreshApplicationType();
       });
     }
     closeModal();
@@ -59,7 +59,7 @@ export function AddEditModal({ showModal, closeModal, onRefreshCenter }) {
   const renderHeader = () => (
     <>
       <h4 className="modal-title">
-        {showModal?.id ? 'Edit Center' : 'Add Center'}
+        {showModal?.id ? 'Edit Type' : 'Add Type'}
       </h4>
       <button
         type="button"
