@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import CustomTable from '../../components/common/CustomTable';
 import '../../assets/scss/usermanagement.scss';
 import CommonHeader from '../../components/common/CommonHeader';
@@ -9,6 +9,9 @@ import moment from 'moment';
 import getUserTableColumns from './getUserTableColumns';
 
 const UserManagement = () => {
+  // ✅ Toggle this to switch between static data and API data
+  const USE_MOCK = true;
+
   const {
     getAllUsers,
     usersData,
@@ -27,6 +30,7 @@ const UserManagement = () => {
     toDate: null,
     sortBy: 'createdAt',
     sortOrder: 'DESC',
+    // status: undefined, // (optional filter key if your BE supports)
   };
 
   const [params, setParams] = useState(initialParams);
@@ -37,21 +41,77 @@ const UserManagement = () => {
 
   const [selectedUser, setSelectedUser] = useState(null);
 
-  const handleGetAllUsers = () => {
-    getAllUsers(params);
+  // ✅ Static mock data (UI testing without API)
+  const staticUsersData = {
+    data: [
+      {
+        id: 1,
+        firstName: 'John',
+        lastName: 'Mathew',
+        email: 'john@test.com',
+        role: 'Admin',
+        status: 1, // 1=Active, 2=Blocked
+        isNotificationEnabled: true,
+        createdAt: '2025-01-12T10:20:00Z',
+      },
+      {
+        id: 2,
+        firstName: 'Akhil',
+        lastName: 'Thomas',
+        email: 'akhil@test.com',
+        role: 'Manager',
+        status: 2,
+        isNotificationEnabled: false,
+        createdAt: '2025-02-20T09:10:00Z',
+      },
+      {
+        id: 3,
+        firstName: 'Nabeela',
+        lastName: 'K',
+        email: 'nabeela@test.com',
+        role: 'User',
+        status: 1,
+        isNotificationEnabled: true,
+        createdAt: '2025-03-05T12:00:00Z',
+      },
+      {
+        id: 4,
+        firstName: 'Dany',
+        lastName: 'Thomas',
+        email: 'dany@test.com',
+        role: 'Full Stack Dev',
+        status: 1,
+        isNotificationEnabled: false,
+        createdAt: '2025-11-10T08:30:00Z',
+      },
+    ],
+    pagination: {
+      totalRecords: 4,
+    },
   };
 
-  // useEffect(() => {
-  //   handleGetAllUsers();
+  const handleGetAllUsers = () => {
+    // ✅ If you want API later, set USE_MOCK=false and uncomment useEffect below
+    if (!USE_MOCK) getAllUsers(params);
+  };
+
+  // ✅ API mode (enable later)
+  // React.useEffect(() => {
+  //   if (!USE_MOCK) handleGetAllUsers();
   // }, [params]);
 
-  const debouncedSearch = debounce((searchValue) => {
-    setParams((prevParams) => ({
-      ...prevParams,
-      search: searchValue,
-      page: 1,
-    }));
-  }, 500);
+  // ✅ Debounced search (stable reference)
+  const debouncedSearch = useMemo(
+    () =>
+      debounce((searchValue) => {
+        setParams((prevParams) => ({
+          ...prevParams,
+          search: searchValue,
+          page: 1,
+        }));
+      }, 500),
+    []
+  );
 
   const handleSortChange = (selector) => {
     setParams((prevParams) => ({
@@ -66,7 +126,7 @@ const UserManagement = () => {
   };
 
   const handleLimitChange = (limit) => {
-    setParams((prevParams) => ({ ...prevParams, limit }));
+    setParams((prevParams) => ({ ...prevParams, limit, page: 1 }));
   };
 
   const handleStatusClick = (row) => {
@@ -75,46 +135,65 @@ const UserManagement = () => {
   };
 
   const handleStatusUpdate = () => {
-    if (selectedUser) {
-      const newStatus = selectedUser.status === 2 ? 1 : 2;
-      usersAction(selectedUser.id, newStatus, () => {
-        setstatusModalOpen(false);
-        handleGetAllUsers();
-      });
+    if (!selectedUser) return;
+
+    if (USE_MOCK) {
+      // ✅ MOCK: just close modal (no real update)
+      setstatusModalOpen(false);
+      return;
     }
+
+    const newStatus = selectedUser.status === 2 ? 1 : 2;
+    usersAction(selectedUser.id, newStatus, () => {
+      setstatusModalOpen(false);
+      handleGetAllUsers();
+    });
   };
 
   const handleDeleteClick = (row) => {
     setSelectedUser(row);
     setDeleteModalOpen(true);
   };
+
   const handleNotification = (row) => {
     setSelectedUser(row);
     setnotifyModal(true);
   };
 
   const handleDeleUser = () => {
-    if (selectedUser) {
-      usersAction(selectedUser.id, 3, () => {
-        setDeleteModalOpen(false);
-        handleGetAllUsers();
-      });
+    if (!selectedUser) return;
+
+    if (USE_MOCK) {
+      // ✅ MOCK: just close modal (no real delete)
+      setDeleteModalOpen(false);
+      return;
     }
+
+    usersAction(selectedUser.id, 3, () => {
+      setDeleteModalOpen(false);
+      handleGetAllUsers();
+    });
   };
 
   const onSubmitUserNotify = () => {
-    if (selectedUser) {
-      userNotification(
-        {
-          userId: selectedUser?.id,
-          notifications: !selectedUser?.isNotificationEnabled,
-        },
-        () => {
-          setnotifyModal(false);
-          handleGetAllUsers();
-        }
-      );
+    if (!selectedUser) return;
+
+    if (USE_MOCK) {
+      // ✅ MOCK: just close modal (no real notify update)
+      setnotifyModal(false);
+      return;
     }
+
+    userNotification(
+      {
+        userId: selectedUser?.id,
+        notifications: !selectedUser?.isNotificationEnabled,
+      },
+      () => {
+        setnotifyModal(false);
+        handleGetAllUsers();
+      }
+    );
   };
 
   const columns = getUserTableColumns({
@@ -142,6 +221,10 @@ const UserManagement = () => {
     },
   ];
 
+  // ✅ Decide which dataset to use
+  const tableData = USE_MOCK ? staticUsersData : usersData;
+  const loading = USE_MOCK ? false : isUsersLoading;
+
   return (
     <>
       <CommonHeader
@@ -150,44 +233,46 @@ const UserManagement = () => {
         submitFilter={(filters) => {
           const { fromDate, toDate, ...rest } = filters;
 
-          setParams({
-            ...params,
+          setParams((prev) => ({
+            ...prev,
             ...rest,
             fromDate: fromDate ? moment(fromDate).format('YYYY-MM-DD') : null,
             toDate: toDate ? moment(toDate).format('YYYY-MM-DD') : null,
-            page: '1',
-          });
+            page: 1,
+          }));
         }}
         clearOptions={() => {
           setParams(initialParams);
         }}
       />
+
       <CustomTable
         pagination={{ currentPage: params.page, limit: params.limit }}
-        count={usersData?.pagination?.totalRecords}
+        count={tableData?.pagination?.totalRecords || 0}
         columns={columns}
-        data={usersData?.data || []}
-        isLoading={isUsersLoading}
+        data={tableData?.data || []}
+        isLoading={loading}
         onPageChange={handlePageChange}
         setLimit={handleLimitChange}
         onSortChange={handleSortChange}
       />
+
       {statusModalOpen && selectedUser && (
         <CustomActionModal
-          isLoading={userActionLoading}
+          isLoading={USE_MOCK ? false : userActionLoading}
           showModal={statusModalOpen}
           closeModal={() => setstatusModalOpen(false)}
-          message={`Are you sure you want to ${
-            selectedUser.status === 2 ? 'Activate' : 'Block'
-          } ${selectedUser?.firstName} ?`}
+          message={`Are you sure you want to ${selectedUser.status === 2 ? 'Activate' : 'Block'
+            } ${selectedUser?.firstName} ?`}
           onCancel={() => setstatusModalOpen(false)}
           onSubmit={handleStatusUpdate}
         />
       )}
+
       {deleteModalOpen && selectedUser && (
         <CustomActionModal
           isDelete
-          isLoading={userActionLoading}
+          isLoading={USE_MOCK ? false : userActionLoading}
           showModal={deleteModalOpen}
           closeModal={() => setDeleteModalOpen(false)}
           message={`Are you sure you want to delete ${selectedUser?.firstName} ?`}
@@ -198,12 +283,11 @@ const UserManagement = () => {
 
       {notifyModal && selectedUser && (
         <CustomActionModal
-          isLoading={userNotifyLoading}
+          isLoading={USE_MOCK ? false : userNotifyLoading}
           showModal={notifyModal}
           closeModal={() => setnotifyModal(false)}
-          message={`Are you sure you want to  ${
-            selectedUser?.isNotificationEnabled ? 'Disable' : 'Enable'
-          } notications for ${selectedUser?.firstName}? `}
+          message={`Are you sure you want to ${selectedUser?.isNotificationEnabled ? 'Disable' : 'Enable'
+            } notifications for ${selectedUser?.firstName}?`}
           onCancel={() => setnotifyModal(false)}
           onSubmit={onSubmitUserNotify}
         />
