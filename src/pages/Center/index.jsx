@@ -15,7 +15,7 @@ import { AddEditModal } from './AddEditModal';
 import { debounce } from 'lodash';
 import CustomActionModal from '../../components/common/CustomActionModal';
 
-const Category = () => {
+const Center = () => {
   const { getData, categoryData, isLoadingGet, deleteData, isLoadingDelete } =
     useCategoryReducer((state) => state);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -216,4 +216,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default Center;

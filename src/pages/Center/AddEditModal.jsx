@@ -74,42 +74,23 @@ export function AddEditModal({ showModal, closeModal, onRefreshCategory }) {
   const renderBody = () => (
     <>
       <div className="modal-body custom-scroll">
-        <div className="set-dealine-wrp">
-          <div className="row">
-            <div className="col-12">
-              <div className="form-group">
-                <label htmlFor="name" className="form-label">
-                  Name<span className="text-danger">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  className="form-control"
-                  autoComplete="off"
-                  maxLength={20}
-                  {...register('name')}
-                />
-                {errors.name && (
-                  <span className="error">{errors.name.message}</span>
-                )}
-              </div>
-            </div>
-
-            <div className="col-12">
-              <div className="form-group">
-                <label htmlFor="isEZPass" className="form-label me-2">
-                  EZ Pass
-                </label>
-                <input
-                  type="checkbox"
-                  id="isEZPass"
-                  className="form-check-input"
-                  {...register('isEZPass')}
-                />
-                {errors.isEZPass && (
-                  <span className="error">{errors.isEZPass.message}</span>
-                )}
-              </div>
+        <div className="row">
+          <div className="col-12">
+            <div className="form-group">
+              <label htmlFor="name" className="form-label">
+                Name<span className="text-danger">*</span>
+              </label>
+              <input
+                type="text"
+                id="name"
+                className="form-control"
+                autoComplete="off"
+                maxLength={20}
+                {...register('name')}
+              />
+              {errors.name && (
+                <span className="error">{errors.name.message}</span>
+              )}
             </div>
           </div>
         </div>

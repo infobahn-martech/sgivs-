@@ -47,7 +47,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
     //     '/inventory-management/edit',
     //   ],
     // },
-    // { name: 'Category Management', icon: MessagesIcon, path: '/category' },
+    { name: 'Center Management', icon: MessagesIcon, path: '/center' },
     // { name: 'Subcategory', icon: MessagesIcon, path: '/sub-category' },
     // {
     //   name: 'Loan Management',
