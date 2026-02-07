@@ -21,6 +21,7 @@ export const headerConfig = [
   { title: 'Designation Management', icon: messageIcon, path: '/designation-management' },
   { title: 'Appointment Type Management', icon: messageIcon, path: '/appointment-type-management' },
   { title: 'Collection Type Management', icon: messageIcon, path: '/collection-type-management' },
+  { title: 'Application Mode Management', icon: messageIcon, path: '/application-mode-management' },
   {
     title: 'Loan Management',
     path: '/loan-management',

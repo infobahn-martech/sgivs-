@@ -1,9 +1,9 @@
 import Gateway from '../config/gateway';
 
-const postData = (payload) => Gateway.post('/center', payload);
-const patchData = (id, payload) => Gateway.put(`/center/${id}`, payload);
-const getData = (params) => Gateway.get('/center', { params });
-const deleteData = (id) => Gateway.delete(`/center/${id}`);
+const postData = (payload) => Gateway.post('/application-mode', payload);
+const patchData = (id, payload) => Gateway.put(`/application-mode/${id}`, payload);
+const getData = (params) => Gateway.get('/application-mode', { params });
+const deleteData = (id) => Gateway.delete(`/application-mode/${id}`);
 
 export default {
   postData,

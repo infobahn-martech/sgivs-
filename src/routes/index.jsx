@@ -26,6 +26,7 @@ import RoleManagement from '../pages/Role/Loader';
 import DesignationManagement from '../pages/Designation/Loader';
 import AppointmentTypeManagement from '../pages/AppointmentType/Loader';
 import CollectionTypeManagement from '../pages/CollectionType/Loader';
+import ApplicationModeManagement from '../pages/ApplicationMode/Loader';
 const router = createHashRouter([
   {
     element: <App />,
@@ -80,6 +81,7 @@ const router = createHashRouter([
               { path: '/designation-management', element: <DesignationManagement /> },
               { path: '/appointment-type-management', element: <AppointmentTypeManagement /> },
               { path: '/collection-type-management', element: <CollectionTypeManagement /> },
+              { path: '/application-mode-management', element: <ApplicationModeManagement /> },
             ],
           },
         ],
