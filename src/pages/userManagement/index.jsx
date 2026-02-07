@@ -66,9 +66,9 @@ const UserManagement = () => {
       },
       {
         id: 3,
-        firstName: 'Nabeela',
+        firstName: 'Zimba',
         lastName: 'K',
-        email: 'nabeela@test.com',
+        email: 'zimba@test.com',
         role: 'User',
         status: 1,
         isNotificationEnabled: true,
