@@ -38,7 +38,7 @@ const UserManagement = () => {
   const [statusModalOpen, setstatusModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [notifyModal, setnotifyModal] = useState(false);
-
+  const [addUserModal, setAddUserModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
 
   // ✅ Static mock data (UI testing without API)
@@ -228,6 +228,11 @@ const UserManagement = () => {
   return (
     <>
       <CommonHeader
+        addButton={{
+          name: 'Add User',
+          type: 'button',
+          action: () => setAddUserModal(true),
+        }}
         onSearch={debouncedSearch}
         filterOptions={filterOptions}
         submitFilter={(filters) => {
