@@ -42,7 +42,7 @@ export const headerConfig = [
   },
   { title: 'Messages', icon: messageIcon, path: '/messages' },
   { title: 'Settings', icon: settingsIcon, path: '/settings' },
-  { title: 'User Management', icon: userImage, path: '/user-management' },
+  { title: 'Employee Management', icon: userImage, path: '/employee-management' },
 ];
 
 export const getFirstLetters = (name) => {

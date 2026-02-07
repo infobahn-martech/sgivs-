@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 
@@ -36,51 +36,123 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
 
   const sideMenu = [
     { name: 'Dashboard', icon: DashboardIcon, path: '/' },
-    { name: 'User Management', icon: UserManageIcon, path: '/user-management' },
-    // {
-    //   name: 'Inventory Management',
-    //   icon: InventoryManageIcon,
-    //   path: '/inventory-management',
-    //   activeRoutes: [
-    //     '/inventory-management',
-    //     '/inventory-management/add',
-    //     '/inventory-management/edit',
-    //   ],
-    // },
-    { name: 'Center Management', icon: MessagesIcon, path: '/center' },
-    { name: 'Counter Management', icon: MessagesIcon, path: '/counter-management' },
-    { name: 'Role Management', icon: MessagesIcon, path: '/role-management' },
-    { name: 'Designation Management', icon: MessagesIcon, path: '/designation-management' },
-    { name: 'Appointment Type Management', icon: MessagesIcon, path: '/appointment-type-management' },
-    { name: 'Collection Type Management', icon: MessagesIcon, path: '/collection-type-management' },
-    { name: 'Application Mode Management', icon: MessagesIcon, path: '/application-mode-management' },
-    { name: 'Application Type Management', icon: MessagesIcon, path: '/application-type-management' },
-    { name: 'Courier Type Management', icon: MessagesIcon, path: '/courier-type-management' },
-    { name: 'Service Management', icon: MessagesIcon, path: '/service-management' },
-    // {
-    //   name: 'Loan Management',
-    //   icon: RentalManageIcon,
-    //   path: '/loan-management',
-    // },
-    // {
-    //   name: 'EZ pass billing',
-    //   icon: EZIcon,
-    //   path: '/ez-pass-billing',
-    //   activeRoutes: [
-    //     '/ez-pass-billing',
-    //     '/ez-pass-billing/unmapped-transactions',
-    //   ],
-    //   subMenu: [
-    //     {
-    //       name: 'Unmapped Transactions',
-    //       path: '/ez-pass-billing/unmapped-transactions',
-    //       icon: transactionICo,
-    //     },
-    //   ],
-    // },
-    // { name: 'Messages', icon: MessagesIcon, path: '/messages' },
+    // Employee Management
+    {
+      name: 'Employee Management',
+      icon: MessagesIcon,
+      path: '/employee-management',
+      activeRoutes: ['/employee-management', '/role-management', '/designation-management'],
+      subMenu: [
+        { name: 'Employees', icon: UserManageIcon, path: '/employee-management' },
+        { name: 'Employee role', path: '/role-management', icon: MessagesIcon },
+        {
+          name: 'Employee designation',
+          path: '/designation-management',
+          icon: MessagesIcon,
+        },
+      ],
+    },
+
+    // Centers
+    {
+      name: 'Centers',
+      icon: MessagesIcon,
+      path: '/center',
+      activeRoutes: ['/center', '/counter-management'],
+      subMenu: [
+        { name: 'Center', path: '/center', icon: MessagesIcon },
+        { name: 'Counter', path: '/counter-management', icon: MessagesIcon },
+      ],
+    },
+
+    // Miscellaneous
+    {
+      name: 'Miscellaneous',
+      icon: MessagesIcon,
+      path: '/appointment-type-management',
+      activeRoutes: [
+        '/appointment-type-management',
+        '/collection-type-management',
+        '/application-mode-management',
+        '/application-type-management',
+        '/courier-type-management',
+      ],
+      subMenu: [
+        {
+          name: 'Appointment type',
+          path: '/appointment-type-management',
+          icon: MessagesIcon,
+        },
+        {
+          name: 'Collection type',
+          path: '/collection-type-management',
+          icon: MessagesIcon,
+        },
+        {
+          name: 'Application mode',
+          path: '/application-mode-management',
+          icon: MessagesIcon,
+        },
+        {
+          name: 'Application type',
+          path: '/application-type-management',
+          icon: MessagesIcon,
+        },
+        { name: 'Courier type', path: '/courier-type-management', icon: MessagesIcon },
+      ],
+    },
+
+    // Service Management
+    {
+      name: 'Service Management',
+      icon: MessagesIcon,
+      path: '/service-management',
+      activeRoutes: [
+        '/service-management',
+        '/visa-duration',
+        '/visa-entry',
+        '/optional-services',
+        '/vas-services',
+      ],
+      subMenu: [
+        { name: 'Services', path: '/service-management', icon: MessagesIcon },
+        { name: 'Visa Duration', path: '/visa-duration', icon: MessagesIcon },
+        { name: 'Visa Entry', path: '/visa-entry', icon: MessagesIcon },
+        { name: 'Optional Services', path: '/optional-services', icon: MessagesIcon },
+        {
+          name: 'VAS services (Value added service)',
+          path: '/vas-services',
+          icon: MessagesIcon,
+        },
+      ],
+    },
+
+    // Appointment Settings
+    {
+      name: 'Apppintment Settings',
+      icon: MessagesIcon,
+      path: '/appointment-settings',
+      activeRoutes: ['/appointment-settings'],
+      subMenu: [
+        {
+          name: 'Appointment Settings',
+          path: '/appointment-settings',
+          icon: MessagesIcon,
+        },
+      ],
+    },
+
     { name: 'Settings', icon: SettingsIcon, path: '/' },
   ];
+
+  // ✅ submenu open/close state (click based)
+  const [openMenuIndex, setOpenMenuIndex] = useState(null);
+
+  // ✅ auto-open menu based on current route
+  useEffect(() => {
+    const activeIndex = sideMenu.findIndex((m) => m.subMenu && isRouteActive(m));
+    if (activeIndex !== -1) setOpenMenuIndex(activeIndex);
+  }, [location.pathname]);
 
   return (
     <div className={`sidebar ${collapsed ? 'collapsed' : ''}`}>
@@ -100,6 +172,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
           <img src={ToggleIcon} alt="Toggle Sidebar" />
         </button>
       </div>
+
       <div className="menu-wrp-outer">
         <nav className="nav">
           {sideMenu.map((menu, index) => (
@@ -118,17 +191,29 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
                 data-tooltip-content={menu.name}
                 data-tooltip-hidden={!collapsed}
                 data-tooltip-id={`tooltip-${index}`}
-                to={menu.path}
-                className={`nav-link ${menu.subMenu && 'is-sub-menu'} ${isRouteActive(menu) ? 'active open ' : ''
+                to={menu.subMenu ? '#' : menu.path}
+                onClick={(e) => {
+                  if (menu.subMenu) {
+                    e.preventDefault();
+                    setOpenMenuIndex((prev) => (prev === index ? null : index));
+                  }
+                }}
+                className={`nav-link ${menu.subMenu && 'is-sub-menu'} ${isRouteActive(menu) || openMenuIndex === index ? 'active open ' : ''
                   }`}
               >
                 <span className="icon">
                   <img src={menu.icon} alt="menu-icon" />
                 </span>
                 <span className="txt">{menu.name}</span>
+
+                {menu.subMenu && (
+                  <span className={`arrow ${openMenuIndex === index ? 'rotate' : ''}`}>
+                    ❯
+                  </span>
+                )}
               </Link>
 
-              {menu.subMenu && isRouteActive(menu) && !collapsed && (
+              {menu.subMenu && openMenuIndex === index && !collapsed && (
                 <div className="sub-menu">
                   {menu.subMenu.map((sub, subIndex) => (
                     <Link

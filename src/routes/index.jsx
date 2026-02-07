@@ -76,7 +76,7 @@ const router = createHashRouter([
               { path: '/messages', element: <Messages /> },
               { path: '/settings', element: <Settings /> },
 
-              { path: '/user-management', element: <UserManagement /> },
+              { path: '/employee-management', element: <UserManagement /> },
               { path: '/profile', element: <Profile /> },
 
               { path: '/center', element: <Center /> },
