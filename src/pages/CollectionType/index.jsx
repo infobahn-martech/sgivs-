@@ -178,7 +178,6 @@ const CollectionType = () => {
         onSearch={debouncedSearch}
         submitFilter={(filters) => {
           const { fromDate, toDate, ...rest } = filters;
-
           setParams({
             ...params,
             ...rest,
