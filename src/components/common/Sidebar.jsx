@@ -52,6 +52,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
     { name: 'Role Management', icon: MessagesIcon, path: '/role-management' },
     { name: 'Designation Management', icon: MessagesIcon, path: '/designation-management' },
     { name: 'Appointment Type Management', icon: MessagesIcon, path: '/appointment-type-management' },
+    { name: 'Collection Type Management', icon: MessagesIcon, path: '/collection-type-management' },
     {
       name: 'Loan Management',
       icon: RentalManageIcon,

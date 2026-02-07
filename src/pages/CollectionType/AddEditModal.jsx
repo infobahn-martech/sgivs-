@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import CustomModal from '../../components/common/CustomModal';
-import useCenterReducer from '../../stores/CenterReducer';
+import useCollectionTypeReducer from '../../stores/CollectionTypeReducer';
 
 // Updated schema with isEZPass as a boolean
 const nameSchema = z.object({
@@ -11,10 +11,9 @@ const nameSchema = z.object({
     .string()
     .nonempty('Name is required')
     .max(20, 'Name must be 10 characters or less'),
-  isEZPass: z.boolean().optional(),
 });
 
-export function AddEditModal({ showModal, closeModal, onRefreshCenter }) {
+export function AddEditModal({ showModal, closeModal, onRefreshCollectionType }) {
   const {
     register,
     handleSubmit,
@@ -25,11 +24,10 @@ export function AddEditModal({ showModal, closeModal, onRefreshCenter }) {
     resolver: zodResolver(nameSchema),
     defaultValues: {
       name: '',
-      isEZPass: false,
     },
   });
 
-  const { postData, patchData, isLoading } = useCenterReducer(
+  const { postData, patchData, isLoading } = useCollectionTypeReducer(
     (state) => state
   );
 
@@ -37,7 +35,6 @@ export function AddEditModal({ showModal, closeModal, onRefreshCenter }) {
   useEffect(() => {
     if (showModal?.id) {
       setValue('name', showModal?.name || '');
-      setValue('isEZPass', showModal?.isEZPass || false);
     } else {
       reset();
     }
@@ -46,11 +43,11 @@ export function AddEditModal({ showModal, closeModal, onRefreshCenter }) {
   const onSubmit = (data) => {
     if (showModal?.id) {
       patchData({ id: showModal.id, ...data }, () => {
-        onRefreshCenter();
+        onRefreshCollectionType();
       });
     } else {
       postData(data, () => {
-        onRefreshCenter();
+        onRefreshCollectionType();
       });
     }
     closeModal();
@@ -59,7 +56,7 @@ export function AddEditModal({ showModal, closeModal, onRefreshCenter }) {
   const renderHeader = () => (
     <>
       <h4 className="modal-title">
-        {showModal?.id ? 'Edit Center' : 'Add Center'}
+        {showModal?.id ? 'Edit Collection Type' : 'Add Collection Type'}
       </h4>
       <button
         type="button"

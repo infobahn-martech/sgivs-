@@ -20,6 +20,7 @@ export const headerConfig = [
   { title: 'Role Management', icon: messageIcon, path: '/role-management' },
   { title: 'Designation Management', icon: messageIcon, path: '/designation-management' },
   { title: 'Appointment Type Management', icon: messageIcon, path: '/appointment-type-management' },
+  { title: 'Collection Type Management', icon: messageIcon, path: '/collection-type-management' },
   {
     title: 'Loan Management',
     path: '/loan-management',
