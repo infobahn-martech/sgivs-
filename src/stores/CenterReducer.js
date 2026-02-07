@@ -1,19 +1,19 @@
 import { create } from 'zustand';
 import useAlertReducer from './AlertReducer';
-import categoryService from '../services/categoryService';
+import centerService from '../services/centerService';
 
-const useCategoryReducer = create((set) => ({
+const useCenterReducer = create((set) => ({
   isLoading: false,
   isLoadingGet: false,
   isLoadingDelete: false,
   errorMessage: '',
   successMessage: '',
-  categoryData: null,
+  centerData: null,
 
   postData: async (payload, cb) => {
     try {
       set({ isLoading: true });
-      const { data } = await categoryService.postData(payload);
+      const { data } = await centerService.postData(payload);
       const { success } = useAlertReducer.getState();
       success(data?.response?.data?.message ?? data?.message);
       set({
@@ -35,7 +35,7 @@ const useCategoryReducer = create((set) => ({
       set({ isLoading: true });
 
       const { id, ...rest } = payload;
-      const { data } = await categoryService.patchData(id, rest); // Updated call
+      const { data } = await centerService.patchData(id, rest); // Updated call
 
       const { success } = useAlertReducer.getState();
       success(data?.response?.data?.message ?? data?.message);
@@ -57,10 +57,10 @@ const useCategoryReducer = create((set) => ({
   getData: async (params) => {
     try {
       set({ isLoadingGet: true });
-      const { data } = await categoryService.getData(params);
+      const { data } = await centerService.getData(params);
       const datas = data;
       set({
-        categoryData: datas?.data,
+        centerData: datas?.data,
         // successMessage: data?.response?.data?.message ?? data?.message,
         isLoadingGet: false,
       });
@@ -76,10 +76,10 @@ const useCategoryReducer = create((set) => ({
   deleteData: async (id, cb) => {
     try {
       set({ isLoadingDelete: true });
-      const { data } = await categoryService.deleteData(id);
+      const { data } = await centerService.deleteData(id);
       const datas = data;
       set({
-        categoryData: datas?.data,
+        centerData: datas?.data,
         successMessage: data?.response?.data?.message ?? data?.message,
         isLoadingDelete: false,
       });
@@ -95,4 +95,4 @@ const useCategoryReducer = create((set) => ({
   },
 }));
 
-export default useCategoryReducer;
+export default useCenterReducer;

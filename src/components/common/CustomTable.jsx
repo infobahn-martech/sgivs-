@@ -89,9 +89,8 @@ export default function CustomTable({
             <ul className="listing">
               <li
                 onClick={onPrevClicked}
-                className={`cursor-pointer ${
-                  currentPage === 1 ? 'cursor-not' : ''
-                }`}
+                className={`cursor-pointer ${currentPage === 1 ? 'cursor-not' : ''
+                  }`}
               >
                 <img src={prevIcon} alt="Previous" />
               </li>
@@ -102,9 +101,8 @@ export default function CustomTable({
                   )}
                   <li onClick={() => onPageNumberClick(num)}>
                     <a
-                      className={`cursor-pointer ${
-                        num === currentPage ? 'active' : ''
-                      }`}
+                      className={`cursor-pointer ${num === currentPage ? 'active' : ''
+                        }`}
                     >
                       {num}
                     </a>
@@ -113,9 +111,8 @@ export default function CustomTable({
               ))}
               <li
                 onClick={onNextClicked}
-                className={`cursor-pointer ${
-                  currentPage === totalPages() ? 'cursor-not' : ''
-                }`}
+                className={`cursor-pointer ${currentPage === totalPages() ? 'cursor-not' : ''
+                  }`}
               >
                 <img src={nextIcon} alt="Next" />
               </li>
@@ -129,7 +126,7 @@ export default function CustomTable({
     <>
       <div className={`table-body-wrap ${mainclasses}`} ref={reffer}>
         <div className={`table-wrap ${wrapClasses}`}>
-          <table className={`${tableClasses} table ${!data?.length && 'h-100' ||''}`}>
+          <table className={`${tableClasses} table ${!data?.length && 'h-100' || ''}`}>
             {data?.length > 0 && (
               <thead>
                 <tr>
@@ -170,53 +167,51 @@ export default function CustomTable({
                   {data.length || dashboard
                     ? data?.map((row, index) => (
                       <tr
-                      key={row.id}
-                      onClick={() => onRowClick?.(row)}
-                      className="cursor-pointer"
-                    >
-                          {columns?.map(
-                            (
-                              {
-                                selector,
-                                cell,
-                                colClassName = '',
-                                contentClass = '',
-                                notView,
-                              },
-                              idx
-                            ) =>
-                              cell ? (
-                                <td
-                                  className={`${colClassName}${
-                                    !notView && onView ? ' cursor-pointer' : ''
+                        key={row.id}
+                        onClick={() => onRowClick?.(row)}
+                        className="cursor-pointer"
+                      >
+                        {columns?.map(
+                          (
+                            {
+                              selector,
+                              cell,
+                              colClassName = '',
+                              contentClass = '',
+                              notView,
+                            },
+                            idx
+                          ) =>
+                            cell ? (
+                              <td
+                                className={`${colClassName}${!notView && onView ? ' cursor-pointer' : ''
                                   }`}
-                                  key={`cell${selector + idx}`}
-                                  onClick={() => {
-                                    if (notView || !onView) return;
-                                    onView(row);
-                                  }}
-                                >
-                                  <div className={` ${contentClass}`}>
-                                    {cell(row, index) || '-'}
-                                  </div>
-                                </td>
-                              ) : (
-                                <td
-                                  className={`${colClassName}${
-                                    !notView && onView ? ' cursor-pointer' : ''
+                                key={`cell${selector + idx}`}
+                                onClick={() => {
+                                  if (notView || !onView) return;
+                                  onView(row);
+                                }}
+                              >
+                                <div className={` ${contentClass}`}>
+                                  {cell(row, index) || '-'}
+                                </div>
+                              </td>
+                            ) : (
+                              <td
+                                className={`${colClassName}${!notView && onView ? ' cursor-pointer' : ''
                                   }`}
-                                  key={`cell${selector}`}
-                                  onClick={() => {
-                                    if (notView || !onView) return;
-                                    onView(row);
-                                  }}
-                                >
-                                  {row[selector] || '-'}
-                                </td>
-                              )
-                          )}
-                        </tr>
-                      ))
+                                key={`cell${selector}`}
+                                onClick={() => {
+                                  if (notView || !onView) return;
+                                  onView(row);
+                                }}
+                              >
+                                {row[selector] || '-'}
+                              </td>
+                            )
+                        )}
+                      </tr>
+                    ))
                     : !isLoading && null}
                 </tbody>
               )
