@@ -52,7 +52,7 @@ export const getInventoryColumns = ({
       selector: 'category.name',
       titleClasses: 'tw1',
       contentClass: 'user-pic',
-     
+
     },
     {
       name: 'Sub Category',
@@ -86,7 +86,7 @@ export const getInventoryColumns = ({
         <Tooltip
           id={`tooltip-${row.id || rowIndex}`}
           place="bottom"
-          style={{ backgroundColor: '#2ca0da' }}
+          style={{ backgroundColor: '#051a53' }}
         />
         {/* <span
           data-tooltip-id={`tooltip-${row.id || rowIndex}`}
@@ -111,15 +111,14 @@ export const getInventoryColumns = ({
         <span
           data-tooltip-id={`tooltip-${row.id || rowIndex}`}
           data-tooltip-content={!row.isVisible ? 'Show' : 'Hide'}
-          onClick={(e) =>
-          {
+          onClick={(e) => {
             e.stopPropagation();
             setModalConfig({
               id: row.id,
               type: row.isVisible ? 'show' : 'hide',
               name: row?.itemName,
             })
-          } 
+          }
           }
         >
           <img
@@ -130,8 +129,7 @@ export const getInventoryColumns = ({
         <span
           data-tooltip-id={`tooltip-${row.id || rowIndex}`}
           data-tooltip-content={'Delete'}
-          onClick={(e) =>
-          {
+          onClick={(e) => {
             e.stopPropagation();
             setModalConfig({
               id: row.id,

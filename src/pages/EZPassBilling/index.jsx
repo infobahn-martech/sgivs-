@@ -213,9 +213,8 @@ const EZPassBilling = () => {
       cell: (row) => (
         <>
           <InitialsAvatar
-            name={`${row?.['user.firstName'] || ''} ${
-              row?.['user.lastName'] || ''
-            }`.trim()}
+            name={`${row?.['user.firstName'] || ''} ${row?.['user.lastName'] || ''
+              }`.trim()}
           />
           <span>
             {row?.['user.firstName'] || row?.['user.lastName']
@@ -326,7 +325,7 @@ const EZPassBilling = () => {
             place="bottom"
             effect="solid"
             style={{
-              backgroundColor: '#2ca0da',
+              backgroundColor: '#051a53',
             }}
           />
           <Tooltip
@@ -334,7 +333,7 @@ const EZPassBilling = () => {
             place="bottom"
             effect="solid"
             style={{
-              backgroundColor: '#2ca0da',
+              backgroundColor: '#051a53',
             }}
           />
           <Tooltip
@@ -342,7 +341,7 @@ const EZPassBilling = () => {
             place="bottom"
             effect="solid"
             style={{
-              backgroundColor: '#2ca0da',
+              backgroundColor: '#051a53',
             }}
           />
         </>
@@ -351,7 +350,7 @@ const EZPassBilling = () => {
   ];
 
   const exportExcel = async () => {
-    exportRental({...params,fileName:"EZpass_data"});
+    exportRental({ ...params, fileName: "EZpass_data" });
   };
   const getUserOptions = () =>
     usersRoleData?.data
@@ -452,7 +451,7 @@ const EZPassBilling = () => {
         onExcelUpload={(data) => uploadEzPass(data)}
         uploadTitle="Import EZ Pass"
         uploadLoading={userActionLoading}
-        // addButton={{ type: 'button', name: 'Add EZ Pass', action: () => {} }}
+      // addButton={{ type: 'button', name: 'Add EZ Pass', action: () => {} }}
       />
       <CustomTable
         pagination={{ currentPage: params.page, limit: params.limit }}

@@ -100,7 +100,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
                 id={`tooltip-${index}`}
                 place="right"
                 style={{
-                  backgroundColor: '#2ca0da',
+                  backgroundColor: '#051a53',
                   maxWidth: 500,
                   marginBottom: '10px',
                 }}

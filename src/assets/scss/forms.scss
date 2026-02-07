@@ -1,19 +1,24 @@
 @import "partials";
-.form-label{
+
+.form-label {
     margin-bottom: 8px;
     font-size: 16px;
     color: #8B8B8D;
-    @media ($sm-1679){
+
+    @media ($sm-1679) {
         font-size: 15px;
     }
-    @media ($sm-1199){
+
+    @media ($sm-1199) {
         font-size: 14px;
     }
-    @media ($sm-767){
+
+    @media ($sm-767) {
         font-size: 13px;
     }
 }
-.form-control{
+
+.form-control {
     border: 1px solid #E9F0FF;
     color: #1E1E1E;
     font-size: 16px;
@@ -21,62 +26,77 @@
     padding: 16px;
     border-radius: 12px;
     background-color: #F7FBFF;
-    @media ($sm-1679){
+
+    @media ($sm-1679) {
         height: 44px;
         font-size: 15px;
     }
-    @media ($sm-1441){
+
+    @media ($sm-1441) {
         height: 42px;
         font-size: 14px;
     }
-    @media ($sm-1199){
+
+    @media ($sm-1199) {
         height: 40px;
     }
-    @media ($sm-767){
+
+    @media ($sm-767) {
         height: 40px;
         font-size: 13px;
     }
-    &::placeholder{
+
+    &::placeholder {
         color: #8897AD;
     }
-    &.react-time-picker{
+
+    &.react-time-picker {
         padding: 0 16px;
-        .react-time-picker__wrapper{
+
+        .react-time-picker__wrapper {
             border: none;
         }
-        .react-time-picker__inputGroup__input{
+
+        .react-time-picker__inputGroup__input {
             width: 20px !important;
             text-align: center;
-            &:focus{
+
+            &:focus {
                 border: none;
                 outline: none;
                 box-shadow: none;
             }
         }
-        select{
-            &.react-time-picker__inputGroup__input{
+
+        select {
+            &.react-time-picker__inputGroup__input {
                 min-width: 44px;
             }
         }
     }
 }
-.form-group{
+
+.form-group {
     margin-bottom: 24px;
     position: relative;
-    @media ($sm-1679){
+
+    @media ($sm-1679) {
         margin-bottom: 20px;
     }
 }
-.error{
+
+.error {
     color: red;
     font-size: 14px;
     position: absolute;
 }
-.form-check-input:checked{
-    background-color: #2ca0da;
-    border-color: #2ca0da;
+
+.form-check-input:checked {
+    background-color: #051a53;
+    border-color: #051a53;
 }
-.btn-rounded{
+
+.btn-rounded {
     border-radius: 30px;
     height: 52px;
     display: flex;
@@ -86,61 +106,74 @@
     color: #fff;
     font-size: 20px;
     transition: all 0.5s linear;
-    @media ($sm-1679){
+
+    @media ($sm-1679) {
         height: 48px;
         font-size: 18px;
     }
-    @media ($sm-1441){
+
+    @media ($sm-1441) {
         height: 42px;
         font-size: 17px;
     }
-    @media ($sm-1199){
+
+    @media ($sm-1199) {
         height: 40px;
         font-size: 16px;
     }
-    @media ($sm-991){
+
+    @media ($sm-991) {
         height: 40px;
         font-size: 15px;
     }
-    @media ($sm-767){
+
+    @media ($sm-767) {
         height: 38px;
         font-size: 14px;
     }
-    &:hover{
+
+    &:hover {
         background: linear-gradient(90deg, #3982A7 0%, #051a53 100%);
         color: #fff;
     }
 }
 
 
-.react-select-custom{
-    .status-select__control{
+.react-select-custom {
+    .status-select__control {
         width: 160px;
         border: 1px solid rgba(75, 22, 76, 0.1) !important;
         border-radius: 12px !important;
-        .status-select__value-container{
+
+        .status-select__value-container {
             padding-left: 20px;
             padding-right: 0;
-            .status-select__single-value{
+
+            .status-select__single-value {
                 font-size: 13px;
             }
-            .status-select__input-container{
+
+            .status-select__input-container {
                 height: 24px;
             }
         }
-        .status-select__indicators{
+
+        .status-select__indicators {
             padding-right: 0px !important;
         }
     }
-    .status-select__option{
+
+    .status-select__option {
         font-size: 13px;
         cursor: pointer;
     }
 }
-.react-select-container{
+
+.react-select-container {
     background: url(../images/down.svg) no-repeat right .75rem center;
     padding: 0 !important;
 }
+
 .react-select__control.react-select__control {
     min-height: 48px;
     border: 1px solid #d9d9d9;
@@ -148,127 +181,162 @@
     border-radius: 12px;
     padding-right: 20px;
     cursor: pointer;
+
     &:hover {
-      border: 1px solid #d9d9d9;
+        border: 1px solid #d9d9d9;
     }
+
     &--is-focused {
-      border: 1px solid #d9d9d9;
-      box-shadow: none;
+        border: 1px solid #d9d9d9;
+        box-shadow: none;
     }
+
     @media (max-width: 1679px) {
-      min-height: 44px;
+        min-height: 44px;
     }
+
     @media (max-width: 1199px) {
         min-height: 40px;
-      }
+    }
+
     .react-select__indicators {
         padding-right: 0px !important;
         margin-bottom: 0px !important;
-        .react-select__clear-indicator svg{
+
+        .react-select__clear-indicator svg {
             width: 15px;
         }
     }
+
     .react-select__value-container {
-      padding: 2px 8px 2px 15px;
-      &--is-multi {
-        // flex-wrap: nowrap;
-        flex-wrap: wrap;
-        padding:5px 8px 5px 15px;
-        overflow-y: auto;
-        height: 42px;
-  
+        padding: 2px 8px 2px 15px;
+
+        &--is-multi {
+            // flex-wrap: nowrap;
+            flex-wrap: wrap;
+            padding: 5px 8px 5px 15px;
+            overflow-y: auto;
+            height: 42px;
+
+            .react-select__multi-value {}
+        }
+
+        .react-select__single-value {
+            color: #8897AD;
+            font-size: 14px;
+
+            @media ($sm-1679) {
+                font-size: 13px;
+            }
+        }
+
+        // react multi select
         .react-select__multi-value {
+            background-color: #d7eaf3;
+            border-radius: 10px;
         }
-      }
-      .react-select__single-value {
-        color: #8897AD;
-        font-size: 14px;
-        @media ($sm-1679) {
-          font-size: 13px;
+
+        .react-select__multi-value__label {
+            color: #8897AD;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            font-size: 13px;
+
+            @media ($sm-1679) {
+                font-size: 12px;
+            }
         }
-      }
-  
-      // react multi select
-      .react-select__multi-value {
-        background-color: #d7eaf3;
-        border-radius: 10px;
-      }
-      .react-select__multi-value__label {
-        color: #8897AD;
-        padding-top: 2px;
-        padding-bottom: 2px;
-        font-size: 13px;
-        @media ($sm-1679) {
-          font-size: 12px;
+
+        .react-select__multi-value__remove {
+            background-color: transparent;
+            color: #8897AD;
+
+            &:hover {
+                color: $primaryColor;
+            }
         }
-      }
-  
-      .react-select__multi-value__remove {
-        background-color: transparent;
-        color: #8897AD;
-        &:hover {
-          color: $primaryColor;
-        }
-      }
     }
-  
+
     .react-select__placeholder {
-      color: #000;
+        color: #000;
     }
-  }
+}
 
 //   date picker style updates
 
-.react-datepicker{
-    .react-datepicker__header{
+.react-datepicker {
+    .react-datepicker__header {
         background-color: #d7eaf3;
         border-bottom: 1px solid #d7eaf3;
     }
-    .react-datepicker__navigation-icon::before, .react-datepicker__year-read-view--down-arrow, .react-datepicker__month-read-view--down-arrow, .react-datepicker__month-year-read-view--down-arrow{
-        border-color:#98a8b1;
+
+    .react-datepicker__navigation-icon::before,
+    .react-datepicker__year-read-view--down-arrow,
+    .react-datepicker__month-read-view--down-arrow,
+    .react-datepicker__month-year-read-view--down-arrow {
+        border-color: #98a8b1;
     }
-    .react-datepicker__current-month, .react-datepicker-time__header, .react-datepicker-year-header{
+
+    .react-datepicker__current-month,
+    .react-datepicker-time__header,
+    .react-datepicker-year-header {
         margin-bottom: 5px !important;
     }
-    .react-datepicker__day--keyboard-selected:not([aria-disabled=true]):hover, .react-datepicker__month-text--keyboard-selected:not([aria-disabled=true]):hover, .react-datepicker__quarter-text--keyboard-selected:not([aria-disabled=true]):hover, .react-datepicker__year-text--keyboard-selected:not([aria-disabled=true]):hover{
+
+    .react-datepicker__day--keyboard-selected:not([aria-disabled=true]):hover,
+    .react-datepicker__month-text--keyboard-selected:not([aria-disabled=true]):hover,
+    .react-datepicker__quarter-text--keyboard-selected:not([aria-disabled=true]):hover,
+    .react-datepicker__year-text--keyboard-selected:not([aria-disabled=true]):hover {
         color: #fff;
     }
-    .react-datepicker__year-option, .react-datepicker__month-option, .react-datepicker__month-year-option{
+
+    .react-datepicker__year-option,
+    .react-datepicker__month-option,
+    .react-datepicker__month-year-option {
         padding: 5px 0;
     }
-    .react-datepicker__month-dropdown{
+
+    .react-datepicker__month-dropdown {
         background-color: #dceef7;
     }
-    .react-datepicker__year-option:hover, .react-datepicker__month-option:hover, .react-datepicker__month-year-option:hover {
+
+    .react-datepicker__year-option:hover,
+    .react-datepicker__month-option:hover,
+    .react-datepicker__month-year-option:hover {
         background-color: #051a53;
         color: #fff;
-        .react-datepicker__month-option--selected{
+
+        .react-datepicker__month-option--selected {
             color: #fff;
         }
     }
+
     .react-datepicker-popper[data-placement^=bottom] .react-datepicker__triangle {
         fill: #d7eaf3;
         color: #d7eaf3;
     }
 }
 
-.react-time-picker{
-    .react-time-picker__inputGroup__input.react-time-picker__inputGroup__amPm{
+.react-time-picker {
+    .react-time-picker__inputGroup__input.react-time-picker__inputGroup__amPm {
         min-width: 48px !important;
     }
-    .react-time-picker__inputGroup__input.react-time-picker__inputGroup__minute{
+
+    .react-time-picker__inputGroup__input.react-time-picker__inputGroup__minute {
         width: 22px !important;
     }
-    .react-time-picker__inputGroup__leadingZero{
+
+    .react-time-picker__inputGroup__leadingZero {
         padding-left: 3px !important;
     }
-    .react-time-picker__inputGroup__input--hasLeadingZero{
+
+    .react-time-picker__inputGroup__input--hasLeadingZero {
         margin-left: -0.9em;
     }
 }
 
 
-.btn-save-trans{
+.btn-save-trans {
     background-color: $primaryColor;
     color: #fff;
     font-size: 13px;
@@ -277,10 +345,12 @@
     height: 35px;
     align-self: center;
     margin-left: 15px;
-    @media ($sm-1679){
+
+    @media ($sm-1679) {
         margin-left: 12px;
     }
-    @media ($sm-1199){
+
+    @media ($sm-1199) {
         margin-left: 10px;
     }
 }

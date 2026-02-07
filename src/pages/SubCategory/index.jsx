@@ -76,13 +76,13 @@ const Category = () => {
           id="edit"
           place="bottom"
           content="Edit"
-          style={{ backgroundColor: '#2ca0da' }}
+          style={{ backgroundColor: '#051a53' }}
         />
         <Tooltip
           id="delete"
           place="bottom"
           content="Delete"
-          style={{ backgroundColor: '#2ca0da' }}
+          style={{ backgroundColor: '#051a53' }}
         />
 
         <img

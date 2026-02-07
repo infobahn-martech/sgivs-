@@ -51,7 +51,7 @@ const ContactItem = ({
         id={`delete-tooltip-${contact?.id}`}
         place="top"
         effect="solid"
-        style={{ backgroundColor: '#2ca0da' }}
+        style={{ backgroundColor: '#051a53' }}
       />
     </li>
   );

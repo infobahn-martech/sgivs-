@@ -238,9 +238,8 @@ const LoanManagement = () => {
       cell: (row) => (
         <>
           <InitialsAvatar
-            name={`${row?.['user.firstName'] || ''} ${
-              row?.['user.lastName'] || ''
-            }`.trim()}
+            name={`${row?.['user.firstName'] || ''} ${row?.['user.lastName'] || ''
+              }`.trim()}
           />
           <span>
             {row?.['user.firstName'] || row?.['user.lastName']
@@ -324,7 +323,7 @@ const LoanManagement = () => {
             place="top"
             effect="solid"
             style={{
-              backgroundColor: '#2ca0da',
+              backgroundColor: '#051a53',
             }}
           />
           <Tooltip
@@ -332,7 +331,7 @@ const LoanManagement = () => {
             place="top"
             effect="solid"
             style={{
-              backgroundColor: '#2ca0da',
+              backgroundColor: '#051a53',
             }}
           />
           <Tooltip
@@ -340,7 +339,7 @@ const LoanManagement = () => {
             place="top"
             effect="solid"
             style={{
-              backgroundColor: '#2ca0da',
+              backgroundColor: '#051a53',
             }}
           />
         </>
@@ -426,7 +425,7 @@ const LoanManagement = () => {
         clearOptions={() => {
           setParams(initialParams);
         }}
-        // hideFilter
+      // hideFilter
       />
       <CustomTable
         pagination={{ currentPage: params.page, limit: params.limit }}

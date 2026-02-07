@@ -104,7 +104,7 @@ const getUserTableColumns = ({
             place="top"
             effect="solid"
             style={{
-              backgroundColor: '#2ca0da',
+              backgroundColor: '#051a53',
             }}
           />
           <img
@@ -119,7 +119,7 @@ const getUserTableColumns = ({
             id="delete-tooltip"
             place="top"
             effect="solid"
-            style={{ backgroundColor: '#2ca0da' }}
+            style={{ backgroundColor: '#051a53' }}
           />
 
           <img
@@ -134,7 +134,7 @@ const getUserTableColumns = ({
             id={`status-tooltip-${row?.id}`}
             place="top"
             effect="solid"
-            style={{ backgroundColor: '#2ca0da' }}
+            style={{ backgroundColor: '#051a53' }}
           />
         </>
       ),
