@@ -36,43 +36,39 @@
         }
 
         .panel-left {
-            background:
-                linear-gradient(rgba(0, 150, 223, 0.88), rgba(0, 150, 223, 0.88)),
-                url('../images/tech-bgg.png') no-repeat center center;
+            // ✅ Use the exact bg image you shared
+            background: url('../images/tech-bgg.png') no-repeat center center;
             background-size: cover;
 
             border-radius: 31px;
-            padding: 56px 56px 90px; // ✅ more bottom space
+            padding: 64px;
             flex: 1;
             max-width: 45%;
             width: 100%;
             position: relative;
             overflow: hidden;
 
-            // ✅ Make layout balanced
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
 
             @media ($sm-1679) {
-                padding: 40px 40px 70px;
+                padding: 52px;
             }
 
             @media ($sm-1441) {
-                padding: 35px 35px 60px;
+                padding: 46px;
             }
 
             @media ($sm-1199) {
-                padding: 30px 30px 50px;
+                padding: 40px;
             }
 
             @media ($sm-991) {
-                padding: 25px 25px 45px;
                 max-width: 45%;
             }
 
             @media ($sm-767) {
-                padding: 20px 20px 40px;
                 max-width: 50%;
             }
 
@@ -82,41 +78,56 @@
                 display: none;
             }
 
-            // ✅ Push text down a little (top spacing)
+            // ✅ Very light overlay only (reference has image clearly visible)
+            &::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: rgba(0, 150, 223, 0.08); // 👈 keep low
+            }
+
+            // ✅ Plain text (NO glass box)
             .quotes-wrp {
-                margin-top: 66px; // ✅ moves content down
-                max-width: 520px; // ✅ readable line length
-                font-size: 18px;
-                color: $white;
-                line-height: 1.8;
                 position: relative;
                 z-index: 2;
+                margin-top: 30px; // ✅ matches reference (top-left, not centered)
+                max-width: 560px;
 
-                // ✅ Premium glass box (optional but looks great)
-                background: rgba(255, 255, 255, 0.12);
-                border: 1px solid rgba(255, 255, 255, 0.18);
-                backdrop-filter: blur(4px);
-                border-radius: 16px;
-                padding: 84px 24px;
+                color: #0b1b2b; // ✅ dark text like reference
+                font-size: 14px;
+                line-height: 1.8;
+                font-weight: 400;
+
+                background: transparent;
+                border: none;
+                backdrop-filter: none;
+                border-radius: 0;
+                padding: 0;
+
+                // ✅ Title like reference
+                &::before {
+                    content: "Access Notice";
+                    display: block;
+                    font-weight: 600;
+                    font-size: 14px;
+                    margin-bottom: 10px;
+                    color: #0b1b2b;
+                }
 
                 @media ($sm-1679) {
-                    font-size: 16px;
-                    margin-top: 66px;
+                    font-size: 13px;
                 }
 
                 @media ($sm-1441) {
-                    font-size: 15px;
-                    margin-top: 45px;
+                    font-size: 13px;
                 }
 
                 @media ($sm-1199) {
-                    font-size: 14px;
-                    margin-top: 35px;
+                    font-size: 12.5px;
                 }
 
                 @media ($sm-767) {
-                    font-size: 13px;
-                    margin-top: 25px;
+                    font-size: 12px;
                 }
             }
         }
@@ -129,12 +140,14 @@
             flex: 1;
             flex-direction: column;
 
+            padding-left: 90px; // ✅ matches reference spacing
+
             @media ($sm-1199) {
-                padding-left: 50px;
+                padding-left: 60px;
             }
 
             @media ($sm-991) {
-                padding-left: 40px;
+                padding-left: 45px;
             }
 
             @media ($sm-767) {
@@ -157,136 +170,101 @@
             }
 
             .form-wrp-center {
-                max-width: 414px;
+                max-width: 520px; // ✅ closer to reference width
                 width: 100%;
                 margin: auto;
 
                 .top-blk {
-                    margin-bottom: 48px;
+                    margin-bottom: 40px;
                     display: flex;
                     flex-direction: column;
 
                     .title {
-                        margin-bottom: 28px;
+                        margin-bottom: 16px;
                         line-height: 1;
+                        font-size: 44px;
+                        font-weight: 700;
+                        color: #081a52;
 
                         @media ($sm-1679) {
-                            margin-bottom: 20px;
+                            font-size: 40px;
                         }
 
                         @media ($sm-1441) {
-                            margin-bottom: 15px;
+                            font-size: 36px;
                         }
 
                         @media ($sm-1199) {
-                            margin-bottom: 10px;
+                            font-size: 32px;
+                        }
+
+                        @media ($sm-991) {
+                            font-size: 28px;
+                        }
+
+                        @media (max-width:650px) {
+                            font-size: 26px;
                         }
                     }
 
                     .desc {
-                        font-size: 20px;
-                        // color: #313957;
+                        font-size: 16px;
                         color: #8B8B8D;
                         font-weight: 400;
-
-                        @media ($sm-1679) {
-                            font-size: 18px;
-                        }
-
-                        @media ($sm-1441) {
-                            font-size: 16px;
-                        }
+                        line-height: 1.6;
 
                         @media ($sm-1199) {
-                            font-size: 15px;
-                        }
-
-                        @media ($sm-991) {
                             font-size: 14px;
-                        }
-
-                        @media (max-width:650px) {
-                            font-size: 13px;
-                        }
-                    }
-
-                    @media ($sm-1679) {
-                        margin-bottom: 40px;
-                    }
-
-                    @media ($sm-1441) {
-                        margin-bottom: 35px;
-                    }
-
-                    @media ($sm-1199) {
-                        margin-bottom: 30px;
-                    }
-
-                    @media ($sm-991) {
-                        margin-bottom: 25px;
-                    }
-
-                    @media ($sm-767) {
-                        margin-bottom: 20px;
-                    }
-
-                    &.reset {
-                        .desc {
-                            color: #313957;
-                            font-weight: 400;
                         }
                     }
                 }
 
                 .form-sec-wrp {
                     .form-group {
+                        margin-bottom: 26px;
+
                         .error {
                             bottom: -20px;
                             left: 15px;
                         }
                     }
 
+                    // ✅ pill inputs like screenshot
                     .form-control {
-                        border-radius: 28px;
+                        border-radius: 999px;
+                        height: 54px;
+                        padding: 0 22px;
+                        background: #eaf3ff;
+                        border: 1px solid #d6e7ff;
+
+                        &:focus {
+                            box-shadow: none;
+                            border-color: #0096df;
+                        }
                     }
 
                     .link {
-                        color: #051a53;
-                        font-size: 16px;
-                        margin-bottom: 24px;
+                        color: #081a52;
+                        font-size: 13px;
+                        margin-bottom: 22px;
                         display: block;
                         text-align: right;
-
-                        @media ($sm-1679) {
-
-                            font-size: 15px;
-                        }
-
-                        @media ($sm-1441) {
-                            font-size: 14px;
-                        }
-
-                        @media ($sm-767) {
-                            font-size: 13px;
-                        }
                     }
 
+                    // ✅ pill gradient button like screenshot
                     .btn-rounded {
-                        width: 388px;
+                        width: 100%;
+                        height: 56px;
                         border: none;
-
-                        @media ($sm-991) {
-                            width: 100%;
-                        }
+                        border-radius: 999px;
+                        font-size: 16px;
+                        font-weight: 600;
+                        background: linear-gradient(90deg, #051a53 0%, #2ca0da 100%);
                     }
                 }
 
                 &.login {
-                    max-width: 402px;
-
-                    @media ($sm-1679) {
-                        max-width: 388px;
-                    }
+                    max-width: 520px;
                 }
 
                 &:not(.login) {
@@ -299,10 +277,6 @@
                     .btn-rounded {
                         width: 100%;
                         border: none;
-
-                        @media ($sm-991) {
-                            width: 100%;
-                        }
                     }
                 }
             }

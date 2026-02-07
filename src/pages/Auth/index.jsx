@@ -33,21 +33,24 @@ const Login = () => {
   };
 
   return (
-    <div className="user-log-wrp">
-      <div className="inner-wrp">
-        {/* ✅ LEFT PANEL (UPDATED) */}
-        <div className="panel-left no-bg">
-          <div className="quotes-wrp">
-            The access to Indian Consular Application CRM system is restricted
-            to authorized personnel only. You are informed that its use must be
-            limited only to the authorized users as mentioned in the security
-            policy and all the access will be registered and logged.
+    <div className="user-log-wrp login-v2">
+      <div className="inner-wrp login-v2__inner">
+        {/* LEFT PANEL */}
+        <div className="panel-left login-v2__left">
+          <div className="login-v2__left-card">
+            <div className="login-v2__left-title">Access Notice</div>
+            <div className="login-v2__left-desc">
+              The access to Indian Consular Application CRM system is restricted
+              to authorized personnel only. You are informed that its use must
+              be limited only to the authorized users as mentioned in the
+              security policy and all the access will be registered and logged.
+            </div>
           </div>
         </div>
 
         {/* RIGHT PANEL */}
-        <div className="panel-right">
-          <div className="form-wrp-center login">
+        <div className="panel-right login-v2__right">
+          <div className="form-wrp-center login login-v2__form-card">
             <div className="top-blk">
               <div className="title">
                 Welcome Back <span className="icon">👋</span>
@@ -60,15 +63,16 @@ const Login = () => {
 
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="form-sec-wrp">
-                <div className="form-group">
+                <div className={`form-group ${errors.email ? 'has-error' : ''}`}>
                   <label className="form-label" htmlFor="email">
                     Email
                   </label>
                   <input
                     id="email"
                     type="text"
-                    className="form-control"
+                    className="form-control login-v2__input"
                     placeholder="Enter your email"
+                    autoComplete="username"
                     {...register('email')}
                   />
                   {errors.email && (
@@ -76,15 +80,19 @@ const Login = () => {
                   )}
                 </div>
 
-                <div className="form-group">
+                <div
+                  className={`form-group ${errors.password ? 'has-error' : ''
+                    }`}
+                >
                   <label className="form-label" htmlFor="password">
                     Password
                   </label>
                   <input
                     id="password"
                     type="password"
-                    className="form-control"
+                    className="form-control login-v2__input"
                     placeholder="Enter your password"
+                    autoComplete="current-password"
                     {...register('password')}
                   />
                   {errors.password && (
@@ -92,16 +100,20 @@ const Login = () => {
                   )}
                 </div>
 
-                <Link
-                  className="link"
-                  onClick={() => {
-                    navigate('/forgot-password');
-                  }}
-                >
-                  Forgot Password?
-                </Link>
+                <div className="login-v2__actions">
+                  <Link
+                    className="link login-v2__forgot"
+                    to="/forgot-password"
+                  >
+                    Forgot Password?
+                  </Link>
+                </div>
 
-                <button className="btn btn-rounded" type="submit">
+                <button
+                  className="btn btn-rounded login-v2__btn"
+                  type="submit"
+                  disabled={isLoginLoading}
+                >
                   {isLoginLoading ? (
                     <Spinner
                       size="sm"
@@ -119,7 +131,7 @@ const Login = () => {
             </form>
           </div>
 
-          <footer className="ftr">
+          <footer className="ftr login-v2__footer">
             <p className="copy">© 2025 ALL RIGHTS RESERVED</p>
           </footer>
         </div>
