@@ -116,7 +116,6 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         '/visa-duration-management',
         '/visa-entry-management',
         '/optional-services',
-        '/vas-services',
         '/visa-service-management',
       ],
       subMenu: [
@@ -124,11 +123,6 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         { name: 'Visa Duration', path: '/visa-duration-management', icon: MessagesIcon },
         { name: 'Visa Entry', path: '/visa-entry-management', icon: MessagesIcon },
         { name: 'Optional Services', path: '/optional-services', icon: MessagesIcon },
-        {
-          name: 'VAS services (Value added service)',
-          path: '/vas-services',
-          icon: MessagesIcon,
-        },
         { name: 'Visa Service', path: '/visa-service-management', icon: MessagesIcon },
       ],
     },
