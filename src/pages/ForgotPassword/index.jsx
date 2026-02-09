@@ -34,15 +34,15 @@ const ForgotPassword = () => {
   return (
     <div class="user-log-wrp">
       <div class="inner-wrp">
-        <div class="panel-left">
-          {/* <div class="logo-wrp">
-            <img src={logo} alt="" />
-          </div> */}
-          <div class="quotes-wrp">
-            The access to Indian Consular Application CRM system is restricted
-            to authorized personnel only. You are informed that its use must be
-            limited only to the authorized users as mentioned in the security
-            policy and all the access will be registered and logged.
+        {/* LEFT PANEL */}
+        <div className="panel-left login-v2__left" aria-hidden="true">
+          <div className="login-v2__left-card">
+            <div className="login-v2__left-title">Access Notice</div>
+            <div className="login-v2__left-desc">
+              The access to Indian Consular Application CRM system is restricted to authorized personnel only.
+              You are informed that its use must be limited only to the authorized users as mentioned in the
+              security policy and all the access will be registered and logged.
+            </div>
           </div>
         </div>
         <div class="panel-right">
