@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -8,21 +8,22 @@ import useOptionalServiceReducer from '../../stores/OptionalServiceReducer';
 
 const USE_MOCK = true;
 
-// ✅ Dummy centers list (Select Center dropdown)
-const mockOptionalServices = [
-  { id: '1', optionalServiceName: 'Optional Service 1' },
-  { id: '2', optionalServiceName: 'Optional Service 2' },
-  { id: '3', optionalServiceName: 'Optional Service 3' },
-  { id: '4', optionalServiceName: 'Optional Service 4' },
+// ✅ Dummy Services Types list (Select dropdown)
+const mockServicesTypesOptions = [
+  { id: '1', servicesTypeName: 'Services Type 1' },
+  { id: '2', servicesTypeName: 'Services Type 2' },
+  { id: '3', servicesTypeName: 'Services Type 3' },
+  { id: '4', servicesTypeName: 'Services Type 4' },
 ];
 
-const nameSchema = z.object({
-  name: z
-    .string()
-    .nonempty('Name is required')
-    .max(20, 'Name must be 20 characters or less'),
-  optionalServiceId: z.string().nonempty('Optional Service is required'),
+const formSchema = z.object({
+  servicesTypeId: z.string().nonempty('Services Type is required'),
+  name: z.string().nonempty('Name is required').max(20, 'Name must be 20 characters or less'),
+
+  serviceFee: z
+    .number({ required_error: 'Service Fee is required', invalid_type_error: 'Service Fee is required' })
 });
+
 
 export function AddEditModal({ showModal, closeModal, onRefreshOptionalService }) {
   const {
@@ -33,53 +34,62 @@ export function AddEditModal({ showModal, closeModal, onRefreshOptionalService }
     reset,
     watch,
   } = useForm({
-    resolver: zodResolver(nameSchema),
+    resolver: zodResolver(formSchema),
     defaultValues: {
       name: '',
-      optionalServiceId: '',
+      servicesTypeId: '',
+      serviceFee: '',
     },
   });
 
   const { postData, patchData, isLoading, getAllOptionalService, optionalServices } =
     useOptionalServiceReducer((state) => state);
 
-  const selectedOptionalServiceId = watch('optionalServiceId');
+  const selectedServicesTypeId = watch('servicesTypeId');
 
-  // ✅ Load center list (API mode only)
+  // ✅ Source list for dropdown (mock vs API)
+  const servicesTypeSourceList = USE_MOCK ? mockServicesTypesOptions : optionalServices || [];
+
+  // ✅ Options for CustomSelect
+  const servicesTypesOptions = useMemo(() => {
+    return (servicesTypeSourceList || []).map((item) => ({
+      label: item.servicesTypeName,
+      value: String(item.id),
+    }));
+  }, [servicesTypeSourceList]);
+
+  // ✅ Load list (API mode only)
   useEffect(() => {
     if (!USE_MOCK) getAllOptionalService();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // ✅ Fill form for edit / clear for add
   useEffect(() => {
-    const optionalServices = USE_MOCK ? mockOptionalServices : optionalServices;
-
-    if (showModal?.id && (optionalServices?.length || 0) > 0) {
-      // Your listing page now uses counterName/centerName.
-      // For edit modal, accept both old & new keys safely.
-      setValue('name', showModal?.optionalServiceName || showModal?.name || '');
+    if (showModal?.id) {
+      setValue('name', showModal?.name || showModal?.optionalServiceName || '');
       setValue(
-        'optionalServiceId',
-        String(showModal?.optionalServiceId || showModal?.optionalService?.id || showModal?.optionalServiceId || '')
+        'servicesTypeId',
+        String(
+          showModal?.servicesTypeId ||
+          showModal?.servicesType?.id ||
+          ''
+        ),
+        { shouldValidate: true }
       );
-    } else if (!showModal?.id) {
-      reset();
+      setValue('serviceFee', showModal?.serviceFee ?? '', { shouldValidate: true });
+    } else {
+      reset({
+        name: '',
+        servicesTypeId: '',
+        serviceFee: '',
+      });
     }
-  }, [showModal?.id, optionalServices, reset, setValue]);
+  }, [showModal?.id, reset, setValue, showModal]);
 
-  // ✅ Options for select
-  const optionalServiceOptions = useMemo(() => {
-    const optionalServices = USE_MOCK ? mockOptionalServices : optionalServices || [];
-    return optionalServices.map((item) => ({
-      label: item.optionalServiceName,
-      value: String(item.id),
-    }));
-  }, [optionalServices]);
-
-  // ✅ Dummy submit (no API)
+  // ✅ Submit
   const onSubmit = (data) => {
     if (USE_MOCK) {
-      // Just close modal + refresh UI
       onRefreshOptionalService?.();
       closeModal?.();
       return;
@@ -115,33 +125,35 @@ export function AddEditModal({ showModal, closeModal, onRefreshOptionalService }
   const renderBody = () => (
     <div className="modal-body">
       <div className="row">
+        {/* Services Type */}
         <div className="col-sm-6">
           <div className="form-group forms-custom">
-            <label htmlFor="optionalServiceId" className="label">
-              Select Optional Service<span className="text-danger">*</span>
+            <label htmlFor="servicesTypeId" className="label">
+              Select Services Type<span className="text-danger">*</span>
             </label>
 
             <CustomSelect
-              options={optionalServiceOptions}
+              options={servicesTypesOptions}
               value={
-                optionalServiceOptions.find(
-                  (option) => option.value === String(selectedOptionalServiceId || '')
+                servicesTypesOptions.find(
+                  (option) => option.value === String(selectedServicesTypeId || '')
                 ) || null
               }
               onChange={(selected) => {
-                setValue('optionalServiceId', selected?.value || '');
+                setValue('servicesTypeId', selected?.value || '', { shouldValidate: true });
               }}
-              placeholder="Select Optional Service"
+              placeholder="Select Services Type"
               showIndicator={false}
               className="form-select form-control"
             />
 
-            {errors.optionalServiceId && (
-              <span className="error">{errors.optionalServiceId.message}</span>
+            {errors.servicesTypeId && (
+              <span className="error">{errors.servicesTypeId.message}</span>
             )}
           </div>
         </div>
 
+        {/* Optional Service Name */}
         <div className="col-sm-6">
           <div className="form-group forms-custom">
             <label htmlFor="name" className="label">
@@ -156,9 +168,29 @@ export function AddEditModal({ showModal, closeModal, onRefreshOptionalService }
               placeholder="Enter optional service name"
               {...register('name')}
             />
-            {errors.name && (
-              <span className="error">{errors.name.message}</span>
+            {errors.name && <span className="error">{errors.name.message}</span>}
+          </div>
+        </div>
+
+        {/* ✅ Service Fee */}
+        <div className="col-sm-6">
+          <div className="form-group forms-custom">
+            <label htmlFor="serviceFee" className="label">
+              Service Fee<span className="text-danger">*</span>
+            </label>
+            <input
+              type="number"
+              id="serviceFee"
+              className="form-control"
+              placeholder="Enter service fee"
+              min={0}
+              {...register('serviceFee', { valueAsNumber: true })}
+            />
+
+            {errors.serviceFee && (
+              <span className="error">{errors.serviceFee.message}</span>
             )}
+
           </div>
         </div>
       </div>
