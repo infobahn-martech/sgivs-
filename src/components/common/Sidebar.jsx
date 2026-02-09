@@ -129,7 +129,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
 
     // Appointment Settings
     {
-      name: 'Apppintment Settings',
+      name: 'Appointment Settings',
       icon: MessagesIcon,
       path: '/appointment-settings',
     },
