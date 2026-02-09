@@ -132,14 +132,6 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       name: 'Apppintment Settings',
       icon: MessagesIcon,
       path: '/appointment-settings',
-      activeRoutes: ['/appointment-settings'],
-      subMenu: [
-        {
-          name: 'Appointment Settings',
-          path: '/appointment-settings',
-          icon: MessagesIcon,
-        },
-      ],
     },
 
     { name: 'Settings', icon: SettingsIcon, path: '/' },

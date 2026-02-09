@@ -8,7 +8,6 @@ import Page404 from '../components/common/Page404';
 import Layout from '../components/common/Layout';
 import Login from '../pages/Auth/Loader';
 import InventoryManagement from '../pages/InventoryManagement/Loader';
-import EZPassBilling from '../pages/EZPassBilling/Loader';
 import Messages from '../pages/Messages/Loader';
 import Settings from '../pages/Settings/Loader';
 import Dashboard from '../pages/Dashboard/Loader';
@@ -19,7 +18,6 @@ import Profile from '../pages/Profile/Loader';
 import ResetPassword from '../pages/ResetPassword/Loader';
 import InventoryView from '../pages/InventoryManagement/InventoryView';
 import LoanManagement from '../pages/LoanManagement';
-import UnmappedTransactions from '../pages/UnmappedTransactions/Loader';
 import Center from '../pages/Center/Loader';
 import CounterManagement from '../pages/Counter/Loader';
 import RoleManagement from '../pages/Role/Loader';
@@ -34,6 +32,7 @@ import VisaDurationManagement from '../pages/VisaDuration/Loader';
 import VisaEntryManagement from '../pages/VisaEntry/Loader';
 import VisaServiceManagement from '../pages/VisaServices/Loader';
 import OptionalServices from '../pages/OptionalServices/Loader';
+import AppointmentSettings from '../pages/AppointmentSettings/Loader';
 
 const router = createHashRouter([
   {
@@ -71,11 +70,6 @@ const router = createHashRouter([
               },
 
               { path: '/loan-management', element: <LoanManagement /> },
-              { path: '/ez-pass-billing', element: <EZPassBilling /> },
-              {
-                path: '/ez-pass-billing/unmapped-transactions',
-                element: <UnmappedTransactions />,
-              },
 
               { path: '/messages', element: <Messages /> },
               { path: '/settings', element: <Settings /> },
@@ -97,6 +91,7 @@ const router = createHashRouter([
               { path: '/visa-entry-management', element: <VisaEntryManagement /> },
               { path: '/visa-service-management', element: <VisaServiceManagement /> },
               { path: '/optional-services', element: <OptionalServices /> },
+              { path: '/appointment-settings', element: <AppointmentSettings /> },
             ],
           },
         ],

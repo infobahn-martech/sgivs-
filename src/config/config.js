@@ -15,6 +15,7 @@ export const headerConfig = [
     icon: inventoryImg,
     path: '/inventory-management',
   },
+  { title: 'Appointment Settings', icon: messageIcon, path: '/appointment-settings' },
   { title: 'Center Management', icon: messageIcon, path: '/center' },
   { title: 'Counter Management', icon: messageIcon, path: '/counter-management' },
   { title: 'Role Management', icon: messageIcon, path: '/role-management' },

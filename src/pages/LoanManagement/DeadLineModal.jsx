@@ -5,7 +5,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import CustomModal from '../../components/common/CustomModal';
 import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
-import useRentalReducer from '../../stores/RentalReducer';
+import useAppointmentSettingsReducer from '../../stores/AppointmentSettingsReducer';
 import { Spinner } from 'react-bootstrap';
 import moment from 'moment';
 
@@ -14,12 +14,12 @@ const DeadLineModal = ({
   closeModal,
   deadlineId,
   setdeadlineModal,
-  handleGetAllRentals,
+  handleGetAllAppointmentSettings,
 }) => {
   const [deadlineDate, setDeadlineDate] = useState(null);
   const [deadlineTime, setDeadlineTime] = useState(null);
   const [errors, setErrors] = useState({});
-  const { changeStatus: postChangeStatus, statusLoading } = useRentalReducer(
+  const { changeAppointmentSettingsStatus: postChangeAppointmentSettingsStatus, isAppointmentSettingsStatusLoading } = useAppointmentSettingsReducer(
     (state) => state
   );
   // Submit handler with validation
@@ -40,13 +40,13 @@ const DeadLineModal = ({
       const formattedDate = moment(deadlineDate).format('YYYY-MM-DD');
       const formattedTime = moment(deadlineTime, 'hh:mm A').format('HH:mm');
 
-      postChangeStatus({
+      postChangeAppointmentSettingsStatus({
         id: deadlineId,
         dueDate: formattedDate + ' ' + formattedTime,
         cb: () => {
           closeModal();
           setdeadlineModal(null);
-          handleGetAllRentals();
+          handleGetAllAppointmentSettings();
         },
       });
     }
@@ -126,9 +126,9 @@ const DeadLineModal = ({
         type="button"
         className="btn btn-submit"
         onClick={handleSubmit}
-        disabled={statusLoading}
+        disabled={isAppointmentSettingsStatusLoading}
       >
-        {statusLoading ? (
+        {isAppointmentSettingsStatusLoading ? (
           <Spinner
             size="sm"
             as="span"

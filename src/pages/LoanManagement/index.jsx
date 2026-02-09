@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import useRentalReducer from '../../stores/RentalReducer';
+import useAppointmentSettingsReducer from '../../stores/AppointmentSettingsReducer';
 import CustomTable from '../../components/common/CustomTable';
 import CommonHeader from '../../components/common/CommonHeader';
 
@@ -24,12 +24,12 @@ import CustomActionModal from '../../components/common/CustomActionModal';
 
 const LoanManagement = () => {
   const {
-    getAllRentals,
+    getAllAppointmentSettings,
     rentalData,
-    isRentalLoading,
-    exportRental,
+    isAppointmentSettingsLoading,
+    exportAppointmentSettings,
     isExportLoading,
-    changeStatus: postChangeStatus,
+    changeAppointmentSettingsStatus: postChangeAppointmentSettingsStatus,
     successMessage,
     getRentalNotes,
     notes,

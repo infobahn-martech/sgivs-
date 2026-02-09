@@ -4,7 +4,7 @@ import moment from 'moment';
 
 import '../../assets/scss/usermanagement.scss';
 
-import useRentalReducer from '../../stores/RentalReducer';
+import useAppointmentSettingsReducer from '../../stores/AppointmentSettingsReducer';
 import CustomTable from '../../components/common/CustomTable';
 import CommonHeader from '../../components/common/CommonHeader';
 import InitialsAvatar from '../../components/common/InitialsAvatar';
@@ -12,14 +12,14 @@ import useAuthReducer from '../../stores/AuthReducer';
 
 const UnmappedTransactions = () => {
   const {
-    isRentalLoading,
+    isAppointmentSettingsLoading,
 
     isExportLoading,
     successMessage,
-    getUnMappedTransactions,
-    unMappedtransactions,
-  } = useRentalReducer((state) => state);
-  console.log(' unMappedtransactions', unMappedtransactions);
+    getAppointmentSettingsUnMappedTransactions,
+    appointmentSettingsUnMappedTransactions,
+  } = useAppointmentSettingsReducer((state) => state);
+  console.log(' appointmentSettingsUnMappedTransactions', appointmentSettingsUnMappedTransactions);
 
   const { getAllUsersListByRole } = useAuthReducer((state) => state);
 
@@ -36,8 +36,8 @@ const UnmappedTransactions = () => {
 
   useEffect(() => {
     if (successMessage) {
-      handleGetAllRentals();
-      useRentalReducer.setState({ successMessage: '' });
+      handleGetAllAppointmentSettings();
+      useAppointmentSettingsReducer.setState({ successMessage: '' });
     }
   }, [successMessage]);
 
@@ -45,8 +45,8 @@ const UnmappedTransactions = () => {
     getAllUsersListByRole({ role: 2 });
   }, []);
 
-  const handleGetAllRentals = () => {
-    getUnMappedTransactions(params);
+  const handleGetAllAppointmentSettings = () => {
+    getAppointmentSettingsUnMappedTransactions(params);
   };
 
   const handleSortChange = (selector) => {
@@ -65,7 +65,7 @@ const UnmappedTransactions = () => {
     setParams((prevParams) => ({ ...prevParams, limit }));
   };
   useEffect(() => {
-    handleGetAllRentals();
+    handleGetAllAppointmentSettings();
   }, [params]);
 
   const debouncedSearch = debounce((searchValue) => {
@@ -160,10 +160,10 @@ const UnmappedTransactions = () => {
       />
       <CustomTable
         pagination={{ currentPage: params.page, limit: params.limit }}
-        count={unMappedtransactions?.pagination?.totalRecords}
+        count={appointmentSettingsUnMappedTransactions?.pagination?.totalRecords}
         columns={columns}
-        data={unMappedtransactions?.data}
-        isLoading={isRentalLoading}
+        data={appointmentSettingsUnMappedTransactions?.data}
+        isLoading={isAppointmentSettingsLoading}
         onPageChange={handlePageChange}
         setLimit={handleLimitChange}
         onSortChange={handleSortChange}
