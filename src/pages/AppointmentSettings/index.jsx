@@ -7,6 +7,7 @@ import CustomActionModal from '../../components/common/CustomActionModal';
 import { debounce } from 'lodash';
 import moment from 'moment';
 import getAppointmentSettingsTableColumns from './getAppointmentSettingsTableColumns';
+import AddEditAppointmentSettingsModal from './AddEditAppointmentSettingsModal';
 
 const AppointmentSettings = () => {
   // ✅ Toggle this to switch between static data and API data
@@ -38,7 +39,7 @@ const AppointmentSettings = () => {
   const [statusModalOpen, setstatusModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [notifyModal, setnotifyModal] = useState(false);
-  const [addUserModal, setAddUserModal] = useState(false);
+  const [addAppointmentSettingsModal, setAddAppointmentSettingsModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
 
 
@@ -223,9 +224,9 @@ const AppointmentSettings = () => {
     <>
       <CommonHeader
         addButton={{
-          name: 'Add User',
+          name: 'Book',
           type: 'button',
-          action: () => setAddUserModal(true),
+          action: () => setAddAppointmentSettingsModal(true),
         }}
         onSearch={debouncedSearch}
         filterOptions={filterOptions}
@@ -255,6 +256,14 @@ const AppointmentSettings = () => {
         setLimit={handleLimitChange}
         onSortChange={handleSortChange}
       />
+
+      {addAppointmentSettingsModal && (
+        <AddEditAppointmentSettingsModal
+          showModal={addAppointmentSettingsModal}
+          closeModal={() => setAddAppointmentSettingsModal(false)}
+          onRefreshAppointmentSettings={handleGetAllAppointmentSettings}
+        />
+      )}
 
       {statusModalOpen && selectedUser && (
         <CustomActionModal
