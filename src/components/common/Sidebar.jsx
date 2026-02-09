@@ -76,6 +76,8 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         '/application-mode-management',
         '/application-type-management',
         '/courier-type-management',
+        '/visa-duration-management',
+        '/visa-entry-management',
       ],
       subMenu: [
         {
@@ -99,6 +101,8 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
           icon: MessagesIcon,
         },
         { name: 'Courier type', path: '/courier-type-management', icon: MessagesIcon },
+        { name: 'Visa Duration', path: '/visa-duration-management', icon: MessagesIcon },
+        { name: 'Visa Entry', path: '/visa-entry-management', icon: MessagesIcon },
       ],
     },
 

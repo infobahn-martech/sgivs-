@@ -1,19 +1,19 @@
 import { create } from 'zustand';
 import useAlertReducer from './AlertReducer';
-import centerService from '../services/centerService';
+import visaEntryService from '../services/visaEntryService';
 
-const useCenterReducer = create((set) => ({
+const useVisaEntryReducer = create((set) => ({
   isLoading: false,
   isLoadingGet: false,
   isLoadingDelete: false,
   errorMessage: '',
   successMessage: '',
-  centerData: null,
+  visaEntryData: null,
 
   postData: async (payload, cb) => {
     try {
       set({ isLoading: true });
-      const { data } = await centerService.postData(payload);
+      const { data } = await visaEntryService.postData(payload);
       const { success } = useAlertReducer.getState();
       success(data?.response?.data?.message ?? data?.message);
       set({
@@ -35,7 +35,7 @@ const useCenterReducer = create((set) => ({
       set({ isLoading: true });
 
       const { id, ...rest } = payload;
-      const { data } = await centerService.patchData(id, rest); // Updated call
+      const { data } = await visaEntryService.patchData(id, rest); // Updated call
 
       const { success } = useAlertReducer.getState();
       success(data?.response?.data?.message ?? data?.message);
@@ -57,10 +57,10 @@ const useCenterReducer = create((set) => ({
   getData: async (params) => {
     try {
       set({ isLoadingGet: true });
-      const { data } = await centerService.getData(params);
+      const { data } = await visaEntryService.getData(params);
       const datas = data;
       set({
-        centerData: datas?.data,
+        visaEntryData: datas?.data,
         // successMessage: data?.response?.data?.message ?? data?.message,
         isLoadingGet: false,
       });
@@ -76,10 +76,10 @@ const useCenterReducer = create((set) => ({
   deleteData: async (id, cb) => {
     try {
       set({ isLoadingDelete: true });
-      const { data } = await centerService.deleteData(id);
+      const { data } = await visaEntryService.deleteData(id);
       const datas = data;
       set({
-        centerData: datas?.data,
+        visaEntryData: datas?.data,
         successMessage: data?.response?.data?.message ?? data?.message,
         isLoadingDelete: false,
       });
@@ -95,4 +95,4 @@ const useCenterReducer = create((set) => ({
   },
 }));
 
-export default useCenterReducer;
+export default useVisaEntryReducer;
