@@ -406,3 +406,37 @@
         transition: none !important;
     }
 }
+
+/* SIGNUP LINK */
+
+.login-v2__signup {
+    margin-top: 18px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(11, 27, 43, 0.65);
+}
+
+.signup-link {
+    font-weight: 700;
+    color: #051a53;
+    text-decoration: none;
+    margin-left: 4px;
+    position: relative;
+}
+
+/* premium underline animation */
+.signup-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0%;
+    height: 2px;
+    background: #2ca0da;
+    transition: 0.25s;
+}
+
+.signup-link:hover::after {
+    width: 100%;
+}

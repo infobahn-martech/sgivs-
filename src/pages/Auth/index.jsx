@@ -117,7 +117,11 @@ const Login = () => {
                   </Link>
                 </div>
 
-                <button className="btn btn-rounded login-v2__btn" type="submit" disabled={isLoginLoading}>
+                <button
+                  className="btn btn-rounded login-v2__btn"
+                  type="submit"
+                  disabled={isLoginLoading}
+                >
                   {isLoginLoading ? (
                     <>
                       <Spinner
@@ -134,6 +138,15 @@ const Login = () => {
                     'Login'
                   )}
                 </button>
+
+                {/* ✅ SIGNUP LINK */}
+                <div className="login-v2__signup">
+                  Don’t have an account?{' '}
+                  <Link to="/signup" className="signup-link">
+                    Sign up
+                  </Link>
+                </div>
+
               </div>
             </form>
           </div>
