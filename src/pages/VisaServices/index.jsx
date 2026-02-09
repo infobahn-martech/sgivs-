@@ -9,18 +9,18 @@ import editIcon from '../../assets/images/edit.svg';
 
 import CommonHeader from '../../components/common/CommonHeader';
 import CustomTable from '../../components/common/CustomTable';
-import useCenterReducer from '../../stores/CenterReducer';
+import useVisaServiceReducer from '../../stores/VisaServiceReducer';
 import { formatDate } from '../../config/config';
 import { AddEditModal } from './AddEditModal';
 import { debounce } from 'lodash';
 import CustomActionModal from '../../components/common/CustomActionModal';
 
-const Center = () => {
+const VisaServices = () => {
   // ✅ Toggle this (VERY useful for large admin projects)
   const USE_MOCK = true;
 
-  const { getData, centerData, isLoadingGet, deleteData, isLoadingDelete } =
-    useCenterReducer((state) => state);
+  const { getData, visaServiceData, isLoadingGet, deleteData, isLoadingDelete } =
+    useVisaServiceReducer((state) => state);
 
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [modal, setModal] = useState(false);
@@ -39,38 +39,38 @@ const Center = () => {
   const [params, setParams] = useState(initialParams);
 
   // ✅ Dummy Data
-  const mockCenterData = {
+  const mockVisaServiceData = {
     total: 5,
     data: [
       {
         id: 1,
-        name: 'Center 1',
+        name: 'Visa Services 1',
         createdAt: '2025-01-10T09:30:00Z',
       },
       {
         id: 2,
-        name: 'Monitors',
+        name: 'Visa Services 2',
         createdAt: '2025-02-14T12:15:00Z',
       },
       {
         id: 3,
-        name: 'Center 3',
+        name: 'Visa Services 3',
         createdAt: '2025-03-05T08:45:00Z',
       },
       {
         id: 4,
-        name: 'Center 4',
+        name: 'Visa Services 4',
         createdAt: '2025-03-20T10:00:00Z',
       },
       {
         id: 5,
-        name: 'Center 5',
+        name: 'Visa Services 5',
         createdAt: '2025-04-02T11:20:00Z',
       },
     ],
   };
 
-  const onRefreshCenter = () => {
+  const onRefreshVisaService = () => {
     if (!USE_MOCK) {
       getData(params);
     }
@@ -157,14 +157,14 @@ const Center = () => {
 
     if (deleteModalOpen?.id) {
       deleteData(deleteModalOpen?.id, () => {
-        onRefreshCenter();
+        onRefreshVisaService();
       });
     }
   };
 
   // ✅ Decide dataset
-  const tableData = USE_MOCK ? mockCenterData : centerData;
-  const loading = USE_MOCK ? false : isLoadingGet;
+  const tableData = USE_MOCK ? mockVisaServiceData : visaServiceData;
+  const loading = USE_MOCK ? false : isLoadingGetV;
 
   return (
     <>
@@ -208,7 +208,7 @@ const Center = () => {
         <AddEditModal
           showModal={modal}
           closeModal={() => setModal(false)}
-          onRefreshCenter={onRefreshCenter}
+          onRefreshVisaService={onRefreshVisaService}
         />
       )}
 
@@ -227,4 +227,4 @@ const Center = () => {
   );
 };
 
-export default Center;
+export default VisaServices;

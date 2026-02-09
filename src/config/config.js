@@ -30,6 +30,9 @@ export const headerConfig = [
     title: 'Visa Entry Management', icon: loanImg, path: '/visa-entry-management'
   },
   {
+    title: 'Visa Service Management', icon: loanImg, path: '/visa-service-management'
+  },
+  {
     title: 'Loan Management',
     path: '/loan-management',
     icon: loanImg,

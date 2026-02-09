@@ -117,6 +117,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         '/visa-entry-management',
         '/optional-services',
         '/vas-services',
+        '/visa-service-management',
       ],
       subMenu: [
         { name: 'Services', path: '/service-management', icon: MessagesIcon },
@@ -128,6 +129,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
           path: '/vas-services',
           icon: MessagesIcon,
         },
+        { name: 'Visa Service', path: '/visa-service-management', icon: MessagesIcon },
       ],
     },
 
