@@ -6,7 +6,6 @@
     display: flex;
     flex-direction: column;
     padding: 43px 44px;
-    background: url(../../assets//images/login-bottom-img.png) #fff no-repeat bottom right;
     background-size: 320px;
 
     @media ($sm-1679) {
@@ -36,10 +35,6 @@
         }
 
         .panel-left {
-            // ✅ Use the exact bg image you shared
-            background: url('../images/tech-bgg.png') no-repeat center center;
-            background-size: cover;
-
             border-radius: 31px;
             padding: 64px;
             flex: 1;
@@ -78,22 +73,20 @@
                 display: none;
             }
 
-            // ✅ Very light overlay only (reference has image clearly visible)
             &::before {
                 content: "";
                 position: absolute;
                 inset: 0;
-                background: rgba(0, 150, 223, 0.08); // 👈 keep low
+                background: rgba(0, 150, 223, 0.08);
             }
 
-            // ✅ Plain text (NO glass box)
             .quotes-wrp {
                 position: relative;
                 z-index: 2;
-                margin-top: 30px; // ✅ matches reference (top-left, not centered)
+                margin-top: 30px;
                 max-width: 560px;
 
-                color: #0b1b2b; // ✅ dark text like reference
+                color: #0b1b2b;
                 font-size: 14px;
                 line-height: 1.8;
                 font-weight: 400;
@@ -104,7 +97,6 @@
                 border-radius: 0;
                 padding: 0;
 
-                // ✅ Title like reference
                 &::before {
                     content: "Access Notice";
                     display: block;
@@ -140,7 +132,7 @@
             flex: 1;
             flex-direction: column;
 
-            padding-left: 90px; // ✅ matches reference spacing
+            padding-left: 90px;
 
             @media ($sm-1199) {
                 padding-left: 60px;
@@ -170,7 +162,7 @@
             }
 
             .form-wrp-center {
-                max-width: 520px; // ✅ closer to reference width
+                max-width: 520px;
                 width: 100%;
                 margin: auto;
 
@@ -229,7 +221,6 @@
                         }
                     }
 
-                    // ✅ pill inputs like screenshot
                     .form-control {
                         border-radius: 999px;
                         height: 54px;
@@ -251,7 +242,6 @@
                         text-align: right;
                     }
 
-                    // ✅ pill gradient button like screenshot
                     .btn-rounded {
                         width: 100%;
                         height: 56px;
