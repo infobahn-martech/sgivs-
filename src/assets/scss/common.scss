@@ -361,3 +361,47 @@ a {
         }
     }
 }
+
+/* Signup Modal Buttons */
+.signup-btn-sec {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    padding-top: 20px;
+
+    button {
+        height: 46px;
+        padding: 0 26px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 15px;
+        transition: all 0.25s ease;
+    }
+
+    /* Cancel */
+    .btn-cancel {
+        background: #ffffff;
+        border: 1.5px solid #051a53;
+        color: #051a53;
+
+        &:hover {
+            background: #f2f5fb;
+            transform: translateY(-1px);
+        }
+    }
+
+    /* Save */
+    .btn-submit {
+        background: #051a53;
+        border: none;
+        color: #fff;
+        min-width: 150px;
+        box-shadow: 0px 8px 20px rgba(5, 26, 83, 0.25);
+
+        &:hover {
+            background: #0a2a7a;
+            transform: translateY(-2px);
+            box-shadow: 0px 12px 26px rgba(5, 26, 83, 0.35);
+        }
+    }
+}

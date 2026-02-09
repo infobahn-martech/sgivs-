@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -11,6 +11,7 @@ import '../../assets/scss/signin.scss';
 import useAuthReducer from '../../stores/AuthReducer';
 import { Link, useNavigate } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
+import SignUp from '../SignUp';
 
 const loginSchema = z.object({
   email: z.string().nonempty('Email is required').email('Invalid email format'),
@@ -19,6 +20,8 @@ const loginSchema = z.object({
 
 const Login = () => {
   const navigate = useNavigate();
+  const [showSignUpModal, setShowSignUpModal] = useState(false);
+
   const { login, isLoginLoading } = useAuthReducer((state) => state);
 
   const {
@@ -142,7 +145,7 @@ const Login = () => {
                 {/* ✅ SIGNUP LINK */}
                 <div className="login-v2__signup">
                   Don’t have an account?{' '}
-                  <Link to="/signup" className="signup-link">
+                  <Link className="signup-link" onClick={() => setShowSignUpModal(true)}>
                     Sign up
                   </Link>
                 </div>
@@ -156,6 +159,7 @@ const Login = () => {
           </footer>
         </div>
       </div>
+      {showSignUpModal && <SignUp showModal={showSignUpModal} closeModal={() => setShowSignUpModal(false)} onRefreshSignUp={() => setShowSignUpModal(false)} />}
     </div>
   );
 };
