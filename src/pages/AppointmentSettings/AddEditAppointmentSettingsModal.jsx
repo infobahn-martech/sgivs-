@@ -259,22 +259,23 @@ export default function AddEditAppointmentSettingsModal({
             />
         </>
     );
-
     const renderBody = () => (
         <div className="modal-body">
-            <div className="row">
+            <div className="row g-3">
+
                 {/* Country */}
-                <div className="col-sm-6">
+                <div className="col-lg-4 col-md-6">
                     <div className="form-group forms-custom">
                         <label className="label">
                             Country<span className="text-danger">*</span>
                         </label>
                         <CustomSelect
                             options={countryOptions}
-                            value={countryOptions.find((o) => o.value === String(selectedCountryId || '')) || null}
-                            onChange={(selected) => setValue('countryId', selected?.value || '', { shouldValidate: true })}
+                            value={countryOptions.find(o => o.value === watch('countryId')) || null}
+                            onChange={(selected) =>
+                                setValue('countryId', selected?.value || '', { shouldValidate: true })
+                            }
                             placeholder="Select Country"
-                            showIndicator={false}
                             className="form-control"
                         />
                         {errors.countryId && <span className="error">{errors.countryId.message}</span>}
@@ -282,17 +283,18 @@ export default function AddEditAppointmentSettingsModal({
                 </div>
 
                 {/* Mission */}
-                <div className="col-sm-6">
+                <div className="col-lg-4 col-md-6">
                     <div className="form-group forms-custom">
                         <label className="label">
                             Mission<span className="text-danger">*</span>
                         </label>
                         <CustomSelect
                             options={missionOptions}
-                            value={missionOptions.find((o) => o.value === String(selectedMissionId || '')) || null}
-                            onChange={(selected) => setValue('missionId', selected?.value || '', { shouldValidate: true })}
+                            value={missionOptions.find(o => o.value === watch('missionId')) || null}
+                            onChange={(selected) =>
+                                setValue('missionId', selected?.value || '', { shouldValidate: true })
+                            }
                             placeholder="Select Mission"
-                            showIndicator={false}
                             className="form-control"
                         />
                         {errors.missionId && <span className="error">{errors.missionId.message}</span>}
@@ -300,17 +302,18 @@ export default function AddEditAppointmentSettingsModal({
                 </div>
 
                 {/* Center */}
-                <div className="col-sm-6">
+                <div className="col-lg-4 col-md-6">
                     <div className="form-group forms-custom">
                         <label className="label">
                             Center<span className="text-danger">*</span>
                         </label>
                         <CustomSelect
                             options={centerOptions}
-                            value={centerOptions.find((o) => o.value === String(selectedCenterId || '')) || null}
-                            onChange={(selected) => setValue('centerId', selected?.value || '', { shouldValidate: true })}
+                            value={centerOptions.find(o => o.value === watch('centerId')) || null}
+                            onChange={(selected) =>
+                                setValue('centerId', selected?.value || '', { shouldValidate: true })
+                            }
                             placeholder="Select Center"
-                            showIndicator={false}
                             className="form-control"
                         />
                         {errors.centerId && <span className="error">{errors.centerId.message}</span>}
@@ -318,54 +321,51 @@ export default function AddEditAppointmentSettingsModal({
                 </div>
 
                 {/* Application Type */}
-                <div className="col-sm-6">
+                <div className="col-lg-4 col-md-6">
                     <div className="form-group forms-custom">
                         <label className="label">
                             Application Type<span className="text-danger">*</span>
                         </label>
                         <CustomSelect
                             options={applicationTypeOptions}
-                            value={
-                                applicationTypeOptions.find((o) => o.value === String(selectedApplicationTypeId || '')) || null
-                            }
+                            value={applicationTypeOptions.find(o => o.value === watch('applicationTypeId')) || null}
                             onChange={(selected) =>
                                 setValue('applicationTypeId', selected?.value || '', { shouldValidate: true })
                             }
                             placeholder="Select Application Type"
-                            showIndicator={false}
                             className="form-control"
                         />
-                        {errors.applicationTypeId && <span className="error">{errors.applicationTypeId.message}</span>}
+                        {errors.applicationTypeId && (
+                            <span className="error">{errors.applicationTypeId.message}</span>
+                        )}
                     </div>
                 </div>
 
                 {/* Appointment Type */}
-                <div className="col-sm-6">
+                <div className="col-lg-4 col-md-6">
                     <div className="form-group forms-custom">
                         <label className="label">
                             Appointment Type<span className="text-danger">*</span>
                         </label>
                         <CustomSelect
                             options={appointmentTypeOptions}
-                            value={
-                                appointmentTypeOptions.find((o) => o.value === String(selectedAppointmentTypeId || '')) || null
-                            }
+                            value={appointmentTypeOptions.find(o => o.value === watch('appointmentTypeId')) || null}
                             onChange={(selected) =>
                                 setValue('appointmentTypeId', selected?.value || '', { shouldValidate: true })
                             }
                             placeholder="Select Appointment Type"
-                            showIndicator={false}
                             className="form-control"
                         />
-                        {errors.appointmentTypeId && <span className="error">{errors.appointmentTypeId.message}</span>}
+                        {errors.appointmentTypeId && (
+                            <span className="error">{errors.appointmentTypeId.message}</span>
+                        )}
                     </div>
                 </div>
 
-                {/* Off days - multi select */}
-                <div className="col-sm-6">
+                {/* Off days (multi select) */}
+                <div className="col-lg-4 col-md-6">
                     <div className="form-group forms-custom">
                         <label className="label">Off days</label>
-
                         <Controller
                             control={control}
                             name="offDays"
@@ -373,24 +373,20 @@ export default function AddEditAppointmentSettingsModal({
                                 <CustomSelect
                                     options={offDaysOptions}
                                     isMulti
-                                    value={offDaysOptions.filter((o) => (field.value || []).includes(o.value))}
-                                    onChange={(selected) => {
-                                        const values = (selected || []).map((s) => s.value);
-                                        field.onChange(values);
-                                    }}
+                                    value={offDaysOptions.filter(o => (field.value || []).includes(o.value))}
+                                    onChange={(selected) =>
+                                        field.onChange((selected || []).map(s => s.value))
+                                    }
                                     placeholder="Select Off days"
-                                    showIndicator={false}
                                     className="form-control"
                                 />
                             )}
                         />
-
-                        {errors.offDays && <span className="error">{errors.offDays.message}</span>}
                     </div>
                 </div>
 
-                {/* Start time */}
-                <div className="col-sm-6">
+                {/* Start Time */}
+                <div className="col-lg-4 col-md-6">
                     <div className="form-group forms-custom">
                         <label className="label">
                             Start time<span className="text-danger">*</span>
@@ -400,8 +396,8 @@ export default function AddEditAppointmentSettingsModal({
                     </div>
                 </div>
 
-                {/* End time */}
-                <div className="col-sm-6">
+                {/* End Time */}
+                <div className="col-lg-4 col-md-6">
                     <div className="form-group forms-custom">
                         <label className="label">
                             End time<span className="text-danger">*</span>
@@ -411,16 +407,16 @@ export default function AddEditAppointmentSettingsModal({
                     </div>
                 </div>
 
-                {/* Lunch break time range */}
-                <div className="col-sm-6">
+                {/* Lunch Break Start */}
+                <div className="col-lg-4 col-md-6">
                     <div className="form-group forms-custom">
                         <label className="label">Lunch break (Start)</label>
                         <input type="time" className="form-control" {...register('lunchStartTime')} />
-                        {errors.lunchStartTime && <span className="error">{errors.lunchStartTime.message}</span>}
                     </div>
                 </div>
 
-                <div className="col-sm-6">
+                {/* Lunch Break End */}
+                <div className="col-lg-4 col-md-6">
                     <div className="form-group forms-custom">
                         <label className="label">Lunch break (End)</label>
                         <input type="time" className="form-control" {...register('lunchEndTime')} />
@@ -428,126 +424,135 @@ export default function AddEditAppointmentSettingsModal({
                     </div>
                 </div>
 
-                {/* Slot period */}
-                <div className="col-sm-6">
+                {/* Slot Period */}
+                <div className="col-lg-4 col-md-6">
                     <div className="form-group forms-custom">
                         <label className="label">
                             Slot period<span className="text-danger">*</span>
                         </label>
                         <CustomSelect
                             options={slotPeriodOptions}
-                            value={slotPeriodOptions.find((o) => o.value === watch('slotPeriod')) || null}
-                            onChange={(selected) => setValue('slotPeriod', selected?.value || '', { shouldValidate: true })}
+                            value={slotPeriodOptions.find(o => o.value === watch('slotPeriod')) || null}
+                            onChange={(selected) =>
+                                setValue('slotPeriod', selected?.value || '', { shouldValidate: true })
+                            }
                             placeholder="Select Slot period"
-                            showIndicator={false}
                             className="form-control"
                         />
                         {errors.slotPeriod && <span className="error">{errors.slotPeriod.message}</span>}
                     </div>
                 </div>
 
-                {/* Slot capacity */}
-                <div className="col-sm-6">
+                {/* Slot Capacity */}
+                <div className="col-lg-4 col-md-6">
                     <div className="form-group forms-custom">
                         <label className="label">
                             Slot capacity<span className="text-danger">*</span>
                         </label>
                         <CustomSelect
                             options={slotCapacityOptions}
-                            value={slotCapacityOptions.find((o) => o.value === watch('slotCapacity')) || null}
-                            onChange={(selected) => setValue('slotCapacity', selected?.value || '', { shouldValidate: true })}
+                            value={slotCapacityOptions.find(o => o.value === watch('slotCapacity')) || null}
+                            onChange={(selected) =>
+                                setValue('slotCapacity', selected?.value || '', { shouldValidate: true })
+                            }
                             placeholder="Select Slot capacity"
-                            showIndicator={false}
                             className="form-control"
                         />
                         {errors.slotCapacity && <span className="error">{errors.slotCapacity.message}</span>}
                     </div>
                 </div>
 
-                {/* Max slots */}
-                <div className="col-sm-6">
+                {/* Max Slots */}
+                <div className="col-lg-4 col-md-6">
                     <div className="form-group forms-custom">
                         <label className="label">
                             Max slots<span className="text-danger">*</span>
                         </label>
                         <CustomSelect
                             options={maxSlotsOptions}
-                            value={maxSlotsOptions.find((o) => o.value === watch('maxSlots')) || null}
-                            onChange={(selected) => setValue('maxSlots', selected?.value || '', { shouldValidate: true })}
+                            value={maxSlotsOptions.find(o => o.value === watch('maxSlots')) || null}
+                            onChange={(selected) =>
+                                setValue('maxSlots', selected?.value || '', { shouldValidate: true })
+                            }
                             placeholder="Select Max slots"
-                            showIndicator={false}
                             className="form-control"
                         />
                         {errors.maxSlots && <span className="error">{errors.maxSlots.message}</span>}
                     </div>
                 </div>
 
-                {/* Booking allow from */}
-                <div className="col-sm-6">
+                {/* Booking Allow From */}
+                <div className="col-lg-4 col-md-6">
                     <div className="form-group forms-custom">
                         <label className="label">
                             Booking allow from<span className="text-danger">*</span>
                         </label>
                         <input type="date" className="form-control" {...register('bookingAllowFrom')} />
-                        {errors.bookingAllowFrom && <span className="error">{errors.bookingAllowFrom.message}</span>}
+                        {errors.bookingAllowFrom && (
+                            <span className="error">{errors.bookingAllowFrom.message}</span>
+                        )}
                     </div>
                 </div>
 
-                {/* Booking allow till */}
-                <div className="col-sm-6">
+                {/* Booking Allow Till */}
+                <div className="col-lg-4 col-md-6">
                     <div className="form-group forms-custom">
                         <label className="label">
                             Booking allow till<span className="text-danger">*</span>
                         </label>
                         <input type="date" className="form-control" {...register('bookingAllowTill')} />
-                        {errors.bookingAllowTill && <span className="error">{errors.bookingAllowTill.message}</span>}
+                        {errors.bookingAllowTill && (
+                            <span className="error">{errors.bookingAllowTill.message}</span>
+                        )}
                     </div>
                 </div>
 
-                {/* Blocked dates */}
-                <div className="col-sm-12">
+                {/* Blocked Dates */}
+                <div className="col-lg-4 col-md-6">
                     <div className="form-group forms-custom">
                         <label className="label">Blocked dates</label>
                         <textarea
                             className="form-control"
                             rows={2}
-                            placeholder="YYYYMMDD, YYYYMMDD, ..."
+                            placeholder="YYYYMMDD, YYYYMMDD"
                             {...register('blockedDates')}
                         />
                         {errors.blockedDates && <span className="error">{errors.blockedDates.message}</span>}
                     </div>
                 </div>
 
-                {/* Release dates */}
-                <div className="col-sm-12">
+                {/* Release Dates */}
+                <div className="col-lg-4 col-md-6">
                     <div className="form-group forms-custom">
                         <label className="label">Release dates</label>
                         <textarea
                             className="form-control"
                             rows={2}
-                            placeholder="YYYYMMDD, YYYYMMDD, ..."
+                            placeholder="YYYYMMDD, YYYYMMDD"
                             {...register('releaseDates')}
                         />
                         {errors.releaseDates && <span className="error">{errors.releaseDates.message}</span>}
                     </div>
                 </div>
 
-                {/* Slot full dates */}
-                <div className="col-sm-12">
+                {/* Slot Full Dates */}
+                <div className="col-lg-4 col-md-6">
                     <div className="form-group forms-custom">
                         <label className="label">Slot full dates</label>
                         <textarea
                             className="form-control"
                             rows={2}
-                            placeholder="YYYYMMDD, YYYYMMDD, ..."
+                            placeholder="YYYYMMDD, YYYYMMDD"
                             {...register('slotFullDates')}
                         />
                         {errors.slotFullDates && <span className="error">{errors.slotFullDates.message}</span>}
                     </div>
                 </div>
+
             </div>
         </div>
     );
+
 
     const renderFooter = () => (
         <div className="modal-footer bottom-btn-sec">

@@ -120,7 +120,6 @@ export function AddEditModal({ showModal, closeModal, onRefreshCounter }) {
             <label htmlFor="centerId" className="label">
               Select Center<span className="text-danger">*</span>
             </label>
-
             <CustomSelect
               options={centerOptions}
               value={
