@@ -30,6 +30,7 @@ import ApplicationModeManagement from '../pages/ApplicationMode/Loader';
 import ApplicationTypeManagement from '../pages/ApplicationType/Loader';
 import CourierTypeManagement from '../pages/CourierType/Loader';
 import ServiceManagement from '../pages/Service/Loader';
+import VisaDurationManagement from '../pages/VisaDuration/Loader';
 
 const router = createHashRouter([
   {
@@ -89,6 +90,7 @@ const router = createHashRouter([
               { path: '/application-type-management', element: <ApplicationTypeManagement /> },
               { path: '/courier-type-management', element: <CourierTypeManagement /> },
               { path: '/service-management', element: <ServiceManagement /> },
+              { path: '/visa-duration-management', element: <VisaDurationManagement /> },
             ],
           },
         ],

@@ -109,14 +109,14 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       path: '/service-management',
       activeRoutes: [
         '/service-management',
-        '/visa-duration',
+        '/visa-duration-management',
         '/visa-entry',
         '/optional-services',
         '/vas-services',
       ],
       subMenu: [
         { name: 'Services', path: '/service-management', icon: MessagesIcon },
-        { name: 'Visa Duration', path: '/visa-duration', icon: MessagesIcon },
+        { name: 'Visa Duration', path: '/visa-duration-management', icon: MessagesIcon },
         { name: 'Visa Entry', path: '/visa-entry', icon: MessagesIcon },
         { name: 'Optional Services', path: '/optional-services', icon: MessagesIcon },
         {

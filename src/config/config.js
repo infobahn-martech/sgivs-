@@ -25,6 +25,7 @@ export const headerConfig = [
   { title: 'Application Type Management', icon: messageIcon, path: '/application-type-management' },
   { title: 'Courier Type Management', icon: loanImg, path: '/courier-type-management' },
   { title: 'Service Management', icon: loanImg, path: '/service-management' },
+  { title: 'Visa Duration Management', icon: loanImg, path: '/visa-duration-management' },
   {
     title: 'Loan Management',
     path: '/loan-management',
