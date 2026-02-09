@@ -53,13 +53,6 @@ const getUserTableColumns = ({
       cell: (row) => <span>{formatDate(row?.createdAt)}</span>,
       sort: true,
     },
-    {
-      name: 'Credit Card Available',
-      selector: 'isCreditCardAvailable',
-      titleClasses: isDashboard ? 'th-card' : 'tw6',
-      cell: (row) => <span>{formatBoolean(row?.isCreditCardAvailable)}</span>,
-      colClassName: 'text-center',
-    },
   ];
 
   if (showActions) {
