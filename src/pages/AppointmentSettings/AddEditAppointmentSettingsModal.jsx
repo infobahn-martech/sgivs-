@@ -567,7 +567,7 @@ export default function AddEditAppointmentSettingsModal({
 
     return (
         <CustomModal
-            className="modal fade category-modal show"
+            className="modal fade category-modal appointment-settings-modal show"
             dialgName="modal-dialog-scrollable"
             show={!!showModal}
             closeModal={closeModal}

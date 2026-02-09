@@ -574,7 +574,19 @@
         @media ($sm-991) {
             height: 45px;
         }
+    }
+}
 
+/* Wider modal for Appointment Settings only */
+.appointment-settings-modal.category-modal .modal-dialog {
+    max-width: 1160px;
+
+    @media ($sm-767) {
+        max-width: 95%;
+    }
+
+    @media ($sm-579) {
+        max-width: 100%;
     }
 }
 
