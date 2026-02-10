@@ -12,6 +12,7 @@ import { AddEditModal } from './AddEditModal';
 import CustomActionModal from '../../components/common/CustomActionModal';
 import ActionsMenu from './ActionsMenu';
 import ViewModal from './ViewModal';
+import CommentModal from './CommentModal';
 
 const PassportApplications = () => {
   const USE_MOCK = true;
@@ -22,6 +23,7 @@ const PassportApplications = () => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [modal, setModal] = useState(false);
   const [viewModal, setViewModal] = useState(false);
+  const [commentModal, setCommentModal] = useState(false);
 
   const initialParams = {
     search: '',
@@ -153,7 +155,7 @@ const PassportApplications = () => {
   };
 
   const handleComment = (row) => {
-    console.log('Comment:', row);
+    setCommentModal(row);
   };
 
   const handleActivityLog = (row) => {
@@ -305,6 +307,13 @@ const PassportApplications = () => {
         <ViewModal
           showModal={viewModal}
           closeModal={() => setViewModal(false)}
+        />
+      )}
+
+      {commentModal && (
+        <CommentModal
+          showModal={commentModal}
+          closeModal={() => setCommentModal(false)}
         />
       )}
     </>
