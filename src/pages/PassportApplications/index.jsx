@@ -160,7 +160,7 @@ const PassportApplications = () => {
 
   const handleEditApplication = (row) => {
     console.log('Edit application:', row);
-    setModal(true); // if you want to open modal in edit mode, you can store editRow state
+    setModal(row); // if you want to open modal in edit mode, you can store editRow state
   };
 
   const handleChangeServiceFee = (row) => {
