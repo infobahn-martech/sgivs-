@@ -192,7 +192,7 @@ const Header = () => {
                 className="dropdown-menu dropdown-menu-end"
                 aria-labelledby="userDropdown"
               >
-                {/* <li>
+                <li>
                   <button
                     type="button"
                     className="dropdown-item"
@@ -202,7 +202,7 @@ const Header = () => {
                   </button>
                 </li>
 
-                <li>
+                {/* <li>
                   <button
                     type="button"
                     className="dropdown-item"

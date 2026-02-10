@@ -134,7 +134,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       path: '/appointment-settings',
     },
 
-    { name: 'Settings', icon: SettingsIcon, path: '/' },
+    { name: 'Settings', icon: SettingsIcon, path: '//profile' },
   ];
 
   // ✅ submenu open/close state (click based)
