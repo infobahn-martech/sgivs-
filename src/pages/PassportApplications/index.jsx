@@ -10,6 +10,7 @@ import usePassportApplicationReducer from '../../stores/PassportApplicationReduc
 import { formatDate } from '../../config/config';
 import { AddEditModal } from './AddEditModal';
 import CustomActionModal from '../../components/common/CustomActionModal';
+import ActionsMenu from './ActionsMenu';
 
 const PassportApplications = () => {
   const USE_MOCK = true;
@@ -132,6 +133,41 @@ const PassportApplications = () => {
     }));
   };
 
+  const openDeleteModal = (row) => {
+    setDeleteModalOpen({ id: row?.id, name: row?.name });
+  };
+
+  // ✅ action handlers (replace with your actual flows)
+  const handlePrintReceipt = (row) => {
+    console.log('Print Receipt:', row);
+  };
+
+  const handlePrintBarcode = (row) => {
+    console.log('Print Barcode:', row);
+  };
+
+  const handleViewApplication = (row) => {
+    console.log('View Application:', row);
+  };
+
+  const handleComment = (row) => {
+    console.log('Comment:', row);
+  };
+
+  const handleActivityLog = (row) => {
+    console.log('Activity Log:', row);
+  };
+
+  const handleEditApplication = (row) => {
+    console.log('Edit application:', row);
+    setModal(true); // if you want to open modal in edit mode, you can store editRow state
+  };
+
+  const handleChangeServiceFee = (row) => {
+    console.log('Change service/fee:', row);
+  };
+
+
   const columns = [
     { name: 'Reference No', selector: 'referenceNo' },
     { name: 'Name', selector: 'name' },
@@ -155,6 +191,25 @@ const PassportApplications = () => {
           {row?.status?.by ? ` / ${row.status.by}` : ''}
           {row?.status?.on ? `, ${formatDate(row.status.on)}` : ''}
         </span>
+      ),
+    },
+    {
+      name: 'Action',
+      selector: 'action',
+      notView: true,        // prevents CustomTable's onView click behavior
+      colClassName: 'action-col',
+      cell: (row) => (
+        <ActionsMenu
+          row={row}
+          onPrintReceipt={handlePrintReceipt}
+          onPrintBarcode={handlePrintBarcode}
+          onViewApplication={handleViewApplication}
+          onComment={handleComment}
+          onActivityLog={handleActivityLog}
+          onEditApplication={handleEditApplication}
+          onChangeServiceFee={handleChangeServiceFee}
+          onDelete={openDeleteModal}
+        />
       ),
     },
   ];

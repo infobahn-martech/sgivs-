@@ -1407,3 +1407,123 @@
         }
     }
 }
+
+.action-col {
+    width: 70px;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.action-menu {
+    position: relative;
+    display: inline-flex;
+    justify-content: flex-end;
+}
+
+/* ✅ Three-dots button */
+.action-menu__btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    border: 1px solid #e7eef7;
+    background: #ffffff;
+    cursor: pointer;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+    line-height: 1;
+    color: #051a53;
+
+    transition: all 0.15s ease-in-out;
+
+    &:hover {
+        background: #f5f8ff;
+        border-color: #cfe3f2;
+    }
+
+    &:active {
+        transform: scale(0.98);
+    }
+
+    &:focus-visible {
+        outline: 3px solid rgba(5, 26, 83, 0.18);
+        outline-offset: 2px;
+    }
+}
+
+/* ✅ If you want the dots to look nicer (3 circles) */
+.action-menu__btn {
+    font-size: 0; // hide text ⋮
+    position: relative;
+
+    &::before {
+        content: '';
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: #051a53;
+        box-shadow: 0 -7px 0 #051a53, 0 7px 0 #051a53; // 3 dots
+        display: inline-block;
+    }
+}
+
+
+.action-menu__dropdown {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    width: 220px;
+    background: #fff;
+    border: 1px solid #e7eef7;
+    border-radius: 14px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+    padding: 8px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+
+    button {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        white-space: nowrap;
+
+        // ✅ IMPORTANT: reset browser/bootstrap button style
+        background: transparent;
+        border: 0;
+        outline: 0;
+        box-shadow: none;
+        padding: 8px 12px;
+        border-radius: 10px;
+        font-size: 14px;
+        color: #051a53;
+        cursor: pointer;
+
+        &:hover {
+            background: #f5f8ff;
+        }
+
+        &.danger {
+            color: #d7263d;
+
+            &:hover {
+                background: rgba(215, 38, 61, 0.08);
+            }
+        }
+    }
+}
+
+.action-menu__divider {
+    height: 1px;
+    background: #eef3fb;
+    margin: 6px 0;
+}
+
+.action-menu__dropdown {
+    top: calc(100% + 8px);
+}
