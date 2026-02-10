@@ -7,6 +7,7 @@ import CustomActionModal from '../../components/common/CustomActionModal';
 import { debounce } from 'lodash';
 import moment from 'moment';
 import getUserTableColumns from './getUserTableColumns';
+import AddEditModal from './AddEditModal';
 
 const UserManagement = () => {
   // ✅ Toggle this to switch between static data and API data
@@ -261,7 +262,13 @@ const UserManagement = () => {
         setLimit={handleLimitChange}
         onSortChange={handleSortChange}
       />
-
+      {addUserModal && (
+        <AddEditModal
+          showModal={addUserModal}
+          closeModal={() => setAddUserModal(false)}
+          onRefreshUsers={handleGetAllUsers}
+        />
+      )}
       {statusModalOpen && selectedUser && (
         <CustomActionModal
           isLoading={USE_MOCK ? false : userActionLoading}
