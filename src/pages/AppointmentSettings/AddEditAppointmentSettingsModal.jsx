@@ -2,10 +2,41 @@ import React, { useEffect, useMemo } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+
 import CustomModal from '../../components/common/CustomModal';
 import CustomSelect from '../../components/common/CustomSelect';
 
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
 const USE_MOCK = true;
+
+/** ✅ Date Range Picker (inline component for easy copy-paste) */
+const DateRangePicker = ({ className, onChange, value }) => {
+    const startDate = value?.startDate || null;
+    const endDate = value?.endDate || null;
+
+    return (
+        <DatePicker
+            selected={startDate}
+            onChange={(update) => {
+                const [start, end] = update;
+                onChange({ startDate: start, endDate: end });
+            }}
+            startDate={startDate}
+            endDate={endDate}
+            selectsRange
+            showYearDropdown
+            showMonthDropdown
+            showTwoColumnMonthYearPicker
+            portalId="root-portal"
+            className={className}
+            placeholderText="Select date range"
+            dateFormat="yyyy-MM-dd"
+            isClearable
+        />
+    );
+};
 
 /** ✅ MOCK OPTIONS */
 const mockCountries = [
@@ -69,7 +100,7 @@ const mockMaxSlots = [
     { id: '100', name: '100' },
 ];
 
-/** ✅ NEW: Lunch Break options (single select) */
+/** ✅ Lunch Break options (single select) */
 const mockLunchBreak = [
     { id: '0', name: 'No Lunch Break' },
     { id: '30', name: '30 Minutes' },
@@ -77,21 +108,11 @@ const mockLunchBreak = [
     { id: '60', name: '60 Minutes' },
 ];
 
-/** ✅ YYYYMMDD CSV validator */
-const yyyymmddCsv = z
-    .string()
-    .optional()
-    .refine(
-        (val) => {
-            if (!val || !val.trim()) return true;
-            const parts = val
-                .split(',')
-                .map((x) => x.trim())
-                .filter(Boolean);
-            return parts.every((p) => /^\d{8}$/.test(p));
-        },
-        { message: 'Enter dates as YYYYMMDD separated by comma' }
-    );
+/** ✅ Date-range schema helper */
+const dateRangeSchema = z.object({
+    startDate: z.date().nullable(),
+    endDate: z.date().nullable(),
+});
 
 const formSchema = z.object({
     countryId: z.string().nonempty('Country is required'),
@@ -102,22 +123,22 @@ const formSchema = z.object({
 
     offDays: z.array(z.string()).optional(),
 
-    startTime: z.string().nonempty('Start time is required'), // HH:MM
-    endTime: z.string().nonempty('End time is required'), // HH:MM
+    startTime: z.string().nonempty('Start time is required'),
+    endTime: z.string().nonempty('End time is required'),
 
-    /** ✅ NEW: single dropdown */
     lunchBreak: z.string().optional(), // '0' | '30' | '45' | '60'
 
     slotPeriod: z.string().nonempty('Slot period is required'),
     slotCapacity: z.string().nonempty('Slot capacity is required'),
     maxSlots: z.string().nonempty('Max slots is required'),
 
-    bookingAllowFrom: z.string().nonempty('Booking allow from is required'), // YYYY-MM-DD
-    bookingAllowTill: z.string().nonempty('Booking allow till is required'), // YYYY-MM-DD
+    bookingAllowFrom: z.string().nonempty('Booking allow from is required'),
+    bookingAllowTill: z.string().nonempty('Booking allow till is required'),
 
-    blockedDates: yyyymmddCsv,
-    releaseDates: yyyymmddCsv,
-    slotFullDates: yyyymmddCsv,
+    /** ✅ NEW: date range picker values */
+    blockedDates: dateRangeSchema.optional(),
+    releaseDates: dateRangeSchema.optional(),
+    slotFullDates: dateRangeSchema.optional(),
 });
 
 export default function AddEditAppointmentSettingsModal({
@@ -146,7 +167,6 @@ export default function AddEditAppointmentSettingsModal({
             startTime: '',
             endTime: '',
 
-            /** ✅ NEW */
             lunchBreak: '0',
 
             slotPeriod: '',
@@ -156,21 +176,20 @@ export default function AddEditAppointmentSettingsModal({
             bookingAllowFrom: '',
             bookingAllowTill: '',
 
-            blockedDates: '',
-            releaseDates: '',
-            slotFullDates: '',
+            blockedDates: { startDate: null, endDate: null },
+            releaseDates: { startDate: null, endDate: null },
+            slotFullDates: { startDate: null, endDate: null },
         },
     });
 
     // ✅ Fill form for edit / clear for add (MOCK)
     useEffect(() => {
         if (showModal?.id) {
-            // If you have edit values, map them here.
-            // Example:
+            // Map edit values here (example):
             // setValue('countryId', String(showModal.countryId || ''));
-            // setValue('offDays', showModal.offDays || []);
             // setValue('lunchBreak', String(showModal.lunchBreak ?? '0'));
-        } else if (!showModal?.id) {
+            // setValue('blockedDates', { startDate: new Date(showModal.blockedStart), endDate: new Date(showModal.blockedEnd) });
+        } else {
             reset();
         }
     }, [showModal?.id, reset, setValue, showModal]);
@@ -192,12 +211,20 @@ export default function AddEditAppointmentSettingsModal({
     );
 
     const applicationTypeOptions = useMemo(
-        () => (USE_MOCK ? mockApplicationTypes : []).map((x) => ({ label: x.name, value: String(x.id) })),
+        () =>
+            (USE_MOCK ? mockApplicationTypes : []).map((x) => ({
+                label: x.name,
+                value: String(x.id),
+            })),
         []
     );
 
     const appointmentTypeOptions = useMemo(
-        () => (USE_MOCK ? mockAppointmentTypes : []).map((x) => ({ label: x.name, value: String(x.id) })),
+        () =>
+            (USE_MOCK ? mockAppointmentTypes : []).map((x) => ({
+                label: x.name,
+                value: String(x.id),
+            })),
         []
     );
 
@@ -221,22 +248,46 @@ export default function AddEditAppointmentSettingsModal({
         []
     );
 
-    /** ✅ NEW: Lunch break options mapping */
     const lunchBreakOptions = useMemo(
         () => (USE_MOCK ? mockLunchBreak : []).map((x) => ({ label: x.name, value: String(x.id) })),
         []
     );
 
+    /** ✅ Helper: convert Date -> yyyy-mm-dd */
+    const toYMD = (date) => {
+        if (!date) return null;
+        const yyyy = date.getFullYear();
+        const mm = String(date.getMonth() + 1).padStart(2, '0');
+        const dd = String(date.getDate()).padStart(2, '0');
+        return `${yyyy}-${mm}-${dd}`;
+    };
+
     // ✅ Submit (MOCK)
     const onSubmit = (data) => {
+        const payload = {
+            ...data,
+            blockedDates: {
+                startDate: toYMD(data.blockedDates?.startDate),
+                endDate: toYMD(data.blockedDates?.endDate),
+            },
+            releaseDates: {
+                startDate: toYMD(data.releaseDates?.startDate),
+                endDate: toYMD(data.releaseDates?.endDate),
+            },
+            slotFullDates: {
+                startDate: toYMD(data.slotFullDates?.startDate),
+                endDate: toYMD(data.slotFullDates?.endDate),
+            },
+        };
+
         if (USE_MOCK) {
-            // console.log('Appointment Settings Payload:', data);
+            // console.log('Appointment Settings Payload:', payload);
             onRefreshAppointmentSettings?.();
             closeModal?.();
             return;
         }
 
-        // API mode: call post/patch here
+        // API mode: call post/patch with payload
         closeModal?.();
     };
 
@@ -323,7 +374,9 @@ export default function AddEditAppointmentSettingsModal({
                         </label>
                         <CustomSelect
                             options={applicationTypeOptions}
-                            value={applicationTypeOptions.find((o) => o.value === watch('applicationTypeId')) || null}
+                            value={
+                                applicationTypeOptions.find((o) => o.value === watch('applicationTypeId')) || null
+                            }
                             onChange={(selected) =>
                                 setValue('applicationTypeId', selected?.value || '', { shouldValidate: true })
                             }
@@ -344,7 +397,9 @@ export default function AddEditAppointmentSettingsModal({
                         </label>
                         <CustomSelect
                             options={appointmentTypeOptions}
-                            value={appointmentTypeOptions.find((o) => o.value === watch('appointmentTypeId')) || null}
+                            value={
+                                appointmentTypeOptions.find((o) => o.value === watch('appointmentTypeId')) || null
+                            }
                             onChange={(selected) =>
                                 setValue('appointmentTypeId', selected?.value || '', { shouldValidate: true })
                             }
@@ -400,7 +455,7 @@ export default function AddEditAppointmentSettingsModal({
                     </div>
                 </div>
 
-                {/* ✅ NEW: Lunch break (single select) */}
+                {/* Lunch break (single select) */}
                 <div className="col-lg-4 col-md-6">
                     <div className="form-group forms-custom">
                         <label className="label">Lunch break</label>
@@ -500,45 +555,45 @@ export default function AddEditAppointmentSettingsModal({
                     </div>
                 </div>
 
-                {/* Blocked Dates */}
+                {/* ✅ Blocked Dates (DateRangePicker) */}
                 <div className="col-lg-4 col-md-6">
                     <div className="form-group forms-custom">
                         <label className="label">Blocked dates</label>
-                        <textarea
-                            className="form-control"
-                            rows={2}
-                            placeholder="YYYYMMDD, YYYYMMDD"
-                            {...register('blockedDates')}
+                        <Controller
+                            control={control}
+                            name="blockedDates"
+                            render={({ field }) => (
+                                <DateRangePicker className="form-control" value={field.value} onChange={field.onChange} />
+                            )}
                         />
-                        {errors.blockedDates && <span className="error">{errors.blockedDates.message}</span>}
                     </div>
                 </div>
 
-                {/* Release Dates */}
+                {/* ✅ Release Dates (DateRangePicker) */}
                 <div className="col-lg-4 col-md-6">
                     <div className="form-group forms-custom">
                         <label className="label">Release dates</label>
-                        <textarea
-                            className="form-control"
-                            rows={2}
-                            placeholder="YYYYMMDD, YYYYMMDD"
-                            {...register('releaseDates')}
+                        <Controller
+                            control={control}
+                            name="releaseDates"
+                            render={({ field }) => (
+                                <DateRangePicker className="form-control" value={field.value} onChange={field.onChange} />
+                            )}
                         />
-                        {errors.releaseDates && <span className="error">{errors.releaseDates.message}</span>}
                     </div>
                 </div>
 
-                {/* Slot Full Dates */}
+                {/* ✅ Slot Full Dates (DateRangePicker) */}
                 <div className="col-lg-4 col-md-6">
                     <div className="form-group forms-custom">
                         <label className="label">Slot full dates</label>
-                        <textarea
-                            className="form-control"
-                            rows={2}
-                            placeholder="YYYYMMDD, YYYYMMDD"
-                            {...register('slotFullDates')}
+                        <Controller
+                            control={control}
+                            name="slotFullDates"
+                            render={({ field }) => (
+                                <DateRangePicker className="form-control" value={field.value} onChange={field.onChange} />
+                            )}
                         />
-                        {errors.slotFullDates && <span className="error">{errors.slotFullDates.message}</span>}
                     </div>
                 </div>
             </div>
