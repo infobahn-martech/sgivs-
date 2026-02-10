@@ -13,6 +13,7 @@ import CustomActionModal from '../../components/common/CustomActionModal';
 import ActionsMenu from './ActionsMenu';
 import ViewModal from './ViewModal';
 import CommentModal from './CommentModal';
+import ChangeServicesModal from './ChangeServices';
 
 const PassportApplications = () => {
   const USE_MOCK = true;
@@ -24,7 +25,7 @@ const PassportApplications = () => {
   const [modal, setModal] = useState(false);
   const [viewModal, setViewModal] = useState(false);
   const [commentModal, setCommentModal] = useState(false);
-
+  const [changeServicesModal, setChangeServicesModal] = useState(false);
   const initialParams = {
     search: '',
     page: 1,
@@ -169,6 +170,7 @@ const PassportApplications = () => {
 
   const handleChangeServiceFee = (row) => {
     console.log('Change service/fee:', row);
+    setChangeServicesModal(row);
   };
 
 
@@ -314,6 +316,13 @@ const PassportApplications = () => {
         <CommentModal
           showModal={commentModal}
           closeModal={() => setCommentModal(false)}
+        />
+      )}
+
+      {changeServicesModal && (
+        <ChangeServicesModal
+          showModal={changeServicesModal}
+          closeModal={() => setChangeServicesModal(false)}
         />
       )}
     </>
