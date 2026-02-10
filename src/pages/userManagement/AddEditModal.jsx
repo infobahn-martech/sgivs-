@@ -267,10 +267,11 @@ export default function EmployeeAddEditModal({
                 <CustomSelect
                     options={options}
                     value={options.find((o) => o.value === String(val || '')) || null}
-                    onChange={(selected) => setValue(name, selected?.value || '')}
+                    onChange={(ev) => setValue(name, ev?.target?.value ?? '')}
                     placeholder={placeholder}
                     showIndicator={false}
                     className="form-select form-control"
+                    name={name}
                 />
                 {errors?.[name]?.message && <span className="error">{errors[name].message}</span>}
             </div>
@@ -408,7 +409,7 @@ export default function EmployeeAddEditModal({
                 </div>
 
                 <div className="col-sm-6 d-flex align-items-end">
-                    <div className="form-group forms-custom mb-2">
+                    <div className="form-group forms-custom">
                         <label className="label d-block">IP Bounded</label>
                         <label className="checkbox-custom">
                             <input type="checkbox" {...register('ipBounded')} />

@@ -24,6 +24,8 @@ function CustomSelect({
   useEffect(() => {
     if (value && isMulti) setSelectedValue(value);
     else if (!value) setSelectedValue(null);
+    else if (typeof value === 'object' && value !== null && 'value' in value)
+      setSelectedValue(value);
     else if (!value.value)
       setSelectedValue(
         options.find((option) => option.value === value) || null
@@ -119,6 +121,9 @@ function CustomSelect({
       placeholder={placeholder}
       noOptionsMessage={() => noOptionsMessage}
       menuPortalTarget={document.body}
+      styles={{
+        menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+      }}
       // options={[
       //   { value: 'shown', label: 'shown' },
       //   { value: 'hidden', label: 'hidden' },
