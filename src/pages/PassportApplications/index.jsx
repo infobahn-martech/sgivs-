@@ -1,4 +1,5 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { Tooltip } from 'react-tooltip';
 import moment from 'moment';
 import { debounce } from 'lodash';
@@ -12,6 +13,15 @@ import { formatDate } from '../../config/config';
 import { AddEditModal } from './AddEditModal';
 import CustomActionModal from '../../components/common/CustomActionModal';
 
+import barcodeIcon from '../../assets/images/barcode.svg';
+import eyeIcon from '../../assets/images/eye.svg';
+import messageIcon from '../../assets/images/message.svg';
+import noteIcon from '../../assets/images/note.svg';
+import editIcon from '../../assets/images/edit.svg';
+import plusIcon from '../../assets/images/plus.svg';
+import deleteIcon from '../../assets/images/delete.svg';
+import downloadIcon from '../../assets/images/download.svg';
+
 const PassportApplications = () => {
   const USE_MOCK = true;
 
@@ -21,8 +31,10 @@ const PassportApplications = () => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [modal, setModal] = useState(false);
 
-  // ✅ for action dropdown state (per row)
-  const [openActionId, setOpenActionId] = useState(null);
+  // ✅ for action dropdown state (per row) + position for portal
+  const [openAction, setOpenAction] = useState(null); // { row, top, left }
+  const openActionId = openAction?.row?.id ?? null;
+  const menuRef = useRef(null);
 
   const initialParams = {
     search: '',
@@ -120,8 +132,21 @@ const PassportApplications = () => {
     }
     setModal(false);
     setDeleteModalOpen(false);
-    setOpenActionId(null);
+    setOpenAction(null);
   };
+
+  // Close action menu on click outside
+  useEffect(() => {
+    if (!openAction) return;
+    const handleClickOutside = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        const isTrigger = e.target.closest('.action-dd-btn');
+        if (!isTrigger) setOpenAction(null);
+      }
+    };
+    document.addEventListener('click', handleClickOutside, true);
+    return () => document.removeEventListener('click', handleClickOutside, true);
+  }, [openAction]);
 
   useEffect(() => {
     if (!USE_MOCK) {
@@ -139,7 +164,7 @@ const PassportApplications = () => {
 
   // ✅ Action Handlers (replace with your routes/modal later)
   const handleActionClick = (actionKey, row) => {
-    setOpenActionId(null);
+    setOpenAction(null);
 
     switch (actionKey) {
       case 'printReceipt':
@@ -171,39 +196,53 @@ const PassportApplications = () => {
     }
   };
 
+  const openActionMenu = (e, row) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (openAction?.row?.id === row?.id) {
+      setOpenAction(null);
+      return;
+    }
+    const rect = e.currentTarget.getBoundingClientRect();
+    const menuWidth = 320;
+    setOpenAction({
+      row,
+      top: rect.bottom + 4,
+      left: Math.max(8, Math.min(rect.right - menuWidth, window.innerWidth - menuWidth - 8)),
+    });
+  };
+
   const renderActionDropdown = (row) => {
-    const isOpen = openActionId === row?.id;
+    const isOpen = openAction?.row?.id === row?.id;
 
     return (
-      <div className="action-dd">
-        <Tooltip id={`action-${row?.id}`} place="bottom" content="Action" style={{ backgroundColor: '#051a53' }} />
+      <div className="action-dd" onClick={(e) => e.stopPropagation()}>
+        <Tooltip id={`action-${row?.id}`} place="bottom" content="Options" style={{ backgroundColor: '#051a53' }} />
 
         <button
           type="button"
-          className="action-dd-btn"
+          className="action-dd-btn action-dd-btn--dots"
           data-tooltip-id={`action-${row?.id}`}
-          onClick={() => setOpenActionId(isOpen ? null : row?.id)}
+          onMouseDown={(e) => openActionMenu(e, row)}
+          aria-label="Options"
+          aria-expanded={isOpen}
         >
-          Action <span className="caret">▾</span>
+          <span className="action-dots-icon">⋮</span>
         </button>
-
-        {isOpen && (
-          <div className="action-dd-menu">
-            <button type="button" onClick={() => handleActionClick('printReceipt', row)}>Print Receipt</button>
-            <button type="button" onClick={() => handleActionClick('printBarcode', row)}>Print Barcode</button>
-            <button type="button" onClick={() => handleActionClick('viewApplication', row)}>View Application</button>
-            <button type="button" onClick={() => handleActionClick('comment', row)}>Comment</button>
-            <button type="button" onClick={() => handleActionClick('activityLog', row)}>Activity Log</button>
-            <button type="button" onClick={() => handleActionClick('editApplication', row)}>Edit Application</button>
-            <button type="button" onClick={() => handleActionClick('changeServiceFee', row)}>Change Service/Fee</button>
-            <button type="button" className="danger" onClick={() => handleActionClick('delete', row)}>
-              Delete
-            </button>
-          </div>
-        )}
       </div>
     );
   };
+
+  const actionMenuItems = [
+    { key: 'printReceipt', label: 'Print Receipt', icon: downloadIcon },
+    { key: 'printBarcode', label: 'Print Barcode', icon: barcodeIcon },
+    { key: 'viewApplication', label: 'View Application', icon: eyeIcon },
+    { key: 'comment', label: 'Comment', icon: messageIcon },
+    { key: 'activityLog', label: 'Activity Log', icon: noteIcon },
+    { key: 'editApplication', label: 'Edit Application', icon: editIcon },
+    { key: 'changeServiceFee', label: 'Change Service / Fees', icon: plusIcon },
+    { key: 'delete', label: 'Delete', labelClass: 'danger', icon: deleteIcon },
+  ];
 
   const columns = [
     { name: 'Reference No', selector: 'referenceNo' },
@@ -232,8 +271,9 @@ const PassportApplications = () => {
     },
     {
       name: 'Action',
+      selector: 'action',
       contentClass: 'action-wrap',
-      disableViewClick: true,
+      notView: true,
       thclass: 'actions-edit employee-actn-edit',
       cell: (row) => renderActionDropdown(row),
     },
@@ -303,6 +343,35 @@ const PassportApplications = () => {
         onSortChange={handleSortChange}
         wrapClasses="inventory-table-wrap"
       />
+
+      {openAction &&
+        createPortal(
+          <div
+            ref={menuRef}
+            className="action-dd-menu action-dd-menu--portal action-dd-menu--grid"
+            style={{
+              position: 'fixed',
+              top: openAction.top,
+              left: openAction.left,
+              zIndex: 10000,
+            }}
+          >
+            {actionMenuItems.map(({ key, label, labelClass, icon }) => (
+              <button
+                key={key}
+                type="button"
+                className={labelClass || ''}
+                onClick={() => handleActionClick(key, openAction.row)}
+              >
+                <span className="action-dd-menu-icon">
+                  <img src={icon} alt="" width={16} height={16} />
+                </span>
+                {label}
+              </button>
+            ))}
+          </div>,
+          document.body
+        )}
 
       {modal && (
         <AddEditModal
