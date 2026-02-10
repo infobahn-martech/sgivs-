@@ -923,6 +923,113 @@
                     padding: 20px;
                 }
 
+                &.view-modal-body {
+                    .view-modal-section {
+                        margin-bottom: 24px;
+
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+                    }
+
+                    .view-modal-section-header {
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        padding: 10px 12px;
+                        background: #E8EEF3;
+                        border-radius: 6px;
+                        margin-bottom: 12px;
+                    }
+
+                    .view-modal-section-icon {
+                        display: inline-flex;
+                        color: #5a6c7d;
+
+                        svg {
+                            width: 16px;
+                            height: 16px;
+                        }
+                    }
+
+                    .view-modal-section-title {
+                        font-weight: 600;
+                        font-size: 14px;
+                        color: #092837;
+                    }
+
+                    .view-modal-section-body {
+                        padding: 0 4px;
+                    }
+
+                    .view-modal-grid {
+                        display: grid;
+                        gap: 12px 24px;
+                        margin-bottom: 12px;
+
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+
+                        &--two-cols {
+                            grid-template-columns: 1fr 1fr;
+                        }
+
+                        &--full {
+                            grid-template-columns: 1fr;
+                        }
+
+                        @media (max-width: 767px) {
+                            &--two-cols {
+                                grid-template-columns: 1fr;
+                            }
+                        }
+                    }
+
+                    .view-modal-field {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 2px;
+                    }
+
+                    .view-modal-label {
+                        font-weight: 600;
+                        font-size: 12px;
+                        color: #5a6c7d;
+                    }
+
+                    .view-modal-value {
+                        font-size: 14px;
+                        color: #092837;
+                    }
+
+                    .view-modal-sms {
+                        padding: 0 4px;
+                    }
+
+                    .view-modal-sms-meta {
+                        margin-bottom: 8px;
+                        font-size: 14px;
+                    }
+
+                    .view-modal-sms-brand {
+                        color: #e67e22;
+                        font-weight: 600;
+                        margin-right: 6px;
+                    }
+
+                    .view-modal-sms-time {
+                        color: #092837;
+                    }
+
+                    .view-modal-sms-message {
+                        font-size: 14px;
+                        color: #092837;
+                        margin: 0;
+                        line-height: 1.5;
+                    }
+                }
+
                 .set-dealine-wrp {
                     margin: 34px 0;
 

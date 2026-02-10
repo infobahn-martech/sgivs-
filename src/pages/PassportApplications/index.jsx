@@ -11,6 +11,7 @@ import { formatDate } from '../../config/config';
 import { AddEditModal } from './AddEditModal';
 import CustomActionModal from '../../components/common/CustomActionModal';
 import ActionsMenu from './ActionsMenu';
+import ViewModal from './ViewModal';
 
 const PassportApplications = () => {
   const USE_MOCK = true;
@@ -20,6 +21,7 @@ const PassportApplications = () => {
 
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [modal, setModal] = useState(false);
+  const [viewModal, setViewModal] = useState(false);
 
   const initialParams = {
     search: '',
@@ -147,7 +149,7 @@ const PassportApplications = () => {
   };
 
   const handleViewApplication = (row) => {
-    console.log('View Application:', row);
+    setViewModal(row);
   };
 
   const handleComment = (row) => {
@@ -296,6 +298,13 @@ const PassportApplications = () => {
           message={`Are you sure you want to delete this ${deleteModalOpen?.name}?`}
           onCancel={() => setDeleteModalOpen(false)}
           onSubmit={handleDelete}
+        />
+      )}
+
+      {viewModal && (
+        <ViewModal
+          showModal={viewModal}
+          closeModal={() => setViewModal(false)}
         />
       )}
     </>
