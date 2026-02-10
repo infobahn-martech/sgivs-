@@ -54,6 +54,7 @@ export const headerConfig = [
   { title: 'Messages', icon: messageIcon, path: '/messages' },
   { title: 'Settings', icon: settingsIcon, path: '/settings' },
   { title: 'Employee Management', icon: userImage, path: '/employee-management' },
+  { title: 'Passport Applications', icon: userImage, path: '/passport-applications' },
 ];
 
 export const getFirstLetters = (name) => {
