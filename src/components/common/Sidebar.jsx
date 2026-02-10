@@ -126,6 +126,40 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         { name: 'Visa Service', path: '/visa-service-management', icon: MessagesIcon },
       ],
     },
+    // Passport Manager
+    {
+      name: 'Passport Manager',
+      icon: EZIcon, // change icon if needed
+      path: '/passport-manager',
+      activeRoutes: [
+        '/passport-manager',
+        '/passport-applications',
+        '/deleted-application',
+        '/outscan-from-spoke',
+        '/inscan-at-hub',
+        '/outscan-to-mission',
+        '/inscan-from-mission',
+        '/outscan-to-spoke',
+        '/counter-delivery',
+        '/outscan-to-courier',
+        '/passport-tracking',
+        '/get-reference-numbers',
+      ],
+      subMenu: [
+        { name: 'Passport Applications', path: '/passport-applications', icon: MessagesIcon },
+        { name: 'Deleted Application', path: '/deleted-application', icon: MessagesIcon },
+        { name: 'Outscan From Spoke', path: '/outscan-from-spoke', icon: MessagesIcon },
+        { name: 'Inscan At Hub', path: '/inscan-at-hub', icon: MessagesIcon },
+        { name: 'Outscan To Mission', path: '/outscan-to-mission', icon: MessagesIcon },
+        { name: 'Inscan From Mission', path: '/inscan-from-mission', icon: MessagesIcon },
+        { name: 'Outscan To Spoke', path: '/outscan-to-spoke', icon: MessagesIcon },
+        { name: 'Counter Delivery', path: '/counter-delivery', icon: MessagesIcon },
+        { name: 'Outscan To Courier', path: '/outscan-to-courier', icon: MessagesIcon },
+        { name: 'Passport Tracking', path: '/passport-tracking', icon: MessagesIcon },
+        { name: 'Get Reference Numbers', path: '/get-reference-numbers', icon: MessagesIcon },
+      ],
+    },
+
 
     // Appointment Settings
     {
