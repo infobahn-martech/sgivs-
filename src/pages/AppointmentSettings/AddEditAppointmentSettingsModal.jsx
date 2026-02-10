@@ -69,6 +69,14 @@ const mockMaxSlots = [
     { id: '100', name: '100' },
 ];
 
+/** ✅ NEW: Lunch Break options (single select) */
+const mockLunchBreak = [
+    { id: '0', name: 'No Lunch Break' },
+    { id: '30', name: '30 Minutes' },
+    { id: '45', name: '45 Minutes' },
+    { id: '60', name: '60 Minutes' },
+];
+
 /** ✅ YYYYMMDD CSV validator */
 const yyyymmddCsv = z
     .string()
@@ -85,44 +93,32 @@ const yyyymmddCsv = z
         { message: 'Enter dates as YYYYMMDD separated by comma' }
     );
 
-const formSchema = z
-    .object({
-        countryId: z.string().nonempty('Country is required'),
-        missionId: z.string().nonempty('Mission is required'),
-        centerId: z.string().nonempty('Center is required'),
-        applicationTypeId: z.string().nonempty('Application Type is required'),
-        appointmentTypeId: z.string().nonempty('Appointment Type is required'),
+const formSchema = z.object({
+    countryId: z.string().nonempty('Country is required'),
+    missionId: z.string().nonempty('Mission is required'),
+    centerId: z.string().nonempty('Center is required'),
+    applicationTypeId: z.string().nonempty('Application Type is required'),
+    appointmentTypeId: z.string().nonempty('Appointment Type is required'),
 
-        offDays: z.array(z.string()).optional(),
+    offDays: z.array(z.string()).optional(),
 
-        startTime: z.string().nonempty('Start time is required'), // HH:MM
-        endTime: z.string().nonempty('End time is required'), // HH:MM
+    startTime: z.string().nonempty('Start time is required'), // HH:MM
+    endTime: z.string().nonempty('End time is required'), // HH:MM
 
-        lunchStartTime: z.string().optional(),
-        lunchEndTime: z.string().optional(),
+    /** ✅ NEW: single dropdown */
+    lunchBreak: z.string().optional(), // '0' | '30' | '45' | '60'
 
-        slotPeriod: z.string().nonempty('Slot period is required'),
-        slotCapacity: z.string().nonempty('Slot capacity is required'),
-        maxSlots: z.string().nonempty('Max slots is required'),
+    slotPeriod: z.string().nonempty('Slot period is required'),
+    slotCapacity: z.string().nonempty('Slot capacity is required'),
+    maxSlots: z.string().nonempty('Max slots is required'),
 
-        bookingAllowFrom: z.string().nonempty('Booking allow from is required'), // YYYY-MM-DD
-        bookingAllowTill: z.string().nonempty('Booking allow till is required'), // YYYY-MM-DD
+    bookingAllowFrom: z.string().nonempty('Booking allow from is required'), // YYYY-MM-DD
+    bookingAllowTill: z.string().nonempty('Booking allow till is required'), // YYYY-MM-DD
 
-        blockedDates: yyyymmddCsv,
-        releaseDates: yyyymmddCsv,
-        slotFullDates: yyyymmddCsv,
-    })
-    .refine(
-        (data) => {
-            if (!data.lunchStartTime && !data.lunchEndTime) return true;
-            if (data.lunchStartTime && data.lunchEndTime) return true;
-            return false;
-        },
-        {
-            message: 'Both lunch start and lunch end are required',
-            path: ['lunchEndTime'],
-        }
-    );
+    blockedDates: yyyymmddCsv,
+    releaseDates: yyyymmddCsv,
+    slotFullDates: yyyymmddCsv,
+});
 
 export default function AddEditAppointmentSettingsModal({
     showModal,
@@ -149,8 +145,9 @@ export default function AddEditAppointmentSettingsModal({
 
             startTime: '',
             endTime: '',
-            lunchStartTime: '',
-            lunchEndTime: '',
+
+            /** ✅ NEW */
+            lunchBreak: '0',
 
             slotPeriod: '',
             slotCapacity: '',
@@ -165,13 +162,6 @@ export default function AddEditAppointmentSettingsModal({
         },
     });
 
-    const selectedCountryId = watch('countryId');
-    const selectedMissionId = watch('missionId');
-    const selectedCenterId = watch('centerId');
-    const selectedApplicationTypeId = watch('applicationTypeId');
-    const selectedAppointmentTypeId = watch('appointmentTypeId');
-    const selectedOffDays = watch('offDays') || [];
-
     // ✅ Fill form for edit / clear for add (MOCK)
     useEffect(() => {
         if (showModal?.id) {
@@ -179,6 +169,7 @@ export default function AddEditAppointmentSettingsModal({
             // Example:
             // setValue('countryId', String(showModal.countryId || ''));
             // setValue('offDays', showModal.offDays || []);
+            // setValue('lunchBreak', String(showModal.lunchBreak ?? '0'));
         } else if (!showModal?.id) {
             reset();
         }
@@ -230,12 +221,16 @@ export default function AddEditAppointmentSettingsModal({
         []
     );
 
+    /** ✅ NEW: Lunch break options mapping */
+    const lunchBreakOptions = useMemo(
+        () => (USE_MOCK ? mockLunchBreak : []).map((x) => ({ label: x.name, value: String(x.id) })),
+        []
+    );
+
     // ✅ Submit (MOCK)
     const onSubmit = (data) => {
         if (USE_MOCK) {
-            // You can console.log(data) to see payload
             // console.log('Appointment Settings Payload:', data);
-
             onRefreshAppointmentSettings?.();
             closeModal?.();
             return;
@@ -259,10 +254,10 @@ export default function AddEditAppointmentSettingsModal({
             />
         </>
     );
+
     const renderBody = () => (
         <div className="modal-body">
             <div className="row g-3">
-
                 {/* Country */}
                 <div className="col-lg-4 col-md-6">
                     <div className="form-group forms-custom">
@@ -271,7 +266,7 @@ export default function AddEditAppointmentSettingsModal({
                         </label>
                         <CustomSelect
                             options={countryOptions}
-                            value={countryOptions.find(o => o.value === watch('countryId')) || null}
+                            value={countryOptions.find((o) => o.value === watch('countryId')) || null}
                             onChange={(selected) =>
                                 setValue('countryId', selected?.value || '', { shouldValidate: true })
                             }
@@ -290,7 +285,7 @@ export default function AddEditAppointmentSettingsModal({
                         </label>
                         <CustomSelect
                             options={missionOptions}
-                            value={missionOptions.find(o => o.value === watch('missionId')) || null}
+                            value={missionOptions.find((o) => o.value === watch('missionId')) || null}
                             onChange={(selected) =>
                                 setValue('missionId', selected?.value || '', { shouldValidate: true })
                             }
@@ -309,7 +304,7 @@ export default function AddEditAppointmentSettingsModal({
                         </label>
                         <CustomSelect
                             options={centerOptions}
-                            value={centerOptions.find(o => o.value === watch('centerId')) || null}
+                            value={centerOptions.find((o) => o.value === watch('centerId')) || null}
                             onChange={(selected) =>
                                 setValue('centerId', selected?.value || '', { shouldValidate: true })
                             }
@@ -328,7 +323,7 @@ export default function AddEditAppointmentSettingsModal({
                         </label>
                         <CustomSelect
                             options={applicationTypeOptions}
-                            value={applicationTypeOptions.find(o => o.value === watch('applicationTypeId')) || null}
+                            value={applicationTypeOptions.find((o) => o.value === watch('applicationTypeId')) || null}
                             onChange={(selected) =>
                                 setValue('applicationTypeId', selected?.value || '', { shouldValidate: true })
                             }
@@ -349,7 +344,7 @@ export default function AddEditAppointmentSettingsModal({
                         </label>
                         <CustomSelect
                             options={appointmentTypeOptions}
-                            value={appointmentTypeOptions.find(o => o.value === watch('appointmentTypeId')) || null}
+                            value={appointmentTypeOptions.find((o) => o.value === watch('appointmentTypeId')) || null}
                             onChange={(selected) =>
                                 setValue('appointmentTypeId', selected?.value || '', { shouldValidate: true })
                             }
@@ -373,10 +368,8 @@ export default function AddEditAppointmentSettingsModal({
                                 <CustomSelect
                                     options={offDaysOptions}
                                     isMulti
-                                    value={offDaysOptions.filter(o => (field.value || []).includes(o.value))}
-                                    onChange={(selected) =>
-                                        field.onChange((selected || []).map(s => s.value))
-                                    }
+                                    value={offDaysOptions.filter((o) => (field.value || []).includes(o.value))}
+                                    onChange={(selected) => field.onChange((selected || []).map((s) => s.value))}
                                     placeholder="Select Off days"
                                     className="form-control"
                                 />
@@ -407,20 +400,20 @@ export default function AddEditAppointmentSettingsModal({
                     </div>
                 </div>
 
-                {/* Lunch Break Start */}
+                {/* ✅ NEW: Lunch break (single select) */}
                 <div className="col-lg-4 col-md-6">
                     <div className="form-group forms-custom">
-                        <label className="label">Lunch break (Start)</label>
-                        <input type="time" className="form-control" {...register('lunchStartTime')} />
-                    </div>
-                </div>
-
-                {/* Lunch Break End */}
-                <div className="col-lg-4 col-md-6">
-                    <div className="form-group forms-custom">
-                        <label className="label">Lunch break (End)</label>
-                        <input type="time" className="form-control" {...register('lunchEndTime')} />
-                        {errors.lunchEndTime && <span className="error">{errors.lunchEndTime.message}</span>}
+                        <label className="label">Lunch break</label>
+                        <CustomSelect
+                            options={lunchBreakOptions}
+                            value={lunchBreakOptions.find((o) => o.value === watch('lunchBreak')) || null}
+                            onChange={(selected) =>
+                                setValue('lunchBreak', selected?.value || '0', { shouldValidate: true })
+                            }
+                            placeholder="Select Lunch break"
+                            className="form-control"
+                        />
+                        {errors.lunchBreak && <span className="error">{errors.lunchBreak.message}</span>}
                     </div>
                 </div>
 
@@ -432,7 +425,7 @@ export default function AddEditAppointmentSettingsModal({
                         </label>
                         <CustomSelect
                             options={slotPeriodOptions}
-                            value={slotPeriodOptions.find(o => o.value === watch('slotPeriod')) || null}
+                            value={slotPeriodOptions.find((o) => o.value === watch('slotPeriod')) || null}
                             onChange={(selected) =>
                                 setValue('slotPeriod', selected?.value || '', { shouldValidate: true })
                             }
@@ -451,7 +444,7 @@ export default function AddEditAppointmentSettingsModal({
                         </label>
                         <CustomSelect
                             options={slotCapacityOptions}
-                            value={slotCapacityOptions.find(o => o.value === watch('slotCapacity')) || null}
+                            value={slotCapacityOptions.find((o) => o.value === watch('slotCapacity')) || null}
                             onChange={(selected) =>
                                 setValue('slotCapacity', selected?.value || '', { shouldValidate: true })
                             }
@@ -470,7 +463,7 @@ export default function AddEditAppointmentSettingsModal({
                         </label>
                         <CustomSelect
                             options={maxSlotsOptions}
-                            value={maxSlotsOptions.find(o => o.value === watch('maxSlots')) || null}
+                            value={maxSlotsOptions.find((o) => o.value === watch('maxSlots')) || null}
                             onChange={(selected) =>
                                 setValue('maxSlots', selected?.value || '', { shouldValidate: true })
                             }
@@ -548,11 +541,9 @@ export default function AddEditAppointmentSettingsModal({
                         {errors.slotFullDates && <span className="error">{errors.slotFullDates.message}</span>}
                     </div>
                 </div>
-
             </div>
         </div>
     );
-
 
     const renderFooter = () => (
         <div className="modal-footer bottom-btn-sec">
