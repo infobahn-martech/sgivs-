@@ -44,9 +44,9 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       activeRoutes: ['/employee-management', '/role-management', '/designation-management'],
       subMenu: [
         { name: 'Employees', icon: UserManageIcon, path: '/employee-management' },
-        { name: 'Employee role', path: '/role-management', icon: MessagesIcon },
+        { name: 'Roles', path: '/role-management', icon: MessagesIcon },
         {
-          name: 'Employee designation',
+          name: 'Designations',
           path: '/designation-management',
           icon: MessagesIcon,
         },
@@ -56,7 +56,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
     // Centers
     {
       name: 'Centers',
-      icon: MessagesIcon,
+      icon: InventoryManageIcon,
       path: '/center',
       activeRoutes: ['/center', '/counter-management'],
       subMenu: [
@@ -68,7 +68,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
     // Miscellaneous
     {
       name: 'Miscellaneous',
-      icon: MessagesIcon,
+      icon: transactionICo,
       path: '/appointment-type-management',
       activeRoutes: [
         '/appointment-type-management',
@@ -109,7 +109,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
     // Service Management
     {
       name: 'Service Management',
-      icon: MessagesIcon,
+      icon: EZIcon,
       path: '/service-management',
       activeRoutes: [
         '/service-management',
@@ -130,7 +130,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
     // Appointment Settings
     {
       name: 'Appointment Settings',
-      icon: MessagesIcon,
+      icon: RentalManageIcon,
       path: '/appointment-settings',
     },
 
