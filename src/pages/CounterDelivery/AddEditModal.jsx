@@ -94,7 +94,7 @@ export default function AddEditModal({
                             id="applicationNumbers"
                             className="form-control"
                             rows={4}
-                            placeholder={'Enter application numbers (one per line)\nEg:\nAPP-1001\nAPP-1002'}
+                            placeholder={'Enter application numbers (one per line)'}
                             autoComplete="off"
                             maxLength={2000}
                             {...register('applicationNumbers')}
@@ -102,9 +102,7 @@ export default function AddEditModal({
                         {errors.applicationNumbers && (
                             <span className="error">{errors.applicationNumbers.message}</span>
                         )}
-                        <small className="text-muted d-block mt-1">
-                            Tip: Enter one application number per line.
-                        </small>
+
                     </div>
                 </div>
 
@@ -152,7 +150,7 @@ export default function AddEditModal({
 
     return (
         <CustomModal
-            className="modal fade category-mgmt-modal show"
+            className="modal fade counter-delivery-modal show"
             dialgName="modal-dialog-scrollable"
             show={!!showModal}
             closeModal={closeModal}
