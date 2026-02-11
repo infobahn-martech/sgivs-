@@ -57,6 +57,7 @@ export const headerConfig = [
   { title: 'Passport Applications', icon: userImage, path: '/passport-applications' },
   { title: 'Deleted Application', icon: userImage, path: '/delete-application' },
   { title: 'Out Scan', icon: userImage, path: '/outscan' },
+  { title: 'In Scan', icon: userImage, path: '/inscan' },
 ];
 
 export const getFirstLetters = (name) => {
