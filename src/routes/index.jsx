@@ -38,6 +38,7 @@ import DeleteApplication from '../pages/DeleteApplication/Loader';
 import OutScan from '../pages/OutScan/Loader';
 import InScan from '../pages/InScan/Loader';
 import OTM from '../pages/OTM';
+import IFM from '../pages/IFM';
 
 const router = createHashRouter([
   {
@@ -102,6 +103,7 @@ const router = createHashRouter([
               { path: '/outscan', element: <OutScan /> },
               { path: '/inscan', element: <InScan /> },
               { path: '/outscan-to-mission', element: <OTM /> },
+              { path: '/inscan-from-mission', element: <IFM /> },
             ],
           },
         ],

@@ -59,6 +59,7 @@ export const headerConfig = [
   { title: 'Out Scan', icon: userImage, path: '/outscan' },
   { title: 'In Scan', icon: userImage, path: '/inscan' },
   { title: 'Out Scan to Mission', icon: userImage, path: '/outscan-to-mission' },
+  { title: 'In Scan to Mission', icon: userImage, path: '/inscan-to-mission' },
 ];
 
 export const getFirstLetters = (name) => {
