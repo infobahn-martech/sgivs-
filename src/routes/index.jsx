@@ -41,6 +41,7 @@ import OTM from '../pages/OTM';
 import IFM from '../pages/IFM';
 import OTS from '../pages/OTS';
 import CounterDelivery from '../pages/CounterDelivery';
+import OTC from '../pages/OTC';
 
 const router = createHashRouter([
   {
@@ -108,6 +109,7 @@ const router = createHashRouter([
               { path: '/inscan-from-mission', element: <IFM /> },
               { path: '/outscan-to-spoke', element: <OTS /> },
               { path: '/counter-delivery', element: <CounterDelivery /> },
+              { path: '/outscan-to-courier', element: <OTC /> },
             ],
           },
         ],
