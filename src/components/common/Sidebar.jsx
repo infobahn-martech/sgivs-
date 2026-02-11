@@ -278,9 +278,9 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
                       className={`nav-link ${location.pathname === sub.path ? 'active' : ''
                         }`}
                     >
-                      <span className="icon">
+                      {/* <span className="icon">
                         <img src={sub.icon} alt="menu-icon" />
-                      </span>
+                      </span> */}
                       <span className="txt">{sub.name}</span>
                     </Link>
                   ))}
