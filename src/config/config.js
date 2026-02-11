@@ -56,6 +56,7 @@ export const headerConfig = [
   { title: 'Employee Management', icon: userImage, path: '/employee-management' },
   { title: 'Passport Applications', icon: userImage, path: '/passport-applications' },
   { title: 'Deleted Application', icon: userImage, path: '/delete-application' },
+  { title: 'Out Scan', icon: userImage, path: '/outscan' },
 ];
 
 export const getFirstLetters = (name) => {

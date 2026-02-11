@@ -35,6 +35,7 @@ import OptionalServices from '../pages/OptionalServices/Loader';
 import AppointmentSettings from '../pages/AppointmentSettings/Loader';
 import PassportApplications from '../pages/PassportApplications/Loader';
 import DeleteApplication from '../pages/DeleteApplication/Loader';
+import OutScan from '../pages/OutScan/Loader';
 
 const router = createHashRouter([
   {
@@ -96,6 +97,7 @@ const router = createHashRouter([
               { path: '/appointment-settings', element: <AppointmentSettings /> },
               { path: '/passport-applications', element: <PassportApplications /> },
               { path: '/delete-application', element: <DeleteApplication /> },
+              { path: '/outscan', element: <OutScan /> },
             ],
           },
         ],
