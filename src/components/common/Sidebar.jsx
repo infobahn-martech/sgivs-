@@ -159,6 +159,37 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         { name: 'Get Reference Numbers', path: '/get-reference-numbers', icon: MessagesIcon },
       ],
     },
+    // Visa Manager
+    {
+      name: 'Visa Manager',
+      icon: EZIcon, // change icon if needed
+      path: '/visa-manager',
+      activeRoutes: [
+        '/visa-manager',
+        '/visa-applications',
+        '/visa-delete-application',
+        '/visa-inscan-hub',
+        '/visa-outscan-to-mission',
+        '/visa-inscan-from-mission',
+        '/visa-outscan-to-spoke',
+        '/visa-counter-delivery',
+        '/visa-outscan-to-courier',
+        '/visa-tracking',
+        '/visa-digitization',
+      ],
+      subMenu: [
+        { name: 'Visa Applications', path: '/visa-applications', icon: MessagesIcon },
+        { name: 'Deleted Application', path: '/visa-delete-application', icon: MessagesIcon },
+        { name: 'Inscan at Hub', path: '/visa-inscan-hub', icon: MessagesIcon },
+        { name: 'Outscan to Mission', path: '/visa-outscan-to-mission', icon: MessagesIcon },
+        { name: 'Inscan from Mission', path: '/visa-inscan-from-mission', icon: MessagesIcon },
+        { name: 'Outscan to Spoke', path: '/visa-outscan-to-spoke', icon: MessagesIcon },
+        { name: 'Counter Delivery', path: '/visa-counter-delivery', icon: MessagesIcon },
+        { name: 'Outscan to Courier', path: '/visa-outscan-to-courier', icon: MessagesIcon },
+        { name: 'Visa Tracking', path: '/visa-tracking', icon: MessagesIcon },
+        { name: 'Visa Digitization', path: '/visa-digitization', icon: MessagesIcon },
+      ],
+    },
 
 
     // Appointment Settings
