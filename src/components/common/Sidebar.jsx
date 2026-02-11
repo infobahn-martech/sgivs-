@@ -139,6 +139,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         '/inscan',
         '/outscan-to-mission',
         '/inscan-from-mission',
+        '/outscan-to-spoke',
         '/counter-delivery',
         '/outscan-to-courier',
         '/passport-tracking',
