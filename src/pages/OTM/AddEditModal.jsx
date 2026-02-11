@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import CustomModal from '../../components/common/CustomModal';
-import useOutScanReducer from '../../stores/OutScanReducer';
+import useOTMReducer from '../../stores/OTMReducer';
 
 // Updated schema with isEZPass as a boolean
 const nameSchema = z.object({
@@ -13,7 +13,7 @@ const nameSchema = z.object({
         .max(20, 'Application Number must be 10 characters or less'),
 });
 
-export default function AddEditModal({ showModal, closeModal, onRefreshOutScan }) {
+export default function AddEditModal({ showModal, closeModal, onRefreshOTM }) {
     const {
         register,
         handleSubmit,
@@ -27,7 +27,7 @@ export default function AddEditModal({ showModal, closeModal, onRefreshOutScan }
         },
     });
 
-    const { postData, patchData, isLoading } = useOutScanReducer(
+    const { postData, patchData, isLoading } = useOTMReducer(
         (state) => state
     );
 
@@ -43,11 +43,11 @@ export default function AddEditModal({ showModal, closeModal, onRefreshOutScan }
     const onSubmit = (data) => {
         if (showModal?.id) {
             patchData({ id: showModal.id, ...data }, () => {
-                onRefreshOutScan();
+                onRefreshOTM();
             });
         } else {
             postData(data, () => {
-                onRefreshOutScan();
+                onRefreshOTM();
             });
         }
         closeModal();
@@ -56,7 +56,7 @@ export default function AddEditModal({ showModal, closeModal, onRefreshOutScan }
     const renderHeader = () => (
         <>
             <h4 className="modal-title">
-                {showModal?.id ? 'Edit Out Scan' : 'Add Out Scan'}
+                {showModal?.id ? 'Edit Out Scan to Mission' : 'Add Out Scan to Mission'}
             </h4>
             <button
                 type="button"

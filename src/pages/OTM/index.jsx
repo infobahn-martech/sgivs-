@@ -1,4 +1,5 @@
 import React, { useMemo, useState, useEffect } from 'react';
+import { Tooltip } from 'react-tooltip';
 import moment from 'moment';
 import { debounce } from 'lodash';
 
@@ -8,17 +9,12 @@ import CommonHeader from '../../components/common/CommonHeader';
 import CustomTable from '../../components/common/CustomTable';
 import useOTMReducer from '../../stores/OTMReducer';
 import { formatDate } from '../../config/config';
-import CustomActionModal from '../../components/common/CustomActionModal';
 import AddEditModal from './AddEditModal';
 
 const OTM = () => {
   const USE_MOCK = true;
 
-  // ✅ Add retrieveData here if your store has it
-  const { getData, otmData, isLoadingGet, isLoadingDelete /*, retrieveData */ } =
-    useOTMReducer((state) => state);
-
-  const [retrieveModalOpen, setRetrieveModalOpen] = useState(false);
+  const { getData, otmData, isLoadingGet } = useOTMReducer((state) => state);
 
   const initialParams = {
     search: '',
@@ -34,6 +30,7 @@ const OTM = () => {
   const [params, setParams] = useState(initialParams);
   const [addEditModal, setAddEditModal] = useState(false);
   const [selectedOTM, setSelectedOTM] = useState(null);
+
   // ✅ Dummy Data (Required fields)
   const mockOTMData = {
     total: 5,
@@ -41,44 +38,39 @@ const OTM = () => {
       {
         id: 1,
         date: '2025-01-10T09:30:00Z',
-        center: 'Dubai Center',
         by: 'Admin',
         totalApplication: 12,
+        manifestId: 'MAN-0001',
       },
       {
         id: 2,
         date: '2025-02-14T12:15:00Z',
-        center: 'Abu Dhabi Center',
         by: 'Operator',
         totalApplication: 7,
+        manifestId: 'MAN-0002',
       },
       {
         id: 3,
         date: '2025-03-05T08:45:00Z',
-        center: 'Sharjah Center',
         by: 'Admin',
         totalApplication: 19,
+        manifestId: 'MAN-0003',
       },
       {
         id: 4,
         date: '2025-03-20T10:00:00Z',
-        center: 'Ajman Center',
         by: 'Supervisor',
         totalApplication: 5,
+        manifestId: 'MAN-0004',
       },
       {
         id: 5,
         date: '2025-04-02T11:20:00Z',
-        center: 'Dubai Center',
         by: 'Admin',
         totalApplication: 9,
+        manifestId: 'MAN-0005',
       },
     ],
-  };
-
-  const onRefresh = () => {
-    if (!USE_MOCK) getData(params);
-    setRetrieveModalOpen(false);
   };
 
   useEffect(() => {
@@ -93,6 +85,95 @@ const OTM = () => {
     }));
   };
 
+  // ✅ Download handlers (replace with your real API/file urls)
+  const downloadDataFiles = (row) => {
+    console.log('Download Data Files:', row);
+    // Example:
+    // window.open(row?.dataFilesUrl, '_blank');
+  };
+
+  const downloadImageFile = (row) => {
+    console.log('Download Image File:', row);
+  };
+
+  const downloadProcessFile = (row) => {
+    console.log('Download Process File:', row);
+  };
+
+  const downloadDocumentFile = (row) => {
+    console.log('Download Document File:', row);
+  };
+
+  const renderAction = (row) => {
+    return (
+      <div className="d-flex gap-2 flex-wrap">
+        <Tooltip
+          id={`otm-data-${row?.id}`}
+          place="bottom"
+          content="Download Data Files"
+          style={{ backgroundColor: '#051a53' }}
+        />
+        <Tooltip
+          id={`otm-image-${row?.id}`}
+          place="bottom"
+          content="Download Image File"
+          style={{ backgroundColor: '#051a53' }}
+        />
+        <Tooltip
+          id={`otm-process-${row?.id}`}
+          place="bottom"
+          content="Download Process File"
+          style={{ backgroundColor: '#051a53' }}
+        />
+        <Tooltip
+          id={`otm-doc-${row?.id}`}
+          place="bottom"
+          content="Download Document File"
+          style={{ backgroundColor: '#051a53' }}
+        />
+
+        <button
+          type="button"
+          className="btn btn-link p-0"
+          data-tooltip-id={`otm-data-${row?.id}`}
+          onClick={() => downloadDataFiles(row)}
+          style={{ textDecoration: 'none' }}
+        >
+          Data
+        </button>
+
+        <button
+          type="button"
+          className="btn btn-link p-0"
+          data-tooltip-id={`otm-image-${row?.id}`}
+          onClick={() => downloadImageFile(row)}
+          style={{ textDecoration: 'none' }}
+        >
+          Image
+        </button>
+
+        <button
+          type="button"
+          className="btn btn-link p-0"
+          data-tooltip-id={`otm-process-${row?.id}`}
+          onClick={() => downloadProcessFile(row)}
+          style={{ textDecoration: 'none' }}
+        >
+          Process
+        </button>
+
+        <button
+          type="button"
+          className="btn btn-link p-0"
+          data-tooltip-id={`otm-doc-${row?.id}`}
+          onClick={() => downloadDocumentFile(row)}
+          style={{ textDecoration: 'none' }}
+        >
+          Document
+        </button>
+      </div>
+    );
+  };
 
   const columns = [
     {
@@ -101,12 +182,6 @@ const OTM = () => {
       sortable: true,
       sortField: 'date',
       cell: (row) => <span>{row?.date ? formatDate(row?.date) : '-'}</span>,
-    },
-    {
-      name: 'Center',
-      selector: 'center',
-      sortable: true,
-      sortField: 'center',
     },
     {
       name: 'By',
@@ -120,6 +195,20 @@ const OTM = () => {
       sortable: true,
       sortField: 'totalApplication',
       cell: (row) => <span>{row?.totalApplication ?? 0}</span>,
+    },
+    {
+      name: 'Manifest ID',
+      selector: 'manifestId',
+      sortable: true,
+      sortField: 'manifestId',
+      cell: (row) => <span>{row?.manifestId || '-'}</span>,
+    },
+    {
+      name: 'Action',
+      contentClass: 'action-wrap',
+      disableViewClick: true,
+      thclass: 'actions-edit employee-actn-edit',
+      cell: (row) => renderAction(row),
     },
   ];
 
@@ -138,20 +227,6 @@ const OTM = () => {
   useEffect(() => {
     return () => debouncedSearch.cancel();
   }, [debouncedSearch]);
-
-  const handleRetrieve = () => {
-    if (USE_MOCK) {
-      setRetrieveModalOpen(false);
-      return;
-    }
-
-    // ✅ Replace with your actual API call
-    // if (retrieveModalOpen?.id) {
-    //   retrieveData(retrieveModalOpen.id, () => onRefresh());
-    // }
-
-    setRetrieveModalOpen(false);
-  };
 
   const tableData = USE_MOCK ? mockOTMData : otmData;
   const loading = USE_MOCK ? false : isLoadingGet;
@@ -195,16 +270,6 @@ const OTM = () => {
         wrapClasses="inventory-table-wrap"
       />
 
-      {retrieveModalOpen && (
-        <CustomActionModal
-          showModal={retrieveModalOpen}
-          closeModal={() => setRetrieveModalOpen(false)}
-          isLoading={USE_MOCK ? false : isLoadingDelete}
-          message={`Are you sure you want to retrieve this record?`}
-          onCancel={() => setRetrieveModalOpen(false)}
-          onSubmit={handleRetrieve}
-        />
-      )}
       {addEditModal && (
         <AddEditModal
           showModal={addEditModal}
