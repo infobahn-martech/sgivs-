@@ -9,6 +9,7 @@ import CustomTable from '../../components/common/CustomTable';
 import useOutScanReducer from '../../stores/OutScanReducer';
 import { formatDate } from '../../config/config';
 import CustomActionModal from '../../components/common/CustomActionModal';
+import AddEditModal from './AddEditModal';
 
 const OutScan = () => {
   const USE_MOCK = true;
@@ -31,7 +32,8 @@ const OutScan = () => {
   };
 
   const [params, setParams] = useState(initialParams);
-
+  const [addEditModal, setAddEditModal] = useState(false);
+  const [selectedOutScan, setSelectedOutScan] = useState(null);
   // ✅ Dummy Data (Required fields)
   const mockOutScanData = {
     total: 5,
@@ -157,6 +159,14 @@ const OutScan = () => {
   return (
     <>
       <CommonHeader
+        addButton={{
+          name: 'Add Item',
+          type: 'button',
+          action: () => {
+            setAddEditModal(true);
+            setSelectedOutScan(null);
+          },
+        }}
         hideFilter
         onSearch={debouncedSearch}
         submitFilter={(filters) => {
@@ -193,6 +203,14 @@ const OutScan = () => {
           message={`Are you sure you want to retrieve this record?`}
           onCancel={() => setRetrieveModalOpen(false)}
           onSubmit={handleRetrieve}
+        />
+      )}
+      {addEditModal && (
+        <AddEditModal
+          showModal={addEditModal}
+          closeModal={() => setAddEditModal(false)}
+          onRefreshOutScan={() => getData(params)}
+          selectedOutScan={selectedOutScan}
         />
       )}
     </>

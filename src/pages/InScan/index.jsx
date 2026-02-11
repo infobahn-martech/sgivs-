@@ -8,6 +8,7 @@ import CommonHeader from '../../components/common/CommonHeader';
 import CustomTable from '../../components/common/CustomTable';
 import useInScanReducer from '../../stores/InScanReducer';
 import { formatDate } from '../../config/config';
+import AddEditModal from './AddEditModal';
 
 const InScan = () => {
   const USE_MOCK = true;
@@ -26,6 +27,8 @@ const InScan = () => {
   };
 
   const [params, setParams] = useState(initialParams);
+  const [addEditModal, setAddEditModal] = useState(false);
+  const [selectedInScan, setSelectedInScan] = useState(null);
 
   // ✅ Dummy Data (Required fields)
   const mockInScanData = {
@@ -96,6 +99,14 @@ const InScan = () => {
   return (
     <>
       <CommonHeader
+        addButton={{
+          name: 'Add Item',
+          type: 'button',
+          action: () => {
+            setAddEditModal(true);
+            setSelectedInScan(null);
+          },
+        }}
         hideFilter
         onSearch={debouncedSearch}
         submitFilter={(filters) => {
@@ -123,6 +134,14 @@ const InScan = () => {
         onSortChange={handleSortChange}
         wrapClasses="inventory-table-wrap"
       />
+      {addEditModal && (
+        <AddEditModal
+          showModal={addEditModal}
+          closeModal={() => setAddEditModal(false)}
+          onRefreshInScan={() => getData(params)}
+          selectedInScan={selectedInScan}
+        />
+      )}
     </>
   );
 };
