@@ -163,9 +163,8 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
     {
       name: 'Visa Manager',
       icon: EZIcon, // change icon if needed
-      path: '/visa-manager',
+      path: '/visa-applications',
       activeRoutes: [
-        '/visa-manager',
         '/visa-applications',
         '/visa-delete-application',
         '/visa-inscan-hub',

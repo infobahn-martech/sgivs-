@@ -64,6 +64,7 @@ export const headerConfig = [
   { title: 'Counter Delivery', icon: userImage, path: '/counter-delivery' },
   { title: 'Out Scan to Courier', icon: userImage, path: '/outscan-to-courier' },
   { title: 'Passport Tracking', icon: userImage, path: '/passport-tracking' },
+  { title: 'Visa Applications', icon: userImage, path: '/visa-applications' },
 ];
 
 export const getFirstLetters = (name) => {
