@@ -151,7 +151,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         { name: 'In Scan', path: '/inscan', icon: MessagesIcon },
         { name: 'Outscan To Mission', path: '/outscan-to-mission', icon: MessagesIcon },
         { name: 'Inscan From Mission', path: '/inscan-from-mission', icon: MessagesIcon },
-        { name: 'Outscan To Spoke', path: '/outscan-to-spoke', icon: MessagesIcon },
+        { name: 'OutScan To Spoke', path: '/outscan-to-spoke', icon: MessagesIcon },
         { name: 'Counter Delivery', path: '/counter-delivery', icon: MessagesIcon },
         { name: 'Outscan To Courier', path: '/outscan-to-courier', icon: MessagesIcon },
         { name: 'Passport Tracking', path: '/passport-tracking', icon: MessagesIcon },
