@@ -37,6 +37,7 @@ import PassportApplications from '../pages/PassportApplications/Loader';
 import DeleteApplication from '../pages/DeleteApplication/Loader';
 import OutScan from '../pages/OutScan/Loader';
 import InScan from '../pages/InScan/Loader';
+import OTM from '../pages/OTM';
 
 const router = createHashRouter([
   {
@@ -100,6 +101,7 @@ const router = createHashRouter([
               { path: '/delete-application', element: <DeleteApplication /> },
               { path: '/outscan', element: <OutScan /> },
               { path: '/inscan', element: <InScan /> },
+              { path: '/outscan-to-mission', element: <OTM /> },
             ],
           },
         ],
