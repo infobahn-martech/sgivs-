@@ -134,7 +134,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       activeRoutes: [
         '/passport-manager',
         '/passport-applications',
-        '/deleted-application',
+        '/delete-application',
         '/outscan-from-spoke',
         '/inscan-at-hub',
         '/outscan-to-mission',
@@ -147,7 +147,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       ],
       subMenu: [
         { name: 'Passport Applications', path: '/passport-applications', icon: MessagesIcon },
-        { name: 'Deleted Application', path: '/deleted-application', icon: MessagesIcon },
+        { name: 'Deleted Application', path: '/delete-application', icon: MessagesIcon },
         { name: 'Outscan From Spoke', path: '/outscan-from-spoke', icon: MessagesIcon },
         { name: 'Inscan At Hub', path: '/inscan-at-hub', icon: MessagesIcon },
         { name: 'Outscan To Mission', path: '/outscan-to-mission', icon: MessagesIcon },

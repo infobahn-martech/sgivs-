@@ -34,6 +34,7 @@ import VisaServiceManagement from '../pages/VisaServices/Loader';
 import OptionalServices from '../pages/OptionalServices/Loader';
 import AppointmentSettings from '../pages/AppointmentSettings/Loader';
 import PassportApplications from '../pages/PassportApplications/Loader';
+import DeleteApplication from '../pages/DeleteApplication/Loader';
 
 const router = createHashRouter([
   {
@@ -94,6 +95,7 @@ const router = createHashRouter([
               { path: '/optional-services', element: <OptionalServices /> },
               { path: '/appointment-settings', element: <AppointmentSettings /> },
               { path: '/passport-applications', element: <PassportApplications /> },
+              { path: '/delete-application', element: <DeleteApplication /> },
             ],
           },
         ],
