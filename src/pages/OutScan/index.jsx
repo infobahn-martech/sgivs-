@@ -1,5 +1,4 @@
 import React, { useMemo, useState, useEffect } from 'react';
-import { Tooltip } from 'react-tooltip';
 import moment from 'moment';
 import { debounce } from 'lodash';
 
@@ -12,10 +11,10 @@ import { formatDate } from '../../config/config';
 import CustomActionModal from '../../components/common/CustomActionModal';
 
 const OutScan = () => {
-  // ✅ Toggle this
   const USE_MOCK = true;
 
-  const { getData, outScanData, isLoadingGet, isLoadingDelete } =
+  // ✅ Add retrieveData here if your store has it
+  const { getData, outScanData, isLoadingGet, isLoadingDelete /*, retrieveData */ } =
     useOutScanReducer((state) => state);
 
   const [retrieveModalOpen, setRetrieveModalOpen] = useState(false);
@@ -26,76 +25,56 @@ const OutScan = () => {
     limit: 10,
     fromDate: null,
     toDate: null,
-    sortBy: 'createdAt',
+    sortBy: 'date',
     sortOrder: 'DESC',
     isExcelExport: 'false',
   };
 
   const [params, setParams] = useState(initialParams);
 
-  // ✅ Dummy Data (as per required fields)
-  const mockDeleteApplicationData = {
+  // ✅ Dummy Data (Required fields)
+  const mockOutScanData = {
     total: 5,
     data: [
       {
         id: 1,
-        referenceNo: 'REF-0001',
-        name: 'Arun Kumar',
-        gender: 'Male',
-        dob: '1996-08-12',
-        passportNo: 'N1234567',
-        status: 'Deleted',
-        actionBy: 'Admin',
-        actionOn: '2025-01-10T09:30:00Z',
+        date: '2025-01-10T09:30:00Z',
+        center: 'Dubai Center',
+        by: 'Admin',
+        totalApplication: 12,
       },
       {
         id: 2,
-        referenceNo: 'REF-0002',
-        name: 'Nisha Thomas',
-        gender: 'Female',
-        dob: '1998-03-22',
-        passportNo: 'P7654321',
-        status: 'Deleted',
-        actionBy: 'Operator',
-        actionOn: '2025-02-14T12:15:00Z',
+        date: '2025-02-14T12:15:00Z',
+        center: 'Abu Dhabi Center',
+        by: 'Operator',
+        totalApplication: 7,
       },
       {
         id: 3,
-        referenceNo: 'REF-0003',
-        name: 'Sameer Ali',
-        gender: 'Male',
-        dob: '1994-11-05',
-        passportNo: 'M9081726',
-        status: 'Deleted',
-        actionBy: 'Admin',
-        actionOn: '2025-03-05T08:45:00Z',
+        date: '2025-03-05T08:45:00Z',
+        center: 'Sharjah Center',
+        by: 'Admin',
+        totalApplication: 19,
       },
       {
         id: 4,
-        referenceNo: 'REF-0004',
-        name: 'Maria Joseph',
-        gender: 'Female',
-        dob: '1999-01-18',
-        passportNo: 'A1122334',
-        status: 'Deleted',
-        actionBy: 'Supervisor',
-        actionOn: '2025-03-20T10:00:00Z',
+        date: '2025-03-20T10:00:00Z',
+        center: 'Ajman Center',
+        by: 'Supervisor',
+        totalApplication: 5,
       },
       {
         id: 5,
-        referenceNo: 'REF-0005',
-        name: 'Rohit Sharma',
-        gender: 'Male',
-        dob: '1992-06-30',
-        passportNo: 'K5566778',
-        status: 'Deleted',
-        actionBy: 'Admin',
-        actionOn: '2025-04-02T11:20:00Z',
+        date: '2025-04-02T11:20:00Z',
+        center: 'Dubai Center',
+        by: 'Admin',
+        totalApplication: 9,
       },
     ],
   };
 
-  const onRefreshCenter = () => {
+  const onRefresh = () => {
     if (!USE_MOCK) getData(params);
     setRetrieveModalOpen(false);
   };
@@ -112,85 +91,33 @@ const OutScan = () => {
     }));
   };
 
-  // ✅ Retrieve action (instead of delete)
-  const renderAction = (row) => {
-    return (
-      <>
-        <Tooltip
-          id={`retrieve-${row?.id}`}
-          place="bottom"
-          content="Retrieve"
-          style={{ backgroundColor: '#051a53' }}
-        />
-
-        <button
-          type="button"
-          className="btn btn-link p-0"
-          data-tooltip-id={`retrieve-${row?.id}`}
-          onClick={() => setRetrieveModalOpen(row)}
-          style={{ textDecoration: 'none' }}
-        >
-          Retrieve
-        </button>
-      </>
-    );
-  };
 
   const columns = [
     {
-      name: 'Reference No',
-      selector: 'referenceNo',
+      name: 'Date',
+      selector: 'date',
       sortable: true,
-      sortField: 'referenceNo',
+      sortField: 'date',
+      cell: (row) => <span>{row?.date ? formatDate(row?.date) : '-'}</span>,
     },
     {
-      name: 'Name',
-      selector: 'name',
+      name: 'Center',
+      selector: 'center',
       sortable: true,
-      sortField: 'name',
+      sortField: 'center',
     },
     {
-      name: 'Gender',
-      selector: 'gender',
+      name: 'By',
+      selector: 'by',
       sortable: true,
-      sortField: 'gender',
+      sortField: 'by',
     },
     {
-      name: 'Date of Birth',
-      selector: 'dob',
+      name: 'Total Application',
+      selector: 'totalApplication',
       sortable: true,
-      sortField: 'dob',
-      cell: (row) => <span>{row?.dob ? formatDate(row?.dob) : '-'}</span>,
-    },
-    {
-      name: 'Passport No',
-      selector: 'passportNo',
-      sortable: true,
-      sortField: 'passportNo',
-    },
-    {
-      name: 'Status / By, On',
-      selector: 'status',
-      sortable: true,
-      sortField: 'status',
-      cell: (row) => (
-        <div className="d-flex flex-column">
-          <span>
-            <b>{row?.status || '-'}</b>
-          </span>
-          <small className="text-muted">
-            {row?.actionBy ? `By: ${row.actionBy}` : 'By: -'}{' '}
-            {row?.actionOn ? `• On: ${formatDate(row.actionOn)}` : ''}
-          </small>
-        </div>
-      ),
-    },
-    {
-      name: 'Action',
-      contentClass: 'action-wrap',
-      disableViewClick: true,
-      thclass: 'actions-edit employee-actn-edit',
-      cell: (row) => renderAction(row),
+      sortField: 'totalApplication',
+      cell: (row) => <span>{row?.totalApplication ?? 0}</span>,
     },
   ];
 
@@ -216,20 +143,15 @@ const OutScan = () => {
       return;
     }
 
-    // ✅ You can change API call name here if you have retrieve endpoint
-    // Example:
-    // retrieveData(retrieveModalOpen?.id, () => onRefreshCenter());
+    // ✅ Replace with your actual API call
+    // if (retrieveModalOpen?.id) {
+    //   retrieveData(retrieveModalOpen.id, () => onRefresh());
+    // }
 
-    // Temporary: using deleteData placeholder (replace this!)
-    if (retrieveModalOpen?.id) {
-      deleteData(retrieveModalOpen?.id, () => {
-        onRefreshCenter();
-      });
-    }
+    setRetrieveModalOpen(false);
   };
 
-  // ✅ dataset
-  const tableData = USE_MOCK ? mockDeleteApplicationData : deleteApplicationData;
+  const tableData = USE_MOCK ? mockOutScanData : outScanData;
   const loading = USE_MOCK ? false : isLoadingGet;
 
   return (
@@ -239,6 +161,7 @@ const OutScan = () => {
         onSearch={debouncedSearch}
         submitFilter={(filters) => {
           const { fromDate, toDate, ...rest } = filters;
+
           setParams({
             ...params,
             ...rest,
@@ -261,13 +184,13 @@ const OutScan = () => {
         onSortChange={handleSortChange}
         wrapClasses="inventory-table-wrap"
       />
+
       {retrieveModalOpen && (
         <CustomActionModal
-          // ✅ this modal used for confirmation; set isDelete={false} if your modal supports it
           showModal={retrieveModalOpen}
           closeModal={() => setRetrieveModalOpen(false)}
           isLoading={USE_MOCK ? false : isLoadingDelete}
-          message={`Are you sure you want to retrieve ${retrieveModalOpen?.name}?`}
+          message={`Are you sure you want to retrieve this record?`}
           onCancel={() => setRetrieveModalOpen(false)}
           onSubmit={handleRetrieve}
         />
