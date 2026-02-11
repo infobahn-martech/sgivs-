@@ -42,6 +42,7 @@ import IFM from '../pages/IFM';
 import OTS from '../pages/OTS';
 import CounterDelivery from '../pages/CounterDelivery';
 import OTC from '../pages/OTC';
+import PassportTracking from '../pages/PassportTracking';
 
 const router = createHashRouter([
   {
@@ -110,6 +111,7 @@ const router = createHashRouter([
               { path: '/outscan-to-spoke', element: <OTS /> },
               { path: '/counter-delivery', element: <CounterDelivery /> },
               { path: '/outscan-to-courier', element: <OTC /> },
+              { path: '/passport-tracking', element: <PassportTracking /> },
             ],
           },
         ],
