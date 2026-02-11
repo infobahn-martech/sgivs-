@@ -14,6 +14,7 @@ import ActionsMenu from './ActionsMenu';
 import ViewModal from './ViewModal';
 import CommentModal from './CommentModal';
 import ChangeServicesModal from './ChangeServices';
+import ActivityLog from './ActivityLog';
 
 const PassportApplications = () => {
   const USE_MOCK = true;
@@ -26,6 +27,7 @@ const PassportApplications = () => {
   const [viewModal, setViewModal] = useState(false);
   const [commentModal, setCommentModal] = useState(false);
   const [changeServicesModal, setChangeServicesModal] = useState(false);
+  const [activityLogModal, setActivityLogModal] = useState(false);
   const initialParams = {
     search: '',
     page: 1,
@@ -160,7 +162,7 @@ const PassportApplications = () => {
   };
 
   const handleActivityLog = (row) => {
-    console.log('Activity Log:', row);
+    setActivityLogModal(row);
   };
 
   const handleEditApplication = (row) => {
@@ -323,6 +325,13 @@ const PassportApplications = () => {
         <ChangeServicesModal
           showModal={changeServicesModal}
           closeModal={() => setChangeServicesModal(false)}
+        />
+      )}
+
+      {activityLogModal && (
+        <ActivityLog
+          showModal={activityLogModal}
+          closeModal={() => setActivityLogModal(false)}
         />
       )}
     </>
