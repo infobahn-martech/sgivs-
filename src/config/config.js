@@ -65,6 +65,7 @@ export const headerConfig = [
   { title: 'Out Scan to Courier', icon: userImage, path: '/outscan-to-courier' },
   { title: 'Passport Tracking', icon: userImage, path: '/passport-tracking' },
   { title: 'Visa Applications', icon: userImage, path: '/visa-applications' },
+  { title: 'Deleted Application', icon: userImage, path: '/visa-delete-application' },
 ];
 
 export const getFirstLetters = (name) => {
