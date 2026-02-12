@@ -198,10 +198,10 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       subMenu: [
         { name: 'OCI Applications', path: '/oci-applications', icon: MessagesIcon },
         { name: 'Deleted Application', path: '/oci-delete-application', icon: MessagesIcon },
-        { name: 'InScan at Hub', path: '/oci-inscan', icon: MessagesIcon },
-        { name: 'OutScan to Mission', path: '/oci-outscan-to-mission', icon: MessagesIcon },
-        { name: 'InScan from Mission', path: '/oci-inscan-from-mission', icon: MessagesIcon },
-        { name: 'OutScan to Spoke', path: '/oci-outscan-to-spoke', icon: MessagesIcon },
+        { name: 'InScan At Hub', path: '/oci-inscan', icon: MessagesIcon },
+        { name: 'OutScan To Mission', path: '/oci-outscan-to-mission', icon: MessagesIcon },
+        { name: 'InScan From Mission', path: '/oci-inscan-from-mission', icon: MessagesIcon },
+        { name: 'OutScan To Spoke', path: '/oci-outscan-to-spoke', icon: MessagesIcon },
       ],
     },
 
