@@ -8,16 +8,15 @@ import editIcon from '../../assets/images/edit.svg';
 
 import CommonHeader from '../../components/common/CommonHeader';
 import CustomTable from '../../components/common/CustomTable';
-import useCounterDeliveryReducer from '../../stores/CounterDeliveryReducer';
+import useVisaCounterDeliveryReducer from '../../stores/VisaCounterDeliveryReducer';
 import { formatDate } from '../../config/config';
 import AddEditModal from './AddEditModal';
 
-const CounterDelivery = () => {
+const VisaCounterDelivery = () => {
   const USE_MOCK = true;
 
-  const { getData, counterDeliveryData, isLoadingGet } =
-    useCounterDeliveryReducer((state) => state);
-
+  const { getData, visaCounterDeliveryData, isLoadingVisaCounterDeliveryGet } =
+    useVisaCounterDeliveryReducer((state) => state);
   const initialParams = {
     search: '',
     page: 1,
@@ -34,7 +33,7 @@ const CounterDelivery = () => {
   const [selectedCounterDelivery, setSelectedCounterDelivery] = useState(null);
 
   // ✅ Dummy Data
-  const mockCounterDeliveryData = {
+  const mockVisaCounterDeliveryData = {
     total: 5,
     data: [
       { id: 1, date: '2025-01-10T09:30:00Z', by: 'Admin', totalApplication: 12 },
@@ -131,8 +130,8 @@ const CounterDelivery = () => {
     return () => debouncedSearch.cancel();
   }, [debouncedSearch]);
 
-  const tableData = USE_MOCK ? mockCounterDeliveryData : counterDeliveryData;
-  const loading = USE_MOCK ? false : isLoadingGet;
+  const tableData = USE_MOCK ? mockVisaCounterDeliveryData : visaCounterDeliveryData;
+  const loading = USE_MOCK ? false : isLoadingVisaCounterDeliveryGet;
 
   return (
     <>
@@ -185,4 +184,4 @@ const CounterDelivery = () => {
   );
 };
 
-export default CounterDelivery;
+export default VisaCounterDelivery;

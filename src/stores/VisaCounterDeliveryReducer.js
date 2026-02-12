@@ -1,21 +1,21 @@
 import { create } from 'zustand';
 import useAlertReducer from './AlertReducer';
-import otmService from '../services/otmService';
+import visaCounterDeliveryService from '../services/VisaCounterDeliveryService';
 
-const useOTMReducer = create((set) => ({
+const useVisaCounterDeliveryReducer = create((set) => ({
     isLoading: false,
     isLoadingGet: false,
     errorMessage: '',
     successMessage: '',
-    otmData: null,
+    visaCounterDeliveryData: null,
 
     getData: async (params) => {
         try {
             set({ isLoadingGet: true });
-            const { data } = await otmService.getData(params);
+            const { data } = await visaCounterDeliveryService.getData(params);
             const datas = data;
             set({
-                otmData: datas?.data,
+                visaCounterDeliveryData: datas?.data,
                 // successMessage: data?.response?.data?.message ?? data?.message,
                 isLoadingGet: false,
             });
@@ -30,4 +30,4 @@ const useOTMReducer = create((set) => ({
     },
 }));
 
-export default useOTMReducer;
+export default useVisaCounterDeliveryReducer;

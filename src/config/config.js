@@ -70,6 +70,7 @@ export const headerConfig = [
   { title: 'Visa OTM', icon: userImage, path: '/visa-outscan-to-mission' },
   { title: 'Visa IFM', icon: userImage, path: '/visa-inscan-from-mission' },
   { title: 'Visa OTS', icon: userImage, path: '/visa-outscan-to-spoke' },
+  { title: 'Visa Counter Delivery', icon: userImage, path: '/visa-counter-delivery' },
 ];
 
 export const getFirstLetters = (name) => {
