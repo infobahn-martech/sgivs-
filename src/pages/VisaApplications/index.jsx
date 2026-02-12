@@ -15,6 +15,7 @@ import ViewModal from './ViewModal';
 import CommentModal from './CommentModal';
 import ChangeServicesModal from './ChangeServices';
 import ActivityLog from './ActivityLog';
+import AddRemoveBiometric from './AddRemoveBiometric';
 
 const VisaApplications = () => {
   const USE_MOCK = true;
@@ -27,6 +28,7 @@ const VisaApplications = () => {
   const [viewModal, setViewModal] = useState(false);
   const [commentModal, setCommentModal] = useState(false);
   const [changeServicesModal, setChangeServicesModal] = useState(false);
+  const [addRemoveBiometricModal, setAddRemoveBiometricModal] = useState(false);
   const [activityLogModal, setActivityLogModal] = useState(false);
   const initialParams = {
     search: '',
@@ -177,6 +179,7 @@ const VisaApplications = () => {
 
   const handleAddRemoveBiometric = (row) => {
     console.log('Add/Remove Biometric:', row);
+    setAddRemoveBiometricModal(row);
   };
 
 
@@ -327,6 +330,13 @@ const VisaApplications = () => {
         <ChangeServicesModal
           showModal={changeServicesModal}
           closeModal={() => setChangeServicesModal(false)}
+        />
+      )}
+
+      {addRemoveBiometricModal && (
+        <AddRemoveBiometric
+          showModal={addRemoveBiometricModal}
+          closeModal={() => setAddRemoveBiometricModal(false)}
         />
       )}
 
