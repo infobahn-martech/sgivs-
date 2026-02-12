@@ -51,6 +51,7 @@ import VisaIFM from '../pages/VisaIFM';
 import VisaOTS from '../pages/VisaOTS';
 import VisaCounterDelivery from '../pages/VisaCounterDelivery';
 import OTC from '../pages/OTC';
+import VisaTracking from '../pages/VisaTracking';
 
 const router = createHashRouter([
   {
@@ -128,6 +129,7 @@ const router = createHashRouter([
               { path: '/visa-outscan-to-spoke', element: <VisaOTS /> },
               { path: '/visa-counter-delivery', element: <VisaCounterDelivery /> },
               { path: '/visa-outscan-to-courier', element: <VisaOTC /> },
+              { path: '/visa-tracking', element: <VisaTracking /> },
             ],
           },
         ],

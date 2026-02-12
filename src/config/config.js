@@ -72,6 +72,7 @@ export const headerConfig = [
   { title: 'Visa OTS', icon: userImage, path: '/visa-outscan-to-spoke' },
   { title: 'Visa Counter Delivery', icon: userImage, path: '/visa-counter-delivery' },
   { title: 'Visa OTC', icon: userImage, path: '/visa-outscan-to-courier' },
+  { title: 'Visa Tracking', icon: userImage, path: '/visa-tracking' },
 ];
 
 export const getFirstLetters = (name) => {

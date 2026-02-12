@@ -1,19 +1,19 @@
 import { create } from 'zustand';
 import useAlertReducer from './AlertReducer';
-import passportTrackingService from '../services/passportTrackingService';
+import visaTrackingService from '../services/VisaTrackingService';
 
-const usePassportTrackingReducer = create((set) => ({
+const useVisaTrackingReducer = create((set) => ({
   isLoading: false,
   isLoadingGet: false,
   isLoadingDelete: false,
   errorMessage: '',
   successMessage: '',
-  passportTrackingData: null,
+  visaTrackingData: null,
 
   postData: async (payload, cb) => {
     try {
       set({ isLoading: true });
-      const { data } = await passportTrackingService.postData(payload);
+      const { data } = await visaTrackingService.postData(payload);
       const { success } = useAlertReducer.getState();
       success(data?.response?.data?.message ?? data?.message);
       set({
@@ -35,7 +35,7 @@ const usePassportTrackingReducer = create((set) => ({
       set({ isLoading: true });
 
       const { id, ...rest } = payload;
-      const { data } = await passportTrackingService.patchData(id, rest); // Updated call
+      const { data } = await visaTrackingService.patchData(id, rest); // Updated call
 
       const { success } = useAlertReducer.getState();
       success(data?.response?.data?.message ?? data?.message);
@@ -57,10 +57,10 @@ const usePassportTrackingReducer = create((set) => ({
   getData: async (params) => {
     try {
       set({ isLoadingGet: true });
-      const { data } = await passportTrackingService.getData(params);
+      const { data } = await visaTrackingService.getData(params);
       const datas = data;
       set({
-        passportTrackingData: datas?.data,
+        visaTrackingData: datas?.data,
         // successMessage: data?.response?.data?.message ?? data?.message,
         isLoadingGet: false,
       });
@@ -76,10 +76,10 @@ const usePassportTrackingReducer = create((set) => ({
   deleteData: async (id, cb) => {
     try {
       set({ isLoadingDelete: true });
-      const { data } = await passportTrackingService.deleteData(id);
+      const { data } = await visaTrackingService.deleteData(id);
       const datas = data;
       set({
-        passportTrackingData: datas?.data,
+        visaTrackingData: datas?.data,
         successMessage: data?.response?.data?.message ?? data?.message,
         isLoadingDelete: false,
       });
@@ -95,4 +95,4 @@ const usePassportTrackingReducer = create((set) => ({
   },
 }));
 
-export default usePassportTrackingReducer;
+export default useVisaTrackingReducer;

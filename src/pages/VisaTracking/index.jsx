@@ -10,19 +10,19 @@ import editIcon from '../../assets/images/edit.svg';
 
 import CommonHeader from '../../components/common/CommonHeader';
 import CustomTable from '../../components/common/CustomTable';
-import usePassportTrackingReducer from '../../stores/PassportTrackingReducer';
+import useVisaTrackingReducer from '../../stores/VisaTrackingReducer';
 import { formatDate } from '../../config/config';
 import { AddEditModal } from './AddEditModal';
 import CustomActionModal from '../../components/common/CustomActionModal';
 
-const PassportTracking = () => {
+const VisaTracking = () => {
   const USE_MOCK = true;
 
   const {
     getData,
-    passportTrackingData,
-    isLoadingPassportTracking,
-  } = usePassportTrackingReducer((state) => state);
+    visaTrackingData,
+    isLoadingVisaTracking,
+  } = useVisaTrackingReducer((state) => state);
 
   const [modal, setModal] = useState(false);
 
@@ -40,7 +40,7 @@ const PassportTracking = () => {
   const [params, setParams] = useState(initialParams);
 
   // ✅ Mock Data (Required fields)
-  const mockPassportTrackingData = {
+  const mockVisaTrackingData = {
     total: 5,
     data: [
       {
@@ -81,7 +81,7 @@ const PassportTracking = () => {
     ],
   };
 
-  const onRefreshPassportTracking = () => {
+  const onRefreshVisaTracking = () => {
     if (!USE_MOCK) getData(params);
     setModal(false);
   };
@@ -145,8 +145,8 @@ const PassportTracking = () => {
     return () => debouncedSearch.cancel();
   }, [debouncedSearch]);
 
-  const tableData = USE_MOCK ? mockPassportTrackingData : passportTrackingData;
-  const loading = USE_MOCK ? false : isLoadingPassportTracking;
+  const tableData = USE_MOCK ? mockVisaTrackingData : visaTrackingData;
+  const loading = USE_MOCK ? false : isLoadingVisaTracking;
 
   return (
     <>
@@ -183,11 +183,11 @@ const PassportTracking = () => {
         <AddEditModal
           showModal={modal}
           closeModal={() => setModal(false)}
-          onRefreshPassportTracking={onRefreshPassportTracking}
+          onRefreshVisaTracking={onRefreshVisaTracking}
         />
       )}
     </>
   );
 };
 
-export default PassportTracking;
+export default VisaTracking;
