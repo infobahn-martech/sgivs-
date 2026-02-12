@@ -1,19 +1,15 @@
 import { create } from 'zustand';
 import useAlertReducer from './AlertReducer';
-import visaTrackingService from '../services/VisaTrackingService';
+import ociTrackingService from '../services/OCITrackingService';
 
-const useVisaTrackingReducer = create((set) => ({
-  isLoading: false,
+const useOCITrackingReducer = create((set) => ({
   isLoadingGet: false,
-  isLoadingDelete: false,
-  errorMessage: '',
-  successMessage: '',
-  visaTrackingData: null,
+  ociTrackingData: null,
 
   postData: async (payload, cb) => {
     try {
       set({ isLoading: true });
-      const { data } = await visaTrackingService.postData(payload);
+      const { data } = await ociTrackingService.postData(payload);
       const { success } = useAlertReducer.getState();
       success(data?.response?.data?.message ?? data?.message);
       set({
@@ -35,7 +31,7 @@ const useVisaTrackingReducer = create((set) => ({
       set({ isLoading: true });
 
       const { id, ...rest } = payload;
-      const { data } = await visaTrackingService.patchData(id, rest); // Updated call
+      const { data } = await ociTrackingService.patchData(id, rest); // Updated call
 
       const { success } = useAlertReducer.getState();
       success(data?.response?.data?.message ?? data?.message);
@@ -57,10 +53,10 @@ const useVisaTrackingReducer = create((set) => ({
   getData: async (params) => {
     try {
       set({ isLoadingGet: true });
-      const { data } = await visaTrackingService.getData(params);
+      const { data } = await ociTrackingService.getData(params);
       const datas = data;
       set({
-        visaTrackingData: datas?.data,
+        ociTrackingData: datas?.data,
         // successMessage: data?.response?.data?.message ?? data?.message,
         isLoadingGet: false,
       });
@@ -76,10 +72,10 @@ const useVisaTrackingReducer = create((set) => ({
   deleteData: async (id, cb) => {
     try {
       set({ isLoadingDelete: true });
-      const { data } = await visaTrackingService.deleteData(id);
+      const { data } = await ociTrackingService.deleteData(id);
       const datas = data;
       set({
-        visaTrackingData: datas?.data,
+        ociTrackingData: datas?.data,
         successMessage: data?.response?.data?.message ?? data?.message,
         isLoadingDelete: false,
       });
@@ -95,4 +91,4 @@ const useVisaTrackingReducer = create((set) => ({
   },
 }));
 
-export default useVisaTrackingReducer;
+export default useOCITrackingReducer;

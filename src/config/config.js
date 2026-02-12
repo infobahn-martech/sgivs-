@@ -83,6 +83,7 @@ export const headerConfig = [
   { title: 'OutScan To Spoke', icon: userImage, path: '/oci-outscan-to-spoke' },
   { title: 'Counter Delivery', icon: userImage, path: '/oci-counter-delivery' },
   { title: 'Out Scan to Courier', icon: userImage, path: '/oci-outscan-to-courier' },
+  { title: 'Tracking', icon: userImage, path: '/oci-tracking' },
 ];
 
 export const getFirstLetters = (name) => {

@@ -194,7 +194,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       name: 'OCI Manager',
       icon: EZIcon, // change icon if needed
       path: '/oci-applications',
-      activeRoutes: ['/oci-applications', '/oci-delete-application', '/oci-inscan', '/oci-outscan-to-mission', '/oci-inscan-from-mission', '/oci-outscan-to-spoke', '/oci-counter-delivery', '/oci-outscan-to-courier'],
+      activeRoutes: ['/oci-applications', '/oci-delete-application', '/oci-inscan', '/oci-outscan-to-mission', '/oci-inscan-from-mission', '/oci-outscan-to-spoke', '/oci-counter-delivery', '/oci-outscan-to-courier', '/oci-tracking'],
       subMenu: [
         { name: 'OCI Applications', path: '/oci-applications', icon: MessagesIcon },
         { name: 'Deleted Application', path: '/oci-delete-application', icon: MessagesIcon },
@@ -204,6 +204,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         { name: 'OutScan To Spoke', path: '/oci-outscan-to-spoke', icon: MessagesIcon },
         { name: 'Counter Delivery', path: '/oci-counter-delivery', icon: MessagesIcon },
         { name: 'Out Scan to Courier', path: '/oci-outscan-to-courier', icon: MessagesIcon },
+        { name: 'Tracking', path: '/oci-tracking', icon: MessagesIcon },
       ],
     },
     // Appointment Settings

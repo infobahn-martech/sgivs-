@@ -62,6 +62,8 @@ import OCIIFM from '../pages/OCIIFM';
 import OCIOTS from '../pages/OCIOTS';
 import OCICounterDelivery from '../pages/OCICounterDelivery';
 import OCIOTC from '../pages/OCIOTC';
+import OCITracking from '../pages/OCITracking';
+
 const router = createHashRouter([
   {
     element: <App />,
@@ -149,6 +151,7 @@ const router = createHashRouter([
               { path: '/oci-outscan-to-spoke', element: <OCIOTS /> },
               { path: '/oci-counter-delivery', element: <OCICounterDelivery /> },
               { path: '/oci-outscan-to-courier', element: <OCIOTC /> },
+              { path: '/oci-tracking', element: <OCITracking /> },
             ],
           },
         ],

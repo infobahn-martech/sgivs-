@@ -10,19 +10,19 @@ import editIcon from '../../assets/images/edit.svg';
 
 import CommonHeader from '../../components/common/CommonHeader';
 import CustomTable from '../../components/common/CustomTable';
-import useVisaTrackingReducer from '../../stores/VisaTrackingReducer';
+import useOCITrackingReducer from '../../stores/OCITrackingReducer';
 import { formatDate } from '../../config/config';
 import { AddEditModal } from './AddEditModal';
 import CustomActionModal from '../../components/common/CustomActionModal';
 
-const VisaTracking = () => {
+const OCITracking = () => {
   const USE_MOCK = true;
 
   const {
     getData,
-    visaTrackingData,
-    isLoadingVisaTracking,
-  } = useVisaTrackingReducer((state) => state);
+    ociTrackingData,
+    isLoadingOCITracking,
+  } = useOCITrackingReducer((state) => state);
 
   const [modal, setModal] = useState(false);
 
@@ -40,7 +40,7 @@ const VisaTracking = () => {
   const [params, setParams] = useState(initialParams);
 
   // ✅ Mock Data (Required fields)
-  const mockVisaTrackingData = {
+  const mockOCITrackingData = {
     total: 5,
     data: [
       {
@@ -81,7 +81,7 @@ const VisaTracking = () => {
     ],
   };
 
-  const onRefreshVisaTracking = () => {
+  const onRefreshOCITracking = () => {
     if (!USE_MOCK) getData(params);
     setModal(false);
   };
@@ -145,8 +145,8 @@ const VisaTracking = () => {
     return () => debouncedSearch.cancel();
   }, [debouncedSearch]);
 
-  const tableData = USE_MOCK ? mockVisaTrackingData : visaTrackingData;
-  const loading = USE_MOCK ? false : isLoadingVisaTracking;
+  const tableData = USE_MOCK ? mockOCITrackingData : ociTrackingData;
+  const loading = USE_MOCK ? false : isLoadingOCITracking;
 
   return (
     <>
@@ -183,11 +183,11 @@ const VisaTracking = () => {
         <AddEditModal
           showModal={modal}
           closeModal={() => setModal(false)}
-          onRefreshVisaTracking={onRefreshVisaTracking}
+          onRefreshOCITracking={onRefreshOCITracking}
         />
       )}
     </>
   );
 };
 
-export default VisaTracking;
+export default OCITracking;
