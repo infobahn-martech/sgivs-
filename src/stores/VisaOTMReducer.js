@@ -1,21 +1,20 @@
 import { create } from 'zustand';
 import useAlertReducer from './AlertReducer';
-import otmService from '../services/otmService';
-
-const useOTMReducer = create((set) => ({
+import visaOTMService from '../services/VisaOTMService';
+const useVisaOTMReducer = create((set) => ({
     isLoading: false,
     isLoadingGet: false,
     errorMessage: '',
     successMessage: '',
-    otmData: null,
+    visaOTMData: null,
 
     getData: async (params) => {
         try {
             set({ isLoadingGet: true });
-            const { data } = await otmService.getData(params);
+            const { data } = await visaOTMService.getData(params);
             const datas = data;
             set({
-                otmData: datas?.data,
+                visaOTMData: datas?.data,
                 // successMessage: data?.response?.data?.message ?? data?.message,
                 isLoadingGet: false,
             });
@@ -30,4 +29,4 @@ const useOTMReducer = create((set) => ({
     },
 }));
 
-export default useOTMReducer;
+export default useVisaOTMReducer;

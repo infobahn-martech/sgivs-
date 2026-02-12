@@ -7,14 +7,14 @@ import '../../assets/scss/usermanagement.scss';
 
 import CommonHeader from '../../components/common/CommonHeader';
 import CustomTable from '../../components/common/CustomTable';
-import useOTMReducer from '../../stores/OTMReducer';
+import useVisaOTMReducer from '../../stores/VisaOTMReducer';
 import { formatDate } from '../../config/config';
 import AddEditModal from './AddEditModal';
 
-const OTM = () => {
+const VisaOTM = () => {
   const USE_MOCK = true;
 
-  const { getData, otmData, isLoadingGet } = useOTMReducer((state) => state);
+  const { getData, visaOTMData, isLoadingGet } = useVisaOTMReducer((state) => state);
 
   const initialParams = {
     search: '',
@@ -32,7 +32,7 @@ const OTM = () => {
   const [selectedOTM, setSelectedOTM] = useState(null);
 
   // ✅ Dummy Data (Required fields)
-  const mockOTMData = {
+  const mockVisaOTMData = {
     total: 5,
     data: [
       {
@@ -228,8 +228,8 @@ const OTM = () => {
     return () => debouncedSearch.cancel();
   }, [debouncedSearch]);
 
-  const tableData = USE_MOCK ? mockOTMData : otmData;
-  const loading = USE_MOCK ? false : isLoadingGet;
+  const tableData = USE_MOCK ? mockVisaOTMData : visaOTMData;
+  const loading = USE_MOCK ? false : isLoadingVisaOTMGet;
 
   return (
     <>
@@ -282,4 +282,4 @@ const OTM = () => {
   );
 };
 
-export default OTM;
+export default VisaOTM;
