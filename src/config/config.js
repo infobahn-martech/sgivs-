@@ -68,6 +68,7 @@ export const headerConfig = [
   { title: 'Deleted Application', icon: userImage, path: '/visa-delete-application' },
   { title: 'Visa In Scan', icon: userImage, path: '/visa-inscan-hub' },
   { title: 'Visa OTM', icon: userImage, path: '/visa-outscan-to-mission' },
+  { title: 'Visa IFM', icon: userImage, path: '/visa-inscan-from-mission' },
 ];
 
 export const getFirstLetters = (name) => {
