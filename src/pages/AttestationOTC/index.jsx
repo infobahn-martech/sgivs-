@@ -9,14 +9,14 @@ import editIcon from '../../assets/images/edit.svg';
 
 import CommonHeader from '../../components/common/CommonHeader';
 import CustomTable from '../../components/common/CustomTable';
-import useVisaOTCReducer from '../../stores/VisaOTCReducer';
+import useAttestationOTMReducer from '../../stores/AttestationOTMReducer';
 import { formatDate } from '../../config/config';
 import AddEditModal from './AddEditModal';
 
-const VisaOTC = () => {
+const AttestationOTC = () => {
   const USE_MOCK = true;
 
-  const { getData, visaOTCData, isLoadingVisaOTCGet } = useVisaOTCReducer((state) => state);
+  const { getData, attestationOTMData, isLoadingGetAttestationOTM } = useAttestationOTMReducer((state) => state);
 
   const initialParams = {
     search: '',
@@ -31,10 +31,10 @@ const VisaOTC = () => {
 
   const [params, setParams] = useState(initialParams);
   const [addEditModal, setAddEditModal] = useState(false);
-  const [selectedVisaOTC, setSelectedVisaOTC] = useState(null);
+  const [selectedAttestationOTM, setSelectedAttestationOTM] = useState(null);
 
   // ✅ Dummy Data
-  const mockVisaOTCData = {
+  const mockAttestationOTMData = {
     total: 5,
     data: [
       { id: 1, date: '2025-01-10T09:30:00Z', by: 'Admin', totalApplication: 12 },
@@ -58,7 +58,7 @@ const VisaOTC = () => {
   };
 
   const onClickEdit = (row) => {
-    setSelectedVisaOTC(row);
+    setSelectedAttestationOTM(row);
     setAddEditModal(true);
   };
 
@@ -66,7 +66,7 @@ const VisaOTC = () => {
     return (
       <div className="d-flex gap-2 align-items-center">
         <Tooltip
-          id={`visa-otc-edit-${row?.id}`}
+          id={`attestation-otm-edit-${row?.id}`}
           place="bottom"
           content="Edit"
           style={{ backgroundColor: '#051a53' }}
@@ -75,7 +75,7 @@ const VisaOTC = () => {
         <img
           src={editIcon}
           alt="edit"
-          data-tooltip-id={`visa-otc-edit-${row?.id}`}
+          data-tooltip-id={`attestation-otm-edit-${row?.id}`}
           onClick={() => onClickEdit(row)}
           style={{ cursor: 'pointer' }}
         />
@@ -129,8 +129,8 @@ const VisaOTC = () => {
     return () => debouncedSearch.cancel();
   }, [debouncedSearch]);
 
-  const tableData = USE_MOCK ? mockVisaOTCData : visaOTCData;
-  const loading = USE_MOCK ? false : isLoadingVisaOTCGet;
+  const tableData = USE_MOCK ? mockAttestationOTMData : attestationOTMData;
+  const loading = USE_MOCK ? false : isLoadingGetAttestationOTM;
 
   return (
     <>
@@ -140,7 +140,7 @@ const VisaOTC = () => {
           type: 'button',
           action: () => {
             setAddEditModal(true);
-            setSelectedVisaOTC(null);
+            setSelectedAttestationOTM(null);
           },
         }}
         hideFilter
@@ -175,12 +175,12 @@ const VisaOTC = () => {
         <AddEditModal
           showModal={addEditModal}
           closeModal={() => setAddEditModal(false)}
-          onRefreshOTC={() => getData(params)}
-          selectedVisaOTC={selectedVisaOTC}
+          onRefreshAttestationOTM={() => getData(params)}
+          selectedAttestationOTM={selectedAttestationOTM}
         />
       )}
     </>
   );
 };
 
-export default VisaOTC;
+export default AttestationOTC;
