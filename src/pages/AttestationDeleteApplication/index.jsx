@@ -7,16 +7,16 @@ import '../../assets/scss/usermanagement.scss';
 
 import CommonHeader from '../../components/common/CommonHeader';
 import CustomTable from '../../components/common/CustomTable';
-import useVisaDeleteApplicationReducer from '../../stores/VisaDeleteApplicationReducer';
+import useAttestationDeleteApplicationReducer from '../../stores/AttestationDeleteApplicationReducer';
 import { formatDate } from '../../config/config';
 import CustomActionModal from '../../components/common/CustomActionModal';
 
-const VisaDeleteApplication = () => {
+const AttestationDeleteApplication = () => {
   // ✅ Toggle this
   const USE_MOCK = true;
 
-  const { getData, visaDeleteApplicationData, isLoadingGet, deleteData, isLoadingDelete } =
-    useVisaDeleteApplicationReducer((state) => state);
+  const { getData, attestationDeleteApplicationData, isLoadingGet, deleteData, isLoadingDelete } =
+    useAttestationDeleteApplicationReducer((state) => state);
 
   const [retrieveModalOpen, setRetrieveModalOpen] = useState(false);
 
@@ -34,7 +34,7 @@ const VisaDeleteApplication = () => {
   const [params, setParams] = useState(initialParams);
 
   // ✅ Dummy Data (as per required fields)
-  const mockDeleteApplicationData = {
+  const mockAttestationDeleteApplicationData = {
     total: 5,
     data: [
       {
@@ -95,7 +95,7 @@ const VisaDeleteApplication = () => {
     ],
   };
 
-  const onRefreshCenter = () => {
+  const onRefreshAttestationDeleteApplication = () => {
     if (!USE_MOCK) getData(params);
     setRetrieveModalOpen(false);
   };
@@ -218,18 +218,18 @@ const VisaDeleteApplication = () => {
 
     // ✅ You can change API call name here if you have retrieve endpoint
     // Example:
-    // retrieveData(retrieveModalOpen?.id, () => onRefreshCenter());
+    // retrieveData(retrieveModalOpen?.id, () => onRefreshAttestationDeleteApplication());
 
     // Temporary: using deleteData placeholder (replace this!)
     if (retrieveModalOpen?.id) {
       deleteData(retrieveModalOpen?.id, () => {
-        onRefreshCenter();
+        onRefreshAttestationDeleteApplication();
       });
     }
   };
 
   // ✅ dataset
-  const tableData = USE_MOCK ? mockDeleteApplicationData : deleteApplicationData;
+  const tableData = USE_MOCK ? mockAttestationDeleteApplicationData : attestationDeleteApplicationData;
   const loading = USE_MOCK ? false : isLoadingGet;
 
   return (
@@ -276,4 +276,4 @@ const VisaDeleteApplication = () => {
   );
 };
 
-export default VisaDeleteApplication;
+export default AttestationDeleteApplication;

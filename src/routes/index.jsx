@@ -64,6 +64,7 @@ import OCICounterDelivery from '../pages/OCICounterDelivery';
 import OCIOTC from '../pages/OCIOTC';
 import OCITracking from '../pages/OCITracking';
 import AttestationApplications from '../pages/AttestationApplications';
+import AttestationDeleteApplication from '../pages/AttestationDeleteApplication';
 const router = createHashRouter([
   {
     element: <App />,
@@ -153,6 +154,7 @@ const router = createHashRouter([
               { path: '/oci-outscan-to-courier', element: <OCIOTC /> },
               { path: '/oci-tracking', element: <OCITracking /> },
               { path: '/attestation-applications', element: <AttestationApplications /> },
+              { path: '/attestation-delete-application', element: <AttestationDeleteApplication /> },
             ],
           },
         ],
