@@ -59,7 +59,7 @@ export const headerConfig = [
   { title: 'Out Scan', icon: userImage, path: '/outscan' },
   { title: 'In Scan', icon: userImage, path: '/inscan' },
   { title: 'Out Scan to Mission', icon: userImage, path: '/outscan-to-mission' },
-  { title: 'In Scan to Mission', icon: userImage, path: '/inscan-to-mission' },
+  { title: 'In Scan From Mission', icon: userImage, path: '/inscan-from-mission' },
   { title: 'Out Scan to Spoke', icon: userImage, path: '/outscan-to-spoke' },
   { title: 'Counter Delivery', icon: userImage, path: '/counter-delivery' },
   { title: 'Out Scan to Courier', icon: userImage, path: '/outscan-to-courier' },
@@ -77,9 +77,10 @@ export const headerConfig = [
   { title: 'Reference Number', icon: userImage, path: '/get-reference-numbers' },
   { title: 'OCI Applications', icon: userImage, path: '/oci-applications' },
   { title: 'Deleted Application', icon: userImage, path: '/oci-delete-application' },
-  { title: 'InScan at Hub', icon: userImage, path: '/oci-inscan' },
-  { title: 'OutScan to Mission', icon: userImage, path: '/oci-outscan-to-mission' },
-  { title: 'InScan from Mission', icon: userImage, path: '/oci-inscan-from-mission' },
+  { title: 'InScan At Hub', icon: userImage, path: '/oci-inscan' },
+  { title: 'OutScan To Mission', icon: userImage, path: '/oci-outscan-to-mission' },
+  { title: 'InScan To Mission', icon: userImage, path: '/oci-inscan-from-mission' },
+  { title: 'OutScan To Spoke', icon: userImage, path: '/oci-outscan-to-spoke' },
 ];
 
 export const getFirstLetters = (name) => {

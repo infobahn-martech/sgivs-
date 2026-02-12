@@ -59,7 +59,7 @@ import OCIDeleteApplication from '../pages/OCIDeleteApplication';
 import OCIInScan from '../pages/OCInScan';
 import OCIOTM from '../pages/OCIOTM';
 import OCIIFM from '../pages/OCIIFM';
-
+import OCIOTS from '../pages/OCIOTS';
 const router = createHashRouter([
   {
     element: <App />,
@@ -144,6 +144,7 @@ const router = createHashRouter([
               { path: '/oci-inscan', element: <OCIInScan /> },
               { path: '/oci-outscan-to-mission', element: <OCIOTM /> },
               { path: '/oci-inscan-from-mission', element: <OCIIFM /> },
+              { path: '/oci-outscan-to-spoke', element: <OCIOTS /> },
             ],
           },
         ],
