@@ -1,21 +1,21 @@
 import { create } from 'zustand';
 import useAlertReducer from './AlertReducer';
-import visaCounterDeliveryService from '../services/VisaCounterDeliveryService';
+import attestationCounterDeliveryService from '../services/AttestationCounterDeliveryService';
 
-const useVisaCounterDeliveryReducer = create((set) => ({
+const useAttestationCounterDeliveryReducer = create((set) => ({
     isLoading: false,
     isLoadingGet: false,
     errorMessage: '',
     successMessage: '',
-    visaCounterDeliveryData: null,
+    attestationCounterDeliveryData: null,
 
     getData: async (params) => {
         try {
             set({ isLoadingGet: true });
-            const { data } = await visaCounterDeliveryService.getData(params);
+            const { data } = await attestationCounterDeliveryService.getData(params);
             const datas = data;
             set({
-                visaCounterDeliveryData: datas?.data,
+                attestationCounterDeliveryData: datas?.data,
                 // successMessage: data?.response?.data?.message ?? data?.message,
                 isLoadingGet: false,
             });
@@ -30,4 +30,4 @@ const useVisaCounterDeliveryReducer = create((set) => ({
     },
 }));
 
-export default useVisaCounterDeliveryReducer;
+export default useAttestationCounterDeliveryReducer;

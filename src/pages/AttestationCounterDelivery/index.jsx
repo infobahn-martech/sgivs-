@@ -8,15 +8,15 @@ import editIcon from '../../assets/images/edit.svg';
 
 import CommonHeader from '../../components/common/CommonHeader';
 import CustomTable from '../../components/common/CustomTable';
-import useVisaCounterDeliveryReducer from '../../stores/VisaCounterDeliveryReducer';
+import useAttestationCounterDeliveryReducer from '../../stores/AttestationCounterDeliveryReducer';
 import { formatDate } from '../../config/config';
 import AddEditModal from './AddEditModal';
 
-const VisaCounterDelivery = () => {
+const AttestationCounterDelivery = () => {
   const USE_MOCK = true;
 
-  const { getData, visaCounterDeliveryData, isLoadingVisaCounterDeliveryGet } =
-    useVisaCounterDeliveryReducer((state) => state);
+  const { getData, attestationCounterDeliveryData, isLoadingGetAttestationCounterDelivery } =
+    useAttestationCounterDeliveryReducer((state) => state);
   const initialParams = {
     search: '',
     page: 1,
@@ -30,10 +30,10 @@ const VisaCounterDelivery = () => {
 
   const [params, setParams] = useState(initialParams);
   const [addEditModal, setAddEditModal] = useState(false);
-  const [selectedCounterDelivery, setSelectedCounterDelivery] = useState(null);
+  const [selectedAttestationCounterDelivery, setSelectedAttestationCounterDelivery] = useState(null);
 
   // ✅ Dummy Data
-  const mockVisaCounterDeliveryData = {
+  const mockAttestationCounterDeliveryData = {
     total: 5,
     data: [
       { id: 1, date: '2025-01-10T09:30:00Z', by: 'Admin', totalApplication: 12 },
@@ -57,7 +57,7 @@ const VisaCounterDelivery = () => {
   };
 
   const onClickEdit = (row) => {
-    setSelectedCounterDelivery(row);
+    setSelectedAttestationCounterDelivery(row);
     setAddEditModal(true);
   };
 
@@ -130,8 +130,8 @@ const VisaCounterDelivery = () => {
     return () => debouncedSearch.cancel();
   }, [debouncedSearch]);
 
-  const tableData = USE_MOCK ? mockVisaCounterDeliveryData : visaCounterDeliveryData;
-  const loading = USE_MOCK ? false : isLoadingVisaCounterDeliveryGet;
+  const tableData = USE_MOCK ? mockAttestationCounterDeliveryData : attestationCounterDeliveryData;
+  const loading = USE_MOCK ? false : isLoadingGetAttestationCounterDelivery;
 
   return (
     <>
@@ -141,7 +141,7 @@ const VisaCounterDelivery = () => {
           type: 'button',
           action: () => {
             setAddEditModal(true);
-            setSelectedCounterDelivery(null);
+            setSelectedAttestationCounterDelivery(null);
           },
         }}
         hideFilter
@@ -176,12 +176,12 @@ const VisaCounterDelivery = () => {
         <AddEditModal
           showModal={addEditModal}
           closeModal={() => setAddEditModal(false)}
-          onRefreshCounterDelivery={() => getData(params)}
-          selectedCounterDelivery={selectedCounterDelivery}
+          onRefreshAttestationCounterDelivery={() => getData(params)}
+          selectedAttestationCounterDelivery={selectedAttestationCounterDelivery}
         />
       )}
     </>
   );
 };
 
-export default VisaCounterDelivery;
+export default AttestationCounterDelivery;
