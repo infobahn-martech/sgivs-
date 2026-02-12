@@ -7,17 +7,17 @@ import '../../assets/scss/usermanagement.scss';
 
 import CommonHeader from '../../components/common/CommonHeader';
 import CustomTable from '../../components/common/CustomTable';
-import useVisaIFMReducer from '../../stores/VisaIFMReducer';
+import useAttestationIFMReducer from '../../stores/AttestationIFMReducer';
 import { formatDate } from '../../config/config';
 import AddEditModal from './AddEditModal';
 
 // Optional: if you already have edit icon, use it. Otherwise button text is fine.
 // import editIcon from '../../assets/images/edit.svg';
 
-const VisaIFM = () => {
+const AttestationIFM = () => {
   const USE_MOCK = true;
 
-  const { getData, visaIFMData, isLoadingGet } = useVisaIFMReducer((state) => state);
+  const { getData, attestationIFMData, isLoadingGetAttestationIFM } = useAttestationIFMReducer((state) => state);
 
   const initialParams = {
     search: '',
@@ -32,10 +32,10 @@ const VisaIFM = () => {
 
   const [params, setParams] = useState(initialParams);
   const [addEditModal, setAddEditModal] = useState(false);
-  const [selectedIFM, setSelectedIFM] = useState(null);
+  const [selectedAttestationIFM, setSelectedAttestationIFM] = useState(null);
 
   // ✅ Dummy Data (Required fields)
-  const mockVisaIFMData = {
+  const mockAttestationIFMData = {
     total: 5,
     data: [
       { id: 1, date: '2025-01-10T09:30:00Z', by: 'Admin', totalApplication: 12 },
@@ -59,7 +59,7 @@ const VisaIFM = () => {
   };
 
   const onClickEdit = (row) => {
-    setSelectedIFM(row);
+    setSelectedAttestationIFM(row);
     setAddEditModal(true);
   };
 
@@ -143,8 +143,8 @@ const VisaIFM = () => {
     return () => debouncedSearch.cancel();
   }, [debouncedSearch]);
 
-  const tableData = USE_MOCK ? mockVisaIFMData : visaIFMData;
-  const loading = USE_MOCK ? false : isLoadingGet;
+  const tableData = USE_MOCK ? mockAttestationIFMData : attestationIFMData;
+  const loading = USE_MOCK ? false : isLoadingGetAttestationIFM;
 
   return (
     <>
@@ -154,7 +154,7 @@ const VisaIFM = () => {
           type: 'button',
           action: () => {
             setAddEditModal(true);
-            setSelectedIFM(null);
+            setSelectedAttestationIFM(null);
           },
         }}
         hideFilter
@@ -189,12 +189,12 @@ const VisaIFM = () => {
         <AddEditModal
           showModal={addEditModal}
           closeModal={() => setAddEditModal(false)}
-          onRefreshIFM={() => getData(params)}
-          selectedIFM={selectedIFM}
+          onRefreshAttestationIFM={() => getData(params)}
+          selectedAttestationIFM={selectedAttestationIFM}
         />
       )}
     </>
   );
 };
 
-export default VisaIFM;
+export default AttestationIFM;

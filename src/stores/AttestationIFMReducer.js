@@ -1,21 +1,21 @@
 import { create } from 'zustand';
 import useAlertReducer from './AlertReducer';
-import visaIFMService from '../services/VisaIFMService';
+import attestationIFMService from '../services/AttestationIFMService';
 
-const useVisaIFMReducer = create((set) => ({
+const useAttestationIFMReducer = create((set) => ({
     isLoading: false,
     isLoadingGet: false,
     errorMessage: '',
     successMessage: '',
-    visaIFMData: null,
+    attestationIFMData: null,
 
     getData: async (params) => {
         try {
             set({ isLoadingGet: true });
-            const { data } = await visaIFMService.getData(params);
+            const { data } = await attestationIFMService.getData(params);
             const datas = data;
             set({
-                visaIFMData: datas?.data,
+                attestationIFMData: datas?.data,
                 // successMessage: data?.response?.data?.message ?? data?.message,
                 isLoadingGet: false,
             });
@@ -30,4 +30,4 @@ const useVisaIFMReducer = create((set) => ({
     },
 }));
 
-export default useVisaIFMReducer;
+export default useAttestationIFMReducer;
