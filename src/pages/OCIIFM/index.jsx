@@ -7,17 +7,17 @@ import '../../assets/scss/usermanagement.scss';
 
 import CommonHeader from '../../components/common/CommonHeader';
 import CustomTable from '../../components/common/CustomTable';
-import useVisaIFMReducer from '../../stores/VisaIFMReducer';
+import useOCIInScanReducer from '../../stores/OCIInScanReducer';
 import { formatDate } from '../../config/config';
 import AddEditModal from './AddEditModal';
 
 // Optional: if you already have edit icon, use it. Otherwise button text is fine.
 // import editIcon from '../../assets/images/edit.svg';
 
-const VisaIFM = () => {
+const OCIInScan = () => {
   const USE_MOCK = true;
 
-  const { getData, visaIFMData, isLoadingGet } = useVisaIFMReducer((state) => state);
+  const { getData, ociInScanDataData, isLoadingGet } = useOCIInScanReducer((state) => state);
 
   const initialParams = {
     search: '',
@@ -35,7 +35,7 @@ const VisaIFM = () => {
   const [selectedIFM, setSelectedIFM] = useState(null);
 
   // ✅ Dummy Data (Required fields)
-  const mockVisaIFMData = {
+  const mockOCIIFMData = {
     total: 5,
     data: [
       { id: 1, date: '2025-01-10T09:30:00Z', by: 'Admin', totalApplication: 12 },
@@ -143,7 +143,7 @@ const VisaIFM = () => {
     return () => debouncedSearch.cancel();
   }, [debouncedSearch]);
 
-  const tableData = USE_MOCK ? mockVisaIFMData : visaIFMData;
+  const tableData = USE_MOCK ? mockOCIIFMData : ociIFMDataData;
   const loading = USE_MOCK ? false : isLoadingGet;
 
   return (
@@ -197,4 +197,4 @@ const VisaIFM = () => {
   );
 };
 
-export default VisaIFM;
+export default OCIInScan;

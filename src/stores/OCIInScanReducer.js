@@ -2,20 +2,18 @@ import { create } from 'zustand';
 import useAlertReducer from './AlertReducer';
 import ociInScanService from '../services/ociInScanService';
 
-const useOCIInScanReducer = create((set) => ({
-    isLoading: false,
+const useOCIInScanStore = create((set) => ({
     isLoadingGet: false,
     errorMessage: '',
-    successMessage: '',
-    ociInScanDataData: null,
+    ociInScanData: null,
 
     getData: async (params) => {
         try {
             set({ isLoadingGet: true });
-            const { data } = await ociInScanService.getData(params);
+            const { data } = await ociInScanStore.getData(params);
             const datas = data;
             set({
-                ociInScanDataData: datas?.data,
+                ociInScanData: datas?.data,
                 // successMessage: data?.response?.data?.message ?? data?.message,
                 isLoadingGet: false,
             });
@@ -30,4 +28,4 @@ const useOCIInScanReducer = create((set) => ({
     },
 }));
 
-export default useOCIInScanReducer;
+export default useOCIInScanStore;

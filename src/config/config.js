@@ -79,6 +79,7 @@ export const headerConfig = [
   { title: 'Deleted Application', icon: userImage, path: '/oci-delete-application' },
   { title: 'InScan at Hub', icon: userImage, path: '/oci-inscan' },
   { title: 'OutScan to Mission', icon: userImage, path: '/oci-outscan-to-mission' },
+  { title: 'InScan from Mission', icon: userImage, path: '/oci-inscan-from-mission' },
 ];
 
 export const getFirstLetters = (name) => {
