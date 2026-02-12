@@ -225,6 +225,16 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         { name: 'Tracking', path: '/attestation-tracking', icon: MessagesIcon },
       ],
     },
+    // Elite Delivery
+    {
+      name: 'Courier Manager',
+      icon: EZIcon, // change icon if needed
+      path: '/elite-delivery',
+      activeRoutes: ['/elite-delivery'],
+      subMenu: [
+        { name: 'Elite Delivery', path: '/elite-delivery', icon: MessagesIcon },
+      ],
+    },
     // Appointment Settings
     {
       name: 'Appointment Settings',

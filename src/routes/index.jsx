@@ -72,6 +72,7 @@ import AttestationOTS from '../pages/AttestationOTS';
 import AttestationCounterDelivery from '../pages/AttestationCounterDelivery';
 import AttestationOTC from '../pages/AttestationOTC';
 import AttestationTracking from '../pages/AttestationTracking';
+import EliteDelivery from '../pages/EliteDelivery';
 const router = createHashRouter([
   {
     element: <App />,
@@ -169,6 +170,7 @@ const router = createHashRouter([
               { path: '/attestation-counter-delivery', element: <AttestationCounterDelivery /> },
               { path: '/attestation-outscan-to-courier', element: <AttestationOTC /> },
               { path: '/attestation-tracking', element: <AttestationTracking /> },
+              { path: '/elite-delivery', element: <EliteDelivery /> },
             ],
           },
         ],
