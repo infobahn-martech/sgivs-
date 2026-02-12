@@ -1,9 +1,9 @@
 import Gateway from '../config/gateway';
 
-const postData = (payload) => Gateway.post('/passport-tracking', payload);
-const patchData = (id, payload) => Gateway.put(`/passport-tracking/${id}`, payload);
-const getData = (params) => Gateway.get('/passport-tracking', { params });
-const deleteData = (id) => Gateway.delete(`/passport-tracking/${id}`);
+const postData = (payload) => Gateway.post('/visa-digitization', payload);
+const patchData = (id, payload) => Gateway.put(`/visa-digitization/${id}`, payload);
+const getData = (params) => Gateway.get('/visa-digitization', { params });
+const deleteData = (id) => Gateway.delete(`/visa-digitization/${id}`);
 
 export default {
   postData,

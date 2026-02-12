@@ -10,19 +10,18 @@ import editIcon from '../../assets/images/edit.svg';
 
 import CommonHeader from '../../components/common/CommonHeader';
 import CustomTable from '../../components/common/CustomTable';
-import usePassportTrackingReducer from '../../stores/PassportTrackingReducer';
+import useVisaDigitizationReducer from '../../stores/VisaDigitizationReducer';
 import { formatDate } from '../../config/config';
 import { AddEditModal } from './AddEditModal';
-import CustomActionModal from '../../components/common/CustomActionModal';
 
-const PassportTracking = () => {
+const VisaDigitization = () => {
   const USE_MOCK = true;
 
   const {
     getData,
-    passportTrackingData,
-    isLoadingPassportTracking,
-  } = usePassportTrackingReducer((state) => state);
+    visaDigitizationData,
+    isLoadingVisaDigitization,
+  } = useVisaDigitizationReducer((state) => state);
 
   const [modal, setModal] = useState(false);
 
@@ -40,7 +39,7 @@ const PassportTracking = () => {
   const [params, setParams] = useState(initialParams);
 
   // ✅ Mock Data (Required fields)
-  const mockPassportTrackingData = {
+  const mockVisaDigitizationData = {
     total: 5,
     data: [
       {
@@ -81,7 +80,7 @@ const PassportTracking = () => {
     ],
   };
 
-  const onRefreshPassportTracking = () => {
+  const onRefreshVisaDigitization = () => {
     if (!USE_MOCK) getData(params);
     setModal(false);
   };
@@ -145,8 +144,8 @@ const PassportTracking = () => {
     return () => debouncedSearch.cancel();
   }, [debouncedSearch]);
 
-  const tableData = USE_MOCK ? mockPassportTrackingData : passportTrackingData;
-  const loading = USE_MOCK ? false : isLoadingPassportTracking;
+  const tableData = USE_MOCK ? mockVisaDigitizationData : visaDigitizationData;
+  const loading = USE_MOCK ? false : isLoadingVisaDigitization;
 
   return (
     <>
@@ -183,11 +182,11 @@ const PassportTracking = () => {
         <AddEditModal
           showModal={modal}
           closeModal={() => setModal(false)}
-          onRefreshPassportTracking={onRefreshPassportTracking}
+          onRefreshVisaDigitization={onRefreshVisaDigitization}
         />
       )}
     </>
   );
 };
 
-export default PassportTracking;
+export default VisaDigitization;
