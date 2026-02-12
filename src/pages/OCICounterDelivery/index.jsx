@@ -8,15 +8,15 @@ import editIcon from '../../assets/images/edit.svg';
 
 import CommonHeader from '../../components/common/CommonHeader';
 import CustomTable from '../../components/common/CustomTable';
-import useVisaCounterDeliveryReducer from '../../stores/VisaCounterDeliveryReducer';
+import useOCICounterDeliveryReducer from '../../stores/OCICounterDeliveryReducer';
 import { formatDate } from '../../config/config';
 import AddEditModal from './AddEditModal';
 
-const VisaCounterDelivery = () => {
+const OCICounterDelivery = () => {
   const USE_MOCK = true;
 
-  const { getData, visaCounterDeliveryData, isLoadingVisaCounterDeliveryGet } =
-    useVisaCounterDeliveryReducer((state) => state);
+  const { getData, ociCounterDeliveryData, isLoadingOCICounterDeliveryGet } =
+    useOCICounterDeliveryReducer((state) => state);
   const initialParams = {
     search: '',
     page: 1,
@@ -33,7 +33,7 @@ const VisaCounterDelivery = () => {
   const [selectedCounterDelivery, setSelectedCounterDelivery] = useState(null);
 
   // ✅ Dummy Data
-  const mockVisaCounterDeliveryData = {
+  const mockOCICounterDeliveryData = {
     total: 5,
     data: [
       { id: 1, date: '2025-01-10T09:30:00Z', by: 'Admin', totalApplication: 12 },
@@ -130,8 +130,8 @@ const VisaCounterDelivery = () => {
     return () => debouncedSearch.cancel();
   }, [debouncedSearch]);
 
-  const tableData = USE_MOCK ? mockVisaCounterDeliveryData : visaCounterDeliveryData;
-  const loading = USE_MOCK ? false : isLoadingVisaCounterDeliveryGet;
+  const tableData = USE_MOCK ? mockOCICounterDeliveryData : ociCounterDeliveryData;
+  const loading = USE_MOCK ? false : isLoadingOCICounterDeliveryGet;
 
   return (
     <>
@@ -184,4 +184,4 @@ const VisaCounterDelivery = () => {
   );
 };
 
-export default VisaCounterDelivery;
+export default OCICounterDelivery;

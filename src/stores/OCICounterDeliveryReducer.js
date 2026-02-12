@@ -1,21 +1,18 @@
 import { create } from 'zustand';
 import useAlertReducer from './AlertReducer';
-import visaCounterDeliveryService from '../services/VisaCounterDeliveryService';
+import ociCounterDeliveryService from '../services/OCICounterDeliveryService';
 
-const useVisaCounterDeliveryReducer = create((set) => ({
-    isLoading: false,
+const useOCICounterDeliveryReducer = create((set) => ({
     isLoadingGet: false,
-    errorMessage: '',
-    successMessage: '',
-    visaCounterDeliveryData: null,
+    ociCounterDeliveryData: null,
 
     getData: async (params) => {
         try {
             set({ isLoadingGet: true });
-            const { data } = await visaCounterDeliveryService.getData(params);
+            const { data } = await ociCounterDeliveryService.getData(params);
             const datas = data;
             set({
-                visaCounterDeliveryData: datas?.data,
+                ociCounterDeliveryData: datas?.data,
                 // successMessage: data?.response?.data?.message ?? data?.message,
                 isLoadingGet: false,
             });
@@ -30,4 +27,4 @@ const useVisaCounterDeliveryReducer = create((set) => ({
     },
 }));
 
-export default useVisaCounterDeliveryReducer;
+export default useOCICounterDeliveryReducer;
