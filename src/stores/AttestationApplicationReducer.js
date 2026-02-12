@@ -1,84 +1,84 @@
 import { create } from 'zustand';
-import visaApplicationService from '../services/VisaApplicationService';
+import attestationApplicationService from '../services/AttestationApplicationService';
 import useAlertReducer from './AlertReducer';
 
 
-const useVisaApplicationReducer = create((set) => ({
-  isCreateVisaApplicationLoading: false,
-  isUpdateVisaApplicationLoading: false,
-  isDeleteVisaApplicationLoading: false,
+const useAttestationApplicationReducer = create((set) => ({
+  isCreateAttestationApplicationLoading: false,
+  isUpdateAttestationApplicationLoading: false,
+  isDeleteAttestationApplicationLoading: false,
   errorMessage: '',
   successMessage: '',
-  visaApplicationsData: [],
+  attestationApplicationsData: [],
   isLoadingGet: false,
   pagination: {},
 
-  createVisaApplication: async (data) => {
+  createAttestationApplication: async (data) => {
     try {
-      set({ isCreateVisaApplicationLoading: true });
-      const { data } = await visaApplicationService.createVisaApplication(data);
-      set({ isCreateVisaApplicationLoading: false });
+      set({ isCreateAttestationApplicationLoading: true });
+      const { data } = await attestationApplicationService.createAttestationApplication(data);
+      set({ isCreateAttestationApplicationLoading: false });
       const { success } = useAlertReducer.getState();
       success(data?.response?.data?.message ?? data?.message);
     } catch (err) {
       const { error } = useAlertReducer.getState();
       set({
         errorMessage: err?.response?.data?.message ?? err?.message,
-        isCreateVisaApplicationLoading: false,
+        isCreateAttestationApplicationLoading: false,
       });
       error(err?.response?.data?.message ?? err.message);
     }
   },
-  updateVisaApplication: async (id, data) => {
+  updateAttestationApplication: async (id, data) => {
     try {
-      set({ isUpdateVisaApplicationLoading: true });
-      const { data } = await visaApplicationService.updateVisaApplication(id, data);
+      set({ isUpdateAttestationApplicationLoading: true });
+      const { data } = await attestationApplicationService.updateAttestationApplication(id, data);
       const { success } = useAlertReducer.getState();
       success(data?.response?.data?.message ?? data?.message);
       set({
         successMessage: data?.response?.data?.message ?? data?.message,
-        isUpdateVisaApplicationLoading: false,
+        isUpdateAttestationApplicationLoading: false,
       });
     } catch (err) {
       const { error } = useAlertReducer.getState();
       set({
         errorMessage: err?.response?.data?.message ?? err?.message,
-        isDeleteVisaApplicationLoading: false,
+        isDeleteAttestationApplicationLoading: false,
       });
       error(err?.response?.data?.message ?? err.message);
     }
   },
-  deleteVisaApplication: async (id) => {
+  deleteAttestationApplication: async (id) => {
     try {
-      set({ isDeleteVisaApplicationLoading: true });
-      const { data } = await visaApplicationService.deleteVisaApplication(id);
+      set({ isDeleteAttestationApplicationLoading: true });
+      const { data } = await attestationApplicationService.deleteAttestationApplication(id);
       const { success } = useAlertReducer.getState();
       success(data?.response?.data?.message ?? data?.message);
       set({
         successMessage: data?.response?.data?.message ?? data?.message,
-        isDeleteVisaApplicationLoading: false,
+        isDeleteAttestationApplicationLoading: false,
       });
     } catch (err) {
       const { error } = useAlertReducer.getState();
       set({
         errorMessage: err?.response?.data?.message ?? err?.message,
-        isDeleteVisaApplicationLoading: false,
+        isDeleteAttestationApplicationLoading: false,
       });
       error(err?.response?.data?.message ?? err.message);
     }
   },
 
-  getVisaApplications: async (params) => {
+  getAttestationApplications: async (params) => {
     try {
       set({ isLoadingGet: true });
-      const { data } = await visaApplicationService.getVisaApplications(params);
-      const visaApplicationsData = data?.data;
-      set({ visaApplicationsData, isLoadingGet: false, pagination: data?.pagination });
+      const { data } = await attestationApplicationService.getAttestationApplications(params);
+      const attestationApplicationsData = data?.data;
+      set({ attestationApplicationsData, isLoadingGet: false, pagination: data?.pagination });
     } catch (err) {
       const { error } = useAlertReducer.getState();
       set({
         isLoadingGet: false,
-        visaApplicationsData: [],
+        attestationApplicationsData: [],
         pagination: {},
       });
       error(err?.response?.data?.message ?? err.message);
@@ -89,4 +89,4 @@ const useVisaApplicationReducer = create((set) => ({
 
 }));
 
-export default useVisaApplicationReducer;
+export default useAttestationApplicationReducer;

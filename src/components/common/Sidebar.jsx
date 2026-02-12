@@ -207,6 +207,16 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         { name: 'Tracking', path: '/oci-tracking', icon: MessagesIcon },
       ],
     },
+    // Attestation Manager
+    {
+      name: 'Attestation Manager',
+      icon: EZIcon, // change icon if needed
+      path: '/attestation-applications',
+      activeRoutes: ['/attestation-applications'],
+      subMenu: [
+        { name: 'Attestation Applications', path: '/attestation-applications', icon: MessagesIcon },
+      ],
+    },
     // Appointment Settings
     {
       name: 'Appointment Settings',

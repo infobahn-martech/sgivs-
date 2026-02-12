@@ -84,6 +84,7 @@ export const headerConfig = [
   { title: 'Counter Delivery', icon: userImage, path: '/oci-counter-delivery' },
   { title: 'Out Scan to Courier', icon: userImage, path: '/oci-outscan-to-courier' },
   { title: 'Tracking', icon: userImage, path: '/oci-tracking' },
+  { title: 'Attestation Applications', icon: userImage, path: '/attestation-applications' },
 ];
 
 export const getFirstLetters = (name) => {
