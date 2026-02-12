@@ -53,6 +53,7 @@ import VisaCounterDelivery from '../pages/VisaCounterDelivery';
 import OTC from '../pages/OTC';
 import VisaTracking from '../pages/VisaTracking';
 import VisaDigitization from '../pages/VisaDigitization';
+import ReferenceNumber from '../pages/ReferenceNumber';
 
 const router = createHashRouter([
   {
@@ -132,6 +133,7 @@ const router = createHashRouter([
               { path: '/visa-outscan-to-courier', element: <VisaOTC /> },
               { path: '/visa-tracking', element: <VisaTracking /> },
               { path: '/visa-digitization', element: <VisaDigitization /> },
+              { path: '/get-reference-numbers', element: <ReferenceNumber /> },
             ],
           },
         ],

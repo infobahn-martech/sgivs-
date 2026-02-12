@@ -74,6 +74,7 @@ export const headerConfig = [
   { title: 'Visa OTC', icon: userImage, path: '/visa-outscan-to-courier' },
   { title: 'Visa Tracking', icon: userImage, path: '/visa-tracking' },
   { title: 'Visa Digitization', icon: userImage, path: '/visa-digitization' },
+  { title: 'Reference Number', icon: userImage, path: '/get-reference-numbers' },
 ];
 
 export const getFirstLetters = (name) => {
