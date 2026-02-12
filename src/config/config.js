@@ -87,6 +87,12 @@ export const headerConfig = [
   { title: 'Attestation Applications', icon: userImage, path: '/attestation-applications' },
   { title: 'Deleted Application', icon: userImage, path: '/attestation-delete-application' },
   { title: 'InScan At Hub', icon: userImage, path: '/attestation-in-scan' },
+  { title: 'OutScan To Mission', icon: userImage, path: '/attestation-outscan-to-mission' },
+  { title: 'InScan From Mission', icon: userImage, path: '/attestation-inscan-from-mission' },
+  { title: 'OutScan To Spoke', icon: userImage, path: '/attestation-outscan-to-spoke' },
+  { title: 'Counter Delivery', icon: userImage, path: '/attestation-counter-delivery' },
+  { title: 'Out Scan to Courier', icon: userImage, path: '/attestation-outscan-to-courier' },
+  { title: 'Tracking', icon: userImage, path: '/attestation-tracking' },
 ];
 
 export const getFirstLetters = (name) => {

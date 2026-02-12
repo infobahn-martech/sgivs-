@@ -7,14 +7,14 @@ import '../../assets/scss/usermanagement.scss';
 
 import CommonHeader from '../../components/common/CommonHeader';
 import CustomTable from '../../components/common/CustomTable';
-import useVisaOTMReducer from '../../stores/VisaOTMReducer';
+import useAttestationOTMReducer from '../../stores/AttestationOTMReducer';
 import { formatDate } from '../../config/config';
 import AddEditModal from './AddEditModal';
 
-const VisaOTM = () => {
+const AttestationOTM = () => {
   const USE_MOCK = true;
 
-  const { getData, visaOTMData, isLoadingGet } = useVisaOTMReducer((state) => state);
+  const { getData, attestationOTMData, isLoadingGetAttestationOTM } = useAttestationOTMReducer((state) => state);
 
   const initialParams = {
     search: '',
@@ -29,10 +29,10 @@ const VisaOTM = () => {
 
   const [params, setParams] = useState(initialParams);
   const [addEditModal, setAddEditModal] = useState(false);
-  const [selectedOTM, setSelectedOTM] = useState(null);
+  const [selectedAttestationOTM, setSelectedAttestationOTM] = useState(null);
 
   // ✅ Dummy Data (Required fields)
-  const mockVisaOTMData = {
+  const mockAttestationOTMData = {
     total: 5,
     data: [
       {
@@ -228,8 +228,8 @@ const VisaOTM = () => {
     return () => debouncedSearch.cancel();
   }, [debouncedSearch]);
 
-  const tableData = USE_MOCK ? mockVisaOTMData : visaOTMData;
-  const loading = USE_MOCK ? false : isLoadingVisaOTMGet;
+  const tableData = USE_MOCK ? mockAttestationOTMData : attestationOTMData;
+  const loading = USE_MOCK ? false : isLoadingAttestationOTMGet;
 
   return (
     <>
@@ -239,7 +239,7 @@ const VisaOTM = () => {
           type: 'button',
           action: () => {
             setAddEditModal(true);
-            setSelectedOTM(null);
+            setSelectedAttestationOTM(null);
           },
         }}
         hideFilter
@@ -274,12 +274,12 @@ const VisaOTM = () => {
         <AddEditModal
           showModal={addEditModal}
           closeModal={() => setAddEditModal(false)}
-          onRefreshOTM={() => getData(params)}
-          selectedOTM={selectedOTM}
+          onRefreshAttestationOTM={() => getData(params)}
+          selectedAttestationOTM={selectedAttestationOTM}
         />
       )}
     </>
   );
 };
 
-export default VisaOTM;
+export default AttestationOTM;

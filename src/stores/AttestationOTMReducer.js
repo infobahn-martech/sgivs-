@@ -1,20 +1,20 @@
 import { create } from 'zustand';
 import useAlertReducer from './AlertReducer';
-import visaOTMService from '../services/VisaOTMService';
-const useVisaOTMReducer = create((set) => ({
+import attestationOTMService from '../services/AttestationOTMService';
+const useAttestationOTMReducer = create((set) => ({
     isLoading: false,
     isLoadingGet: false,
     errorMessage: '',
     successMessage: '',
-    visaOTMData: null,
+    attestationOTMData: null,
 
     getData: async (params) => {
         try {
             set({ isLoadingGet: true });
-            const { data } = await visaOTMService.getData(params);
+            const { data } = await attestationOTMService.getData(params);
             const datas = data;
             set({
-                visaOTMData: datas?.data,
+                attestationOTMData: datas?.data,
                 // successMessage: data?.response?.data?.message ?? data?.message,
                 isLoadingGet: false,
             });
@@ -29,4 +29,4 @@ const useVisaOTMReducer = create((set) => ({
     },
 }));
 
-export default useVisaOTMReducer;
+export default useAttestationOTMReducer;

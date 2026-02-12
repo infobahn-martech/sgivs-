@@ -66,6 +66,12 @@ import OCITracking from '../pages/OCITracking';
 import AttestationApplications from '../pages/AttestationApplications';
 import AttestationDeleteApplication from '../pages/AttestationDeleteApplication';
 import AttestationInScan from '../pages/AttestationInScan';
+import AttestationOTM from '../pages/AttestationOTM';
+import AttestationIFM from '../pages/AttestationIFM';
+import AttestationOTS from '../pages/AttestationOTS';
+import AttestationCounterDelivery from '../pages/AttestationCounterDelivery';
+import AttestationOTC from '../pages/AttestationOTC';
+import AttestationTracking from '../pages/AttestationTracking';
 const router = createHashRouter([
   {
     element: <App />,
@@ -157,6 +163,12 @@ const router = createHashRouter([
               { path: '/attestation-applications', element: <AttestationApplications /> },
               { path: '/attestation-delete-application', element: <AttestationDeleteApplication /> },
               { path: '/attestation-in-scan', element: <AttestationInScan /> },
+              { path: '/attestation-outscan-to-mission', element: <AttestationOTM /> },
+              { path: '/attestation-inscan-from-mission', element: <AttestationIFM /> },
+              { path: '/attestation-outscan-to-spoke', element: <AttestationOTS /> },
+              { path: '/attestation-counter-delivery', element: <AttestationCounterDelivery /> },
+              { path: '/attestation-outscan-to-courier', element: <AttestationOTC /> },
+              { path: '/attestation-tracking', element: <AttestationTracking /> },
             ],
           },
         ],
