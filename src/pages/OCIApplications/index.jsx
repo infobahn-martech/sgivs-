@@ -6,7 +6,7 @@ import '../../assets/scss/usermanagement.scss';
 
 import CommonHeader from '../../components/common/CommonHeader';
 import CustomTable from '../../components/common/CustomTable';
-import useVisaApplicationReducer from '../../stores/VisaApplicationReducer';
+import useOCIApplicationReducer from '../../stores/OCIApplicationReducer';
 import { formatDate } from '../../config/config';
 import { AddEditModal } from './AddEditModal';
 import CustomActionModal from '../../components/common/CustomActionModal';
@@ -17,11 +17,11 @@ import ChangeServicesModal from './ChangeServices';
 import ActivityLog from './ActivityLog';
 import AddRemoveBiometric from './AddRemoveBiometric';
 
-const VisaApplications = () => {
+const OCIApplications = () => {
   const USE_MOCK = true;
 
-  const { getData, visaApplicationsData, isLoadingGet, deleteData, isLoadingDelete } =
-    useVisaApplicationReducer((state) => state);
+  const { getData, ociApplicationsData, isLoadingGet, deleteData, isLoadingDelete } =
+    useOCIApplicationReducer((state) => state);
 
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [modal, setModal] = useState(false);
@@ -43,7 +43,7 @@ const VisaApplications = () => {
 
   const [params, setParams] = useState(initialParams);
 
-  const mockVisaApplicationsData = {
+  const mockOCIApplicationsData = {
     total: 5,
     data: [
       {
@@ -120,7 +120,7 @@ const VisaApplications = () => {
   };
 
 
-  const onRefreshVisaApplications = () => {
+  const onRefreshOCIApplications = () => {
     if (!USE_MOCK) {
       getData(params);
     }
@@ -248,12 +248,12 @@ const VisaApplications = () => {
 
     if (deleteModalOpen?.id) {
       deleteData(deleteModalOpen?.id, () => {
-        onRefreshVisaApplications();
+        onRefreshOCIApplications();
       });
     }
   };
 
-  const tableData = USE_MOCK ? mockVisaApplicationsData : visaApplicationsData;
+  const tableData = USE_MOCK ? mockOCIApplicationsData : ociApplicationsData;
   const loading = USE_MOCK ? false : isLoadingGet;
 
   return (
@@ -296,7 +296,7 @@ const VisaApplications = () => {
         <AddEditModal
           showModal={modal}
           closeModal={() => setModal(false)}
-          onRefreshVisaApplications={onRefreshVisaApplications}
+          onRefreshOCIApplications={onRefreshOCIApplications}
         />
       )}
 
@@ -350,4 +350,4 @@ const VisaApplications = () => {
   );
 };
 
-export default VisaApplications;
+export default OCIApplications;

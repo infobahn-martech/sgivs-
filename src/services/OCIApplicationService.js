@@ -1,15 +1,15 @@
 import Gateway from '../config/gateway';
 
-const createVisaApplication = (data) => Gateway.post('visa-application', data);
-const getVisaApplications = (params) => Gateway.get('visa-application', { params });
+const createOCIApplication = (data) => Gateway.post('oci-application', data);
+const getOCIApplications = (params) => Gateway.get('oci-application', { params });
 
-const updateVisaApplication = (id, data) => Gateway.patch(`visa-application/${id}`, data);
+const updateOCIApplication = (id, data) => Gateway.patch(`oci-application/${id}`, data);
 
-const deleteVisaApplication = (id) => Gateway.delete(`visa-application/${id}`);
+const deleteOCIApplication = (id) => Gateway.delete(`oci-application/${id}`);
 
 export default {
-  getVisaApplications,
-  createVisaApplication,
-  updateVisaApplication,
-  deleteVisaApplication,
+  getOCIApplications,
+  createOCIApplication,
+  updateOCIApplication,
+  deleteOCIApplication,
 };

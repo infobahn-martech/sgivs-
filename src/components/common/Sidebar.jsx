@@ -189,6 +189,14 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         { name: 'Visa Digitization', path: '/visa-digitization', icon: MessagesIcon },
       ],
     },
+    // OCI Manager
+    {
+      name: 'OCI Manager',
+      icon: EZIcon, // change icon if needed
+      path: '/oci-applications',
+      activeRoutes: ['/oci-applications'],
+      subMenu: [{ name: 'OCI Applications', path: '/oci-applications', icon: MessagesIcon }],
+    },
 
 
     // Appointment Settings
