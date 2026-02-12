@@ -9,14 +9,14 @@ import editIcon from '../../assets/images/edit.svg';
 
 import CommonHeader from '../../components/common/CommonHeader';
 import CustomTable from '../../components/common/CustomTable';
-import useOTCReducer from '../../stores/OTCReducer';
+import useVisaOTCReducer from '../../stores/VisaOTCReducer';
 import { formatDate } from '../../config/config';
 import AddEditModal from './AddEditModal';
 
-const OTC = () => {
+const VisaOTC = () => {
   const USE_MOCK = true;
 
-  const { getData, otcData, isLoadingGet } = useOTCReducer((state) => state);
+  const { getData, visaOTCData, isLoadingVisaOTCGet } = useVisaOTCReducer((state) => state);
 
   const initialParams = {
     search: '',
@@ -31,10 +31,10 @@ const OTC = () => {
 
   const [params, setParams] = useState(initialParams);
   const [addEditModal, setAddEditModal] = useState(false);
-  const [selectedOTC, setSelectedOTC] = useState(null);
+  const [selectedVisaOTC, setSelectedVisaOTC] = useState(null);
 
   // ✅ Dummy Data
-  const mockOTCData = {
+  const mockVisaOTCData = {
     total: 5,
     data: [
       { id: 1, date: '2025-01-10T09:30:00Z', by: 'Admin', totalApplication: 12 },
@@ -58,7 +58,7 @@ const OTC = () => {
   };
 
   const onClickEdit = (row) => {
-    setSelectedOTC(row);
+    setSelectedVisaOTC(row);
     setAddEditModal(true);
   };
 
@@ -66,7 +66,7 @@ const OTC = () => {
     return (
       <div className="d-flex gap-2 align-items-center">
         <Tooltip
-          id={`otc-edit-${row?.id}`}
+          id={`visa-otc-edit-${row?.id}`}
           place="bottom"
           content="Edit"
           style={{ backgroundColor: '#051a53' }}
@@ -75,7 +75,7 @@ const OTC = () => {
         <img
           src={editIcon}
           alt="edit"
-          data-tooltip-id={`otc-edit-${row?.id}`}
+          data-tooltip-id={`visa-otc-edit-${row?.id}`}
           onClick={() => onClickEdit(row)}
           style={{ cursor: 'pointer' }}
         />
@@ -129,8 +129,8 @@ const OTC = () => {
     return () => debouncedSearch.cancel();
   }, [debouncedSearch]);
 
-  const tableData = USE_MOCK ? mockOTCData : otcData;
-  const loading = USE_MOCK ? false : isLoadingGet;
+  const tableData = USE_MOCK ? mockVisaOTCData : visaOTCData;
+  const loading = USE_MOCK ? false : isLoadingVisaOTCGet;
 
   return (
     <>
@@ -140,7 +140,7 @@ const OTC = () => {
           type: 'button',
           action: () => {
             setAddEditModal(true);
-            setSelectedOTC(null);
+            setSelectedVisaOTC(null);
           },
         }}
         hideFilter
@@ -176,11 +176,11 @@ const OTC = () => {
           showModal={addEditModal}
           closeModal={() => setAddEditModal(false)}
           onRefreshOTC={() => getData(params)}
-          selectedOTC={selectedOTC}
+          selectedVisaOTC={selectedVisaOTC}
         />
       )}
     </>
   );
 };
 
-export default OTC;
+export default VisaOTC;

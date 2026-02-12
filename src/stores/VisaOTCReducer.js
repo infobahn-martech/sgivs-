@@ -1,21 +1,21 @@
 import { create } from 'zustand';
 import useAlertReducer from './AlertReducer';
-import ifmService from '../services/ifmService';
+import visaOTCService from '../services/VisaOTCService';
 
-const useIFMReducer = create((set) => ({
+const useVisaOTCReducer = create((set) => ({
     isLoading: false,
     isLoadingGet: false,
     errorMessage: '',
     successMessage: '',
-    ifmData: null,
+    visaOTCData: null,
 
     getData: async (params) => {
         try {
             set({ isLoadingGet: true });
-            const { data } = await ifmService.getData(params);
+            const { data } = await visaOTCService.getData(params);
             const datas = data;
             set({
-                ifmData: datas?.data,
+                visaOTCData: datas?.data,
                 // successMessage: data?.response?.data?.message ?? data?.message,
                 isLoadingGet: false,
             });
@@ -30,4 +30,4 @@ const useIFMReducer = create((set) => ({
     },
 }));
 
-export default useIFMReducer;
+export default useVisaOTCReducer;

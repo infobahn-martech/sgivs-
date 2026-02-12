@@ -41,7 +41,7 @@ import OTM from '../pages/OTM';
 import IFM from '../pages/IFM';
 import OTS from '../pages/OTS';
 import CounterDelivery from '../pages/CounterDelivery';
-import OTC from '../pages/OTC';
+import VisaOTC from '../pages/VisaOTC';
 import PassportTracking from '../pages/PassportTracking';
 import VisaApplications from '../pages/VisaApplications';
 import VisaDeleteApplication from '../pages/VisaDeleteApplication';
@@ -50,6 +50,7 @@ import VisaOTM from '../pages/VisaOTM';
 import VisaIFM from '../pages/VisaIFM';
 import VisaOTS from '../pages/VisaOTS';
 import VisaCounterDelivery from '../pages/VisaCounterDelivery';
+import OTC from '../pages/OTC';
 
 const router = createHashRouter([
   {
@@ -126,6 +127,7 @@ const router = createHashRouter([
               { path: '/visa-inscan-from-mission', element: <VisaIFM /> },
               { path: '/visa-outscan-to-spoke', element: <VisaOTS /> },
               { path: '/visa-counter-delivery', element: <VisaCounterDelivery /> },
+              { path: '/visa-outscan-to-courier', element: <VisaOTC /> },
             ],
           },
         ],
