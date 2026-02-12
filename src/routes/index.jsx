@@ -45,6 +45,7 @@ import OTC from '../pages/OTC';
 import PassportTracking from '../pages/PassportTracking';
 import VisaApplications from '../pages/VisaApplications';
 import VisaDeleteApplication from '../pages/VisaDeleteApplication';
+import VisaInScan from '../pages/VisaInScan';
 
 const router = createHashRouter([
   {
@@ -116,6 +117,7 @@ const router = createHashRouter([
               { path: '/passport-tracking', element: <PassportTracking /> },
               { path: '/visa-applications', element: <VisaApplications /> },
               { path: '/visa-delete-application', element: <VisaDeleteApplication /> },
+              { path: '/visa-inscan-hub', element: <VisaInScan /> },
             ],
           },
         ],
