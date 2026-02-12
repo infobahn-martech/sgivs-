@@ -6,15 +6,14 @@ import '../../assets/scss/usermanagement.scss';
 
 import CommonHeader from '../../components/common/CommonHeader';
 import CustomTable from '../../components/common/CustomTable';
-import useVisaInScanReducer from '../../stores/VisaInScanReducer';
+import useOCIInScanReducer from '../../stores/OCIInScanReducer';
 import { formatDate } from '../../config/config';
 import AddEditModal from './AddEditModal';
 
-const VisaInScan = () => {
+const OCIInScan = () => {
   const USE_MOCK = true;
 
-  const { getData, visaInScanData, isLoadingGet } = useVisaInScanReducer((state) => state);
-
+  const { getData, ociInScanDataData, isLoadingGetData } = useOCIInScanReducer((state) => state);
   const initialParams = {
     search: '',
     page: 1,
@@ -93,7 +92,7 @@ const VisaInScan = () => {
     return () => debouncedSearch.cancel();
   }, [debouncedSearch]);
 
-  const tableData = USE_MOCK ? mockInScanData : visaInScanData;
+  const tableData = USE_MOCK ? mockInScanData : ociInScanDataData;
   const loading = USE_MOCK ? false : isLoadingGet;
 
   return (
@@ -146,4 +145,4 @@ const VisaInScan = () => {
   );
 };
 
-export default VisaInScan;
+export default OCIInScan;
