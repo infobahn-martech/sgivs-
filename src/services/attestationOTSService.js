@@ -1,5 +1,5 @@
 import Gateway from '../config/gateway';
 
-const getData = (params) => Gateway.get('/visa-ots', { params });
+const getData = (params) => Gateway.get('/attestation-ots', { params });
 
 export default { getData };

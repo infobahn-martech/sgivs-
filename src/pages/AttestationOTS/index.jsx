@@ -6,15 +6,15 @@ import '../../assets/scss/usermanagement.scss';
 
 import CommonHeader from '../../components/common/CommonHeader';
 import CustomTable from '../../components/common/CustomTable';
-import useVisaOTSReducer from '../../stores/VisaOTSReducer';
+import useAttestationOTSReducer from '../../stores/AttestationOTSReducer';
 import { formatDate } from '../../config/config';
 import AddEditModal from './AddEditModal';
 
-const VisaOTS = () => {
+const AttestationOTS = () => {
   const USE_MOCK = true;
 
-  const { getData, visaOTSData, isLoadingGet } = useVisaOTSReducer((state) => state);
-  const { isLoadingVisaOTSGet } = useVisaOTSReducer((state) => state);
+  const { getData, attestationOTSData, isLoadingGetAttestationOTS } = useAttestationOTSReducer((state) => state);
+  const { isLoadingAttestationOTSGet } = useAttestationOTSReducer((state) => state);
   const initialParams = {
     search: '',
     page: 1,
@@ -29,7 +29,7 @@ const VisaOTS = () => {
   const [params, setParams] = useState(initialParams);
   const [showAddModal, setShowAddModal] = useState(false);
   // ✅ Dummy Data (Required fields)
-  const mockVisaOTSData = {
+  const mockAttestationOTSData = {
     total: 5,
     data: [
       { id: 1, date: '2025-01-10T09:30:00Z', by: 'Admin', totalApplication: 12 },
@@ -91,8 +91,8 @@ const VisaOTS = () => {
     return () => debouncedSearch.cancel();
   }, [debouncedSearch]);
 
-  const tableData = USE_MOCK ? mockVisaOTSData : visaOTSData;
-  const loading = USE_MOCK ? false : isLoadingVisaOTSGet;
+  const tableData = USE_MOCK ? mockAttestationOTSData : attestationOTSData;
+  const loading = USE_MOCK ? false : isLoadingAttestationOTSGet;
 
   return (
     <>
@@ -131,9 +131,9 @@ const VisaOTS = () => {
         onSortChange={handleSortChange}
         wrapClasses="inventory-table-wrap"
       />
-      {showAddModal && <AddEditModal showModal={showAddModal} closeModal={() => setShowAddModal(false)} onRefreshOTS={() => getData(params)} />}
+      {showAddModal && <AddEditModal showModal={showAddModal} closeModal={() => setShowAddModal(false)} onRefreshAttestationOTS={() => getData(params)} />}
     </>
   );
 };
 
-export default VisaOTS;
+export default AttestationOTS;
