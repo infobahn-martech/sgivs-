@@ -1,21 +1,18 @@
 import { create } from 'zustand';
 import useAlertReducer from './AlertReducer';
-import visaOTCService from '../services/VisaOTCService';
+import ociOTCService from '../services/OCIOTCService';
 
-const useVisaOTCReducer = create((set) => ({
-    isLoading: false,
+const useOCIOTCReducer = create((set) => ({
     isLoadingGet: false,
-    errorMessage: '',
-    successMessage: '',
-    visaOTCData: null,
+    ociOTCData: null,
 
     getData: async (params) => {
         try {
             set({ isLoadingGet: true });
-            const { data } = await visaOTCService.getData(params);
+            const { data } = await ociOTCService.getData(params);
             const datas = data;
             set({
-                visaOTCData: datas?.data,
+                ociOTCData: datas?.data,
                 // successMessage: data?.response?.data?.message ?? data?.message,
                 isLoadingGet: false,
             });
@@ -30,4 +27,4 @@ const useVisaOTCReducer = create((set) => ({
     },
 }));
 
-export default useVisaOTCReducer;
+export default useOCIOTCReducer;
