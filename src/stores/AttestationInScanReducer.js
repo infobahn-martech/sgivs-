@@ -1,21 +1,21 @@
 import { create } from 'zustand';
 import useAlertReducer from './AlertReducer';
-import visaInScanService from '../services/VisaInScanService';
+import attestationInScanService from '../services/AttestationInScanService';
 
-const useVisaInScanReducer = create((set) => ({
+const useAttestationInScanReducer = create((set) => ({
     isLoading: false,
     isLoadingGet: false,
     errorMessage: '',
     successMessage: '',
-    visaInScanData: null,
+    attestationInScanData: null,
 
     getData: async (params) => {
         try {
             set({ isLoadingGet: true });
-            const { data } = await visaInScanService.getData(params);
+            const { data } = await attestationInScanService.getData(params);
             const datas = data;
             set({
-                visaInScanData: datas?.data,
+                attestationInScanData: datas?.data,
                 // successMessage: data?.response?.data?.message ?? data?.message,
                 isLoadingGet: false,
             });
@@ -30,4 +30,4 @@ const useVisaInScanReducer = create((set) => ({
     },
 }));
 
-export default useVisaInScanReducer;
+export default useAttestationInScanReducer;

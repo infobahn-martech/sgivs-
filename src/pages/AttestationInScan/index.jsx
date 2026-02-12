@@ -6,14 +6,14 @@ import '../../assets/scss/usermanagement.scss';
 
 import CommonHeader from '../../components/common/CommonHeader';
 import CustomTable from '../../components/common/CustomTable';
-import useVisaInScanReducer from '../../stores/VisaInScanReducer';
+import useAttestationInScanReducer from '../../stores/AttestationInScanReducer';
 import { formatDate } from '../../config/config';
 import AddEditModal from './AddEditModal';
 
-const VisaInScan = () => {
+const AttestationInScan = () => {
   const USE_MOCK = true;
 
-  const { getData, visaInScanData, isLoadingGet } = useVisaInScanReducer((state) => state);
+  const { getData, attestationInScanData, isLoadingGetAttestationInScan } = useAttestationInScanReducer((state) => state);
 
   const initialParams = {
     search: '',
@@ -28,10 +28,10 @@ const VisaInScan = () => {
 
   const [params, setParams] = useState(initialParams);
   const [addEditModal, setAddEditModal] = useState(false);
-  const [selectedInScan, setSelectedInScan] = useState(null);
+  const [selectedAttestationInScan, setSelectedAttestationInScan] = useState(null);
 
   // ✅ Dummy Data (Required fields)
-  const mockInScanData = {
+  const mockAttestationInScanData = {
     total: 5,
     data: [
       { id: 1, date: '2025-01-10T09:30:00Z', by: 'Admin', totalApplication: 12 },
@@ -93,8 +93,8 @@ const VisaInScan = () => {
     return () => debouncedSearch.cancel();
   }, [debouncedSearch]);
 
-  const tableData = USE_MOCK ? mockInScanData : visaInScanData;
-  const loading = USE_MOCK ? false : isLoadingGet;
+  const tableData = USE_MOCK ? mockAttestationInScanData : attestationInScanData;
+  const loading = USE_MOCK ? false : isLoadingGetAttestationInScan;
 
   return (
     <>
@@ -104,7 +104,7 @@ const VisaInScan = () => {
           type: 'button',
           action: () => {
             setAddEditModal(true);
-            setSelectedInScan(null);
+            setSelectedAttestationInScan(null);
           },
         }}
         hideFilter
@@ -138,12 +138,12 @@ const VisaInScan = () => {
         <AddEditModal
           showModal={addEditModal}
           closeModal={() => setAddEditModal(false)}
-          onRefreshInScan={() => getData(params)}
-          selectedInScan={selectedInScan}
+          onRefreshAttestationInScan={() => getData(params)}
+          selectedAttestationInScan={selectedAttestationInScan}
         />
       )}
     </>
   );
 };
 
-export default VisaInScan;
+export default AttestationInScan;

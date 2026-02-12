@@ -212,10 +212,11 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       name: 'Attestation Manager',
       icon: EZIcon, // change icon if needed
       path: '/attestation-applications',
-      activeRoutes: ['/attestation-applications', '/attestation-delete-application'],
+      activeRoutes: ['/attestation-applications', '/attestation-delete-application', '/attestation-in-scan'],
       subMenu: [
         { name: 'Attestation Applications', path: '/attestation-applications', icon: MessagesIcon },
         { name: 'Deleted Application', path: '/attestation-delete-application', icon: MessagesIcon },
+        { name: 'InScan At Hub', path: '/attestation-in-scan', icon: MessagesIcon },
       ],
     },
     // Appointment Settings
