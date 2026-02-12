@@ -1,21 +1,21 @@
 import { create } from 'zustand';
 import useAlertReducer from './AlertReducer';
-import otsService from '../services/otsService';
+import visaOTSService from '../services/VisaOTSService';
 
-const useOTSReducer = create((set) => ({
+const useVisaOTSReducer = create((set) => ({
     isLoading: false,
     isLoadingGet: false,
     errorMessage: '',
     successMessage: '',
-    otsData: null,
+    visaOTSData: null,
 
     getData: async (params) => {
         try {
             set({ isLoadingGet: true });
-            const { data } = await otsService.getData(params);
+            const { data } = await visaOTSService.getData(params);
             const datas = data;
             set({
-                otsData: datas?.data,
+                visaOTSData: datas?.data,
                 // successMessage: data?.response?.data?.message ?? data?.message,
                 isLoadingGet: false,
             });
@@ -30,4 +30,4 @@ const useOTSReducer = create((set) => ({
     },
 }));
 
-export default useOTSReducer;
+export default useVisaOTSReducer;

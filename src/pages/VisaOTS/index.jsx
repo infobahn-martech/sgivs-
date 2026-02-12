@@ -6,15 +6,15 @@ import '../../assets/scss/usermanagement.scss';
 
 import CommonHeader from '../../components/common/CommonHeader';
 import CustomTable from '../../components/common/CustomTable';
-import useOTSReducer from '../../stores/OTSReducer';
+import useVisaOTSReducer from '../../stores/VisaOTSReducer';
 import { formatDate } from '../../config/config';
 import AddEditModal from './AddEditModal';
 
-const OTS = () => {
+const VisaOTS = () => {
   const USE_MOCK = true;
 
-  const { getData, otsData, isLoadingGet } = useOTSReducer((state) => state);
-
+  const { getData, visaOTSData, isLoadingGet } = useVisaOTSReducer((state) => state);
+  const { isLoadingVisaOTSGet } = useVisaOTSReducer((state) => state);
   const initialParams = {
     search: '',
     page: 1,
@@ -29,7 +29,7 @@ const OTS = () => {
   const [params, setParams] = useState(initialParams);
   const [showAddModal, setShowAddModal] = useState(false);
   // ✅ Dummy Data (Required fields)
-  const mockOTSData = {
+  const mockVisaOTSData = {
     total: 5,
     data: [
       { id: 1, date: '2025-01-10T09:30:00Z', by: 'Admin', totalApplication: 12 },
@@ -91,8 +91,8 @@ const OTS = () => {
     return () => debouncedSearch.cancel();
   }, [debouncedSearch]);
 
-  const tableData = USE_MOCK ? mockOTSData : otsData;
-  const loading = USE_MOCK ? false : isLoadingGet;
+  const tableData = USE_MOCK ? mockVisaOTSData : visaOTSData;
+  const loading = USE_MOCK ? false : isLoadingVisaOTSGet;
 
   return (
     <>
@@ -136,4 +136,4 @@ const OTS = () => {
   );
 };
 
-export default OTS;
+export default VisaOTS;

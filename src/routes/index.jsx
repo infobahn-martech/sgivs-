@@ -48,6 +48,7 @@ import VisaDeleteApplication from '../pages/VisaDeleteApplication';
 import VisaInScan from '../pages/VisaInScan';
 import VisaOTM from '../pages/VisaOTM';
 import VisaIFM from '../pages/VisaIFM';
+import VisaOTS from '../pages/VisaOTS';
 
 const router = createHashRouter([
   {
@@ -122,6 +123,7 @@ const router = createHashRouter([
               { path: '/visa-inscan-hub', element: <VisaInScan /> },
               { path: '/visa-outscan-to-mission', element: <VisaOTM /> },
               { path: '/visa-inscan-from-mission', element: <VisaIFM /> },
+              { path: '/visa-outscan-to-spoke', element: <VisaOTS /> },
             ],
           },
         ],
