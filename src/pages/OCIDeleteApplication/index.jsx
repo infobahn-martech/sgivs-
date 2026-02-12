@@ -7,16 +7,16 @@ import '../../assets/scss/usermanagement.scss';
 
 import CommonHeader from '../../components/common/CommonHeader';
 import CustomTable from '../../components/common/CustomTable';
-import useVisaDeleteApplicationReducer from '../../stores/VisaDeleteApplicationReducer';
+import useOCIDeleteApplicationReducer from '../../stores/OCIDeleteApplicationReducer';
 import { formatDate } from '../../config/config';
 import CustomActionModal from '../../components/common/CustomActionModal';
 
-const VisaDeleteApplication = () => {
+const OCIDeleteApplication = () => {
   // ✅ Toggle this
   const USE_MOCK = true;
 
-  const { getData, visaDeleteApplicationData, isLoadingGet, deleteData, isLoadingDelete } =
-    useVisaDeleteApplicationReducer((state) => state);
+  const { getData, deleteApplicationData, isLoadingGet, deleteData, isLoadingDelete } =
+    useOCIDeleteApplicationReducer((state) => state);
 
   const [retrieveModalOpen, setRetrieveModalOpen] = useState(false);
 
@@ -267,7 +267,7 @@ const VisaDeleteApplication = () => {
           showModal={retrieveModalOpen}
           closeModal={() => setRetrieveModalOpen(false)}
           isLoading={USE_MOCK ? false : isLoadingDelete}
-          message={`Are you sure you want to retrieve ${retrieveModalOpen?.name}?`}
+          message={`Are you sure you want to delete ${retrieveModalOpen?.name}?`}
           onCancel={() => setRetrieveModalOpen(false)}
           onSubmit={handleRetrieve}
         />
@@ -276,4 +276,4 @@ const VisaDeleteApplication = () => {
   );
 };
 
-export default VisaDeleteApplication;
+export default OCIDeleteApplication;

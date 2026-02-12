@@ -1,22 +1,22 @@
 import { create } from 'zustand';
 import useAlertReducer from './AlertReducer';
-import visaDeleteApplicationService from '../services/visaDeleteApplicationService';
+import ociDeleteApplicationService from '../services/ociDeleteApplicationService';
 
-const useVisaDeleteApplicationReducer = create((set) => ({
+const useOCIDeleteApplicationReducer = create((set) => ({
     isLoading: false,
     isLoadingGet: false,
     isLoadingDelete: false,
     errorMessage: '',
     successMessage: '',
-    visaDeleteApplicationData: null,
+    deleteApplicationData: null,
 
     getData: async (params) => {
         try {
             set({ isLoadingGet: true });
-            const { data } = await visaDeleteApplicationService.getData(params);
+            const { data } = await ociDeleteApplicationService.getData(params);
             const datas = data;
             set({
-                visaDeleteApplicationData: datas?.data,
+                deleteApplicationData: datas?.data,
                 // successMessage: data?.response?.data?.message ?? data?.message,
                 isLoadingGet: false,
             });
@@ -32,10 +32,10 @@ const useVisaDeleteApplicationReducer = create((set) => ({
     deleteData: async (id, cb) => {
         try {
             set({ isLoadingDelete: true });
-            const { data } = await visaDeleteApplicationService.deleteData(id);
+            const { data } = await ociDeleteApplicationService.deleteData(id);
             const datas = data;
             set({
-                visaDeleteApplicationData: datas?.data,
+                deleteApplicationData: datas?.data,
                 successMessage: data?.response?.data?.message ?? data?.message,
                 isLoadingDelete: false,
             });
@@ -51,4 +51,4 @@ const useVisaDeleteApplicationReducer = create((set) => ({
     },
 }));
 
-export default useVisaDeleteApplicationReducer;
+export default useOCIDeleteApplicationReducer;

@@ -194,8 +194,11 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       name: 'OCI Manager',
       icon: EZIcon, // change icon if needed
       path: '/oci-applications',
-      activeRoutes: ['/oci-applications'],
-      subMenu: [{ name: 'OCI Applications', path: '/oci-applications', icon: MessagesIcon }],
+      activeRoutes: ['/oci-applications', '/oci-delete-application'],
+      subMenu: [
+        { name: 'OCI Applications', path: '/oci-applications', icon: MessagesIcon },
+        { name: 'Deleted Application', path: '/oci-delete-application', icon: MessagesIcon },
+      ],
     },
 
 

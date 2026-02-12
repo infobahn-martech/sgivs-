@@ -55,6 +55,7 @@ import VisaTracking from '../pages/VisaTracking';
 import VisaDigitization from '../pages/VisaDigitization';
 import ReferenceNumber from '../pages/ReferenceNumber';
 import OCIApplications from '../pages/OCIApplications';
+import OCIDeleteApplication from '../pages/OCIDeleteApplication';
 
 const router = createHashRouter([
   {
@@ -136,6 +137,7 @@ const router = createHashRouter([
               { path: '/visa-digitization', element: <VisaDigitization /> },
               { path: '/get-reference-numbers', element: <ReferenceNumber /> },
               { path: '/oci-applications', element: <OCIApplications /> },
+              { path: '/oci-delete-application', element: <OCIDeleteApplication /> },
             ],
           },
         ],
