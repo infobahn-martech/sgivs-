@@ -7,14 +7,14 @@ import '../../assets/scss/usermanagement.scss';
 
 import CommonHeader from '../../components/common/CommonHeader';
 import CustomTable from '../../components/common/CustomTable';
-import useVisaOTMReducer from '../../stores/VisaOTMReducer';
+import useOCIOTMReducer from '../../stores/OCIOTMReducer';
 import { formatDate } from '../../config/config';
 import AddEditModal from './AddEditModal';
 
-const VisaOTM = () => {
+const OCIOTM = () => {
   const USE_MOCK = true;
 
-  const { getData, visaOTMData, isLoadingGet } = useVisaOTMReducer((state) => state);
+  const { getData, ociOTMData, isLoadingGet } = useOCIOTMReducer((state) => state);
 
   const initialParams = {
     search: '',
@@ -32,7 +32,7 @@ const VisaOTM = () => {
   const [selectedOTM, setSelectedOTM] = useState(null);
 
   // ✅ Dummy Data (Required fields)
-  const mockVisaOTMData = {
+  const mockOCIOTMData = {
     total: 5,
     data: [
       {
@@ -228,8 +228,8 @@ const VisaOTM = () => {
     return () => debouncedSearch.cancel();
   }, [debouncedSearch]);
 
-  const tableData = USE_MOCK ? mockVisaOTMData : visaOTMData;
-  const loading = USE_MOCK ? false : isLoadingVisaOTMGet;
+  const tableData = USE_MOCK ? mockOCIOTMData : ociOTMData;
+  const loading = USE_MOCK ? false : isLoadingOCIOTMGet;
 
   return (
     <>
@@ -282,4 +282,4 @@ const VisaOTM = () => {
   );
 };
 
-export default VisaOTM;
+export default OCIOTM;

@@ -57,6 +57,7 @@ import ReferenceNumber from '../pages/ReferenceNumber';
 import OCIApplications from '../pages/OCIApplications';
 import OCIDeleteApplication from '../pages/OCIDeleteApplication';
 import OCIInScan from '../pages/OCInScan';
+import OCIOTM from '../pages/OCIOTM';
 
 const router = createHashRouter([
   {
@@ -140,6 +141,7 @@ const router = createHashRouter([
               { path: '/oci-applications', element: <OCIApplications /> },
               { path: '/oci-delete-application', element: <OCIDeleteApplication /> },
               { path: '/oci-inscan', element: <OCIInScan /> },
+              { path: '/oci-outscan-to-mission', element: <OCIOTM /> },
             ],
           },
         ],
