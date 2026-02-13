@@ -247,12 +247,13 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
     },
     // Return from Mission
     {
-      name: 'Return from Mission',
+      name: 'Return From Mission',
       icon: EZIcon, // change icon if needed
       path: '/return-from-mission',
-      activeRoutes: ['/return-from-mission'],
+      activeRoutes: ['/return-from-mission', '/return-to-mission'],
       subMenu: [
-        { name: 'Return from Mission', path: '/return-from-mission', icon: MessagesIcon },
+        { name: 'Return From Mission', path: '/return-from-mission', icon: MessagesIcon },
+        { name: 'Return To Mission', path: '/return-to-mission', icon: MessagesIcon },
       ],
     },
     // Appointment Settings

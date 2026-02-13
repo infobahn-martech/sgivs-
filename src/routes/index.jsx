@@ -75,6 +75,8 @@ import AttestationTracking from '../pages/AttestationTracking';
 import EliteDelivery from '../pages/EliteDelivery';
 import ChargeAndRefunds from '../pages/ChargeAndRefunds';
 import ReturnFromMission from '../pages/ReturnFromMission';
+import ReturnToMission from '../pages/ReturnToMission';
+
 const router = createHashRouter([
   {
     element: <App />,
@@ -175,6 +177,7 @@ const router = createHashRouter([
               { path: '/elite-delivery', element: <EliteDelivery /> },
               { path: '/charge-and-refunds', element: <ChargeAndRefunds /> },
               { path: '/return-from-mission', element: <ReturnFromMission /> },
+              { path: '/return-to-mission', element: <ReturnToMission /> },
             ],
           },
         ],
