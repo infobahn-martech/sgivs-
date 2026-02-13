@@ -76,6 +76,7 @@ import EliteDelivery from '../pages/EliteDelivery';
 import ChargeAndRefunds from '../pages/ChargeAndRefunds';
 import ReturnFromMission from '../pages/ReturnFromMission';
 import ReturnToMission from '../pages/ReturnToMission';
+import DailyCashCollection from '../pages/DailyCashCollection';
 
 const router = createHashRouter([
   {
@@ -178,6 +179,7 @@ const router = createHashRouter([
               { path: '/charge-and-refunds', element: <ChargeAndRefunds /> },
               { path: '/return-from-mission', element: <ReturnFromMission /> },
               { path: '/return-to-mission', element: <ReturnToMission /> },
+              { path: '/daily-cash-collection', element: <DailyCashCollection /> },
             ],
           },
         ],

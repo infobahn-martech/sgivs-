@@ -247,13 +247,23 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
     },
     // Return from Mission
     {
-      name: 'Return From Mission',
+      name: 'Return File Manager',
       icon: EZIcon, // change icon if needed
       path: '/return-from-mission',
       activeRoutes: ['/return-from-mission', '/return-to-mission'],
       subMenu: [
         { name: 'Return From Mission', path: '/return-from-mission', icon: MessagesIcon },
         { name: 'Return To Mission', path: '/return-to-mission', icon: MessagesIcon },
+      ],
+    },
+    // Daily Cash Collection
+    {
+      name: 'Daily Cash Collection',
+      icon: EZIcon, // change icon if needed
+      path: '/daily-cash-collection',
+      activeRoutes: ['/daily-cash-collection'],
+      subMenu: [
+        { name: 'Daily Cash Collection', path: '/daily-cash-collection', icon: MessagesIcon },
       ],
     },
     // Appointment Settings

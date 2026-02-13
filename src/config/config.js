@@ -97,6 +97,7 @@ export const headerConfig = [
   { title: 'Charge and Refunds', icon: userImage, path: '/charge-and-refunds' },
   { title: 'Return From Mission', icon: userImage, path: '/return-from-mission' },
   { title: 'Return To Mission', icon: userImage, path: '/return-to-mission' },
+  { title: 'Daily Cash Collection', icon: userImage, path: '/daily-cash-collection' },
 ];
 
 export const getFirstLetters = (name) => {
