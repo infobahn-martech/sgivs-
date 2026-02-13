@@ -266,6 +266,16 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         { name: 'Daily Cash Collection', path: '/daily-cash-collection', icon: MessagesIcon },
       ],
     },
+    // Passport VAS Applications
+    {
+      name: 'Passport VAS Manager',
+      icon: EZIcon, // change icon if needed
+      path: '/passport-vas-applications',
+      activeRoutes: ['/passport-vas-applications'],
+      subMenu: [
+        { name: 'Passport VAS Applications', path: '/passport-vas-applications', icon: MessagesIcon },
+      ],
+    },
     // Appointment Settings
     {
       name: 'Appointment Settings',

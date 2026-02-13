@@ -77,7 +77,7 @@ import ChargeAndRefunds from '../pages/ChargeAndRefunds';
 import ReturnFromMission from '../pages/ReturnFromMission';
 import ReturnToMission from '../pages/ReturnToMission';
 import DailyCashCollection from '../pages/DailyCashCollection';
-
+import PassportVasApplications from '../pages/PassportVasApplications';
 const router = createHashRouter([
   {
     element: <App />,
@@ -180,6 +180,7 @@ const router = createHashRouter([
               { path: '/return-from-mission', element: <ReturnFromMission /> },
               { path: '/return-to-mission', element: <ReturnToMission /> },
               { path: '/daily-cash-collection', element: <DailyCashCollection /> },
+              { path: '/passport-vas-applications', element: <PassportVasApplications /> },
             ],
           },
         ],
