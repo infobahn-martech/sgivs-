@@ -235,6 +235,16 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         { name: 'Elite Delivery', path: '/elite-delivery', icon: MessagesIcon },
       ],
     },
+    // Charge and Refunds
+    {
+      name: 'Charge and Refunds',
+      icon: EZIcon, // change icon if needed
+      path: '/charge-and-refunds',
+      activeRoutes: ['/charge-and-refunds'],
+      subMenu: [
+        { name: 'Charge and Refunds', path: '/charge-and-refunds', icon: MessagesIcon },
+      ],
+    },
     // Appointment Settings
     {
       name: 'Appointment Settings',

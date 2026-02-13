@@ -73,6 +73,7 @@ import AttestationCounterDelivery from '../pages/AttestationCounterDelivery';
 import AttestationOTC from '../pages/AttestationOTC';
 import AttestationTracking from '../pages/AttestationTracking';
 import EliteDelivery from '../pages/EliteDelivery';
+import ChargeAndRefunds from '../pages/ChargeAndRefunds';
 const router = createHashRouter([
   {
     element: <App />,
@@ -171,6 +172,7 @@ const router = createHashRouter([
               { path: '/attestation-outscan-to-courier', element: <AttestationOTC /> },
               { path: '/attestation-tracking', element: <AttestationTracking /> },
               { path: '/elite-delivery', element: <EliteDelivery /> },
+              { path: '/charge-and-refunds', element: <ChargeAndRefunds /> },
             ],
           },
         ],
