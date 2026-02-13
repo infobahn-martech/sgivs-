@@ -268,12 +268,13 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
     },
     // Passport VAS Applications
     {
-      name: 'Passport VAS Manager',
+      name: 'VAS Manager',
       icon: EZIcon, // change icon if needed
       path: '/passport-vas-applications',
-      activeRoutes: ['/passport-vas-applications'],
+      activeRoutes: ['/passport-vas-applications', '/visa-vas-applications'],
       subMenu: [
         { name: 'Passport VAS Applications', path: '/passport-vas-applications', icon: MessagesIcon },
+        { name: 'Visa VAS Applications', path: '/visa-vas-applications', icon: MessagesIcon },
       ],
     },
     // Appointment Settings
