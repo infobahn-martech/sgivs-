@@ -258,7 +258,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
     },
     // Daily Cash Collection
     {
-      name: 'Daily Cash Collection',
+      name: 'Cash Collection Manager',
       icon: EZIcon, // change icon if needed
       path: '/daily-cash-collection',
       activeRoutes: ['/daily-cash-collection'],
