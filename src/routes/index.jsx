@@ -74,6 +74,7 @@ import AttestationOTC from '../pages/AttestationOTC';
 import AttestationTracking from '../pages/AttestationTracking';
 import EliteDelivery from '../pages/EliteDelivery';
 import ChargeAndRefunds from '../pages/ChargeAndRefunds';
+import ReturnFromMission from '../pages/ReturnFromMission';
 const router = createHashRouter([
   {
     element: <App />,
@@ -173,6 +174,7 @@ const router = createHashRouter([
               { path: '/attestation-tracking', element: <AttestationTracking /> },
               { path: '/elite-delivery', element: <EliteDelivery /> },
               { path: '/charge-and-refunds', element: <ChargeAndRefunds /> },
+              { path: '/return-from-mission', element: <ReturnFromMission /> },
             ],
           },
         ],

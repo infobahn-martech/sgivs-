@@ -95,6 +95,7 @@ export const headerConfig = [
   { title: 'Tracking', icon: userImage, path: '/attestation-tracking' },
   { title: 'Elite Delivery', icon: userImage, path: '/elite-delivery' },
   { title: 'Charge and Refunds', icon: userImage, path: '/charge-and-refunds' },
+  { title: 'Return from Mission', icon: userImage, path: '/return-from-mission' },
 ];
 
 export const getFirstLetters = (name) => {

@@ -245,6 +245,16 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         { name: 'Charge and Refunds', path: '/charge-and-refunds', icon: MessagesIcon },
       ],
     },
+    // Return from Mission
+    {
+      name: 'Return from Mission',
+      icon: EZIcon, // change icon if needed
+      path: '/return-from-mission',
+      activeRoutes: ['/return-from-mission'],
+      subMenu: [
+        { name: 'Return from Mission', path: '/return-from-mission', icon: MessagesIcon },
+      ],
+    },
     // Appointment Settings
     {
       name: 'Appointment Settings',
