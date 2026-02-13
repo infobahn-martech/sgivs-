@@ -144,23 +144,23 @@ const ReturnToMission = () => {
     }));
   };
 
-  const renderAction = (row) => {
-    return (
-      <>
-        <Tooltip id="edit" place="bottom" content="Edit" style={{ backgroundColor: '#051a53' }} />
-        <Tooltip id="delete" place="bottom" content="Delete" style={{ backgroundColor: '#051a53' }} />
+  // const renderAction = (row) => {
+  //   return (
+  //     <>
+  //       <Tooltip id="edit" place="bottom" content="Edit" style={{ backgroundColor: '#051a53' }} />
+  //       <Tooltip id="delete" place="bottom" content="Delete" style={{ backgroundColor: '#051a53' }} />
 
-        <img src={editIcon} alt="edit" data-tooltip-id="edit" />
+  //       <img src={editIcon} alt="edit" data-tooltip-id="edit" />
 
-        <img
-          src={deleteIcon}
-          alt="delete"
-          data-tooltip-id="delete"
-          onClick={() => setDeleteModalOpen(row)}
-        />
-      </>
-    );
-  };
+  //       <img
+  //         src={deleteIcon}
+  //         alt="delete"
+  //         data-tooltip-id="delete"
+  //         onClick={() => setDeleteModalOpen(row)}
+  //       />
+  //     </>
+  //   );
+  // };
 
   const columns = [
     {
