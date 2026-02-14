@@ -3,38 +3,68 @@ import authService from '../services/authService';
 import { getAuthData, removeItem, setItem } from '../helpers/localStorage';
 import useAlertReducer from './AlertReducer';
 
+// If your getAuthData() depends on tokens, it may return false now.
+// We'll still keep isAuthenticated stored locally.
 const { isAuthenticated } = getAuthData();
 
 const useAuthReducer = create((set) => ({
   authData: null,
   userProfile: null,
+
   isLoginLoading: false,
   isForgotLoading: false,
   isAuthenticated,
+
   errorMessage: '',
   successMessage: '',
+
   profileData: null,
+  isProfileFetchLoading: false,
   profileEditLoader: false,
+
   usersData: null,
   isUsersLoading: false,
   userActionLoading: false,
   isChangePassLoading: false,
   pagination: {},
+
   usersRoleData: null,
   isUsersListLoading: false,
   usersListpagination: {},
+
   userNotifyLoading: false,
 
+  // ✅ SESSION LOGIN
   login: async ({ username, password }) => {
     try {
       set({ isLoginLoading: true });
+
       const { data } = await authService.doLoginValidate(username, password);
-      const authData = data?.user;
-      setItem('accessToken', data?.token?.accessToken);
-      setItem('refreshToken', data?.token?.refreshToken);
-      set({ authData, isAuthenticated: true, isLoginLoading: false });
+
+      // Backend response example:
+      // { status: "success", message: "Login successful" }
+      const ok = data?.status === 'success';
+
+      if (!ok) {
+        throw new Error(data?.message || 'Login failed');
+      }
+
+      // ✅ No token storage for PHP session auth
+      // But if your app expects auth flag in localStorage, store a simple boolean
+      setItem('isAuthenticated', true);
+
+      set({
+        isAuthenticated: true,
+        isLoginLoading: false,
+        authData: null, // will be filled after calling profile
+      });
+
       const { success } = useAlertReducer.getState();
-      success(data?.response?.data?.message ?? data?.message);
+      success(data?.message || 'Login successful');
+
+      // ✅ OPTIONAL: fetch profile after login (recommended)
+      // If your backend supports it:
+      // await useAuthReducer.getState().getUserProfile({ details: 'basic' });
     } catch (err) {
       const { error } = useAlertReducer.getState();
       set({
@@ -45,6 +75,7 @@ const useAuthReducer = create((set) => ({
       throw err;
     }
   },
+
   forgotPassword: async ({ email }) => {
     try {
       set({ isForgotLoading: true });
@@ -64,6 +95,7 @@ const useAuthReducer = create((set) => ({
       error(err?.response?.data?.message ?? err.message);
     }
   },
+
   restPassword: async ({ token, password, confirmPassword }) => {
     try {
       set({ isForgotLoading: true });
@@ -87,6 +119,7 @@ const useAuthReducer = create((set) => ({
       error(err?.response?.data?.message ?? err.message);
     }
   },
+
   changePassword: async ({ currentPassword, password, confirmPassword }) => {
     try {
       set({ isChangePassLoading: true });
@@ -111,32 +144,57 @@ const useAuthReducer = create((set) => ({
     }
   },
 
-  doLogout: () => {
+  // ✅ SESSION LOGOUT (recommended: call backend logout endpoint)
+  doLogout: async () => {
+    try {
+      // if backend has logout, call it so session is destroyed
+      await authService.logout?.();
+    } catch (e) {
+      // ignore
+    }
+
     set({
       userProfile: null,
       authData: null,
       successMessage: '',
       isAuthenticated: false,
       errorMessage: null,
+      profileData: null,
     });
+
+    removeItem('isAuthenticated');
+    // no tokens anymore
     removeItem('accessToken');
     removeItem('refreshToken');
   },
+
   getUserProfile: async ({ details }) => {
     try {
       set({ isProfileFetchLoading: true });
       const { data } = await authService.getUserProfile(details);
-      const profileData = data?.user;
-      set({ profileData, isProfileFetchLoading: false });
+
+      // Adapt based on backend shape
+      // common options: data.user OR data.data OR data.profile
+      const profileData = data?.user ?? data?.data ?? data?.profile ?? null;
+
+      set({
+        profileData,
+        authData: profileData,
+        isProfileFetchLoading: false,
+        isAuthenticated: true,
+      });
+
+      setItem('isAuthenticated', true);
     } catch (err) {
       const { error } = useAlertReducer.getState();
       set({
         isProfileFetchLoading: false,
         isAuthenticated: false,
+        profileData: null,
+        authData: null,
       });
       error(err?.response?.data?.message ?? err.message);
-      removeItem('accessToken');
-      removeItem('refreshToken');
+      removeItem('isAuthenticated');
     }
   },
 
@@ -152,9 +210,7 @@ const useAuthReducer = create((set) => ({
       });
     } catch (err) {
       const { error } = useAlertReducer.getState();
-      set({
-        isUsersLoading: false,
-      });
+      set({ isUsersLoading: false });
       error(err?.response?.data?.message ?? err.message);
     }
   },
@@ -171,48 +227,39 @@ const useAuthReducer = create((set) => ({
       });
     } catch (err) {
       const { error } = useAlertReducer.getState();
-      set({
-        isUsersListLoading: false,
-      });
+      set({ isUsersListLoading: false });
       error(err?.response?.data?.message ?? err.message);
     }
   },
 
-  // patch user status active blocked delete
   usersAction: async (userId, action, callBack) => {
     try {
       set({ userActionLoading: true });
       const response = await authService.usersActionService(userId, action);
       set({ userActionLoading: false });
       const { success } = useAlertReducer.getState();
-      const message =
-        response?.data?.message ?? 'Action completed successfully';
+      const message = response?.data?.message ?? 'Action completed successfully';
       success(message);
       callBack && callBack();
     } catch (err) {
       const { error } = useAlertReducer.getState();
-      set({
-        userActionLoading: false,
-      });
+      set({ userActionLoading: false });
       error(err?.response?.data?.message ?? err.message);
     }
   },
-  // user mangmnt notification
+
   userNotification: async (payload, callBack) => {
     try {
       set({ userNotifyLoading: true });
       const response = await authService.userNotifyService(payload);
       set({ userNotifyLoading: false });
       const { success } = useAlertReducer.getState();
-      const message =
-        response?.data?.message ?? 'Notification Updated successfully';
+      const message = response?.data?.message ?? 'Notification Updated successfully';
       success(message);
       callBack && callBack();
     } catch (err) {
       const { error } = useAlertReducer.getState();
-      set({
-        userNotifyLoading: false,
-      });
+      set({ userNotifyLoading: false });
       error(err?.response?.data?.message ?? err.message);
     }
   },
