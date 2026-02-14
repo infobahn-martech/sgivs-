@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -8,21 +8,42 @@ import CustomSelect from './Select';
 
 const USE_MOCK = true;
 
-// ✅ Dummy centers list (Select Center dropdown)
-const mockCenters = [
-  { id: '1', name: 'Dubai Center' },
-  { id: '2', name: 'Abu Dhabi Center' },
-  { id: '3', name: 'Sharjah Center' },
-  { id: '4', name: 'Ajman Center' },
+// ✅ Application Type options
+const applicationTypeOptions = [
+  { label: 'Passport', value: 'Passport' },
+  { label: 'Visa', value: 'Visa' },
+  { label: 'OCI', value: 'OCI' },
+  { label: 'Attestation', value: 'Attestation' },
 ];
 
-const nameSchema = z.object({
-  name: z
-    .string()
-    .nonempty('Name is required')
-    .max(20, 'Name must be 20 characters or less'),
-  centerId: z.string().nonempty('Center is required'),
-});
+// ✅ Schema
+const formSchema = z
+  .object({
+    passportNumber: z
+      .string()
+      .nonempty('Passport Number is required')
+      .max(20, 'Passport Number must be 20 characters or less'),
+    applicationType: z.string().nonempty('Application Type is required'),
+
+    // VAS Services
+    formFilling: z.boolean().optional(),
+    photocopy: z.boolean().optional(),
+    photograph: z.boolean().optional(),
+
+    photographNotes: z.string().optional(),
+  })
+  .superRefine((values, ctx) => {
+    // If Photograph checked -> notes required
+    if (values.photograph) {
+      if (!values.photographNotes || values.photographNotes.trim() === '') {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ['photographNotes'],
+          message: 'Please enter details for Photograph',
+        });
+      }
+    }
+  });
 
 export function AddEditModal({ showModal, closeModal, onRefreshCounter }) {
   const {
@@ -33,53 +54,44 @@ export function AddEditModal({ showModal, closeModal, onRefreshCounter }) {
     reset,
     watch,
   } = useForm({
-    resolver: zodResolver(nameSchema),
+    resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
-      centerId: '',
+      passportNumber: '',
+      applicationType: '',
+      formFilling: false,
+      photocopy: false,
+      photograph: false,
+      photographNotes: '',
     },
   });
 
-  const { postData, patchData, isLoading, getAllCenter, centers } =
-    useCounterReducer((state) => state);
+  const { postData, patchData, isLoading } = useCounterReducer((state) => state);
 
-  const selectedCenterId = watch('centerId');
-
-  // ✅ Load center list (API mode only)
-  useEffect(() => {
-    if (!USE_MOCK) getAllCenter();
-  }, []);
+  const selectedApplicationType = watch('applicationType');
+  const isPhotographChecked = watch('photograph');
 
   // ✅ Fill form for edit / clear for add
   useEffect(() => {
-    const centers = USE_MOCK ? mockCenters : centers;
+    if (showModal?.id) {
+      setValue('passportNumber', showModal?.passportNumber || '');
+      setValue('applicationType', showModal?.applicationType || '');
 
-    if (showModal?.id && (centers?.length || 0) > 0) {
-      // Your listing page now uses counterName/centerName.
-      // For edit modal, accept both old & new keys safely.
-      setValue('name', showModal?.counterName || showModal?.name || '');
-      setValue(
-        'centerId',
-        String(showModal?.centerId || showModal?.center?.id || showModal?.centerId || '')
-      );
-    } else if (!showModal?.id) {
+      setValue('formFilling', !!showModal?.formFilling);
+      setValue('photocopy', !!showModal?.photocopy);
+      setValue('photograph', !!showModal?.photograph);
+
+      setValue('photographNotes', showModal?.photographNotes || '');
+    } else {
       reset();
     }
-  }, [showModal?.id, centers, reset, setValue]);
+  }, [showModal?.id, reset, setValue]);
 
   // ✅ Options for select
-  const centerOptions = useMemo(() => {
-    const centers = USE_MOCK ? mockCenters : centers || [];
-    return centers.map((item) => ({
-      label: item.name,
-      value: String(item.id),
-    }));
-  }, [centers]);
+  const appTypeOptions = useMemo(() => applicationTypeOptions, []);
 
-  // ✅ Dummy submit (no API)
+  // ✅ Submit
   const onSubmit = (data) => {
     if (USE_MOCK) {
-      // Just close modal + refresh UI
       onRefreshCounter?.();
       closeModal?.();
       return;
@@ -100,7 +112,7 @@ export function AddEditModal({ showModal, closeModal, onRefreshCounter }) {
   const renderHeader = () => (
     <>
       <h4 className="modal-title">
-        {showModal?.id ? 'Edit Counter' : 'Add Counter'}
+        {showModal?.id ? 'Edit VAS Services' : 'Add VAS Services'}
       </h4>
       <button
         type="button"
@@ -115,51 +127,102 @@ export function AddEditModal({ showModal, closeModal, onRefreshCounter }) {
   const renderBody = () => (
     <div className="modal-body">
       <div className="row">
+        {/* Passport Number */}
         <div className="col-sm-6">
           <div className="form-group forms-custom">
-            <label htmlFor="centerId" className="label">
-              Select Center<span className="text-danger">*</span>
+            <label htmlFor="passportNumber" className="label">
+              Passport Number<span className="text-danger">*</span>
             </label>
+            <input
+              type="text"
+              id="passportNumber"
+              className="form-control"
+              autoComplete="off"
+              maxLength={20}
+              placeholder="Enter passport number"
+              {...register('passportNumber')}
+            />
+            {errors.passportNumber && (
+              <span className="error">{errors.passportNumber.message}</span>
+            )}
+          </div>
+        </div>
+
+        {/* Application Type */}
+        <div className="col-sm-6">
+          <div className="form-group forms-custom">
+            <label htmlFor="applicationType" className="label">
+              Application Type<span className="text-danger">*</span>
+            </label>
+
             <CustomSelect
-              options={centerOptions}
+              options={appTypeOptions}
               value={
-                centerOptions.find(
-                  (option) => option.value === String(selectedCenterId || '')
+                appTypeOptions.find(
+                  (option) =>
+                    option.value === String(selectedApplicationType || '')
                 ) || null
               }
               onChange={(selected) => {
-                setValue('centerId', selected?.value || '');
+                setValue('applicationType', selected?.value || '', {
+                  shouldValidate: true,
+                });
               }}
-              placeholder="Select Center"
+              placeholder="Select Application Type"
               showIndicator={false}
               className="form-select form-control"
             />
 
-            {errors.centerId && (
-              <span className="error">{errors.centerId.message}</span>
+            {errors.applicationType && (
+              <span className="error">{errors.applicationType.message}</span>
             )}
           </div>
         </div>
 
-        <div className="col-sm-6">
-          <div className="form-group forms-custom">
-            <label htmlFor="name" className="label">
-              Counter Name<span className="text-danger">*</span>
-            </label>
-            <input
-              type="text"
-              id="name"
-              className="form-control"
-              autoComplete="off"
-              maxLength={20}
-              placeholder="Enter counter name"
-              {...register('name')}
-            />
-            {errors.name && (
-              <span className="error">{errors.name.message}</span>
-            )}
+        {/* VAS Services */}
+        <div className="col-12">
+          <div className="form-group forms-custom mt-2">
+            <label className="label">Option VAS Services</label>
+
+            <div className="d-flex flex-wrap gap-3 mt-1">
+              <label className="d-flex align-items-center gap-2">
+                <input type="checkbox" {...register('formFilling')} />
+                <span>Form Filling</span>
+              </label>
+
+              <label className="d-flex align-items-center gap-2">
+                <input type="checkbox" {...register('photocopy')} />
+                <span>Photocopy</span>
+              </label>
+
+              <label className="d-flex align-items-center gap-2">
+                <input type="checkbox" {...register('photograph')} />
+                <span>Photograph</span>
+              </label>
+            </div>
           </div>
         </div>
+
+        {/* Photograph textarea (only if checked) */}
+        {isPhotographChecked && (
+          <div className="col-12">
+            <div className="form-group forms-custom mt-2">
+              <label htmlFor="photographNotes" className="label">
+                Photograph Details<span className="text-danger">*</span>
+              </label>
+              <textarea
+                id="photographNotes"
+                className="form-control"
+                rows={3}
+                placeholder="Enter photograph details..."
+                {...register('photographNotes')}
+              />
+              {errors.photographNotes && (
+                <span className="error">{errors.photographNotes.message}</span>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -193,3 +256,5 @@ export function AddEditModal({ showModal, closeModal, onRefreshCounter }) {
     />
   );
 }
+
+export default AddEditModal;

@@ -43,45 +43,69 @@ const AFSManager = () => {
 
   const [params, setParams] = useState(initialParams);
 
-  // ✅ Dummy data (fields: Center Name, Counter, Created Date, Action)
+  // ✅ Dummy data based on screenshot columns
   const mockAFSManagerData = {
     total: 6,
     data: [
       {
         id: 1,
-        centerName: 'Dubai Center',
-        counterName: 'Counter A',
-        createdAt: '2025-01-12T10:00:00Z',
+        receiptNo: 'RCPT-1001',
+        passportNo: 'P1234567',
+        applicationType: 'Normal',
+        afsType: 'Photocopy',
+        quantity: 2,
+        amount: 20,
+        onBy: 'Admin',
       },
       {
         id: 2,
-        centerName: 'Dubai Center',
-        counterName: 'Counter B',
-        createdAt: '2025-01-15T11:20:00Z',
+        receiptNo: 'RCPT-1002',
+        passportNo: 'P7654321',
+        applicationType: 'Urgent',
+        afsType: 'SMS',
+        quantity: 1,
+        amount: 10,
+        onBy: 'Operator',
       },
       {
         id: 3,
-        centerName: 'Abu Dhabi Center',
-        counterName: 'Counter 1',
-        createdAt: '2025-02-02T09:10:00Z',
+        receiptNo: 'RCPT-1003',
+        passportNo: 'N9876543',
+        applicationType: 'Normal',
+        afsType: 'Photograph',
+        quantity: 3,
+        amount: 30,
+        onBy: 'Supervisor',
       },
       {
         id: 4,
-        centerName: 'Sharjah Center',
-        counterName: 'Counter 3',
-        createdAt: '2025-02-20T14:45:00Z',
+        receiptNo: 'RCPT-1004',
+        passportNo: 'M4567890',
+        applicationType: 'Premium',
+        afsType: 'Form Filling',
+        quantity: 1,
+        amount: 50,
+        onBy: 'Admin',
       },
       {
         id: 5,
-        centerName: 'Ajman Center',
-        counterName: 'Counter X',
-        createdAt: '2025-03-01T08:35:00Z',
+        receiptNo: 'RCPT-1005',
+        passportNo: 'K2468101',
+        applicationType: 'Normal',
+        afsType: 'Photocopy',
+        quantity: 5,
+        amount: 25,
+        onBy: 'Operator',
       },
       {
         id: 6,
-        centerName: 'Fujairah Center',
-        counterName: 'Counter Z',
-        createdAt: '2025-03-10T16:05:00Z',
+        receiptNo: 'RCPT-1006',
+        passportNo: 'J1357911',
+        applicationType: 'Urgent',
+        afsType: 'SMS',
+        quantity: 2,
+        amount: 20,
+        onBy: 'Supervisor',
       },
     ],
   };
@@ -127,25 +151,47 @@ const AFSManager = () => {
     );
   };
 
-  // ✅ Replace table fields with: Center Name + Counter
   const columns = [
     {
-      name: 'Center Name',
-      selector: 'centerName',
-      contentClass: 'user-pic',
-      cell: (row) => <span>{row?.centerName || '-'}</span>,
+      name: 'Receipt No',
+      selector: 'receiptNo',
+      cell: (row) => <span>{row?.receiptNo || '-'}</span>,
       sort: true,
     },
     {
-      name: 'Counter',
-      selector: 'counterName',
-      contentClass: 'user-pic',
-      cell: (row) => <span>{row?.counterName || '-'}</span>,
+      name: 'Passport No',
+      selector: 'passportNo',
+      cell: (row) => <span>{row?.passportNo || '-'}</span>,
+      sort: true,
     },
     {
-      name: 'Created Date',
-      selector: 'createdAt',
-      cell: (row) => <span>{formatDate(row?.createdAt)}</span>,
+      name: 'Application Type',
+      selector: 'applicationType',
+      cell: (row) => <span>{row?.applicationType || '-'}</span>,
+      sort: true,
+    },
+    {
+      name: 'AFS Type',
+      selector: 'afsType',
+      cell: (row) => <span>{row?.afsType || '-'}</span>,
+      sort: true,
+    },
+    {
+      name: 'Quantity',
+      selector: 'quantity',
+      cell: (row) => <span>{row?.quantity ?? '-'}</span>,
+      sort: true,
+    },
+    {
+      name: 'Amount',
+      selector: 'amount',
+      cell: (row) => <span>{row?.amount ?? '-'}</span>,
+      sort: true,
+    },
+    {
+      name: 'On / By',
+      selector: 'onBy',
+      cell: (row) => <span>{row?.onBy || '-'}</span>,
       sort: true,
     },
     {
