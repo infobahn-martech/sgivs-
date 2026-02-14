@@ -38,9 +38,8 @@ const useCenterReducer = create((set) => ({
   patchData: async (payload, cb) => {
     try {
       set({ isLoading: true });
-
-      const { id, ...rest } = payload;
-      const { data } = await centerService.patchData(id, rest); // Updated call
+      // Payload: { center_id, country_id, mission_id, center_name }
+      const { data } = await centerService.patchData(payload);
 
       const { success } = useAlertReducer.getState();
       success(data?.response?.data?.message ?? data?.message);
@@ -63,10 +62,10 @@ const useCenterReducer = create((set) => ({
     try {
       set({ isLoadingGet: true });
       const { data } = await centerService.getData(params);
-      const datas = data;
+      const list = Array.isArray(data?.data) ? data.data : Array.isArray(data) ? data : [];
+      const total = data?.total ?? list?.length ?? 0;
       set({
-        centerData: datas?.data,
-        // successMessage: data?.response?.data?.message ?? data?.message,
+        centerData: { data: list, total },
         isLoadingGet: false,
       });
     } catch (err) {

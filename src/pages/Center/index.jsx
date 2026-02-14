@@ -10,7 +10,6 @@ import editIcon from '../../assets/images/edit.svg';
 import CommonHeader from '../../components/common/CommonHeader';
 import CustomTable from '../../components/common/CustomTable';
 import useCenterReducer from '../../stores/CenterReducer';
-import { formatDate } from '../../config/config';
 import { AddEditModal } from './AddEditModal';
 import { debounce } from 'lodash';
 import CustomActionModal from '../../components/common/CustomActionModal';
@@ -38,35 +37,15 @@ const Center = () => {
 
   const [params, setParams] = useState(initialParams);
 
-  // ✅ Dummy Data
+  // Mock data matching API shape: center_id, center_name, country_id, country_name, mission_id, mission_name
   const mockCenterData = {
     total: 5,
     data: [
-      {
-        id: 1,
-        name: 'Center 1',
-        createdAt: '2025-01-10T09:30:00Z',
-      },
-      {
-        id: 2,
-        name: 'Monitors',
-        createdAt: '2025-02-14T12:15:00Z',
-      },
-      {
-        id: 3,
-        name: 'Center 3',
-        createdAt: '2025-03-05T08:45:00Z',
-      },
-      {
-        id: 4,
-        name: 'Center 4',
-        createdAt: '2025-03-20T10:00:00Z',
-      },
-      {
-        id: 5,
-        name: 'Center 5',
-        createdAt: '2025-04-02T11:20:00Z',
-      },
+      { center_id: 1, center_name: 'Center 1', country_id: 1, country_name: 'Country A', mission_id: 1, mission_name: 'Mission 1' },
+      { center_id: 2, center_name: 'Monitors', country_id: 1, country_name: 'Country A', mission_id: 2, mission_name: 'Mission 2' },
+      { center_id: 3, center_name: 'Center 3', country_id: 2, country_name: 'Country B', mission_id: 3, mission_name: 'Mission 3' },
+      { center_id: 4, center_name: 'Center 4', country_id: 2, country_name: 'Country B', mission_id: 4, mission_name: 'Mission 4' },
+      { center_id: 5, center_name: 'Center 5', country_id: 1, country_name: 'Country A', mission_id: 1, mission_name: 'Mission 1' },
     ],
   };
 
@@ -119,13 +98,16 @@ const Center = () => {
   const columns = [
     {
       name: 'Center Name',
-      selector: 'name',
+      selector: 'center_name',
       contentClass: 'user-pic',
     },
     {
-      name: 'Center Created Date',
-      selector: 'createdAt',
-      cell: (row) => <span>{formatDate(row?.createdAt)}</span>,
+      name: 'Country',
+      selector: 'country_name',
+    },
+    {
+      name: 'Mission',
+      selector: 'mission_name',
     },
     {
       name: 'Action',
@@ -155,8 +137,8 @@ const Center = () => {
       return;
     }
 
-    if (deleteModalOpen?.id) {
-      deleteData(deleteModalOpen?.id, () => {
+    if (deleteModalOpen?.center_id) {
+      deleteData(deleteModalOpen?.center_id, () => {
         onRefreshCenter();
       });
     }
@@ -218,7 +200,7 @@ const Center = () => {
           isLoading={USE_MOCK ? false : isLoadingDelete}
           showModal={deleteModalOpen}
           closeModal={() => setDeleteModalOpen(false)}
-          message={`Are you sure you want to delete this ${deleteModalOpen?.name}?`}
+          message={`Are you sure you want to delete this ${deleteModalOpen?.center_name}?`}
           onCancel={() => setDeleteModalOpen(false)}
           onSubmit={handleDelete}
         />

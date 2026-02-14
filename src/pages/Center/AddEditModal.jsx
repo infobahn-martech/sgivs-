@@ -5,12 +5,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import CustomModal from '../../components/common/CustomModal';
 import useCenterReducer from '../../stores/CenterReducer';
 
-const nameSchema = z.object({
-  name: z
+const centerSchema = z.object({
+  center_name: z
     .string()
-    .nonempty('Name is required')
-    .max(20, 'Name must be 10 characters or less'),
-  isEZPass: z.boolean().optional(),
+    .nonempty('Center name is required')
+    .max(100, 'Center name must be 100 characters or less'),
   country_id: z.union([z.string(), z.number()]).optional(),
   mission_id: z.union([z.string(), z.number()]).optional(),
 });
@@ -24,10 +23,9 @@ export function AddEditModal({ showModal, closeModal, onRefreshCenter }) {
     reset,
     watch,
   } = useForm({
-    resolver: zodResolver(nameSchema),
+    resolver: zodResolver(centerSchema),
     defaultValues: {
-      name: '',
-      isEZPass: false,
+      center_name: '',
       country_id: '',
       mission_id: '',
     },
@@ -69,9 +67,8 @@ export function AddEditModal({ showModal, closeModal, onRefreshCenter }) {
 
   // Prefill form when editing
   useEffect(() => {
-    if (showModal?.id) {
-      setValue('name', showModal?.name || '');
-      setValue('isEZPass', showModal?.isEZPass ?? false);
+    if (showModal?.center_id) {
+      setValue('center_name', showModal?.center_name || '');
       setValue('country_id', showModal?.country_id ?? '');
       setValue('mission_id', showModal?.mission_id ?? '');
       if (showModal?.country_id) {
@@ -80,17 +77,28 @@ export function AddEditModal({ showModal, closeModal, onRefreshCenter }) {
     } else {
       reset();
     }
-  }, [showModal?.id]);
+  }, [showModal?.center_id]);
 
   const onSubmit = (data) => {
-    if (showModal?.id) {
-      patchData({ id: showModal.id, ...data }, () => {
-        onRefreshCenter();
-      });
+    if (showModal?.center_id) {
+      patchData(
+        {
+          center_id: showModal.center_id,
+          country_id: data.country_id,
+          mission_id: data.mission_id,
+          center_name: data.center_name,
+        },
+        () => onRefreshCenter()
+      );
     } else {
-      postData(data, () => {
-        onRefreshCenter();
-      });
+      postData(
+        {
+          country_id: data.country_id,
+          mission_id: data.mission_id,
+          center_name: data.center_name,
+        },
+        () => onRefreshCenter()
+      );
     }
     closeModal();
   };
@@ -98,7 +106,7 @@ export function AddEditModal({ showModal, closeModal, onRefreshCenter }) {
   const renderHeader = () => (
     <>
       <h4 className="modal-title">
-        {showModal?.id ? 'Edit Center' : 'Add Center'}
+        {showModal?.center_id ? 'Edit Center' : 'Add Center'}
       </h4>
       <button
         type="button"
@@ -116,19 +124,19 @@ export function AddEditModal({ showModal, closeModal, onRefreshCenter }) {
         <div className="row">
           <div className="col-12">
             <div className="form-group">
-              <label htmlFor="name" className="form-label">
-                Name<span className="text-danger">*</span>
+              <label htmlFor="center_name" className="form-label">
+                Center Name<span className="text-danger">*</span>
               </label>
               <input
                 type="text"
-                id="name"
+                id="center_name"
                 className="form-control"
                 autoComplete="off"
-                maxLength={20}
-                {...register('name')}
+                maxLength={100}
+                {...register('center_name')}
               />
-              {errors.name && (
-                <span className="error">{errors.name.message}</span>
+              {errors.center_name && (
+                <span className="error">{errors.center_name.message}</span>
               )}
             </div>
           </div>
