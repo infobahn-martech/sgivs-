@@ -80,6 +80,7 @@ import DailyCashCollection from '../pages/DailyCashCollection';
 import PassportVasApplications from '../pages/PassportVasApplications';
 import VisaVasApplications from '../pages/VisaVasApplications';
 import AttestationVasApplications from '../pages/AttestationVasApplications';
+import OCIVasApplications from '../pages/OCIVasApplications';
 const router = createHashRouter([
   {
     element: <App />,
@@ -185,6 +186,7 @@ const router = createHashRouter([
               { path: '/passport-vas-applications', element: <PassportVasApplications /> },
               { path: '/visa-vas-applications', element: <VisaVasApplications /> },
               { path: '/attestation-vas-applications', element: <AttestationVasApplications /> },
+              { path: '/oci-vas-applications', element: <OCIVasApplications /> },
             ],
           },
         ],

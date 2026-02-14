@@ -101,6 +101,7 @@ export const headerConfig = [
   { title: 'Passport VAS Applications', icon: userImage, path: '/passport-vas-applications' },
   { title: 'Visa VAS Applications', icon: userImage, path: '/visa-vas-applications' },
   { title: 'Attestation VAS Applications', icon: userImage, path: '/attestation-vas-applications' },
+  { title: 'OCI VAS Applications', icon: userImage, path: '/oci-vas-applications' },
 ];
 
 export const getFirstLetters = (name) => {
