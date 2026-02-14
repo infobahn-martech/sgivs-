@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import useAlertReducer from './AlertReducer';
 import centerService from '../services/centerService';
+import userService from '../services/userService';
 
 const useCenterReducer = create((set) => ({
   isLoading: false,
@@ -9,6 +10,10 @@ const useCenterReducer = create((set) => ({
   errorMessage: '',
   successMessage: '',
   centerData: null,
+  countryList: [],
+  missionList: [],
+  isLoadingCountries: false,
+  isLoadingMissions: false,
 
   postData: async (payload, cb) => {
     try {
@@ -91,6 +96,40 @@ const useCenterReducer = create((set) => ({
         isLoadingDelete: false,
       });
       error(err?.response?.data?.message ?? err.message);
+    }
+  },
+
+  getCountries: async () => {
+    try {
+      set({ isLoadingCountries: true });
+      const { data } = await userService.getCountries();
+      const list = Array.isArray(data?.data) ? data.data : Array.isArray(data) ? data : [];
+      set({ countryList: list, isLoadingCountries: false });
+      return list;
+    } catch (err) {
+      const { error } = useAlertReducer.getState();
+      set({ isLoadingCountries: false, countryList: [] });
+      error(err?.response?.data?.message ?? err.message);
+      return [];
+    }
+  },
+
+  getMissionsByCountry: async (countryId) => {
+    if (!countryId) {
+      set({ missionList: [] });
+      return [];
+    }
+    try {
+      set({ isLoadingMissions: true });
+      const { data } = await userService.getMissionsByCountry(countryId);
+      const list = Array.isArray(data?.data) ? data.data : Array.isArray(data) ? data : [];
+      set({ missionList: list, isLoadingMissions: false });
+      return list;
+    } catch (err) {
+      const { error } = useAlertReducer.getState();
+      set({ missionList: [], isLoadingMissions: false });
+      error(err?.response?.data?.message ?? err.message);
+      return [];
     }
   },
 }));
