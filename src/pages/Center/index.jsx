@@ -16,7 +16,7 @@ import CustomActionModal from '../../components/common/CustomActionModal';
 
 const Center = () => {
   // ✅ Toggle this (VERY useful for large admin projects)
-  const USE_MOCK = true;
+  const USE_MOCK = false;
 
   const { getData, centerData, isLoadingGet, deleteData, isLoadingDelete } =
     useCenterReducer((state) => state);
