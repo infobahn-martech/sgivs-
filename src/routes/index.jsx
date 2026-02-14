@@ -82,6 +82,7 @@ import VisaVasApplications from '../pages/VisaVasApplications';
 import AttestationVasApplications from '../pages/AttestationVasApplications';
 import OCIVasApplications from '../pages/OCIVasApplications';
 import AFSManager from '../pages/AFSManager';
+import DailyAFSReport from '../pages/DailyAFSReport';
 const router = createHashRouter([
   {
     element: <App />,
@@ -189,6 +190,7 @@ const router = createHashRouter([
               { path: '/attestation-vas-applications', element: <AttestationVasApplications /> },
               { path: '/oci-vas-applications', element: <OCIVasApplications /> },
               { path: '/afs-manager', element: <AFSManager /> },
+              { path: '/daily-afs-report', element: <DailyAFSReport /> },
             ],
           },
         ],

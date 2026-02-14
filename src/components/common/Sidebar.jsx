@@ -284,9 +284,10 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       name: 'AFS Manager',
       icon: EZIcon, // change icon if needed
       path: '/afs-manager',
-      activeRoutes: ['/afs-manager'],
+      activeRoutes: ['/afs-manager', '/daily-afs-report'],
       subMenu: [
         { name: 'AFS', path: '/afs-manager', icon: MessagesIcon },
+        { name: 'Daily AFS Report', path: '/daily-afs-report', icon: MessagesIcon },
       ],
     },
     // Appointment Settings
