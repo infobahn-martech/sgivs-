@@ -290,6 +290,16 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         { name: 'Daily AFS Report', path: '/daily-afs-report', icon: MessagesIcon },
       ],
     },
+    // Appointments Manager
+    {
+      name: 'Appointments Manager',
+      icon: EZIcon, // change icon if needed
+      path: '/icac-appointments',
+      activeRoutes: ['/icac-appointments'],
+      subMenu: [
+        { name: 'ICAC Appointments', path: '/icac-appointments', icon: MessagesIcon },
+      ],
+    },
     // Appointment Settings
     {
       name: 'Appointment Settings',
