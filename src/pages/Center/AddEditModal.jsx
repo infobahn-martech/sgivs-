@@ -15,6 +15,7 @@ const centerSchema = z.object({
 });
 
 export function AddEditModal({ showModal, closeModal, onRefreshCenter }) {
+  console.log('showModal', showModal);
   const {
     register,
     handleSubmit,
@@ -84,9 +85,9 @@ export function AddEditModal({ showModal, closeModal, onRefreshCenter }) {
       patchData(
         {
           center_id: showModal.center_id,
-          country_id: data.country_id,
-          mission_id: data.mission_id,
-          center_name: data.center_name,
+          country_id: data.country_id || showModal?.country_id,
+          mission_id: data.mission_id || showModal?.mission_id,
+          center_name: data.center_name || showModal?.center_name,
         },
         () => onRefreshCenter()
       );
