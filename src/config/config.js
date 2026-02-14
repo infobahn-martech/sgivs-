@@ -105,6 +105,7 @@ export const headerConfig = [
   { title: 'AFS Manager', icon: userImage, path: '/afs-manager' },
   { title: 'Daily AFS Report', icon: userImage, path: '/daily-afs-report' },
   { title: 'ICAC Appointments', icon: userImage, path: '/icac-appointments' },
+  { title: 'ICAC Appointment Settings', icon: userImage, path: '/icac-appt-settings' },
 ];
 
 export const getFirstLetters = (name) => {

@@ -84,6 +84,7 @@ import OCIVasApplications from '../pages/OCIVasApplications';
 import AFSManager from '../pages/AFSManager';
 import DailyAFSReport from '../pages/DailyAFSReport';
 import ICACAppointments from '../pages/ICACAppointments';
+import ICACApptSettings from '../pages/ICACApptSettings';
 const router = createHashRouter([
   {
     element: <App />,
@@ -193,6 +194,7 @@ const router = createHashRouter([
               { path: '/afs-manager', element: <AFSManager /> },
               { path: '/daily-afs-report', element: <DailyAFSReport /> },
               { path: '/icac-appointments', element: <ICACAppointments /> },
+              { path: '/icac-appt-settings', element: <ICACApptSettings /> },
             ],
           },
         ],

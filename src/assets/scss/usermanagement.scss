@@ -1527,3 +1527,9 @@
 .action-menu__dropdown {
     top: calc(100% + 8px);
 }
+
+/* Status (and other) tooltips above table cells / toggles */
+.inventory-table-wrap [id^="status-"],
+.inventory-table-wrap .react-tooltip {
+    z-index: 99999 !important;
+}

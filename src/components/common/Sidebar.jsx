@@ -293,11 +293,12 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
     // Appointments Manager
     {
       name: 'Appointments Manager',
-      icon: EZIcon, // change icon if needed
+      icon: EZIcon, // change icon if needed  
       path: '/icac-appointments',
-      activeRoutes: ['/icac-appointments'],
+      activeRoutes: ['/icac-appointments', '/icac-appt-settings'],
       subMenu: [
         { name: 'ICAC Appointments', path: '/icac-appointments', icon: MessagesIcon },
+        { name: 'ICAC Appointment Settings', path: '/icac-appt-settings', icon: MessagesIcon },
       ],
     },
     // Appointment Settings

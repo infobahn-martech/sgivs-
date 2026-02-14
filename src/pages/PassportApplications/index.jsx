@@ -124,6 +124,10 @@ const PassportApplications = () => {
     }
     setModal(false);
     setDeleteModalOpen(false);
+    setViewModal(false);
+    setCommentModal(false);
+    setChangeServicesModal(false);
+    setActivityLogModal(false);
   };
 
   useEffect(() => {
@@ -144,7 +148,6 @@ const PassportApplications = () => {
     setDeleteModalOpen({ id: row?.id, name: row?.name });
   };
 
-  // ✅ action handlers (replace with your actual flows)
   const handlePrintReceipt = (row) => {
     console.log('Print Receipt:', row);
   };
@@ -166,15 +169,12 @@ const PassportApplications = () => {
   };
 
   const handleEditApplication = (row) => {
-    console.log('Edit application:', row);
-    setModal(row); // if you want to open modal in edit mode, you can store editRow state
+    setModal(row);
   };
 
   const handleChangeServiceFee = (row) => {
-    console.log('Change service/fee:', row);
     setChangeServicesModal(row);
   };
-
 
   const columns = [
     { name: 'Reference No', selector: 'referenceNo' },
@@ -240,7 +240,6 @@ const PassportApplications = () => {
       setDeleteModalOpen(false);
       return;
     }
-
     if (deleteModalOpen?.id) {
       deleteData(deleteModalOpen?.id, () => {
         onRefreshPassportApplications();
@@ -308,17 +307,11 @@ const PassportApplications = () => {
       )}
 
       {viewModal && (
-        <ViewModal
-          showModal={viewModal}
-          closeModal={() => setViewModal(false)}
-        />
+        <ViewModal showModal={viewModal} closeModal={() => setViewModal(false)} />
       )}
 
       {commentModal && (
-        <CommentModal
-          showModal={commentModal}
-          closeModal={() => setCommentModal(false)}
-        />
+        <CommentModal showModal={commentModal} closeModal={() => setCommentModal(false)} />
       )}
 
       {changeServicesModal && (
@@ -329,10 +322,7 @@ const PassportApplications = () => {
       )}
 
       {activityLogModal && (
-        <ActivityLog
-          showModal={activityLogModal}
-          closeModal={() => setActivityLogModal(false)}
-        />
+        <ActivityLog showModal={activityLogModal} closeModal={() => setActivityLogModal(false)} />
       )}
     </>
   );
