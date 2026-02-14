@@ -100,6 +100,7 @@ export const headerConfig = [
   { title: 'Daily Cash Collection', icon: userImage, path: '/daily-cash-collection' },
   { title: 'Passport VAS Applications', icon: userImage, path: '/passport-vas-applications' },
   { title: 'Visa VAS Applications', icon: userImage, path: '/visa-vas-applications' },
+  { title: 'Attestation VAS Applications', icon: userImage, path: '/attestation-vas-applications' },
 ];
 
 export const getFirstLetters = (name) => {

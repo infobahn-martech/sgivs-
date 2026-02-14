@@ -271,10 +271,11 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       name: 'VAS Manager',
       icon: EZIcon, // change icon if needed
       path: '/passport-vas-applications',
-      activeRoutes: ['/passport-vas-applications', '/visa-vas-applications'],
+      activeRoutes: ['/passport-vas-applications', '/visa-vas-applications', '/attestation-vas-applications'],
       subMenu: [
         { name: 'Passport VAS Applications', path: '/passport-vas-applications', icon: MessagesIcon },
         { name: 'Visa VAS Applications', path: '/visa-vas-applications', icon: MessagesIcon },
+        { name: 'Attestation VAS Applications', path: '/attestation-vas-applications', icon: MessagesIcon },
       ],
     },
     // Appointment Settings

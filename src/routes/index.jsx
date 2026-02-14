@@ -79,6 +79,7 @@ import ReturnToMission from '../pages/ReturnToMission';
 import DailyCashCollection from '../pages/DailyCashCollection';
 import PassportVasApplications from '../pages/PassportVasApplications';
 import VisaVasApplications from '../pages/VisaVasApplications';
+import AttestationVasApplications from '../pages/AttestationVasApplications';
 const router = createHashRouter([
   {
     element: <App />,
@@ -183,6 +184,7 @@ const router = createHashRouter([
               { path: '/daily-cash-collection', element: <DailyCashCollection /> },
               { path: '/passport-vas-applications', element: <PassportVasApplications /> },
               { path: '/visa-vas-applications', element: <VisaVasApplications /> },
+              { path: '/attestation-vas-applications', element: <AttestationVasApplications /> },
             ],
           },
         ],
