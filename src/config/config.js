@@ -102,6 +102,7 @@ export const headerConfig = [
   { title: 'Visa VAS Applications', icon: userImage, path: '/visa-vas-applications' },
   { title: 'Attestation VAS Applications', icon: userImage, path: '/attestation-vas-applications' },
   { title: 'OCI VAS Applications', icon: userImage, path: '/oci-vas-applications' },
+  { title: 'AFS Manager', icon: userImage, path: '/afs-manager' },
 ];
 
 export const getFirstLetters = (name) => {

@@ -279,6 +279,16 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         { name: 'OCI VAS Applications', path: '/oci-vas-applications', icon: MessagesIcon },
       ],
     },
+    // AFS Manager
+    {
+      name: 'AFS Manager',
+      icon: EZIcon, // change icon if needed
+      path: '/afs-manager',
+      activeRoutes: ['/afs-manager'],
+      subMenu: [
+        { name: 'AFS', path: '/afs-manager', icon: MessagesIcon },
+      ],
+    },
     // Appointment Settings
     {
       name: 'Appointment Settings',
