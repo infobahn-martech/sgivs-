@@ -3,7 +3,7 @@ import axios from 'axios';
 const url = import.meta.env.VITE_API_ENDPOINT;
 
 const Gateway = axios.create({
-  baseURL: `${url}api/v1/`,
+  baseURL: `${url}api/`,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -45,7 +45,9 @@ Gateway.interceptors.response.use(
     if (
       response &&
       response.status === 401 &&
-      !['v1/auth/login', 'v1/auth/token'].includes(response.config.url)
+      !['auth/login', 'auth/token', 'users/login'].some((p) =>
+        response.config.url?.includes(p)
+      )
     ) {
       // Call refresh token API to get both new tokens
       // const refreshResponse = await axios.post(`${url}api/v1/auth/token`, {

@@ -1,7 +1,7 @@
 import Gateway from '../config/gateway';
 
-const doLoginValidate = (email, password, platform) =>
-  Gateway.post('auth/login', { email, password, platform });
+const doLoginValidate = (username, password) =>
+  Gateway.post('users/login', { username, password });
 
 const forgotPassword = (email) =>
   Gateway.post('auth/forgot-password', { email });

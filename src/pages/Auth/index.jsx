@@ -14,7 +14,7 @@ import { Spinner } from 'react-bootstrap';
 import SignUp from '../SignUp';
 
 const loginSchema = z.object({
-  email: z.string().nonempty('Email is required').email('Invalid email format'),
+  username: z.string().nonempty('Username is required'),
   password: z.string().nonempty('Password is required'),
 });
 
@@ -33,11 +33,13 @@ const Login = () => {
     mode: 'onSubmit',
   });
 
-  const onSubmit = (data) => {
-    // ✅ use this when API ready
-    // login({ ...data, platform: "web" });
-
-    navigate('/');
+  const onSubmit = async (data) => {
+    try {
+      await login({ username: data.username, password: data.password });
+      navigate('/');
+    } catch {
+      // Error already shown via AlertReducer
+    }
   };
 
   return (
@@ -69,25 +71,24 @@ const Login = () => {
 
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
               <div className="form-sec-wrp">
-                {/* EMAIL */}
-                <div className={`form-group ${errors.email ? 'has-error' : ''}`}>
-                  <label className="form-label" htmlFor="email">
-                    Email
+                {/* USERNAME */}
+                <div className={`form-group ${errors.username ? 'has-error' : ''}`}>
+                  <label className="form-label" htmlFor="username">
+                    Username
                   </label>
                   <input
-                    id="email"
-                    type="email"
-                    inputMode="email"
+                    id="username"
+                    type="text"
                     className="form-control login-v2__input"
-                    placeholder="Enter your email"
+                    placeholder="Enter your username"
                     autoComplete="username"
-                    aria-invalid={!!errors.email}
-                    aria-describedby={errors.email ? 'email-error' : undefined}
-                    {...register('email')}
+                    aria-invalid={!!errors.username}
+                    aria-describedby={errors.username ? 'username-error' : undefined}
+                    {...register('username')}
                   />
-                  {errors.email && (
-                    <span className="error" id="email-error" role="alert">
-                      {errors.email.message}
+                  {errors.username && (
+                    <span className="error" id="username-error" role="alert">
+                      {errors.username.message}
                     </span>
                   )}
                 </div>

@@ -25,14 +25,10 @@ const useAuthReducer = create((set) => ({
   usersListpagination: {},
   userNotifyLoading: false,
 
-  login: async ({ email, password, platform }) => {
+  login: async ({ username, password }) => {
     try {
       set({ isLoginLoading: true });
-      const { data } = await authService.doLoginValidate(
-        email,
-        password,
-        platform
-      );
+      const { data } = await authService.doLoginValidate(username, password);
       const authData = data?.user;
       setItem('accessToken', data?.token?.accessToken);
       setItem('refreshToken', data?.token?.refreshToken);
@@ -46,6 +42,7 @@ const useAuthReducer = create((set) => ({
         isLoginLoading: false,
       });
       error(err?.response?.data?.message ?? err.message);
+      throw err;
     }
   },
   forgotPassword: async ({ email }) => {
