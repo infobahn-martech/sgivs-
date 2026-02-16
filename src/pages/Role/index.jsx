@@ -17,7 +17,7 @@ import CustomActionModal from '../../components/common/CustomActionModal';
 
 const Role = () => {
   // ✅ Toggle this (VERY useful for large admin projects)
-  const USE_MOCK = true;
+  const USE_MOCK = false;
 
   const { getData, roleData, isLoadingRole, deleteData, isLoadingDelete } =
     useRoleRudcer((state) => state);
@@ -33,7 +33,6 @@ const Role = () => {
     toDate: null,
     sortBy: 'createdAt',
     sortOrder: 'DESC',
-    isExcelExport: 'false',
   };
 
   const [params, setParams] = useState(initialParams);
