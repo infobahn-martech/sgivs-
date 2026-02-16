@@ -34,8 +34,8 @@ const useRoleRudcer = create((set) => ({
     try {
       set({ isLoading: true });
 
-      const { id, ...rest } = payload;
-      const { data } = await roleService.patchData(id, rest); // Updated call
+      const { employee_role_id, ...rest } = payload;
+      const { data } = await roleService.patchData(employee_role_id, rest);
 
       const { success } = useAlertReducer.getState();
       success(data?.response?.data?.message ?? data?.message);

@@ -5,13 +5,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import CustomModal from '../../components/common/CustomModal';
 import useRoleRudcer from '../../stores/RoleReducer';
 
-// Updated schema with isEZPass as a boolean
-const nameSchema = z.object({
-  name: z
+const roleSchema = z.object({
+  employee_role: z
     .string()
-    .nonempty('Name is required')
-    .max(20, 'Name must be 10 characters or less'),
-  isEZPass: z.boolean().optional(),
+    .trim()
+    .min(1, 'Employee role is required')
+    .max(20, 'Employee role must be 20 characters or less'),
 });
 
 export function AddEditModal({ showModal, closeModal, onRefreshRole }) {
@@ -22,7 +21,7 @@ export function AddEditModal({ showModal, closeModal, onRefreshRole }) {
     setValue,
     reset,
   } = useForm({
-    resolver: zodResolver(nameSchema),
+    resolver: zodResolver(roleSchema),
     defaultValues: {
       employee_role: '',
     },
@@ -42,7 +41,6 @@ export function AddEditModal({ showModal, closeModal, onRefreshRole }) {
   }, [showModal?.employee_role_id]);
 
   const onSubmit = (data) => {
-    debugger;
     const onSuccess = () => {
       onRefreshRole();
       closeModal();
