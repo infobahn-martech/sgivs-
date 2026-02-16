@@ -8,14 +8,18 @@ import useCenterReducer from '../../stores/CenterReducer';
 const centerSchema = z.object({
   center_name: z
     .string()
-    .nonempty('Center name is required')
+    .trim()
+    .min(1, 'Center name is required')
     .max(100, 'Center name must be 100 characters or less'),
-  country_id: z.union([z.string(), z.number()]).optional(),
-  mission_id: z.union([z.string(), z.number()]).optional(),
+  country_id: z
+    .union([z.string(), z.number()])
+    .refine((val) => val !== '' && val != null, 'Country is required'),
+  mission_id: z
+    .union([z.string(), z.number()])
+    .refine((val) => val !== '' && val != null, 'Mission is required'),
 });
 
 export function AddEditModal({ showModal, closeModal, onRefreshCenter }) {
-  console.log('showModal', showModal);
   const {
     register,
     handleSubmit,
@@ -60,7 +64,8 @@ export function AddEditModal({ showModal, closeModal, onRefreshCenter }) {
     } else {
       useCenterReducer.setState({ missionList: [] });
     }
-    if (prevCountryIdRef.current !== undefined && prevCountryIdRef.current !== countryId) {
+    const isInitialPrefill = showModal?.center_id && (prevCountryIdRef.current === '' || prevCountryIdRef.current === undefined);
+    if (prevCountryIdRef.current !== undefined && prevCountryIdRef.current !== countryId && !isInitialPrefill) {
       setValue('mission_id', '');
     }
     prevCountryIdRef.current = countryId;
@@ -80,7 +85,27 @@ export function AddEditModal({ showModal, closeModal, onRefreshCenter }) {
     }
   }, [showModal?.center_id]);
 
+  // Re-apply country_id when countryList loads (edit mode) - countries load async
+  useEffect(() => {
+    if (showModal?.center_id && showModal?.country_id != null && countryList?.length > 0) {
+      const match = countryList.find((c) => c.country_id == showModal.country_id);
+      setValue('country_id', match ? match.country_id : showModal.country_id);
+    }
+  }, [showModal?.center_id, showModal?.country_id, countryList]);
+
+  // Re-apply mission_id when missionList loads (edit mode) - missions load async
+  useEffect(() => {
+    if (showModal?.center_id && showModal?.mission_id != null && missionList?.length > 0) {
+      const match = missionList.find((m) => m.mission_id == showModal.mission_id);
+      setValue('mission_id', match ? match.mission_id : showModal.mission_id);
+    }
+  }, [showModal?.center_id, showModal?.mission_id, missionList]);
+
   const onSubmit = (data) => {
+    const onSuccess = () => {
+      onRefreshCenter();
+      closeModal();
+    };
     if (showModal?.center_id) {
       patchData(
         {
@@ -89,7 +114,7 @@ export function AddEditModal({ showModal, closeModal, onRefreshCenter }) {
           mission_id: data.mission_id || showModal?.mission_id,
           center_name: data.center_name || showModal?.center_name,
         },
-        () => onRefreshCenter()
+        onSuccess
       );
     } else {
       postData(
@@ -98,10 +123,9 @@ export function AddEditModal({ showModal, closeModal, onRefreshCenter }) {
           mission_id: data.mission_id,
           center_name: data.center_name,
         },
-        () => onRefreshCenter()
+        onSuccess
       );
     }
-    closeModal();
   };
 
   const renderHeader = () => (
@@ -144,7 +168,7 @@ export function AddEditModal({ showModal, closeModal, onRefreshCenter }) {
           <div className="col-12">
             <div className="form-group">
               <label htmlFor="country_id" className="form-label">
-                Country
+                Country<span className="text-danger">*</span>
               </label>
               <select
                 id="country_id"
@@ -159,12 +183,15 @@ export function AddEditModal({ showModal, closeModal, onRefreshCenter }) {
                   </option>
                 ))}
               </select>
+              {errors.country_id && (
+                <span className="error">{errors.country_id.message}</span>
+              )}
             </div>
           </div>
           <div className="col-12">
             <div className="form-group">
               <label htmlFor="mission_id" className="form-label">
-                Mission
+                Mission<span className="text-danger">*</span>
               </label>
               <select
                 id="mission_id"
@@ -179,6 +206,9 @@ export function AddEditModal({ showModal, closeModal, onRefreshCenter }) {
                   </option>
                 ))}
               </select>
+              {errors.mission_id && (
+                <span className="error">{errors.mission_id.message}</span>
+              )}
             </div>
           </div>
         </div>
