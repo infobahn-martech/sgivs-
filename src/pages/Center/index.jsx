@@ -32,7 +32,6 @@ const Center = () => {
     toDate: null,
     sortBy: 'createdAt',
     sortOrder: 'DESC',
-    isExcelExport: 'false',
   };
 
   const [params, setParams] = useState(initialParams);
